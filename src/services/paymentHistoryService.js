@@ -51,6 +51,7 @@ const getPaymentHistoryData = async (userInputs, request) => {
         }
 
         const PaymentHistoryData = await PaymentHistoryModel.fatchPaymentHistoryList({user_id, page, perPage});
+        const countPaymentHistoryData = await PaymentHistoryModel.countPaymentHistoryList({user_id});
         
         if(PaymentHistoryData){
 
@@ -79,14 +80,16 @@ const getPaymentHistoryData = async (userInputs, request) => {
                     status: true,
                     status_code: constants.SUCCESS_RESPONSE,
                     message: "Data get successfully",
-                    data: PaymentHistoryData
+                    data: PaymentHistoryData,
+                    total_count: countPaymentHistoryData
                 };
             }else{
                 return {
                     status: true,
                     status_code: constants.SUCCESS_RESPONSE,
                     message: "Data get successfully",
-                    data: PaymentHistoryData
+                    data: PaymentHistoryData,
+                    total_count: countPaymentHistoryData
                 }
             }
         }else{

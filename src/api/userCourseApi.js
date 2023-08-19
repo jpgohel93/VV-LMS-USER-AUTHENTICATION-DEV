@@ -296,9 +296,9 @@ module.exports = async (app) => {
     });
 
     app.post('/user/getPaymentHistory', UserAuth ,async (req,res,next) => {
-        const { user_id } = req.body;
+        const { user_id, startToken, endToken } = req.body;
 
-        const data = await paymentHistoryService.getPaymentHistoryData({ user_id }, req); 
+        const data = await paymentHistoryService.getPaymentHistoryData({ user_id, startToken, endToken }, req); 
 
         res.status(data.status_code).json(data);
     });

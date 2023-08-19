@@ -1,0 +1,1132 @@
+Webhook Working ---- Mon Jul 03 2023 12:06:58 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+"Successfully validated SNS topic for Amazon SES event publishing." 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 12:07:49 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+"Successfully validated SNS topic for Amazon SES event publishing." 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 12:08:12 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+"{\"eventType\":\"Send\",\"mail\":{\"timestamp\":\"2023-07-03T06:38:12.645Z\",\"source\":\"tjcloudtest@gmail.com\",\"sourceArn\":\"arn:aws:ses:ap-south-1:379034229131:identity/tjcloudtest@gmail.com\",\"sendingAccountId\":\"379034229131\",\"messageId\":\"010901891a791ea5-09c20235-38f6-42a8-99e6-35cdc1497844-000000\",\"destination\":[\"success@simulator.amazonses.com\"],\"headersTruncated\":false,\"headers\":[{\"name\":\"From\",\"value\":\"tjcloudtest@gmail.com\"},{\"name\":\"To\",\"value\":\"success@simulator.amazonses.com\"},{\"name\":\"Subject\",\"value\":\"testing\"},{\"name\":\"MIME-Version\",\"value\":\"1.0\"},{\"name\":\"Content-Type\",\"value\":\"multipart/alternative;  boundary=\\\"----=_Part_3170881_260251697.1688366292649\\\"\"}],\"commonHeaders\":{\"from\":[\"tjcloudtest@gmail.com\"],\"to\":[\"success@simulator.amazonses.com\"],\"messageId\":\"010901891a791ea5-09c20235-38f6-42a8-99e6-35cdc1497844-000000\",\"subject\":\"testing\"},\"tags\":{\"ses:operation\":[\"SendEmail\"],\"ses:configuration-set\":[\"Testingemails\"],\"ses:source-ip\":[\"103.105.234.242\"],\"ses:from-domain\":[\"gmail.com\"],\"ses:caller-identity\":[\"root\"]}},\"send\":{}}\n" 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 12:08:13 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+"{\"eventType\":\"Delivery\",\"mail\":{\"timestamp\":\"2023-07-03T06:38:12.645Z\",\"source\":\"tjcloudtest@gmail.com\",\"sourceArn\":\"arn:aws:ses:ap-south-1:379034229131:identity/tjcloudtest@gmail.com\",\"sendingAccountId\":\"379034229131\",\"messageId\":\"010901891a791ea5-09c20235-38f6-42a8-99e6-35cdc1497844-000000\",\"destination\":[\"success@simulator.amazonses.com\"],\"headersTruncated\":false,\"headers\":[{\"name\":\"From\",\"value\":\"tjcloudtest@gmail.com\"},{\"name\":\"To\",\"value\":\"success@simulator.amazonses.com\"},{\"name\":\"Subject\",\"value\":\"testing\"},{\"name\":\"MIME-Version\",\"value\":\"1.0\"},{\"name\":\"Content-Type\",\"value\":\"multipart/alternative;  boundary=\\\"----=_Part_3170881_260251697.1688366292649\\\"\"}],\"commonHeaders\":{\"from\":[\"tjcloudtest@gmail.com\"],\"to\":[\"success@simulator.amazonses.com\"],\"messageId\":\"010901891a791ea5-09c20235-38f6-42a8-99e6-35cdc1497844-000000\",\"subject\":\"testing\"},\"tags\":{\"ses:operation\":[\"SendEmail\"],\"ses:configuration-set\":[\"Testingemails\"],\"ses:source-ip\":[\"103.105.234.242\"],\"ses:from-domain\":[\"gmail.com\"],\"ses:caller-identity\":[\"root\"],\"ses:outgoing-ip\":[\"76.223.180.18\"]}},\"delivery\":{\"timestamp\":\"2023-07-03T06:38:13.767Z\",\"processingTimeMillis\":1122,\"recipients\":[\"success@simulator.amazonses.com\"],\"smtpResponse\":\"250 2.6.0 Message received\",\"reportingMTA\":\"c180-18.smtp-out.ap-south-1.amazonses.com\"}}\n" 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 12:08:40 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+"Successfully validated SNS topic for Amazon SES event publishing." 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 12:09:03 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+"{\"eventType\":\"Send\",\"mail\":{\"timestamp\":\"2023-07-03T06:38:12.645Z\",\"source\":\"tjcloudtest@gmail.com\",\"sourceArn\":\"arn:aws:ses:ap-south-1:379034229131:identity/tjcloudtest@gmail.com\",\"sendingAccountId\":\"379034229131\",\"messageId\":\"010901891a791ea5-09c20235-38f6-42a8-99e6-35cdc1497844-000000\",\"destination\":[\"success@simulator.amazonses.com\"],\"headersTruncated\":false,\"headers\":[{\"name\":\"From\",\"value\":\"tjcloudtest@gmail.com\"},{\"name\":\"To\",\"value\":\"success@simulator.amazonses.com\"},{\"name\":\"Subject\",\"value\":\"testing\"},{\"name\":\"MIME-Version\",\"value\":\"1.0\"},{\"name\":\"Content-Type\",\"value\":\"multipart/alternative;  boundary=\\\"----=_Part_3170881_260251697.1688366292649\\\"\"}],\"commonHeaders\":{\"from\":[\"tjcloudtest@gmail.com\"],\"to\":[\"success@simulator.amazonses.com\"],\"messageId\":\"010901891a791ea5-09c20235-38f6-42a8-99e6-35cdc1497844-000000\",\"subject\":\"testing\"},\"tags\":{\"ses:operation\":[\"SendEmail\"],\"ses:configuration-set\":[\"Testingemails\"],\"ses:source-ip\":[\"103.105.234.242\"],\"ses:from-domain\":[\"gmail.com\"],\"ses:caller-identity\":[\"root\"]}},\"send\":{}}\n" 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 12:09:04 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+"{\"eventType\":\"Delivery\",\"mail\":{\"timestamp\":\"2023-07-03T06:38:12.645Z\",\"source\":\"tjcloudtest@gmail.com\",\"sourceArn\":\"arn:aws:ses:ap-south-1:379034229131:identity/tjcloudtest@gmail.com\",\"sendingAccountId\":\"379034229131\",\"messageId\":\"010901891a791ea5-09c20235-38f6-42a8-99e6-35cdc1497844-000000\",\"destination\":[\"success@simulator.amazonses.com\"],\"headersTruncated\":false,\"headers\":[{\"name\":\"From\",\"value\":\"tjcloudtest@gmail.com\"},{\"name\":\"To\",\"value\":\"success@simulator.amazonses.com\"},{\"name\":\"Subject\",\"value\":\"testing\"},{\"name\":\"MIME-Version\",\"value\":\"1.0\"},{\"name\":\"Content-Type\",\"value\":\"multipart/alternative;  boundary=\\\"----=_Part_3170881_260251697.1688366292649\\\"\"}],\"commonHeaders\":{\"from\":[\"tjcloudtest@gmail.com\"],\"to\":[\"success@simulator.amazonses.com\"],\"messageId\":\"010901891a791ea5-09c20235-38f6-42a8-99e6-35cdc1497844-000000\",\"subject\":\"testing\"},\"tags\":{\"ses:operation\":[\"SendEmail\"],\"ses:configuration-set\":[\"Testingemails\"],\"ses:source-ip\":[\"103.105.234.242\"],\"ses:from-domain\":[\"gmail.com\"],\"ses:caller-identity\":[\"root\"],\"ses:outgoing-ip\":[\"76.223.180.18\"]}},\"delivery\":{\"timestamp\":\"2023-07-03T06:38:13.767Z\",\"processingTimeMillis\":1122,\"recipients\":[\"success@simulator.amazonses.com\"],\"smtpResponse\":\"250 2.6.0 Message received\",\"reportingMTA\":\"c180-18.smtp-out.ap-south-1.amazonses.com\"}}\n" 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 12:09:08 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+"{\"eventType\":\"Send\",\"mail\":{\"timestamp\":\"2023-07-03T06:39:08.909Z\",\"source\":\"tjcloudtest@gmail.com\",\"sourceArn\":\"arn:aws:ses:ap-south-1:379034229131:identity/tjcloudtest@gmail.com\",\"sendingAccountId\":\"379034229131\",\"messageId\":\"010901891a79fa6d-2c08a961-d360-494a-8c1a-554bba84b54e-000000\",\"destination\":[\"tjcloudtest@gmail.com\"],\"headersTruncated\":false,\"headers\":[{\"name\":\"From\",\"value\":\"tjcloudtest@gmail.com\"},{\"name\":\"To\",\"value\":\"tjcloudtest@gmail.com\"},{\"name\":\"Subject\",\"value\":\"testing\"},{\"name\":\"MIME-Version\",\"value\":\"1.0\"},{\"name\":\"Content-Type\",\"value\":\"multipart/alternative;  boundary=\\\"----=_Part_80912_1481071321.1688366348913\\\"\"}],\"commonHeaders\":{\"from\":[\"tjcloudtest@gmail.com\"],\"to\":[\"tjcloudtest@gmail.com\"],\"messageId\":\"010901891a79fa6d-2c08a961-d360-494a-8c1a-554bba84b54e-000000\",\"subject\":\"testing\"},\"tags\":{\"ses:operation\":[\"SendEmail\"],\"ses:configuration-set\":[\"Testingemails\"],\"ses:source-ip\":[\"103.105.234.242\"],\"ses:from-domain\":[\"gmail.com\"],\"ses:caller-identity\":[\"root\"]}},\"send\":{}}\n" 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 12:09:10 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+"{\"eventType\":\"Delivery\",\"mail\":{\"timestamp\":\"2023-07-03T06:39:08.909Z\",\"source\":\"tjcloudtest@gmail.com\",\"sourceArn\":\"arn:aws:ses:ap-south-1:379034229131:identity/tjcloudtest@gmail.com\",\"sendingAccountId\":\"379034229131\",\"messageId\":\"010901891a79fa6d-2c08a961-d360-494a-8c1a-554bba84b54e-000000\",\"destination\":[\"tjcloudtest@gmail.com\"],\"headersTruncated\":false,\"headers\":[{\"name\":\"From\",\"value\":\"tjcloudtest@gmail.com\"},{\"name\":\"To\",\"value\":\"tjcloudtest@gmail.com\"},{\"name\":\"Subject\",\"value\":\"testing\"},{\"name\":\"MIME-Version\",\"value\":\"1.0\"},{\"name\":\"Content-Type\",\"value\":\"multipart/alternative;  boundary=\\\"----=_Part_80912_1481071321.1688366348913\\\"\"}],\"commonHeaders\":{\"from\":[\"tjcloudtest@gmail.com\"],\"to\":[\"tjcloudtest@gmail.com\"],\"messageId\":\"010901891a79fa6d-2c08a961-d360-494a-8c1a-554bba84b54e-000000\",\"subject\":\"testing\"},\"tags\":{\"ses:operation\":[\"SendEmail\"],\"ses:configuration-set\":[\"Testingemails\"],\"ses:source-ip\":[\"103.105.234.242\"],\"ses:from-domain\":[\"gmail.com\"],\"ses:caller-identity\":[\"root\"],\"ses:outgoing-ip\":[\"76.223.180.17\"]}},\"delivery\":{\"timestamp\":\"2023-07-03T06:39:10.633Z\",\"processingTimeMillis\":1724,\"recipients\":[\"tjcloudtest@gmail.com\"],\"smtpResponse\":\"250 2.0.0 OK  1688366350 s138-20020a632c90000000b0055ae207577csi14236840pgs.650 - gsmtp\",\"reportingMTA\":\"c180-17.smtp-out.ap-south-1.amazonses.com\"}}\n" 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 12:09:15 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+"{\"eventType\":\"Open\",\"mail\":{\"timestamp\":\"2023-07-03T06:39:08.909Z\",\"source\":\"tjcloudtest@gmail.com\",\"sendingAccountId\":\"379034229131\",\"messageId\":\"010901891a79fa6d-2c08a961-d360-494a-8c1a-554bba84b54e-000000\",\"destination\":[\"tjcloudtest@gmail.com\"],\"headersTruncated\":false,\"headers\":[{\"name\":\"From\",\"value\":\"tjcloudtest@gmail.com\"},{\"name\":\"To\",\"value\":\"tjcloudtest@gmail.com\"},{\"name\":\"Subject\",\"value\":\"testing\"},{\"name\":\"MIME-Version\",\"value\":\"1.0\"},{\"name\":\"Content-Type\",\"value\":\"multipart/alternative;  boundary=\\\"----=_Part_80912_1481071321.1688366348913\\\"\"}],\"commonHeaders\":{\"from\":[\"tjcloudtest@gmail.com\"],\"to\":[\"tjcloudtest@gmail.com\"],\"messageId\":\"010901891a79fa6d-2c08a961-d360-494a-8c1a-554bba84b54e-000000\",\"subject\":\"testing\"},\"tags\":{\"ses:operation\":[\"SendEmail\"],\"ses:configuration-set\":[\"Testingemails\"],\"ses:source-ip\":[\"103.105.234.242\"],\"ses:from-domain\":[\"gmail.com\"],\"ses:caller-identity\":[\"root\"]}},\"open\":{\"timestamp\":\"2023-07-03T06:39:16.137Z\",\"userAgent\":\"Mozilla/5.0 (Windows NT 5.1; rv:11.0) Gecko Firefox/11.0 (via ggpht.com GoogleImageProxy)\",\"ipAddress\":\"74.125.209.85\"}}\n" 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 12:09:33 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{} 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 12:09:50 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{} 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 12:09:51 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{} 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 12:09:51 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{} 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 12:09:51 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{} 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 12:09:51 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{} 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 12:10:42 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{} 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 12:10:42 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{} 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 12:10:42 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{} 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 12:10:42 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{} 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 12:10:42 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{} 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 12:11:33 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{} 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 12:11:33 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{} 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 12:11:33 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{} 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 12:13:18 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{} 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 12:14:09 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{} 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 12:15:00 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{} 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 12:15:52 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{} 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 12:16:57 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{} 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 12:17:04 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{} 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 12:17:48 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{} 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 12:17:55 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{} 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 12:18:39 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{} 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 12:18:46 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{} 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 12:19:30 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{} 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 12:19:37 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{} 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 12:20:35 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{} 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 12:21:27 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{} 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 12:22:17 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{} 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 12:23:08 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{} 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 12:25:36 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{} 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 12:25:38 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{} 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 12:25:55 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{} 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 12:25:56 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{} 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 12:25:56 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{} 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 12:26:09 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{} 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 12:26:59 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+"{\"eventType\":\"Send\",\"mail\":{\"timestamp\":\"2023-07-03T06:55:36.237Z\",\"source\":\"tjcloudtest@gmail.com\",\"sourceArn\":\"arn:aws:ses:ap-south-1:379034229131:identity/tjcloudtest@gmail.com\",\"sendingAccountId\":\"379034229131\",\"messageId\":\"010901891a890b2d-0012c417-1be2-4641-bb59-e23078f2b762-000000\",\"destination\":[\"jayrank@tjcg.in\"],\"headersTruncated\":false,\"headers\":[{\"name\":\"From\",\"value\":\"tjcloudtest@gmail.com\"},{\"name\":\"To\",\"value\":\"jayrank@tjcg.in\"},{\"name\":\"Subject\",\"value\":\"Testing one\"},{\"name\":\"MIME-Version\",\"value\":\"1.0\"},{\"name\":\"Content-Type\",\"value\":\"multipart/alternative;  boundary=\\\"----=_Part_3148843_734093330.1688367336241\\\"\"}],\"commonHeaders\":{\"from\":[\"tjcloudtest@gmail.com\"],\"to\":[\"jayrank@tjcg.in\"],\"messageId\":\"010901891a890b2d-0012c417-1be2-4641-bb59-e23078f2b762-000000\",\"subject\":\"Testing one\"},\"tags\":{\"ses:operation\":[\"SendEmail\"],\"ses:configuration-set\":[\"Testingemails\"],\"ses:source-ip\":[\"103.105.234.242\"],\"ses:from-domain\":[\"gmail.com\"],\"ses:caller-identity\":[\"root\"]}},\"send\":{}}\n" 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 12:26:59 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+"{\"eventType\":\"Delivery\",\"mail\":{\"timestamp\":\"2023-07-03T06:55:36.237Z\",\"source\":\"tjcloudtest@gmail.com\",\"sourceArn\":\"arn:aws:ses:ap-south-1:379034229131:identity/tjcloudtest@gmail.com\",\"sendingAccountId\":\"379034229131\",\"messageId\":\"010901891a890b2d-0012c417-1be2-4641-bb59-e23078f2b762-000000\",\"destination\":[\"jayrank@tjcg.in\"],\"headersTruncated\":false,\"headers\":[{\"name\":\"From\",\"value\":\"tjcloudtest@gmail.com\"},{\"name\":\"To\",\"value\":\"jayrank@tjcg.in\"},{\"name\":\"Subject\",\"value\":\"Testing one\"},{\"name\":\"MIME-Version\",\"value\":\"1.0\"},{\"name\":\"Content-Type\",\"value\":\"multipart/alternative;  boundary=\\\"----=_Part_3148843_734093330.1688367336241\\\"\"}],\"commonHeaders\":{\"from\":[\"tjcloudtest@gmail.com\"],\"to\":[\"jayrank@tjcg.in\"],\"messageId\":\"010901891a890b2d-0012c417-1be2-4641-bb59-e23078f2b762-000000\",\"subject\":\"Testing one\"},\"tags\":{\"ses:operation\":[\"SendEmail\"],\"ses:configuration-set\":[\"Testingemails\"],\"ses:source-ip\":[\"103.105.234.242\"],\"ses:from-domain\":[\"gmail.com\"],\"ses:caller-identity\":[\"root\"],\"ses:outgoing-ip\":[\"76.223.180.18\"]}},\"delivery\":{\"timestamp\":\"2023-07-03T06:55:38.694Z\",\"processingTimeMillis\":2457,\"recipients\":[\"jayrank@tjcg.in\"],\"smtpResponse\":\"250 2.0.0 Ok: queued as 4QvcBf10Cxz9HMys\",\"reportingMTA\":\"c180-18.smtp-out.ap-south-1.amazonses.com\"}}\n" 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 12:26:59 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+"{\"eventType\":\"Open\",\"mail\":{\"timestamp\":\"2023-07-03T06:55:36.237Z\",\"source\":\"tjcloudtest@gmail.com\",\"sendingAccountId\":\"379034229131\",\"messageId\":\"010901891a890b2d-0012c417-1be2-4641-bb59-e23078f2b762-000000\",\"destination\":[\"jayrank@tjcg.in\"],\"headersTruncated\":false,\"headers\":[{\"name\":\"From\",\"value\":\"tjcloudtest@gmail.com\"},{\"name\":\"To\",\"value\":\"jayrank@tjcg.in\"},{\"name\":\"Subject\",\"value\":\"Testing one\"},{\"name\":\"MIME-Version\",\"value\":\"1.0\"},{\"name\":\"Content-Type\",\"value\":\"multipart/alternative;  boundary=\\\"----=_Part_3148843_734093330.1688367336241\\\"\"}],\"commonHeaders\":{\"from\":[\"tjcloudtest@gmail.com\"],\"to\":[\"jayrank@tjcg.in\"],\"messageId\":\"010901891a890b2d-0012c417-1be2-4641-bb59-e23078f2b762-000000\",\"subject\":\"Testing one\"},\"tags\":{\"ses:operation\":[\"SendEmail\"],\"ses:configuration-set\":[\"Testingemails\"],\"ses:source-ip\":[\"103.105.234.242\"],\"ses:from-domain\":[\"gmail.com\"],\"ses:caller-identity\":[\"root\"]}},\"open\":{\"timestamp\":\"2023-07-03T06:56:09.571Z\",\"userAgent\":\"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36\",\"ipAddress\":\"103.105.234.242\"}}\n" 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 12:27:50 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+"{\"eventType\":\"Open\",\"mail\":{\"timestamp\":\"2023-07-03T06:55:36.237Z\",\"source\":\"tjcloudtest@gmail.com\",\"sendingAccountId\":\"379034229131\",\"messageId\":\"010901891a890b2d-0012c417-1be2-4641-bb59-e23078f2b762-000000\",\"destination\":[\"jayrank@tjcg.in\"],\"headersTruncated\":false,\"headers\":[{\"name\":\"From\",\"value\":\"tjcloudtest@gmail.com\"},{\"name\":\"To\",\"value\":\"jayrank@tjcg.in\"},{\"name\":\"Subject\",\"value\":\"Testing one\"},{\"name\":\"MIME-Version\",\"value\":\"1.0\"},{\"name\":\"Content-Type\",\"value\":\"multipart/alternative;  boundary=\\\"----=_Part_3148843_734093330.1688367336241\\\"\"}],\"commonHeaders\":{\"from\":[\"tjcloudtest@gmail.com\"],\"to\":[\"jayrank@tjcg.in\"],\"messageId\":\"010901891a890b2d-0012c417-1be2-4641-bb59-e23078f2b762-000000\",\"subject\":\"Testing one\"},\"tags\":{\"ses:operation\":[\"SendEmail\"],\"ses:configuration-set\":[\"Testingemails\"],\"ses:source-ip\":[\"103.105.234.242\"],\"ses:from-domain\":[\"gmail.com\"],\"ses:caller-identity\":[\"root\"]}},\"open\":{\"timestamp\":\"2023-07-03T06:56:09.571Z\",\"userAgent\":\"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36\",\"ipAddress\":\"103.105.234.242\"}}\n" 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 12:27:50 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+"{\"eventType\":\"Delivery\",\"mail\":{\"timestamp\":\"2023-07-03T06:55:36.237Z\",\"source\":\"tjcloudtest@gmail.com\",\"sourceArn\":\"arn:aws:ses:ap-south-1:379034229131:identity/tjcloudtest@gmail.com\",\"sendingAccountId\":\"379034229131\",\"messageId\":\"010901891a890b2d-0012c417-1be2-4641-bb59-e23078f2b762-000000\",\"destination\":[\"jayrank@tjcg.in\"],\"headersTruncated\":false,\"headers\":[{\"name\":\"From\",\"value\":\"tjcloudtest@gmail.com\"},{\"name\":\"To\",\"value\":\"jayrank@tjcg.in\"},{\"name\":\"Subject\",\"value\":\"Testing one\"},{\"name\":\"MIME-Version\",\"value\":\"1.0\"},{\"name\":\"Content-Type\",\"value\":\"multipart/alternative;  boundary=\\\"----=_Part_3148843_734093330.1688367336241\\\"\"}],\"commonHeaders\":{\"from\":[\"tjcloudtest@gmail.com\"],\"to\":[\"jayrank@tjcg.in\"],\"messageId\":\"010901891a890b2d-0012c417-1be2-4641-bb59-e23078f2b762-000000\",\"subject\":\"Testing one\"},\"tags\":{\"ses:operation\":[\"SendEmail\"],\"ses:configuration-set\":[\"Testingemails\"],\"ses:source-ip\":[\"103.105.234.242\"],\"ses:from-domain\":[\"gmail.com\"],\"ses:caller-identity\":[\"root\"],\"ses:outgoing-ip\":[\"76.223.180.18\"]}},\"delivery\":{\"timestamp\":\"2023-07-03T06:55:38.694Z\",\"processingTimeMillis\":2457,\"recipients\":[\"jayrank@tjcg.in\"],\"smtpResponse\":\"250 2.0.0 Ok: queued as 4QvcBf10Cxz9HMys\",\"reportingMTA\":\"c180-18.smtp-out.ap-south-1.amazonses.com\"}}\n" 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 12:27:50 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+"{\"eventType\":\"Send\",\"mail\":{\"timestamp\":\"2023-07-03T06:55:36.237Z\",\"source\":\"tjcloudtest@gmail.com\",\"sourceArn\":\"arn:aws:ses:ap-south-1:379034229131:identity/tjcloudtest@gmail.com\",\"sendingAccountId\":\"379034229131\",\"messageId\":\"010901891a890b2d-0012c417-1be2-4641-bb59-e23078f2b762-000000\",\"destination\":[\"jayrank@tjcg.in\"],\"headersTruncated\":false,\"headers\":[{\"name\":\"From\",\"value\":\"tjcloudtest@gmail.com\"},{\"name\":\"To\",\"value\":\"jayrank@tjcg.in\"},{\"name\":\"Subject\",\"value\":\"Testing one\"},{\"name\":\"MIME-Version\",\"value\":\"1.0\"},{\"name\":\"Content-Type\",\"value\":\"multipart/alternative;  boundary=\\\"----=_Part_3148843_734093330.1688367336241\\\"\"}],\"commonHeaders\":{\"from\":[\"tjcloudtest@gmail.com\"],\"to\":[\"jayrank@tjcg.in\"],\"messageId\":\"010901891a890b2d-0012c417-1be2-4641-bb59-e23078f2b762-000000\",\"subject\":\"Testing one\"},\"tags\":{\"ses:operation\":[\"SendEmail\"],\"ses:configuration-set\":[\"Testingemails\"],\"ses:source-ip\":[\"103.105.234.242\"],\"ses:from-domain\":[\"gmail.com\"],\"ses:caller-identity\":[\"root\"]}},\"send\":{}}\n" 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 12:28:21 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{"eventType":"Open","mail":{"timestamp":"2023-07-03T06:55:36.237Z","source":"tjcloudtest@gmail.com","sendingAccountId":"379034229131","messageId":"010901891a890b2d-0012c417-1be2-4641-bb59-e23078f2b762-000000","destination":["jayrank@tjcg.in"],"headersTruncated":false,"headers":[{"name":"From","value":"tjcloudtest@gmail.com"},{"name":"To","value":"jayrank@tjcg.in"},{"name":"Subject","value":"Testing one"},{"name":"MIME-Version","value":"1.0"},{"name":"Content-Type","value":"multipart/alternative;  boundary=\"----=_Part_3148843_734093330.1688367336241\""}],"commonHeaders":{"from":["tjcloudtest@gmail.com"],"to":["jayrank@tjcg.in"],"messageId":"010901891a890b2d-0012c417-1be2-4641-bb59-e23078f2b762-000000","subject":"Testing one"},"tags":{"ses:operation":["SendEmail"],"ses:configuration-set":["Testingemails"],"ses:source-ip":["103.105.234.242"],"ses:from-domain":["gmail.com"],"ses:caller-identity":["root"]}},"open":{"timestamp":"2023-07-03T06:56:09.571Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36","ipAddress":"103.105.234.242"}}
+ 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 12:28:41 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{"eventType":"Send","mail":{"timestamp":"2023-07-03T06:58:41.483Z","source":"tjcloudtest@gmail.com","sourceArn":"arn:aws:ses:ap-south-1:379034229131:identity/tjcloudtest@gmail.com","sendingAccountId":"379034229131","messageId":"010901891a8bdecb-3c41f416-36b0-41b4-8b25-59cc1271dbe7-000000","destination":["jayrank@tjcg.in"],"headersTruncated":false,"headers":[{"name":"From","value":"tjcloudtest@gmail.com"},{"name":"To","value":"jayrank@tjcg.in"},{"name":"Subject","value":"testing two"},{"name":"MIME-Version","value":"1.0"},{"name":"Content-Type","value":"multipart/alternative;  boundary=\"----=_Part_90805_1027016912.1688367521487\""}],"commonHeaders":{"from":["tjcloudtest@gmail.com"],"to":["jayrank@tjcg.in"],"messageId":"010901891a8bdecb-3c41f416-36b0-41b4-8b25-59cc1271dbe7-000000","subject":"testing two"},"tags":{"ses:operation":["SendEmail"],"ses:configuration-set":["Testingemails"],"ses:source-ip":["103.105.234.242"],"ses:from-domain":["gmail.com"],"ses:caller-identity":["root"]}},"send":{}}
+ 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 12:28:43 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{"notificationType":"Delivery","mail":{"timestamp":"2023-07-03T06:58:41.483Z","source":"tjcloudtest@gmail.com","sourceArn":"arn:aws:ses:ap-south-1:379034229131:identity/tjcloudtest@gmail.com","sourceIp":"103.105.234.242","callerIdentity":"root","sendingAccountId":"379034229131","messageId":"010901891a8bdecb-3c41f416-36b0-41b4-8b25-59cc1271dbe7-000000","destination":["jayrank@tjcg.in"],"headersTruncated":false,"headers":[{"name":"From","value":"tjcloudtest@gmail.com"},{"name":"To","value":"jayrank@tjcg.in"},{"name":"Subject","value":"testing two"},{"name":"MIME-Version","value":"1.0"},{"name":"Content-Type","value":"multipart/alternative;  boundary=\"----=_Part_90805_1027016912.1688367521487\""}],"commonHeaders":{"from":["tjcloudtest@gmail.com"],"to":["jayrank@tjcg.in"],"subject":"testing two"}},"delivery":{"timestamp":"2023-07-03T06:58:44.392Z","processingTimeMillis":2909,"recipients":["jayrank@tjcg.in"],"smtpResponse":"250 2.0.0 Ok: queued as 4QvcGC5FxDzNRTDD","remoteMtaIp":"172.65.182.103","reportingMTA":"c180-17.smtp-out.ap-south-1.amazonses.com"}} 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 12:28:44 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{"eventType":"Delivery","mail":{"timestamp":"2023-07-03T06:58:41.483Z","source":"tjcloudtest@gmail.com","sourceArn":"arn:aws:ses:ap-south-1:379034229131:identity/tjcloudtest@gmail.com","sendingAccountId":"379034229131","messageId":"010901891a8bdecb-3c41f416-36b0-41b4-8b25-59cc1271dbe7-000000","destination":["jayrank@tjcg.in"],"headersTruncated":false,"headers":[{"name":"From","value":"tjcloudtest@gmail.com"},{"name":"To","value":"jayrank@tjcg.in"},{"name":"Subject","value":"testing two"},{"name":"MIME-Version","value":"1.0"},{"name":"Content-Type","value":"multipart/alternative;  boundary=\"----=_Part_90805_1027016912.1688367521487\""}],"commonHeaders":{"from":["tjcloudtest@gmail.com"],"to":["jayrank@tjcg.in"],"messageId":"010901891a8bdecb-3c41f416-36b0-41b4-8b25-59cc1271dbe7-000000","subject":"testing two"},"tags":{"ses:operation":["SendEmail"],"ses:configuration-set":["Testingemails"],"ses:source-ip":["103.105.234.242"],"ses:from-domain":["gmail.com"],"ses:caller-identity":["root"],"ses:outgoing-ip":["76.223.180.17"]}},"delivery":{"timestamp":"2023-07-03T06:58:44.392Z","processingTimeMillis":2909,"recipients":["jayrank@tjcg.in"],"smtpResponse":"250 2.0.0 Ok: queued as 4QvcGC5FxDzNRTDD","reportingMTA":"c180-17.smtp-out.ap-south-1.amazonses.com"}}
+ 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 12:29:32 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{"eventType":"Send","mail":{"timestamp":"2023-07-03T06:58:41.483Z","source":"tjcloudtest@gmail.com","sourceArn":"arn:aws:ses:ap-south-1:379034229131:identity/tjcloudtest@gmail.com","sendingAccountId":"379034229131","messageId":"010901891a8bdecb-3c41f416-36b0-41b4-8b25-59cc1271dbe7-000000","destination":["jayrank@tjcg.in"],"headersTruncated":false,"headers":[{"name":"From","value":"tjcloudtest@gmail.com"},{"name":"To","value":"jayrank@tjcg.in"},{"name":"Subject","value":"testing two"},{"name":"MIME-Version","value":"1.0"},{"name":"Content-Type","value":"multipart/alternative;  boundary=\"----=_Part_90805_1027016912.1688367521487\""}],"commonHeaders":{"from":["tjcloudtest@gmail.com"],"to":["jayrank@tjcg.in"],"messageId":"010901891a8bdecb-3c41f416-36b0-41b4-8b25-59cc1271dbe7-000000","subject":"testing two"},"tags":{"ses:operation":["SendEmail"],"ses:configuration-set":["Testingemails"],"ses:source-ip":["103.105.234.242"],"ses:from-domain":["gmail.com"],"ses:caller-identity":["root"]}},"send":{}}
+ 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 12:29:35 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{"notificationType":"Delivery","mail":{"timestamp":"2023-07-03T06:58:41.483Z","source":"tjcloudtest@gmail.com","sourceArn":"arn:aws:ses:ap-south-1:379034229131:identity/tjcloudtest@gmail.com","sourceIp":"103.105.234.242","callerIdentity":"root","sendingAccountId":"379034229131","messageId":"010901891a8bdecb-3c41f416-36b0-41b4-8b25-59cc1271dbe7-000000","destination":["jayrank@tjcg.in"],"headersTruncated":false,"headers":[{"name":"From","value":"tjcloudtest@gmail.com"},{"name":"To","value":"jayrank@tjcg.in"},{"name":"Subject","value":"testing two"},{"name":"MIME-Version","value":"1.0"},{"name":"Content-Type","value":"multipart/alternative;  boundary=\"----=_Part_90805_1027016912.1688367521487\""}],"commonHeaders":{"from":["tjcloudtest@gmail.com"],"to":["jayrank@tjcg.in"],"subject":"testing two"}},"delivery":{"timestamp":"2023-07-03T06:58:44.392Z","processingTimeMillis":2909,"recipients":["jayrank@tjcg.in"],"smtpResponse":"250 2.0.0 Ok: queued as 4QvcGC5FxDzNRTDD","remoteMtaIp":"172.65.182.103","reportingMTA":"c180-17.smtp-out.ap-south-1.amazonses.com"}} 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 12:29:35 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{"eventType":"Delivery","mail":{"timestamp":"2023-07-03T06:58:41.483Z","source":"tjcloudtest@gmail.com","sourceArn":"arn:aws:ses:ap-south-1:379034229131:identity/tjcloudtest@gmail.com","sendingAccountId":"379034229131","messageId":"010901891a8bdecb-3c41f416-36b0-41b4-8b25-59cc1271dbe7-000000","destination":["jayrank@tjcg.in"],"headersTruncated":false,"headers":[{"name":"From","value":"tjcloudtest@gmail.com"},{"name":"To","value":"jayrank@tjcg.in"},{"name":"Subject","value":"testing two"},{"name":"MIME-Version","value":"1.0"},{"name":"Content-Type","value":"multipart/alternative;  boundary=\"----=_Part_90805_1027016912.1688367521487\""}],"commonHeaders":{"from":["tjcloudtest@gmail.com"],"to":["jayrank@tjcg.in"],"messageId":"010901891a8bdecb-3c41f416-36b0-41b4-8b25-59cc1271dbe7-000000","subject":"testing two"},"tags":{"ses:operation":["SendEmail"],"ses:configuration-set":["Testingemails"],"ses:source-ip":["103.105.234.242"],"ses:from-domain":["gmail.com"],"ses:caller-identity":["root"],"ses:outgoing-ip":["76.223.180.17"]}},"delivery":{"timestamp":"2023-07-03T06:58:44.392Z","processingTimeMillis":2909,"recipients":["jayrank@tjcg.in"],"smtpResponse":"250 2.0.0 Ok: queued as 4QvcGC5FxDzNRTDD","reportingMTA":"c180-17.smtp-out.ap-south-1.amazonses.com"}}
+ 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 12:30:23 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{"eventType":"Send","mail":{"timestamp":"2023-07-03T06:58:41.483Z","source":"tjcloudtest@gmail.com","sourceArn":"arn:aws:ses:ap-south-1:379034229131:identity/tjcloudtest@gmail.com","sendingAccountId":"379034229131","messageId":"010901891a8bdecb-3c41f416-36b0-41b4-8b25-59cc1271dbe7-000000","destination":["jayrank@tjcg.in"],"headersTruncated":false,"headers":[{"name":"From","value":"tjcloudtest@gmail.com"},{"name":"To","value":"jayrank@tjcg.in"},{"name":"Subject","value":"testing two"},{"name":"MIME-Version","value":"1.0"},{"name":"Content-Type","value":"multipart/alternative;  boundary=\"----=_Part_90805_1027016912.1688367521487\""}],"commonHeaders":{"from":["tjcloudtest@gmail.com"],"to":["jayrank@tjcg.in"],"messageId":"010901891a8bdecb-3c41f416-36b0-41b4-8b25-59cc1271dbe7-000000","subject":"testing two"},"tags":{"ses:operation":["SendEmail"],"ses:configuration-set":["Testingemails"],"ses:source-ip":["103.105.234.242"],"ses:from-domain":["gmail.com"],"ses:caller-identity":["root"]}},"send":{}}
+ 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 12:30:25 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{"notificationType":"Delivery","mail":{"timestamp":"2023-07-03T06:58:41.483Z","source":"tjcloudtest@gmail.com","sourceArn":"arn:aws:ses:ap-south-1:379034229131:identity/tjcloudtest@gmail.com","sourceIp":"103.105.234.242","callerIdentity":"root","sendingAccountId":"379034229131","messageId":"010901891a8bdecb-3c41f416-36b0-41b4-8b25-59cc1271dbe7-000000","destination":["jayrank@tjcg.in"],"headersTruncated":false,"headers":[{"name":"From","value":"tjcloudtest@gmail.com"},{"name":"To","value":"jayrank@tjcg.in"},{"name":"Subject","value":"testing two"},{"name":"MIME-Version","value":"1.0"},{"name":"Content-Type","value":"multipart/alternative;  boundary=\"----=_Part_90805_1027016912.1688367521487\""}],"commonHeaders":{"from":["tjcloudtest@gmail.com"],"to":["jayrank@tjcg.in"],"subject":"testing two"}},"delivery":{"timestamp":"2023-07-03T06:58:44.392Z","processingTimeMillis":2909,"recipients":["jayrank@tjcg.in"],"smtpResponse":"250 2.0.0 Ok: queued as 4QvcGC5FxDzNRTDD","remoteMtaIp":"172.65.182.103","reportingMTA":"c180-17.smtp-out.ap-south-1.amazonses.com"}} 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 12:30:26 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{"eventType":"Delivery","mail":{"timestamp":"2023-07-03T06:58:41.483Z","source":"tjcloudtest@gmail.com","sourceArn":"arn:aws:ses:ap-south-1:379034229131:identity/tjcloudtest@gmail.com","sendingAccountId":"379034229131","messageId":"010901891a8bdecb-3c41f416-36b0-41b4-8b25-59cc1271dbe7-000000","destination":["jayrank@tjcg.in"],"headersTruncated":false,"headers":[{"name":"From","value":"tjcloudtest@gmail.com"},{"name":"To","value":"jayrank@tjcg.in"},{"name":"Subject","value":"testing two"},{"name":"MIME-Version","value":"1.0"},{"name":"Content-Type","value":"multipart/alternative;  boundary=\"----=_Part_90805_1027016912.1688367521487\""}],"commonHeaders":{"from":["tjcloudtest@gmail.com"],"to":["jayrank@tjcg.in"],"messageId":"010901891a8bdecb-3c41f416-36b0-41b4-8b25-59cc1271dbe7-000000","subject":"testing two"},"tags":{"ses:operation":["SendEmail"],"ses:configuration-set":["Testingemails"],"ses:source-ip":["103.105.234.242"],"ses:from-domain":["gmail.com"],"ses:caller-identity":["root"],"ses:outgoing-ip":["76.223.180.17"]}},"delivery":{"timestamp":"2023-07-03T06:58:44.392Z","processingTimeMillis":2909,"recipients":["jayrank@tjcg.in"],"smtpResponse":"250 2.0.0 Ok: queued as 4QvcGC5FxDzNRTDD","reportingMTA":"c180-17.smtp-out.ap-south-1.amazonses.com"}}
+ 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 12:31:02 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{"eventType":"Open","mail":{"timestamp":"2023-07-03T06:58:41.483Z","source":"tjcloudtest@gmail.com","sendingAccountId":"379034229131","messageId":"010901891a8bdecb-3c41f416-36b0-41b4-8b25-59cc1271dbe7-000000","destination":["jayrank@tjcg.in"],"headersTruncated":false,"headers":[{"name":"From","value":"tjcloudtest@gmail.com"},{"name":"To","value":"jayrank@tjcg.in"},{"name":"Subject","value":"testing two"},{"name":"MIME-Version","value":"1.0"},{"name":"Content-Type","value":"multipart/alternative;  boundary=\"----=_Part_90805_1027016912.1688367521487\""}],"commonHeaders":{"from":["tjcloudtest@gmail.com"],"to":["jayrank@tjcg.in"],"messageId":"010901891a8bdecb-3c41f416-36b0-41b4-8b25-59cc1271dbe7-000000","subject":"testing two"},"tags":{"ses:operation":["SendEmail"],"ses:configuration-set":["Testingemails"],"ses:source-ip":["103.105.234.242"],"ses:from-domain":["gmail.com"],"ses:caller-identity":["root"]}},"open":{"timestamp":"2023-07-03T07:01:03.263Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36","ipAddress":"103.105.234.242"}}
+ 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 12:31:14 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{"eventType":"Send","mail":{"timestamp":"2023-07-03T06:58:41.483Z","source":"tjcloudtest@gmail.com","sourceArn":"arn:aws:ses:ap-south-1:379034229131:identity/tjcloudtest@gmail.com","sendingAccountId":"379034229131","messageId":"010901891a8bdecb-3c41f416-36b0-41b4-8b25-59cc1271dbe7-000000","destination":["jayrank@tjcg.in"],"headersTruncated":false,"headers":[{"name":"From","value":"tjcloudtest@gmail.com"},{"name":"To","value":"jayrank@tjcg.in"},{"name":"Subject","value":"testing two"},{"name":"MIME-Version","value":"1.0"},{"name":"Content-Type","value":"multipart/alternative;  boundary=\"----=_Part_90805_1027016912.1688367521487\""}],"commonHeaders":{"from":["tjcloudtest@gmail.com"],"to":["jayrank@tjcg.in"],"messageId":"010901891a8bdecb-3c41f416-36b0-41b4-8b25-59cc1271dbe7-000000","subject":"testing two"},"tags":{"ses:operation":["SendEmail"],"ses:configuration-set":["Testingemails"],"ses:source-ip":["103.105.234.242"],"ses:from-domain":["gmail.com"],"ses:caller-identity":["root"]}},"send":{}}
+ 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 12:31:16 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{"notificationType":"Delivery","mail":{"timestamp":"2023-07-03T06:58:41.483Z","source":"tjcloudtest@gmail.com","sourceArn":"arn:aws:ses:ap-south-1:379034229131:identity/tjcloudtest@gmail.com","sourceIp":"103.105.234.242","callerIdentity":"root","sendingAccountId":"379034229131","messageId":"010901891a8bdecb-3c41f416-36b0-41b4-8b25-59cc1271dbe7-000000","destination":["jayrank@tjcg.in"],"headersTruncated":false,"headers":[{"name":"From","value":"tjcloudtest@gmail.com"},{"name":"To","value":"jayrank@tjcg.in"},{"name":"Subject","value":"testing two"},{"name":"MIME-Version","value":"1.0"},{"name":"Content-Type","value":"multipart/alternative;  boundary=\"----=_Part_90805_1027016912.1688367521487\""}],"commonHeaders":{"from":["tjcloudtest@gmail.com"],"to":["jayrank@tjcg.in"],"subject":"testing two"}},"delivery":{"timestamp":"2023-07-03T06:58:44.392Z","processingTimeMillis":2909,"recipients":["jayrank@tjcg.in"],"smtpResponse":"250 2.0.0 Ok: queued as 4QvcGC5FxDzNRTDD","remoteMtaIp":"172.65.182.103","reportingMTA":"c180-17.smtp-out.ap-south-1.amazonses.com"}} 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 12:31:17 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{"eventType":"Delivery","mail":{"timestamp":"2023-07-03T06:58:41.483Z","source":"tjcloudtest@gmail.com","sourceArn":"arn:aws:ses:ap-south-1:379034229131:identity/tjcloudtest@gmail.com","sendingAccountId":"379034229131","messageId":"010901891a8bdecb-3c41f416-36b0-41b4-8b25-59cc1271dbe7-000000","destination":["jayrank@tjcg.in"],"headersTruncated":false,"headers":[{"name":"From","value":"tjcloudtest@gmail.com"},{"name":"To","value":"jayrank@tjcg.in"},{"name":"Subject","value":"testing two"},{"name":"MIME-Version","value":"1.0"},{"name":"Content-Type","value":"multipart/alternative;  boundary=\"----=_Part_90805_1027016912.1688367521487\""}],"commonHeaders":{"from":["tjcloudtest@gmail.com"],"to":["jayrank@tjcg.in"],"messageId":"010901891a8bdecb-3c41f416-36b0-41b4-8b25-59cc1271dbe7-000000","subject":"testing two"},"tags":{"ses:operation":["SendEmail"],"ses:configuration-set":["Testingemails"],"ses:source-ip":["103.105.234.242"],"ses:from-domain":["gmail.com"],"ses:caller-identity":["root"],"ses:outgoing-ip":["76.223.180.17"]}},"delivery":{"timestamp":"2023-07-03T06:58:44.392Z","processingTimeMillis":2909,"recipients":["jayrank@tjcg.in"],"smtpResponse":"250 2.0.0 Ok: queued as 4QvcGC5FxDzNRTDD","reportingMTA":"c180-17.smtp-out.ap-south-1.amazonses.com"}}
+ 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 12:31:53 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{"eventType":"Open","mail":{"timestamp":"2023-07-03T06:58:41.483Z","source":"tjcloudtest@gmail.com","sendingAccountId":"379034229131","messageId":"010901891a8bdecb-3c41f416-36b0-41b4-8b25-59cc1271dbe7-000000","destination":["jayrank@tjcg.in"],"headersTruncated":false,"headers":[{"name":"From","value":"tjcloudtest@gmail.com"},{"name":"To","value":"jayrank@tjcg.in"},{"name":"Subject","value":"testing two"},{"name":"MIME-Version","value":"1.0"},{"name":"Content-Type","value":"multipart/alternative;  boundary=\"----=_Part_90805_1027016912.1688367521487\""}],"commonHeaders":{"from":["tjcloudtest@gmail.com"],"to":["jayrank@tjcg.in"],"messageId":"010901891a8bdecb-3c41f416-36b0-41b4-8b25-59cc1271dbe7-000000","subject":"testing two"},"tags":{"ses:operation":["SendEmail"],"ses:configuration-set":["Testingemails"],"ses:source-ip":["103.105.234.242"],"ses:from-domain":["gmail.com"],"ses:caller-identity":["root"]}},"open":{"timestamp":"2023-07-03T07:01:03.263Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36","ipAddress":"103.105.234.242"}}
+ 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 12:32:44 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{"eventType":"Open","mail":{"timestamp":"2023-07-03T06:58:41.483Z","source":"tjcloudtest@gmail.com","sendingAccountId":"379034229131","messageId":"010901891a8bdecb-3c41f416-36b0-41b4-8b25-59cc1271dbe7-000000","destination":["jayrank@tjcg.in"],"headersTruncated":false,"headers":[{"name":"From","value":"tjcloudtest@gmail.com"},{"name":"To","value":"jayrank@tjcg.in"},{"name":"Subject","value":"testing two"},{"name":"MIME-Version","value":"1.0"},{"name":"Content-Type","value":"multipart/alternative;  boundary=\"----=_Part_90805_1027016912.1688367521487\""}],"commonHeaders":{"from":["tjcloudtest@gmail.com"],"to":["jayrank@tjcg.in"],"messageId":"010901891a8bdecb-3c41f416-36b0-41b4-8b25-59cc1271dbe7-000000","subject":"testing two"},"tags":{"ses:operation":["SendEmail"],"ses:configuration-set":["Testingemails"],"ses:source-ip":["103.105.234.242"],"ses:from-domain":["gmail.com"],"ses:caller-identity":["root"]}},"open":{"timestamp":"2023-07-03T07:01:03.263Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36","ipAddress":"103.105.234.242"}}
+ 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 12:33:35 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{"eventType":"Open","mail":{"timestamp":"2023-07-03T06:58:41.483Z","source":"tjcloudtest@gmail.com","sendingAccountId":"379034229131","messageId":"010901891a8bdecb-3c41f416-36b0-41b4-8b25-59cc1271dbe7-000000","destination":["jayrank@tjcg.in"],"headersTruncated":false,"headers":[{"name":"From","value":"tjcloudtest@gmail.com"},{"name":"To","value":"jayrank@tjcg.in"},{"name":"Subject","value":"testing two"},{"name":"MIME-Version","value":"1.0"},{"name":"Content-Type","value":"multipart/alternative;  boundary=\"----=_Part_90805_1027016912.1688367521487\""}],"commonHeaders":{"from":["tjcloudtest@gmail.com"],"to":["jayrank@tjcg.in"],"messageId":"010901891a8bdecb-3c41f416-36b0-41b4-8b25-59cc1271dbe7-000000","subject":"testing two"},"tags":{"ses:operation":["SendEmail"],"ses:configuration-set":["Testingemails"],"ses:source-ip":["103.105.234.242"],"ses:from-domain":["gmail.com"],"ses:caller-identity":["root"]}},"open":{"timestamp":"2023-07-03T07:01:03.263Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36","ipAddress":"103.105.234.242"}}
+ 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 14:31:51 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{"eventType":"Send","mail":{"timestamp":"2023-07-03T09:01:51.771Z","source":"jayrank@tjcg.in","sourceArn":"arn:aws:ses:ap-south-1:379034229131:identity/jayrank@tjcg.in","sendingAccountId":"379034229131","messageId":"010901891afca31b-656bd6c0-f668-4b86-99b2-9778aa5665a6-000000","destination":["jayrank@tjcg.in"],"headersTruncated":false,"headers":[{"name":"Content-Type","value":"text/html; charset=utf-8"},{"name":"From","value":"jayrank@tjcg.in"},{"name":"To","value":"jayrank@tjcg.in"},{"name":"Subject","value":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},{"name":"Message-ID","value":"<6f515f9c-0b6a-0773-44ae-c46dd88856d4@tjcg.in>"},{"name":"Content-Transfer-Encoding","value":"quoted-printable"},{"name":"Date","value":"Mon, 03 Jul 2023 09:01:50 +0000"},{"name":"MIME-Version","value":"1.0"}],"commonHeaders":{"from":["jayrank@tjcg.in"],"date":"Mon, 03 Jul 2023 09:01:50 +0000","to":["jayrank@tjcg.in"],"messageId":"010901891afca31b-656bd6c0-f668-4b86-99b2-9778aa5665a6-000000","subject":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},"tags":{"ses:operation":["SendRawEmail"],"ses:configuration-set":["Testingemails"],"ses:source-ip":["103.105.234.242"],"ses:from-domain":["tjcg.in"],"ses:caller-identity":["root"]}},"send":{}}
+ 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 14:31:55 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{"eventType":"Delivery","mail":{"timestamp":"2023-07-03T09:01:51.771Z","source":"jayrank@tjcg.in","sourceArn":"arn:aws:ses:ap-south-1:379034229131:identity/jayrank@tjcg.in","sendingAccountId":"379034229131","messageId":"010901891afca31b-656bd6c0-f668-4b86-99b2-9778aa5665a6-000000","destination":["jayrank@tjcg.in"],"headersTruncated":false,"headers":[{"name":"Content-Type","value":"text/html; charset=utf-8"},{"name":"From","value":"jayrank@tjcg.in"},{"name":"To","value":"jayrank@tjcg.in"},{"name":"Subject","value":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},{"name":"Message-ID","value":"<6f515f9c-0b6a-0773-44ae-c46dd88856d4@tjcg.in>"},{"name":"Content-Transfer-Encoding","value":"quoted-printable"},{"name":"Date","value":"Mon, 03 Jul 2023 09:01:50 +0000"},{"name":"MIME-Version","value":"1.0"}],"commonHeaders":{"from":["jayrank@tjcg.in"],"date":"Mon, 03 Jul 2023 09:01:50 +0000","to":["jayrank@tjcg.in"],"messageId":"010901891afca31b-656bd6c0-f668-4b86-99b2-9778aa5665a6-000000","subject":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},"tags":{"ses:operation":["SendRawEmail"],"ses:configuration-set":["Testingemails"],"ses:source-ip":["103.105.234.242"],"ses:from-domain":["tjcg.in"],"ses:caller-identity":["root"],"ses:outgoing-ip":["76.223.180.17"]}},"delivery":{"timestamp":"2023-07-03T09:01:55.740Z","processingTimeMillis":3969,"recipients":["jayrank@tjcg.in"],"smtpResponse":"250 2.0.0 Ok: queued as 4Qvg0L14VszJjkcg","reportingMTA":"c180-17.smtp-out.ap-south-1.amazonses.com"}}
+ 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 14:32:42 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{"eventType":"Send","mail":{"timestamp":"2023-07-03T09:01:51.771Z","source":"jayrank@tjcg.in","sourceArn":"arn:aws:ses:ap-south-1:379034229131:identity/jayrank@tjcg.in","sendingAccountId":"379034229131","messageId":"010901891afca31b-656bd6c0-f668-4b86-99b2-9778aa5665a6-000000","destination":["jayrank@tjcg.in"],"headersTruncated":false,"headers":[{"name":"Content-Type","value":"text/html; charset=utf-8"},{"name":"From","value":"jayrank@tjcg.in"},{"name":"To","value":"jayrank@tjcg.in"},{"name":"Subject","value":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},{"name":"Message-ID","value":"<6f515f9c-0b6a-0773-44ae-c46dd88856d4@tjcg.in>"},{"name":"Content-Transfer-Encoding","value":"quoted-printable"},{"name":"Date","value":"Mon, 03 Jul 2023 09:01:50 +0000"},{"name":"MIME-Version","value":"1.0"}],"commonHeaders":{"from":["jayrank@tjcg.in"],"date":"Mon, 03 Jul 2023 09:01:50 +0000","to":["jayrank@tjcg.in"],"messageId":"010901891afca31b-656bd6c0-f668-4b86-99b2-9778aa5665a6-000000","subject":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},"tags":{"ses:operation":["SendRawEmail"],"ses:configuration-set":["Testingemails"],"ses:source-ip":["103.105.234.242"],"ses:from-domain":["tjcg.in"],"ses:caller-identity":["root"]}},"send":{}}
+ 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 14:32:46 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{"eventType":"Delivery","mail":{"timestamp":"2023-07-03T09:01:51.771Z","source":"jayrank@tjcg.in","sourceArn":"arn:aws:ses:ap-south-1:379034229131:identity/jayrank@tjcg.in","sendingAccountId":"379034229131","messageId":"010901891afca31b-656bd6c0-f668-4b86-99b2-9778aa5665a6-000000","destination":["jayrank@tjcg.in"],"headersTruncated":false,"headers":[{"name":"Content-Type","value":"text/html; charset=utf-8"},{"name":"From","value":"jayrank@tjcg.in"},{"name":"To","value":"jayrank@tjcg.in"},{"name":"Subject","value":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},{"name":"Message-ID","value":"<6f515f9c-0b6a-0773-44ae-c46dd88856d4@tjcg.in>"},{"name":"Content-Transfer-Encoding","value":"quoted-printable"},{"name":"Date","value":"Mon, 03 Jul 2023 09:01:50 +0000"},{"name":"MIME-Version","value":"1.0"}],"commonHeaders":{"from":["jayrank@tjcg.in"],"date":"Mon, 03 Jul 2023 09:01:50 +0000","to":["jayrank@tjcg.in"],"messageId":"010901891afca31b-656bd6c0-f668-4b86-99b2-9778aa5665a6-000000","subject":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},"tags":{"ses:operation":["SendRawEmail"],"ses:configuration-set":["Testingemails"],"ses:source-ip":["103.105.234.242"],"ses:from-domain":["tjcg.in"],"ses:caller-identity":["root"],"ses:outgoing-ip":["76.223.180.17"]}},"delivery":{"timestamp":"2023-07-03T09:01:55.740Z","processingTimeMillis":3969,"recipients":["jayrank@tjcg.in"],"smtpResponse":"250 2.0.0 Ok: queued as 4Qvg0L14VszJjkcg","reportingMTA":"c180-17.smtp-out.ap-south-1.amazonses.com"}}
+ 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 14:33:33 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{"eventType":"Send","mail":{"timestamp":"2023-07-03T09:01:51.771Z","source":"jayrank@tjcg.in","sourceArn":"arn:aws:ses:ap-south-1:379034229131:identity/jayrank@tjcg.in","sendingAccountId":"379034229131","messageId":"010901891afca31b-656bd6c0-f668-4b86-99b2-9778aa5665a6-000000","destination":["jayrank@tjcg.in"],"headersTruncated":false,"headers":[{"name":"Content-Type","value":"text/html; charset=utf-8"},{"name":"From","value":"jayrank@tjcg.in"},{"name":"To","value":"jayrank@tjcg.in"},{"name":"Subject","value":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},{"name":"Message-ID","value":"<6f515f9c-0b6a-0773-44ae-c46dd88856d4@tjcg.in>"},{"name":"Content-Transfer-Encoding","value":"quoted-printable"},{"name":"Date","value":"Mon, 03 Jul 2023 09:01:50 +0000"},{"name":"MIME-Version","value":"1.0"}],"commonHeaders":{"from":["jayrank@tjcg.in"],"date":"Mon, 03 Jul 2023 09:01:50 +0000","to":["jayrank@tjcg.in"],"messageId":"010901891afca31b-656bd6c0-f668-4b86-99b2-9778aa5665a6-000000","subject":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},"tags":{"ses:operation":["SendRawEmail"],"ses:configuration-set":["Testingemails"],"ses:source-ip":["103.105.234.242"],"ses:from-domain":["tjcg.in"],"ses:caller-identity":["root"]}},"send":{}}
+ 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 14:33:37 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{"eventType":"Delivery","mail":{"timestamp":"2023-07-03T09:01:51.771Z","source":"jayrank@tjcg.in","sourceArn":"arn:aws:ses:ap-south-1:379034229131:identity/jayrank@tjcg.in","sendingAccountId":"379034229131","messageId":"010901891afca31b-656bd6c0-f668-4b86-99b2-9778aa5665a6-000000","destination":["jayrank@tjcg.in"],"headersTruncated":false,"headers":[{"name":"Content-Type","value":"text/html; charset=utf-8"},{"name":"From","value":"jayrank@tjcg.in"},{"name":"To","value":"jayrank@tjcg.in"},{"name":"Subject","value":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},{"name":"Message-ID","value":"<6f515f9c-0b6a-0773-44ae-c46dd88856d4@tjcg.in>"},{"name":"Content-Transfer-Encoding","value":"quoted-printable"},{"name":"Date","value":"Mon, 03 Jul 2023 09:01:50 +0000"},{"name":"MIME-Version","value":"1.0"}],"commonHeaders":{"from":["jayrank@tjcg.in"],"date":"Mon, 03 Jul 2023 09:01:50 +0000","to":["jayrank@tjcg.in"],"messageId":"010901891afca31b-656bd6c0-f668-4b86-99b2-9778aa5665a6-000000","subject":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},"tags":{"ses:operation":["SendRawEmail"],"ses:configuration-set":["Testingemails"],"ses:source-ip":["103.105.234.242"],"ses:from-domain":["tjcg.in"],"ses:caller-identity":["root"],"ses:outgoing-ip":["76.223.180.17"]}},"delivery":{"timestamp":"2023-07-03T09:01:55.740Z","processingTimeMillis":3969,"recipients":["jayrank@tjcg.in"],"smtpResponse":"250 2.0.0 Ok: queued as 4Qvg0L14VszJjkcg","reportingMTA":"c180-17.smtp-out.ap-south-1.amazonses.com"}}
+ 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 14:34:24 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{"eventType":"Send","mail":{"timestamp":"2023-07-03T09:01:51.771Z","source":"jayrank@tjcg.in","sourceArn":"arn:aws:ses:ap-south-1:379034229131:identity/jayrank@tjcg.in","sendingAccountId":"379034229131","messageId":"010901891afca31b-656bd6c0-f668-4b86-99b2-9778aa5665a6-000000","destination":["jayrank@tjcg.in"],"headersTruncated":false,"headers":[{"name":"Content-Type","value":"text/html; charset=utf-8"},{"name":"From","value":"jayrank@tjcg.in"},{"name":"To","value":"jayrank@tjcg.in"},{"name":"Subject","value":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},{"name":"Message-ID","value":"<6f515f9c-0b6a-0773-44ae-c46dd88856d4@tjcg.in>"},{"name":"Content-Transfer-Encoding","value":"quoted-printable"},{"name":"Date","value":"Mon, 03 Jul 2023 09:01:50 +0000"},{"name":"MIME-Version","value":"1.0"}],"commonHeaders":{"from":["jayrank@tjcg.in"],"date":"Mon, 03 Jul 2023 09:01:50 +0000","to":["jayrank@tjcg.in"],"messageId":"010901891afca31b-656bd6c0-f668-4b86-99b2-9778aa5665a6-000000","subject":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},"tags":{"ses:operation":["SendRawEmail"],"ses:configuration-set":["Testingemails"],"ses:source-ip":["103.105.234.242"],"ses:from-domain":["tjcg.in"],"ses:caller-identity":["root"]}},"send":{}}
+ 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 14:34:28 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{"eventType":"Delivery","mail":{"timestamp":"2023-07-03T09:01:51.771Z","source":"jayrank@tjcg.in","sourceArn":"arn:aws:ses:ap-south-1:379034229131:identity/jayrank@tjcg.in","sendingAccountId":"379034229131","messageId":"010901891afca31b-656bd6c0-f668-4b86-99b2-9778aa5665a6-000000","destination":["jayrank@tjcg.in"],"headersTruncated":false,"headers":[{"name":"Content-Type","value":"text/html; charset=utf-8"},{"name":"From","value":"jayrank@tjcg.in"},{"name":"To","value":"jayrank@tjcg.in"},{"name":"Subject","value":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},{"name":"Message-ID","value":"<6f515f9c-0b6a-0773-44ae-c46dd88856d4@tjcg.in>"},{"name":"Content-Transfer-Encoding","value":"quoted-printable"},{"name":"Date","value":"Mon, 03 Jul 2023 09:01:50 +0000"},{"name":"MIME-Version","value":"1.0"}],"commonHeaders":{"from":["jayrank@tjcg.in"],"date":"Mon, 03 Jul 2023 09:01:50 +0000","to":["jayrank@tjcg.in"],"messageId":"010901891afca31b-656bd6c0-f668-4b86-99b2-9778aa5665a6-000000","subject":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},"tags":{"ses:operation":["SendRawEmail"],"ses:configuration-set":["Testingemails"],"ses:source-ip":["103.105.234.242"],"ses:from-domain":["tjcg.in"],"ses:caller-identity":["root"],"ses:outgoing-ip":["76.223.180.17"]}},"delivery":{"timestamp":"2023-07-03T09:01:55.740Z","processingTimeMillis":3969,"recipients":["jayrank@tjcg.in"],"smtpResponse":"250 2.0.0 Ok: queued as 4Qvg0L14VszJjkcg","reportingMTA":"c180-17.smtp-out.ap-south-1.amazonses.com"}}
+ 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 15:51:43 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{"eventType":"Send","mail":{"timestamp":"2023-07-03T10:21:44.447Z","source":"jayrank@tjcg.in","sourceArn":"arn:aws:ses:ap-south-1:379034229131:identity/jayrank@tjcg.in","sendingAccountId":"379034229131","messageId":"010901891b45c47f-e7fe613f-1e89-4241-b0fa-370ae289a440-000000","destination":["jayrank@tjcg.in"],"headersTruncated":false,"headers":[{"name":"Content-Type","value":"text/html; charset=utf-8"},{"name":"From","value":"jayrank@tjcg.in"},{"name":"To","value":"jayrank@tjcg.in"},{"name":"Subject","value":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},{"name":"Message-ID","value":"<c075c2e8-66f4-5fad-0cb0-a56c0ea9e2a6@tjcg.in>"},{"name":"Content-Transfer-Encoding","value":"quoted-printable"},{"name":"Date","value":"Mon, 03 Jul 2023 10:21:43 +0000"},{"name":"MIME-Version","value":"1.0"}],"commonHeaders":{"from":["jayrank@tjcg.in"],"date":"Mon, 03 Jul 2023 10:21:43 +0000","to":["jayrank@tjcg.in"],"messageId":"010901891b45c47f-e7fe613f-1e89-4241-b0fa-370ae289a440-000000","subject":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},"tags":{"ses:operation":["SendRawEmail"],"ses:configuration-set":["Testingemails"],"ses:source-ip":["103.105.234.242"],"ses:from-domain":["tjcg.in"],"ses:caller-identity":["root"]}},"send":{}}
+ 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 15:51:47 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{"eventType":"Delivery","mail":{"timestamp":"2023-07-03T10:21:44.447Z","source":"jayrank@tjcg.in","sourceArn":"arn:aws:ses:ap-south-1:379034229131:identity/jayrank@tjcg.in","sendingAccountId":"379034229131","messageId":"010901891b45c47f-e7fe613f-1e89-4241-b0fa-370ae289a440-000000","destination":["jayrank@tjcg.in"],"headersTruncated":false,"headers":[{"name":"Content-Type","value":"text/html; charset=utf-8"},{"name":"From","value":"jayrank@tjcg.in"},{"name":"To","value":"jayrank@tjcg.in"},{"name":"Subject","value":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},{"name":"Message-ID","value":"<c075c2e8-66f4-5fad-0cb0-a56c0ea9e2a6@tjcg.in>"},{"name":"Content-Transfer-Encoding","value":"quoted-printable"},{"name":"Date","value":"Mon, 03 Jul 2023 10:21:43 +0000"},{"name":"MIME-Version","value":"1.0"}],"commonHeaders":{"from":["jayrank@tjcg.in"],"date":"Mon, 03 Jul 2023 10:21:43 +0000","to":["jayrank@tjcg.in"],"messageId":"010901891b45c47f-e7fe613f-1e89-4241-b0fa-370ae289a440-000000","subject":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},"tags":{"ses:operation":["SendRawEmail"],"ses:configuration-set":["Testingemails"],"ses:source-ip":["103.105.234.242"],"ses:from-domain":["tjcg.in"],"ses:caller-identity":["root"],"ses:outgoing-ip":["76.223.180.15"]}},"delivery":{"timestamp":"2023-07-03T10:21:47.979Z","processingTimeMillis":3532,"recipients":["jayrank@tjcg.in"],"smtpResponse":"250 2.0.0 Ok: queued as 4QvhmV3G73zKfC9r","reportingMTA":"c180-15.smtp-out.ap-south-1.amazonses.com"}}
+ 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 15:52:35 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{"eventType":"Send","mail":{"timestamp":"2023-07-03T10:21:44.447Z","source":"jayrank@tjcg.in","sourceArn":"arn:aws:ses:ap-south-1:379034229131:identity/jayrank@tjcg.in","sendingAccountId":"379034229131","messageId":"010901891b45c47f-e7fe613f-1e89-4241-b0fa-370ae289a440-000000","destination":["jayrank@tjcg.in"],"headersTruncated":false,"headers":[{"name":"Content-Type","value":"text/html; charset=utf-8"},{"name":"From","value":"jayrank@tjcg.in"},{"name":"To","value":"jayrank@tjcg.in"},{"name":"Subject","value":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},{"name":"Message-ID","value":"<c075c2e8-66f4-5fad-0cb0-a56c0ea9e2a6@tjcg.in>"},{"name":"Content-Transfer-Encoding","value":"quoted-printable"},{"name":"Date","value":"Mon, 03 Jul 2023 10:21:43 +0000"},{"name":"MIME-Version","value":"1.0"}],"commonHeaders":{"from":["jayrank@tjcg.in"],"date":"Mon, 03 Jul 2023 10:21:43 +0000","to":["jayrank@tjcg.in"],"messageId":"010901891b45c47f-e7fe613f-1e89-4241-b0fa-370ae289a440-000000","subject":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},"tags":{"ses:operation":["SendRawEmail"],"ses:configuration-set":["Testingemails"],"ses:source-ip":["103.105.234.242"],"ses:from-domain":["tjcg.in"],"ses:caller-identity":["root"]}},"send":{}}
+ 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 15:52:38 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{"eventType":"Delivery","mail":{"timestamp":"2023-07-03T10:21:44.447Z","source":"jayrank@tjcg.in","sourceArn":"arn:aws:ses:ap-south-1:379034229131:identity/jayrank@tjcg.in","sendingAccountId":"379034229131","messageId":"010901891b45c47f-e7fe613f-1e89-4241-b0fa-370ae289a440-000000","destination":["jayrank@tjcg.in"],"headersTruncated":false,"headers":[{"name":"Content-Type","value":"text/html; charset=utf-8"},{"name":"From","value":"jayrank@tjcg.in"},{"name":"To","value":"jayrank@tjcg.in"},{"name":"Subject","value":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},{"name":"Message-ID","value":"<c075c2e8-66f4-5fad-0cb0-a56c0ea9e2a6@tjcg.in>"},{"name":"Content-Transfer-Encoding","value":"quoted-printable"},{"name":"Date","value":"Mon, 03 Jul 2023 10:21:43 +0000"},{"name":"MIME-Version","value":"1.0"}],"commonHeaders":{"from":["jayrank@tjcg.in"],"date":"Mon, 03 Jul 2023 10:21:43 +0000","to":["jayrank@tjcg.in"],"messageId":"010901891b45c47f-e7fe613f-1e89-4241-b0fa-370ae289a440-000000","subject":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},"tags":{"ses:operation":["SendRawEmail"],"ses:configuration-set":["Testingemails"],"ses:source-ip":["103.105.234.242"],"ses:from-domain":["tjcg.in"],"ses:caller-identity":["root"],"ses:outgoing-ip":["76.223.180.15"]}},"delivery":{"timestamp":"2023-07-03T10:21:47.979Z","processingTimeMillis":3532,"recipients":["jayrank@tjcg.in"],"smtpResponse":"250 2.0.0 Ok: queued as 4QvhmV3G73zKfC9r","reportingMTA":"c180-15.smtp-out.ap-south-1.amazonses.com"}}
+ 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 15:53:26 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{"eventType":"Send","mail":{"timestamp":"2023-07-03T10:21:44.447Z","source":"jayrank@tjcg.in","sourceArn":"arn:aws:ses:ap-south-1:379034229131:identity/jayrank@tjcg.in","sendingAccountId":"379034229131","messageId":"010901891b45c47f-e7fe613f-1e89-4241-b0fa-370ae289a440-000000","destination":["jayrank@tjcg.in"],"headersTruncated":false,"headers":[{"name":"Content-Type","value":"text/html; charset=utf-8"},{"name":"From","value":"jayrank@tjcg.in"},{"name":"To","value":"jayrank@tjcg.in"},{"name":"Subject","value":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},{"name":"Message-ID","value":"<c075c2e8-66f4-5fad-0cb0-a56c0ea9e2a6@tjcg.in>"},{"name":"Content-Transfer-Encoding","value":"quoted-printable"},{"name":"Date","value":"Mon, 03 Jul 2023 10:21:43 +0000"},{"name":"MIME-Version","value":"1.0"}],"commonHeaders":{"from":["jayrank@tjcg.in"],"date":"Mon, 03 Jul 2023 10:21:43 +0000","to":["jayrank@tjcg.in"],"messageId":"010901891b45c47f-e7fe613f-1e89-4241-b0fa-370ae289a440-000000","subject":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},"tags":{"ses:operation":["SendRawEmail"],"ses:configuration-set":["Testingemails"],"ses:source-ip":["103.105.234.242"],"ses:from-domain":["tjcg.in"],"ses:caller-identity":["root"]}},"send":{}}
+ 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 15:53:29 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{"eventType":"Delivery","mail":{"timestamp":"2023-07-03T10:21:44.447Z","source":"jayrank@tjcg.in","sourceArn":"arn:aws:ses:ap-south-1:379034229131:identity/jayrank@tjcg.in","sendingAccountId":"379034229131","messageId":"010901891b45c47f-e7fe613f-1e89-4241-b0fa-370ae289a440-000000","destination":["jayrank@tjcg.in"],"headersTruncated":false,"headers":[{"name":"Content-Type","value":"text/html; charset=utf-8"},{"name":"From","value":"jayrank@tjcg.in"},{"name":"To","value":"jayrank@tjcg.in"},{"name":"Subject","value":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},{"name":"Message-ID","value":"<c075c2e8-66f4-5fad-0cb0-a56c0ea9e2a6@tjcg.in>"},{"name":"Content-Transfer-Encoding","value":"quoted-printable"},{"name":"Date","value":"Mon, 03 Jul 2023 10:21:43 +0000"},{"name":"MIME-Version","value":"1.0"}],"commonHeaders":{"from":["jayrank@tjcg.in"],"date":"Mon, 03 Jul 2023 10:21:43 +0000","to":["jayrank@tjcg.in"],"messageId":"010901891b45c47f-e7fe613f-1e89-4241-b0fa-370ae289a440-000000","subject":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},"tags":{"ses:operation":["SendRawEmail"],"ses:configuration-set":["Testingemails"],"ses:source-ip":["103.105.234.242"],"ses:from-domain":["tjcg.in"],"ses:caller-identity":["root"],"ses:outgoing-ip":["76.223.180.15"]}},"delivery":{"timestamp":"2023-07-03T10:21:47.979Z","processingTimeMillis":3532,"recipients":["jayrank@tjcg.in"],"smtpResponse":"250 2.0.0 Ok: queued as 4QvhmV3G73zKfC9r","reportingMTA":"c180-15.smtp-out.ap-south-1.amazonses.com"}}
+ 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 15:54:17 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{"eventType":"Send","mail":{"timestamp":"2023-07-03T10:21:44.447Z","source":"jayrank@tjcg.in","sourceArn":"arn:aws:ses:ap-south-1:379034229131:identity/jayrank@tjcg.in","sendingAccountId":"379034229131","messageId":"010901891b45c47f-e7fe613f-1e89-4241-b0fa-370ae289a440-000000","destination":["jayrank@tjcg.in"],"headersTruncated":false,"headers":[{"name":"Content-Type","value":"text/html; charset=utf-8"},{"name":"From","value":"jayrank@tjcg.in"},{"name":"To","value":"jayrank@tjcg.in"},{"name":"Subject","value":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},{"name":"Message-ID","value":"<c075c2e8-66f4-5fad-0cb0-a56c0ea9e2a6@tjcg.in>"},{"name":"Content-Transfer-Encoding","value":"quoted-printable"},{"name":"Date","value":"Mon, 03 Jul 2023 10:21:43 +0000"},{"name":"MIME-Version","value":"1.0"}],"commonHeaders":{"from":["jayrank@tjcg.in"],"date":"Mon, 03 Jul 2023 10:21:43 +0000","to":["jayrank@tjcg.in"],"messageId":"010901891b45c47f-e7fe613f-1e89-4241-b0fa-370ae289a440-000000","subject":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},"tags":{"ses:operation":["SendRawEmail"],"ses:configuration-set":["Testingemails"],"ses:source-ip":["103.105.234.242"],"ses:from-domain":["tjcg.in"],"ses:caller-identity":["root"]}},"send":{}}
+ 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 15:54:20 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{"eventType":"Delivery","mail":{"timestamp":"2023-07-03T10:21:44.447Z","source":"jayrank@tjcg.in","sourceArn":"arn:aws:ses:ap-south-1:379034229131:identity/jayrank@tjcg.in","sendingAccountId":"379034229131","messageId":"010901891b45c47f-e7fe613f-1e89-4241-b0fa-370ae289a440-000000","destination":["jayrank@tjcg.in"],"headersTruncated":false,"headers":[{"name":"Content-Type","value":"text/html; charset=utf-8"},{"name":"From","value":"jayrank@tjcg.in"},{"name":"To","value":"jayrank@tjcg.in"},{"name":"Subject","value":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},{"name":"Message-ID","value":"<c075c2e8-66f4-5fad-0cb0-a56c0ea9e2a6@tjcg.in>"},{"name":"Content-Transfer-Encoding","value":"quoted-printable"},{"name":"Date","value":"Mon, 03 Jul 2023 10:21:43 +0000"},{"name":"MIME-Version","value":"1.0"}],"commonHeaders":{"from":["jayrank@tjcg.in"],"date":"Mon, 03 Jul 2023 10:21:43 +0000","to":["jayrank@tjcg.in"],"messageId":"010901891b45c47f-e7fe613f-1e89-4241-b0fa-370ae289a440-000000","subject":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},"tags":{"ses:operation":["SendRawEmail"],"ses:configuration-set":["Testingemails"],"ses:source-ip":["103.105.234.242"],"ses:from-domain":["tjcg.in"],"ses:caller-identity":["root"],"ses:outgoing-ip":["76.223.180.15"]}},"delivery":{"timestamp":"2023-07-03T10:21:47.979Z","processingTimeMillis":3532,"recipients":["jayrank@tjcg.in"],"smtpResponse":"250 2.0.0 Ok: queued as 4QvhmV3G73zKfC9r","reportingMTA":"c180-15.smtp-out.ap-south-1.amazonses.com"}}
+ 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 15:58:08 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{"eventType":"Send","mail":{"timestamp":"2023-07-03T10:28:09.378Z","source":"jayrank@tjcg.in","sourceArn":"arn:aws:ses:ap-south-1:379034229131:identity/jayrank@tjcg.in","sendingAccountId":"379034229131","messageId":"010901891b4ba422-fc014326-be13-4e0b-ada7-2b5f647b9981-000000","destination":["jayrank@tjcg.in"],"headersTruncated":false,"headers":[{"name":"Content-Type","value":"text/html; charset=utf-8"},{"name":"From","value":"jayrank@tjcg.in"},{"name":"To","value":"jayrank@tjcg.in"},{"name":"Subject","value":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},{"name":"Message-ID","value":"<3b272a57-5c5a-76db-b7b5-0641eb0621a7@tjcg.in>"},{"name":"Content-Transfer-Encoding","value":"quoted-printable"},{"name":"Date","value":"Mon, 03 Jul 2023 10:28:08 +0000"},{"name":"MIME-Version","value":"1.0"}],"commonHeaders":{"from":["jayrank@tjcg.in"],"date":"Mon, 03 Jul 2023 10:28:08 +0000","to":["jayrank@tjcg.in"],"messageId":"010901891b4ba422-fc014326-be13-4e0b-ada7-2b5f647b9981-000000","subject":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},"tags":{"ses:operation":["SendRawEmail"],"ses:configuration-set":["Testingemails"],"ses:source-ip":["103.105.234.242"],"ses:from-domain":["tjcg.in"],"ses:caller-identity":["root"]}},"send":{}}
+ 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 15:58:12 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{"eventType":"Delivery","mail":{"timestamp":"2023-07-03T10:28:09.378Z","source":"jayrank@tjcg.in","sourceArn":"arn:aws:ses:ap-south-1:379034229131:identity/jayrank@tjcg.in","sendingAccountId":"379034229131","messageId":"010901891b4ba422-fc014326-be13-4e0b-ada7-2b5f647b9981-000000","destination":["jayrank@tjcg.in"],"headersTruncated":false,"headers":[{"name":"Content-Type","value":"text/html; charset=utf-8"},{"name":"From","value":"jayrank@tjcg.in"},{"name":"To","value":"jayrank@tjcg.in"},{"name":"Subject","value":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},{"name":"Message-ID","value":"<3b272a57-5c5a-76db-b7b5-0641eb0621a7@tjcg.in>"},{"name":"Content-Transfer-Encoding","value":"quoted-printable"},{"name":"Date","value":"Mon, 03 Jul 2023 10:28:08 +0000"},{"name":"MIME-Version","value":"1.0"}],"commonHeaders":{"from":["jayrank@tjcg.in"],"date":"Mon, 03 Jul 2023 10:28:08 +0000","to":["jayrank@tjcg.in"],"messageId":"010901891b4ba422-fc014326-be13-4e0b-ada7-2b5f647b9981-000000","subject":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},"tags":{"ses:operation":["SendRawEmail"],"ses:configuration-set":["Testingemails"],"ses:source-ip":["103.105.234.242"],"ses:from-domain":["tjcg.in"],"ses:caller-identity":["root"],"ses:outgoing-ip":["76.223.180.18"]}},"delivery":{"timestamp":"2023-07-03T10:28:13.091Z","processingTimeMillis":3713,"recipients":["jayrank@tjcg.in"],"smtpResponse":"250 2.0.0 Ok: queued as 4Qvhvv41h0z9HJW1","reportingMTA":"c180-18.smtp-out.ap-south-1.amazonses.com"}}
+ 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 15:58:59 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{"eventType":"Send","mail":{"timestamp":"2023-07-03T10:28:09.378Z","source":"jayrank@tjcg.in","sourceArn":"arn:aws:ses:ap-south-1:379034229131:identity/jayrank@tjcg.in","sendingAccountId":"379034229131","messageId":"010901891b4ba422-fc014326-be13-4e0b-ada7-2b5f647b9981-000000","destination":["jayrank@tjcg.in"],"headersTruncated":false,"headers":[{"name":"Content-Type","value":"text/html; charset=utf-8"},{"name":"From","value":"jayrank@tjcg.in"},{"name":"To","value":"jayrank@tjcg.in"},{"name":"Subject","value":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},{"name":"Message-ID","value":"<3b272a57-5c5a-76db-b7b5-0641eb0621a7@tjcg.in>"},{"name":"Content-Transfer-Encoding","value":"quoted-printable"},{"name":"Date","value":"Mon, 03 Jul 2023 10:28:08 +0000"},{"name":"MIME-Version","value":"1.0"}],"commonHeaders":{"from":["jayrank@tjcg.in"],"date":"Mon, 03 Jul 2023 10:28:08 +0000","to":["jayrank@tjcg.in"],"messageId":"010901891b4ba422-fc014326-be13-4e0b-ada7-2b5f647b9981-000000","subject":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},"tags":{"ses:operation":["SendRawEmail"],"ses:configuration-set":["Testingemails"],"ses:source-ip":["103.105.234.242"],"ses:from-domain":["tjcg.in"],"ses:caller-identity":["root"]}},"send":{}}
+ 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 15:59:03 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{"eventType":"Delivery","mail":{"timestamp":"2023-07-03T10:28:09.378Z","source":"jayrank@tjcg.in","sourceArn":"arn:aws:ses:ap-south-1:379034229131:identity/jayrank@tjcg.in","sendingAccountId":"379034229131","messageId":"010901891b4ba422-fc014326-be13-4e0b-ada7-2b5f647b9981-000000","destination":["jayrank@tjcg.in"],"headersTruncated":false,"headers":[{"name":"Content-Type","value":"text/html; charset=utf-8"},{"name":"From","value":"jayrank@tjcg.in"},{"name":"To","value":"jayrank@tjcg.in"},{"name":"Subject","value":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},{"name":"Message-ID","value":"<3b272a57-5c5a-76db-b7b5-0641eb0621a7@tjcg.in>"},{"name":"Content-Transfer-Encoding","value":"quoted-printable"},{"name":"Date","value":"Mon, 03 Jul 2023 10:28:08 +0000"},{"name":"MIME-Version","value":"1.0"}],"commonHeaders":{"from":["jayrank@tjcg.in"],"date":"Mon, 03 Jul 2023 10:28:08 +0000","to":["jayrank@tjcg.in"],"messageId":"010901891b4ba422-fc014326-be13-4e0b-ada7-2b5f647b9981-000000","subject":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},"tags":{"ses:operation":["SendRawEmail"],"ses:configuration-set":["Testingemails"],"ses:source-ip":["103.105.234.242"],"ses:from-domain":["tjcg.in"],"ses:caller-identity":["root"],"ses:outgoing-ip":["76.223.180.18"]}},"delivery":{"timestamp":"2023-07-03T10:28:13.091Z","processingTimeMillis":3713,"recipients":["jayrank@tjcg.in"],"smtpResponse":"250 2.0.0 Ok: queued as 4Qvhvv41h0z9HJW1","reportingMTA":"c180-18.smtp-out.ap-south-1.amazonses.com"}}
+ 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 15:59:50 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{"eventType":"Send","mail":{"timestamp":"2023-07-03T10:28:09.378Z","source":"jayrank@tjcg.in","sourceArn":"arn:aws:ses:ap-south-1:379034229131:identity/jayrank@tjcg.in","sendingAccountId":"379034229131","messageId":"010901891b4ba422-fc014326-be13-4e0b-ada7-2b5f647b9981-000000","destination":["jayrank@tjcg.in"],"headersTruncated":false,"headers":[{"name":"Content-Type","value":"text/html; charset=utf-8"},{"name":"From","value":"jayrank@tjcg.in"},{"name":"To","value":"jayrank@tjcg.in"},{"name":"Subject","value":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},{"name":"Message-ID","value":"<3b272a57-5c5a-76db-b7b5-0641eb0621a7@tjcg.in>"},{"name":"Content-Transfer-Encoding","value":"quoted-printable"},{"name":"Date","value":"Mon, 03 Jul 2023 10:28:08 +0000"},{"name":"MIME-Version","value":"1.0"}],"commonHeaders":{"from":["jayrank@tjcg.in"],"date":"Mon, 03 Jul 2023 10:28:08 +0000","to":["jayrank@tjcg.in"],"messageId":"010901891b4ba422-fc014326-be13-4e0b-ada7-2b5f647b9981-000000","subject":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},"tags":{"ses:operation":["SendRawEmail"],"ses:configuration-set":["Testingemails"],"ses:source-ip":["103.105.234.242"],"ses:from-domain":["tjcg.in"],"ses:caller-identity":["root"]}},"send":{}}
+ 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 15:59:54 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{"eventType":"Delivery","mail":{"timestamp":"2023-07-03T10:28:09.378Z","source":"jayrank@tjcg.in","sourceArn":"arn:aws:ses:ap-south-1:379034229131:identity/jayrank@tjcg.in","sendingAccountId":"379034229131","messageId":"010901891b4ba422-fc014326-be13-4e0b-ada7-2b5f647b9981-000000","destination":["jayrank@tjcg.in"],"headersTruncated":false,"headers":[{"name":"Content-Type","value":"text/html; charset=utf-8"},{"name":"From","value":"jayrank@tjcg.in"},{"name":"To","value":"jayrank@tjcg.in"},{"name":"Subject","value":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},{"name":"Message-ID","value":"<3b272a57-5c5a-76db-b7b5-0641eb0621a7@tjcg.in>"},{"name":"Content-Transfer-Encoding","value":"quoted-printable"},{"name":"Date","value":"Mon, 03 Jul 2023 10:28:08 +0000"},{"name":"MIME-Version","value":"1.0"}],"commonHeaders":{"from":["jayrank@tjcg.in"],"date":"Mon, 03 Jul 2023 10:28:08 +0000","to":["jayrank@tjcg.in"],"messageId":"010901891b4ba422-fc014326-be13-4e0b-ada7-2b5f647b9981-000000","subject":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},"tags":{"ses:operation":["SendRawEmail"],"ses:configuration-set":["Testingemails"],"ses:source-ip":["103.105.234.242"],"ses:from-domain":["tjcg.in"],"ses:caller-identity":["root"],"ses:outgoing-ip":["76.223.180.18"]}},"delivery":{"timestamp":"2023-07-03T10:28:13.091Z","processingTimeMillis":3713,"recipients":["jayrank@tjcg.in"],"smtpResponse":"250 2.0.0 Ok: queued as 4Qvhvv41h0z9HJW1","reportingMTA":"c180-18.smtp-out.ap-south-1.amazonses.com"}}
+ 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 16:00:42 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{"eventType":"Send","mail":{"timestamp":"2023-07-03T10:28:09.378Z","source":"jayrank@tjcg.in","sourceArn":"arn:aws:ses:ap-south-1:379034229131:identity/jayrank@tjcg.in","sendingAccountId":"379034229131","messageId":"010901891b4ba422-fc014326-be13-4e0b-ada7-2b5f647b9981-000000","destination":["jayrank@tjcg.in"],"headersTruncated":false,"headers":[{"name":"Content-Type","value":"text/html; charset=utf-8"},{"name":"From","value":"jayrank@tjcg.in"},{"name":"To","value":"jayrank@tjcg.in"},{"name":"Subject","value":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},{"name":"Message-ID","value":"<3b272a57-5c5a-76db-b7b5-0641eb0621a7@tjcg.in>"},{"name":"Content-Transfer-Encoding","value":"quoted-printable"},{"name":"Date","value":"Mon, 03 Jul 2023 10:28:08 +0000"},{"name":"MIME-Version","value":"1.0"}],"commonHeaders":{"from":["jayrank@tjcg.in"],"date":"Mon, 03 Jul 2023 10:28:08 +0000","to":["jayrank@tjcg.in"],"messageId":"010901891b4ba422-fc014326-be13-4e0b-ada7-2b5f647b9981-000000","subject":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},"tags":{"ses:operation":["SendRawEmail"],"ses:configuration-set":["Testingemails"],"ses:source-ip":["103.105.234.242"],"ses:from-domain":["tjcg.in"],"ses:caller-identity":["root"]}},"send":{}}
+ 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 16:00:44 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{"eventType":"Delivery","mail":{"timestamp":"2023-07-03T10:28:09.378Z","source":"jayrank@tjcg.in","sourceArn":"arn:aws:ses:ap-south-1:379034229131:identity/jayrank@tjcg.in","sendingAccountId":"379034229131","messageId":"010901891b4ba422-fc014326-be13-4e0b-ada7-2b5f647b9981-000000","destination":["jayrank@tjcg.in"],"headersTruncated":false,"headers":[{"name":"Content-Type","value":"text/html; charset=utf-8"},{"name":"From","value":"jayrank@tjcg.in"},{"name":"To","value":"jayrank@tjcg.in"},{"name":"Subject","value":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},{"name":"Message-ID","value":"<3b272a57-5c5a-76db-b7b5-0641eb0621a7@tjcg.in>"},{"name":"Content-Transfer-Encoding","value":"quoted-printable"},{"name":"Date","value":"Mon, 03 Jul 2023 10:28:08 +0000"},{"name":"MIME-Version","value":"1.0"}],"commonHeaders":{"from":["jayrank@tjcg.in"],"date":"Mon, 03 Jul 2023 10:28:08 +0000","to":["jayrank@tjcg.in"],"messageId":"010901891b4ba422-fc014326-be13-4e0b-ada7-2b5f647b9981-000000","subject":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},"tags":{"ses:operation":["SendRawEmail"],"ses:configuration-set":["Testingemails"],"ses:source-ip":["103.105.234.242"],"ses:from-domain":["tjcg.in"],"ses:caller-identity":["root"],"ses:outgoing-ip":["76.223.180.18"]}},"delivery":{"timestamp":"2023-07-03T10:28:13.091Z","processingTimeMillis":3713,"recipients":["jayrank@tjcg.in"],"smtpResponse":"250 2.0.0 Ok: queued as 4Qvhvv41h0z9HJW1","reportingMTA":"c180-18.smtp-out.ap-south-1.amazonses.com"}}
+ 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 16:02:13 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{"eventType":"Send","mail":{"timestamp":"2023-07-03T10:32:13.952Z","source":"jayrank@tjcg.in","sourceArn":"arn:aws:ses:ap-south-1:379034229131:identity/jayrank@tjcg.in","sendingAccountId":"379034229131","messageId":"010901891b4f5f80-4fec7a82-333e-4138-86c8-aec12c49220b-000000","destination":["jayrank@tjcg.in"],"headersTruncated":false,"headers":[{"name":"Content-Type","value":"text/html; charset=utf-8"},{"name":"From","value":"jayrank@tjcg.in"},{"name":"To","value":"jayrank@tjcg.in"},{"name":"Subject","value":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},{"name":"Message-ID","value":"<7a719e1d-c998-4dd8-39a4-d2a02a608bb7@tjcg.in>"},{"name":"Content-Transfer-Encoding","value":"quoted-printable"},{"name":"Date","value":"Mon, 03 Jul 2023 10:32:12 +0000"},{"name":"MIME-Version","value":"1.0"}],"commonHeaders":{"from":["jayrank@tjcg.in"],"date":"Mon, 03 Jul 2023 10:32:12 +0000","to":["jayrank@tjcg.in"],"messageId":"010901891b4f5f80-4fec7a82-333e-4138-86c8-aec12c49220b-000000","subject":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},"tags":{"ses:operation":["SendRawEmail"],"ses:configuration-set":["Testingemails"],"ses:source-ip":["103.105.234.242"],"ses:from-domain":["tjcg.in"],"ses:caller-identity":["root"]}},"send":{}}
+ 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 16:02:15 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{"eventType":"Delivery","mail":{"timestamp":"2023-07-03T10:32:13.952Z","source":"jayrank@tjcg.in","sourceArn":"arn:aws:ses:ap-south-1:379034229131:identity/jayrank@tjcg.in","sendingAccountId":"379034229131","messageId":"010901891b4f5f80-4fec7a82-333e-4138-86c8-aec12c49220b-000000","destination":["jayrank@tjcg.in"],"headersTruncated":false,"headers":[{"name":"Content-Type","value":"text/html; charset=utf-8"},{"name":"From","value":"jayrank@tjcg.in"},{"name":"To","value":"jayrank@tjcg.in"},{"name":"Subject","value":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},{"name":"Message-ID","value":"<7a719e1d-c998-4dd8-39a4-d2a02a608bb7@tjcg.in>"},{"name":"Content-Transfer-Encoding","value":"quoted-printable"},{"name":"Date","value":"Mon, 03 Jul 2023 10:32:12 +0000"},{"name":"MIME-Version","value":"1.0"}],"commonHeaders":{"from":["jayrank@tjcg.in"],"date":"Mon, 03 Jul 2023 10:32:12 +0000","to":["jayrank@tjcg.in"],"messageId":"010901891b4f5f80-4fec7a82-333e-4138-86c8-aec12c49220b-000000","subject":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},"tags":{"ses:operation":["SendRawEmail"],"ses:configuration-set":["Testingemails"],"ses:source-ip":["103.105.234.242"],"ses:from-domain":["tjcg.in"],"ses:caller-identity":["root"],"ses:outgoing-ip":["76.223.180.15"]}},"delivery":{"timestamp":"2023-07-03T10:32:16.396Z","processingTimeMillis":2444,"recipients":["jayrank@tjcg.in"],"smtpResponse":"250 2.0.0 Ok: queued as 4Qvj0b66WLz53lhp","reportingMTA":"c180-15.smtp-out.ap-south-1.amazonses.com"}}
+ 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 16:03:04 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{"eventType":"Send","mail":{"timestamp":"2023-07-03T10:32:13.952Z","source":"jayrank@tjcg.in","sourceArn":"arn:aws:ses:ap-south-1:379034229131:identity/jayrank@tjcg.in","sendingAccountId":"379034229131","messageId":"010901891b4f5f80-4fec7a82-333e-4138-86c8-aec12c49220b-000000","destination":["jayrank@tjcg.in"],"headersTruncated":false,"headers":[{"name":"Content-Type","value":"text/html; charset=utf-8"},{"name":"From","value":"jayrank@tjcg.in"},{"name":"To","value":"jayrank@tjcg.in"},{"name":"Subject","value":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},{"name":"Message-ID","value":"<7a719e1d-c998-4dd8-39a4-d2a02a608bb7@tjcg.in>"},{"name":"Content-Transfer-Encoding","value":"quoted-printable"},{"name":"Date","value":"Mon, 03 Jul 2023 10:32:12 +0000"},{"name":"MIME-Version","value":"1.0"}],"commonHeaders":{"from":["jayrank@tjcg.in"],"date":"Mon, 03 Jul 2023 10:32:12 +0000","to":["jayrank@tjcg.in"],"messageId":"010901891b4f5f80-4fec7a82-333e-4138-86c8-aec12c49220b-000000","subject":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},"tags":{"ses:operation":["SendRawEmail"],"ses:configuration-set":["Testingemails"],"ses:source-ip":["103.105.234.242"],"ses:from-domain":["tjcg.in"],"ses:caller-identity":["root"]}},"send":{}}
+ 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 16:03:06 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{"eventType":"Delivery","mail":{"timestamp":"2023-07-03T10:32:13.952Z","source":"jayrank@tjcg.in","sourceArn":"arn:aws:ses:ap-south-1:379034229131:identity/jayrank@tjcg.in","sendingAccountId":"379034229131","messageId":"010901891b4f5f80-4fec7a82-333e-4138-86c8-aec12c49220b-000000","destination":["jayrank@tjcg.in"],"headersTruncated":false,"headers":[{"name":"Content-Type","value":"text/html; charset=utf-8"},{"name":"From","value":"jayrank@tjcg.in"},{"name":"To","value":"jayrank@tjcg.in"},{"name":"Subject","value":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},{"name":"Message-ID","value":"<7a719e1d-c998-4dd8-39a4-d2a02a608bb7@tjcg.in>"},{"name":"Content-Transfer-Encoding","value":"quoted-printable"},{"name":"Date","value":"Mon, 03 Jul 2023 10:32:12 +0000"},{"name":"MIME-Version","value":"1.0"}],"commonHeaders":{"from":["jayrank@tjcg.in"],"date":"Mon, 03 Jul 2023 10:32:12 +0000","to":["jayrank@tjcg.in"],"messageId":"010901891b4f5f80-4fec7a82-333e-4138-86c8-aec12c49220b-000000","subject":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},"tags":{"ses:operation":["SendRawEmail"],"ses:configuration-set":["Testingemails"],"ses:source-ip":["103.105.234.242"],"ses:from-domain":["tjcg.in"],"ses:caller-identity":["root"],"ses:outgoing-ip":["76.223.180.15"]}},"delivery":{"timestamp":"2023-07-03T10:32:16.396Z","processingTimeMillis":2444,"recipients":["jayrank@tjcg.in"],"smtpResponse":"250 2.0.0 Ok: queued as 4Qvj0b66WLz53lhp","reportingMTA":"c180-15.smtp-out.ap-south-1.amazonses.com"}}
+ 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 16:03:06 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{"eventType":"Send","mail":{"timestamp":"2023-07-03T10:33:07.470Z","source":"jayrank@tjcg.in","sourceArn":"arn:aws:ses:ap-south-1:379034229131:identity/jayrank@tjcg.in","sendingAccountId":"379034229131","messageId":"010901891b50308e-35418f94-716e-4ed1-ba25-ba31fd10b613-000000","destination":["jayrank@tjcg.in"],"headersTruncated":false,"headers":[{"name":"Content-Type","value":"text/html; charset=utf-8"},{"name":"From","value":"jayrank@tjcg.in"},{"name":"To","value":"jayrank@tjcg.in"},{"name":"Subject","value":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},{"name":"Message-ID","value":"<9fc36bbc-dd9f-bc09-0bfb-75ed5b55198d@tjcg.in>"},{"name":"Content-Transfer-Encoding","value":"quoted-printable"},{"name":"Date","value":"Mon, 03 Jul 2023 10:33:06 +0000"},{"name":"MIME-Version","value":"1.0"}],"commonHeaders":{"from":["jayrank@tjcg.in"],"date":"Mon, 03 Jul 2023 10:33:06 +0000","to":["jayrank@tjcg.in"],"messageId":"010901891b50308e-35418f94-716e-4ed1-ba25-ba31fd10b613-000000","subject":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},"tags":{"ses:operation":["SendRawEmail"],"ses:configuration-set":["Testingemails"],"ses:source-ip":["103.105.234.242"],"ses:from-domain":["tjcg.in"],"ses:caller-identity":["root"]}},"send":{}}
+ 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 16:03:13 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{"eventType":"Delivery","mail":{"timestamp":"2023-07-03T10:33:07.470Z","source":"jayrank@tjcg.in","sourceArn":"arn:aws:ses:ap-south-1:379034229131:identity/jayrank@tjcg.in","sendingAccountId":"379034229131","messageId":"010901891b50308e-35418f94-716e-4ed1-ba25-ba31fd10b613-000000","destination":["jayrank@tjcg.in"],"headersTruncated":false,"headers":[{"name":"Content-Type","value":"text/html; charset=utf-8"},{"name":"From","value":"jayrank@tjcg.in"},{"name":"To","value":"jayrank@tjcg.in"},{"name":"Subject","value":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},{"name":"Message-ID","value":"<9fc36bbc-dd9f-bc09-0bfb-75ed5b55198d@tjcg.in>"},{"name":"Content-Transfer-Encoding","value":"quoted-printable"},{"name":"Date","value":"Mon, 03 Jul 2023 10:33:06 +0000"},{"name":"MIME-Version","value":"1.0"}],"commonHeaders":{"from":["jayrank@tjcg.in"],"date":"Mon, 03 Jul 2023 10:33:06 +0000","to":["jayrank@tjcg.in"],"messageId":"010901891b50308e-35418f94-716e-4ed1-ba25-ba31fd10b613-000000","subject":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},"tags":{"ses:operation":["SendRawEmail"],"ses:configuration-set":["Testingemails"],"ses:source-ip":["103.105.234.242"],"ses:from-domain":["tjcg.in"],"ses:caller-identity":["root"],"ses:outgoing-ip":["76.223.180.14"]}},"delivery":{"timestamp":"2023-07-03T10:33:13.926Z","processingTimeMillis":6456,"recipients":["jayrank@tjcg.in"],"smtpResponse":"250 2.0.0 Ok: queued as 4Qvj1d2Cz7z2Sm3K","reportingMTA":"c180-14.smtp-out.ap-south-1.amazonses.com"}}
+ 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 16:03:27 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{"eventType":"Send","mail":{"timestamp":"2023-07-03T10:33:28.336Z","source":"jayrank@tjcg.in","sourceArn":"arn:aws:ses:ap-south-1:379034229131:identity/jayrank@tjcg.in","sendingAccountId":"379034229131","messageId":"010901891b508210-f2da9282-a4a0-411b-82a7-bbf2896dbc40-000000","destination":["jayrank@tjcg.in"],"headersTruncated":false,"headers":[{"name":"Content-Type","value":"text/html; charset=utf-8"},{"name":"From","value":"jayrank@tjcg.in"},{"name":"To","value":"jayrank@tjcg.in"},{"name":"Subject","value":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},{"name":"Message-ID","value":"<b62e4fce-a5a9-a204-1ac4-4cd3fd7c9760@tjcg.in>"},{"name":"Content-Transfer-Encoding","value":"quoted-printable"},{"name":"Date","value":"Mon, 03 Jul 2023 10:33:27 +0000"},{"name":"MIME-Version","value":"1.0"}],"commonHeaders":{"from":["jayrank@tjcg.in"],"date":"Mon, 03 Jul 2023 10:33:27 +0000","to":["jayrank@tjcg.in"],"messageId":"010901891b508210-f2da9282-a4a0-411b-82a7-bbf2896dbc40-000000","subject":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},"tags":{"ses:operation":["SendRawEmail"],"ses:configuration-set":["Testingemails"],"ses:source-ip":["103.105.234.242"],"ses:from-domain":["tjcg.in"],"ses:caller-identity":["root"]}},"send":{}}
+ 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 16:03:30 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{"eventType":"Delivery","mail":{"timestamp":"2023-07-03T10:33:28.336Z","source":"jayrank@tjcg.in","sourceArn":"arn:aws:ses:ap-south-1:379034229131:identity/jayrank@tjcg.in","sendingAccountId":"379034229131","messageId":"010901891b508210-f2da9282-a4a0-411b-82a7-bbf2896dbc40-000000","destination":["jayrank@tjcg.in"],"headersTruncated":false,"headers":[{"name":"Content-Type","value":"text/html; charset=utf-8"},{"name":"From","value":"jayrank@tjcg.in"},{"name":"To","value":"jayrank@tjcg.in"},{"name":"Subject","value":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},{"name":"Message-ID","value":"<b62e4fce-a5a9-a204-1ac4-4cd3fd7c9760@tjcg.in>"},{"name":"Content-Transfer-Encoding","value":"quoted-printable"},{"name":"Date","value":"Mon, 03 Jul 2023 10:33:27 +0000"},{"name":"MIME-Version","value":"1.0"}],"commonHeaders":{"from":["jayrank@tjcg.in"],"date":"Mon, 03 Jul 2023 10:33:27 +0000","to":["jayrank@tjcg.in"],"messageId":"010901891b508210-f2da9282-a4a0-411b-82a7-bbf2896dbc40-000000","subject":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},"tags":{"ses:operation":["SendRawEmail"],"ses:configuration-set":["Testingemails"],"ses:source-ip":["103.105.234.242"],"ses:from-domain":["tjcg.in"],"ses:caller-identity":["root"],"ses:outgoing-ip":["76.223.180.16"]}},"delivery":{"timestamp":"2023-07-03T10:33:31.666Z","processingTimeMillis":3330,"recipients":["jayrank@tjcg.in"],"smtpResponse":"250 2.0.0 Ok: queued as 4Qvj226NLdz9HGgK","reportingMTA":"c180-16.smtp-out.ap-south-1.amazonses.com"}}
+ 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 16:03:40 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{"eventType":"Send","mail":{"timestamp":"2023-07-03T10:33:07.470Z","source":"jayrank@tjcg.in","sourceArn":"arn:aws:ses:ap-south-1:379034229131:identity/jayrank@tjcg.in","sendingAccountId":"379034229131","messageId":"010901891b50308e-35418f94-716e-4ed1-ba25-ba31fd10b613-000000","destination":["jayrank@tjcg.in"],"headersTruncated":false,"headers":[{"name":"Content-Type","value":"text/html; charset=utf-8"},{"name":"From","value":"jayrank@tjcg.in"},{"name":"To","value":"jayrank@tjcg.in"},{"name":"Subject","value":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},{"name":"Message-ID","value":"<9fc36bbc-dd9f-bc09-0bfb-75ed5b55198d@tjcg.in>"},{"name":"Content-Transfer-Encoding","value":"quoted-printable"},{"name":"Date","value":"Mon, 03 Jul 2023 10:33:06 +0000"},{"name":"MIME-Version","value":"1.0"}],"commonHeaders":{"from":["jayrank@tjcg.in"],"date":"Mon, 03 Jul 2023 10:33:06 +0000","to":["jayrank@tjcg.in"],"messageId":"010901891b50308e-35418f94-716e-4ed1-ba25-ba31fd10b613-000000","subject":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},"tags":{"ses:operation":["SendRawEmail"],"ses:configuration-set":["Testingemails"],"ses:source-ip":["103.105.234.242"],"ses:from-domain":["tjcg.in"],"ses:caller-identity":["root"]}},"send":{}}
+ 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 16:03:40 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{"eventType":"Delivery","mail":{"timestamp":"2023-07-03T10:33:07.470Z","source":"jayrank@tjcg.in","sourceArn":"arn:aws:ses:ap-south-1:379034229131:identity/jayrank@tjcg.in","sendingAccountId":"379034229131","messageId":"010901891b50308e-35418f94-716e-4ed1-ba25-ba31fd10b613-000000","destination":["jayrank@tjcg.in"],"headersTruncated":false,"headers":[{"name":"Content-Type","value":"text/html; charset=utf-8"},{"name":"From","value":"jayrank@tjcg.in"},{"name":"To","value":"jayrank@tjcg.in"},{"name":"Subject","value":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},{"name":"Message-ID","value":"<9fc36bbc-dd9f-bc09-0bfb-75ed5b55198d@tjcg.in>"},{"name":"Content-Transfer-Encoding","value":"quoted-printable"},{"name":"Date","value":"Mon, 03 Jul 2023 10:33:06 +0000"},{"name":"MIME-Version","value":"1.0"}],"commonHeaders":{"from":["jayrank@tjcg.in"],"date":"Mon, 03 Jul 2023 10:33:06 +0000","to":["jayrank@tjcg.in"],"messageId":"010901891b50308e-35418f94-716e-4ed1-ba25-ba31fd10b613-000000","subject":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},"tags":{"ses:operation":["SendRawEmail"],"ses:configuration-set":["Testingemails"],"ses:source-ip":["103.105.234.242"],"ses:from-domain":["tjcg.in"],"ses:caller-identity":["root"],"ses:outgoing-ip":["76.223.180.14"]}},"delivery":{"timestamp":"2023-07-03T10:33:13.926Z","processingTimeMillis":6456,"recipients":["jayrank@tjcg.in"],"smtpResponse":"250 2.0.0 Ok: queued as 4Qvj1d2Cz7z2Sm3K","reportingMTA":"c180-14.smtp-out.ap-south-1.amazonses.com"}}
+ 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 16:03:40 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{"eventType":"Send","mail":{"timestamp":"2023-07-03T10:32:13.952Z","source":"jayrank@tjcg.in","sourceArn":"arn:aws:ses:ap-south-1:379034229131:identity/jayrank@tjcg.in","sendingAccountId":"379034229131","messageId":"010901891b4f5f80-4fec7a82-333e-4138-86c8-aec12c49220b-000000","destination":["jayrank@tjcg.in"],"headersTruncated":false,"headers":[{"name":"Content-Type","value":"text/html; charset=utf-8"},{"name":"From","value":"jayrank@tjcg.in"},{"name":"To","value":"jayrank@tjcg.in"},{"name":"Subject","value":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},{"name":"Message-ID","value":"<7a719e1d-c998-4dd8-39a4-d2a02a608bb7@tjcg.in>"},{"name":"Content-Transfer-Encoding","value":"quoted-printable"},{"name":"Date","value":"Mon, 03 Jul 2023 10:32:12 +0000"},{"name":"MIME-Version","value":"1.0"}],"commonHeaders":{"from":["jayrank@tjcg.in"],"date":"Mon, 03 Jul 2023 10:32:12 +0000","to":["jayrank@tjcg.in"],"messageId":"010901891b4f5f80-4fec7a82-333e-4138-86c8-aec12c49220b-000000","subject":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},"tags":{"ses:operation":["SendRawEmail"],"ses:configuration-set":["Testingemails"],"ses:source-ip":["103.105.234.242"],"ses:from-domain":["tjcg.in"],"ses:caller-identity":["root"]}},"send":{}}
+ 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 16:03:40 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{"eventType":"Delivery","mail":{"timestamp":"2023-07-03T10:32:13.952Z","source":"jayrank@tjcg.in","sourceArn":"arn:aws:ses:ap-south-1:379034229131:identity/jayrank@tjcg.in","sendingAccountId":"379034229131","messageId":"010901891b4f5f80-4fec7a82-333e-4138-86c8-aec12c49220b-000000","destination":["jayrank@tjcg.in"],"headersTruncated":false,"headers":[{"name":"Content-Type","value":"text/html; charset=utf-8"},{"name":"From","value":"jayrank@tjcg.in"},{"name":"To","value":"jayrank@tjcg.in"},{"name":"Subject","value":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},{"name":"Message-ID","value":"<7a719e1d-c998-4dd8-39a4-d2a02a608bb7@tjcg.in>"},{"name":"Content-Transfer-Encoding","value":"quoted-printable"},{"name":"Date","value":"Mon, 03 Jul 2023 10:32:12 +0000"},{"name":"MIME-Version","value":"1.0"}],"commonHeaders":{"from":["jayrank@tjcg.in"],"date":"Mon, 03 Jul 2023 10:32:12 +0000","to":["jayrank@tjcg.in"],"messageId":"010901891b4f5f80-4fec7a82-333e-4138-86c8-aec12c49220b-000000","subject":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},"tags":{"ses:operation":["SendRawEmail"],"ses:configuration-set":["Testingemails"],"ses:source-ip":["103.105.234.242"],"ses:from-domain":["tjcg.in"],"ses:caller-identity":["root"],"ses:outgoing-ip":["76.223.180.15"]}},"delivery":{"timestamp":"2023-07-03T10:32:16.396Z","processingTimeMillis":2444,"recipients":["jayrank@tjcg.in"],"smtpResponse":"250 2.0.0 Ok: queued as 4Qvj0b66WLz53lhp","reportingMTA":"c180-15.smtp-out.ap-south-1.amazonses.com"}}
+ 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 16:03:42 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{"eventType":"Send","mail":{"timestamp":"2023-07-03T10:33:43.253Z","source":"jayrank@tjcg.in","sourceArn":"arn:aws:ses:ap-south-1:379034229131:identity/jayrank@tjcg.in","sendingAccountId":"379034229131","messageId":"010901891b50bc55-f7d118de-e8bf-44ff-abaf-d318e513cbc9-000000","destination":["jayrank@tjcg.in"],"headersTruncated":false,"headers":[{"name":"Content-Type","value":"text/html; charset=utf-8"},{"name":"From","value":"jayrank@tjcg.in"},{"name":"To","value":"jayrank@tjcg.in"},{"name":"Subject","value":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},{"name":"Message-ID","value":"<06097697-9865-346c-bb40-5be44720e25a@tjcg.in>"},{"name":"Content-Transfer-Encoding","value":"quoted-printable"},{"name":"Date","value":"Mon, 03 Jul 2023 10:33:42 +0000"},{"name":"MIME-Version","value":"1.0"}],"commonHeaders":{"from":["jayrank@tjcg.in"],"date":"Mon, 03 Jul 2023 10:33:42 +0000","to":["jayrank@tjcg.in"],"messageId":"010901891b50bc55-f7d118de-e8bf-44ff-abaf-d318e513cbc9-000000","subject":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},"tags":{"ses:operation":["SendRawEmail"],"ses:configuration-set":["Testingemails"],"ses:source-ip":["103.105.234.242"],"ses:from-domain":["tjcg.in"],"ses:caller-identity":["root"]}},"send":{}}
+ 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 16:03:45 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{"eventType":"Delivery","mail":{"timestamp":"2023-07-03T10:33:43.253Z","source":"jayrank@tjcg.in","sourceArn":"arn:aws:ses:ap-south-1:379034229131:identity/jayrank@tjcg.in","sendingAccountId":"379034229131","messageId":"010901891b50bc55-f7d118de-e8bf-44ff-abaf-d318e513cbc9-000000","destination":["jayrank@tjcg.in"],"headersTruncated":false,"headers":[{"name":"Content-Type","value":"text/html; charset=utf-8"},{"name":"From","value":"jayrank@tjcg.in"},{"name":"To","value":"jayrank@tjcg.in"},{"name":"Subject","value":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},{"name":"Message-ID","value":"<06097697-9865-346c-bb40-5be44720e25a@tjcg.in>"},{"name":"Content-Transfer-Encoding","value":"quoted-printable"},{"name":"Date","value":"Mon, 03 Jul 2023 10:33:42 +0000"},{"name":"MIME-Version","value":"1.0"}],"commonHeaders":{"from":["jayrank@tjcg.in"],"date":"Mon, 03 Jul 2023 10:33:42 +0000","to":["jayrank@tjcg.in"],"messageId":"010901891b50bc55-f7d118de-e8bf-44ff-abaf-d318e513cbc9-000000","subject":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},"tags":{"ses:operation":["SendRawEmail"],"ses:configuration-set":["Testingemails"],"ses:source-ip":["103.105.234.242"],"ses:from-domain":["tjcg.in"],"ses:caller-identity":["root"],"ses:outgoing-ip":["76.223.180.13"]}},"delivery":{"timestamp":"2023-07-03T10:33:45.821Z","processingTimeMillis":2568,"recipients":["jayrank@tjcg.in"],"smtpResponse":"250 2.0.0 Ok: queued as 4Qvj2K1zpBz4wycG","reportingMTA":"c180-13.smtp-out.ap-south-1.amazonses.com"}}
+ 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 16:03:57 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{"eventType":"Delivery","mail":{"timestamp":"2023-07-03T10:33:28.336Z","source":"jayrank@tjcg.in","sourceArn":"arn:aws:ses:ap-south-1:379034229131:identity/jayrank@tjcg.in","sendingAccountId":"379034229131","messageId":"010901891b508210-f2da9282-a4a0-411b-82a7-bbf2896dbc40-000000","destination":["jayrank@tjcg.in"],"headersTruncated":false,"headers":[{"name":"Content-Type","value":"text/html; charset=utf-8"},{"name":"From","value":"jayrank@tjcg.in"},{"name":"To","value":"jayrank@tjcg.in"},{"name":"Subject","value":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},{"name":"Message-ID","value":"<b62e4fce-a5a9-a204-1ac4-4cd3fd7c9760@tjcg.in>"},{"name":"Content-Transfer-Encoding","value":"quoted-printable"},{"name":"Date","value":"Mon, 03 Jul 2023 10:33:27 +0000"},{"name":"MIME-Version","value":"1.0"}],"commonHeaders":{"from":["jayrank@tjcg.in"],"date":"Mon, 03 Jul 2023 10:33:27 +0000","to":["jayrank@tjcg.in"],"messageId":"010901891b508210-f2da9282-a4a0-411b-82a7-bbf2896dbc40-000000","subject":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},"tags":{"ses:operation":["SendRawEmail"],"ses:configuration-set":["Testingemails"],"ses:source-ip":["103.105.234.242"],"ses:from-domain":["tjcg.in"],"ses:caller-identity":["root"],"ses:outgoing-ip":["76.223.180.16"]}},"delivery":{"timestamp":"2023-07-03T10:33:31.666Z","processingTimeMillis":3330,"recipients":["jayrank@tjcg.in"],"smtpResponse":"250 2.0.0 Ok: queued as 4Qvj226NLdz9HGgK","reportingMTA":"c180-16.smtp-out.ap-south-1.amazonses.com"}}
+ 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 16:03:57 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{"eventType":"Send","mail":{"timestamp":"2023-07-03T10:33:28.336Z","source":"jayrank@tjcg.in","sourceArn":"arn:aws:ses:ap-south-1:379034229131:identity/jayrank@tjcg.in","sendingAccountId":"379034229131","messageId":"010901891b508210-f2da9282-a4a0-411b-82a7-bbf2896dbc40-000000","destination":["jayrank@tjcg.in"],"headersTruncated":false,"headers":[{"name":"Content-Type","value":"text/html; charset=utf-8"},{"name":"From","value":"jayrank@tjcg.in"},{"name":"To","value":"jayrank@tjcg.in"},{"name":"Subject","value":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},{"name":"Message-ID","value":"<b62e4fce-a5a9-a204-1ac4-4cd3fd7c9760@tjcg.in>"},{"name":"Content-Transfer-Encoding","value":"quoted-printable"},{"name":"Date","value":"Mon, 03 Jul 2023 10:33:27 +0000"},{"name":"MIME-Version","value":"1.0"}],"commonHeaders":{"from":["jayrank@tjcg.in"],"date":"Mon, 03 Jul 2023 10:33:27 +0000","to":["jayrank@tjcg.in"],"messageId":"010901891b508210-f2da9282-a4a0-411b-82a7-bbf2896dbc40-000000","subject":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},"tags":{"ses:operation":["SendRawEmail"],"ses:configuration-set":["Testingemails"],"ses:source-ip":["103.105.234.242"],"ses:from-domain":["tjcg.in"],"ses:caller-identity":["root"]}},"send":{}}
+ 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 16:04:00 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{"eventType":"Send","mail":{"timestamp":"2023-07-03T10:34:00.805Z","source":"jayrank@tjcg.in","sourceArn":"arn:aws:ses:ap-south-1:379034229131:identity/jayrank@tjcg.in","sendingAccountId":"379034229131","messageId":"010901891b5100e5-b5a03964-c1cd-4ea4-8c1b-860a6566677a-000000","destination":["jayrank@tjcg.in"],"headersTruncated":false,"headers":[{"name":"Content-Type","value":"text/html; charset=utf-8"},{"name":"From","value":"jayrank@tjcg.in"},{"name":"To","value":"jayrank@tjcg.in"},{"name":"Subject","value":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},{"name":"Message-ID","value":"<ba426d96-7934-dfdf-47e4-58a05592ab15@tjcg.in>"},{"name":"Content-Transfer-Encoding","value":"quoted-printable"},{"name":"Date","value":"Mon, 03 Jul 2023 10:33:59 +0000"},{"name":"MIME-Version","value":"1.0"}],"commonHeaders":{"from":["jayrank@tjcg.in"],"date":"Mon, 03 Jul 2023 10:33:59 +0000","to":["jayrank@tjcg.in"],"messageId":"010901891b5100e5-b5a03964-c1cd-4ea4-8c1b-860a6566677a-000000","subject":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},"tags":{"ses:operation":["SendRawEmail"],"ses:configuration-set":["Testingemails"],"ses:source-ip":["103.105.234.242"],"ses:from-domain":["tjcg.in"],"ses:caller-identity":["root"]}},"send":{}}
+ 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 16:04:02 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{"eventType":"Delivery","mail":{"timestamp":"2023-07-03T10:34:00.805Z","source":"jayrank@tjcg.in","sourceArn":"arn:aws:ses:ap-south-1:379034229131:identity/jayrank@tjcg.in","sendingAccountId":"379034229131","messageId":"010901891b5100e5-b5a03964-c1cd-4ea4-8c1b-860a6566677a-000000","destination":["jayrank@tjcg.in"],"headersTruncated":false,"headers":[{"name":"Content-Type","value":"text/html; charset=utf-8"},{"name":"From","value":"jayrank@tjcg.in"},{"name":"To","value":"jayrank@tjcg.in"},{"name":"Subject","value":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},{"name":"Message-ID","value":"<ba426d96-7934-dfdf-47e4-58a05592ab15@tjcg.in>"},{"name":"Content-Transfer-Encoding","value":"quoted-printable"},{"name":"Date","value":"Mon, 03 Jul 2023 10:33:59 +0000"},{"name":"MIME-Version","value":"1.0"}],"commonHeaders":{"from":["jayrank@tjcg.in"],"date":"Mon, 03 Jul 2023 10:33:59 +0000","to":["jayrank@tjcg.in"],"messageId":"010901891b5100e5-b5a03964-c1cd-4ea4-8c1b-860a6566677a-000000","subject":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},"tags":{"ses:operation":["SendRawEmail"],"ses:configuration-set":["Testingemails"],"ses:source-ip":["103.105.234.242"],"ses:from-domain":["tjcg.in"],"ses:caller-identity":["root"],"ses:outgoing-ip":["76.223.180.16"]}},"delivery":{"timestamp":"2023-07-03T10:34:03.361Z","processingTimeMillis":2556,"recipients":["jayrank@tjcg.in"],"smtpResponse":"250 2.0.0 Ok: queued as 4Qvj2f4pgwz9HJTV","reportingMTA":"c180-16.smtp-out.ap-south-1.amazonses.com"}}
+ 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 16:04:09 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{"eventType":"Send","mail":{"timestamp":"2023-07-03T10:32:13.952Z","source":"jayrank@tjcg.in","sourceArn":"arn:aws:ses:ap-south-1:379034229131:identity/jayrank@tjcg.in","sendingAccountId":"379034229131","messageId":"010901891b4f5f80-4fec7a82-333e-4138-86c8-aec12c49220b-000000","destination":["jayrank@tjcg.in"],"headersTruncated":false,"headers":[{"name":"Content-Type","value":"text/html; charset=utf-8"},{"name":"From","value":"jayrank@tjcg.in"},{"name":"To","value":"jayrank@tjcg.in"},{"name":"Subject","value":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},{"name":"Message-ID","value":"<7a719e1d-c998-4dd8-39a4-d2a02a608bb7@tjcg.in>"},{"name":"Content-Transfer-Encoding","value":"quoted-printable"},{"name":"Date","value":"Mon, 03 Jul 2023 10:32:12 +0000"},{"name":"MIME-Version","value":"1.0"}],"commonHeaders":{"from":["jayrank@tjcg.in"],"date":"Mon, 03 Jul 2023 10:32:12 +0000","to":["jayrank@tjcg.in"],"messageId":"010901891b4f5f80-4fec7a82-333e-4138-86c8-aec12c49220b-000000","subject":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},"tags":{"ses:operation":["SendRawEmail"],"ses:configuration-set":["Testingemails"],"ses:source-ip":["103.105.234.242"],"ses:from-domain":["tjcg.in"],"ses:caller-identity":["root"]}},"send":{}}
+ 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 16:04:09 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{"eventType":"Delivery","mail":{"timestamp":"2023-07-03T10:33:07.470Z","source":"jayrank@tjcg.in","sourceArn":"arn:aws:ses:ap-south-1:379034229131:identity/jayrank@tjcg.in","sendingAccountId":"379034229131","messageId":"010901891b50308e-35418f94-716e-4ed1-ba25-ba31fd10b613-000000","destination":["jayrank@tjcg.in"],"headersTruncated":false,"headers":[{"name":"Content-Type","value":"text/html; charset=utf-8"},{"name":"From","value":"jayrank@tjcg.in"},{"name":"To","value":"jayrank@tjcg.in"},{"name":"Subject","value":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},{"name":"Message-ID","value":"<9fc36bbc-dd9f-bc09-0bfb-75ed5b55198d@tjcg.in>"},{"name":"Content-Transfer-Encoding","value":"quoted-printable"},{"name":"Date","value":"Mon, 03 Jul 2023 10:33:06 +0000"},{"name":"MIME-Version","value":"1.0"}],"commonHeaders":{"from":["jayrank@tjcg.in"],"date":"Mon, 03 Jul 2023 10:33:06 +0000","to":["jayrank@tjcg.in"],"messageId":"010901891b50308e-35418f94-716e-4ed1-ba25-ba31fd10b613-000000","subject":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},"tags":{"ses:operation":["SendRawEmail"],"ses:configuration-set":["Testingemails"],"ses:source-ip":["103.105.234.242"],"ses:from-domain":["tjcg.in"],"ses:caller-identity":["root"],"ses:outgoing-ip":["76.223.180.14"]}},"delivery":{"timestamp":"2023-07-03T10:33:13.926Z","processingTimeMillis":6456,"recipients":["jayrank@tjcg.in"],"smtpResponse":"250 2.0.0 Ok: queued as 4Qvj1d2Cz7z2Sm3K","reportingMTA":"c180-14.smtp-out.ap-south-1.amazonses.com"}}
+ 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 16:04:09 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{"eventType":"Delivery","mail":{"timestamp":"2023-07-03T10:32:13.952Z","source":"jayrank@tjcg.in","sourceArn":"arn:aws:ses:ap-south-1:379034229131:identity/jayrank@tjcg.in","sendingAccountId":"379034229131","messageId":"010901891b4f5f80-4fec7a82-333e-4138-86c8-aec12c49220b-000000","destination":["jayrank@tjcg.in"],"headersTruncated":false,"headers":[{"name":"Content-Type","value":"text/html; charset=utf-8"},{"name":"From","value":"jayrank@tjcg.in"},{"name":"To","value":"jayrank@tjcg.in"},{"name":"Subject","value":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},{"name":"Message-ID","value":"<7a719e1d-c998-4dd8-39a4-d2a02a608bb7@tjcg.in>"},{"name":"Content-Transfer-Encoding","value":"quoted-printable"},{"name":"Date","value":"Mon, 03 Jul 2023 10:32:12 +0000"},{"name":"MIME-Version","value":"1.0"}],"commonHeaders":{"from":["jayrank@tjcg.in"],"date":"Mon, 03 Jul 2023 10:32:12 +0000","to":["jayrank@tjcg.in"],"messageId":"010901891b4f5f80-4fec7a82-333e-4138-86c8-aec12c49220b-000000","subject":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},"tags":{"ses:operation":["SendRawEmail"],"ses:configuration-set":["Testingemails"],"ses:source-ip":["103.105.234.242"],"ses:from-domain":["tjcg.in"],"ses:caller-identity":["root"],"ses:outgoing-ip":["76.223.180.15"]}},"delivery":{"timestamp":"2023-07-03T10:32:16.396Z","processingTimeMillis":2444,"recipients":["jayrank@tjcg.in"],"smtpResponse":"250 2.0.0 Ok: queued as 4Qvj0b66WLz53lhp","reportingMTA":"c180-15.smtp-out.ap-south-1.amazonses.com"}}
+ 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 16:04:09 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{"eventType":"Delivery","mail":{"timestamp":"2023-07-03T10:33:43.253Z","source":"jayrank@tjcg.in","sourceArn":"arn:aws:ses:ap-south-1:379034229131:identity/jayrank@tjcg.in","sendingAccountId":"379034229131","messageId":"010901891b50bc55-f7d118de-e8bf-44ff-abaf-d318e513cbc9-000000","destination":["jayrank@tjcg.in"],"headersTruncated":false,"headers":[{"name":"Content-Type","value":"text/html; charset=utf-8"},{"name":"From","value":"jayrank@tjcg.in"},{"name":"To","value":"jayrank@tjcg.in"},{"name":"Subject","value":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},{"name":"Message-ID","value":"<06097697-9865-346c-bb40-5be44720e25a@tjcg.in>"},{"name":"Content-Transfer-Encoding","value":"quoted-printable"},{"name":"Date","value":"Mon, 03 Jul 2023 10:33:42 +0000"},{"name":"MIME-Version","value":"1.0"}],"commonHeaders":{"from":["jayrank@tjcg.in"],"date":"Mon, 03 Jul 2023 10:33:42 +0000","to":["jayrank@tjcg.in"],"messageId":"010901891b50bc55-f7d118de-e8bf-44ff-abaf-d318e513cbc9-000000","subject":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},"tags":{"ses:operation":["SendRawEmail"],"ses:configuration-set":["Testingemails"],"ses:source-ip":["103.105.234.242"],"ses:from-domain":["tjcg.in"],"ses:caller-identity":["root"],"ses:outgoing-ip":["76.223.180.13"]}},"delivery":{"timestamp":"2023-07-03T10:33:45.821Z","processingTimeMillis":2568,"recipients":["jayrank@tjcg.in"],"smtpResponse":"250 2.0.0 Ok: queued as 4Qvj2K1zpBz4wycG","reportingMTA":"c180-13.smtp-out.ap-south-1.amazonses.com"}}
+ 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 16:04:09 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{"eventType":"Send","mail":{"timestamp":"2023-07-03T10:33:43.253Z","source":"jayrank@tjcg.in","sourceArn":"arn:aws:ses:ap-south-1:379034229131:identity/jayrank@tjcg.in","sendingAccountId":"379034229131","messageId":"010901891b50bc55-f7d118de-e8bf-44ff-abaf-d318e513cbc9-000000","destination":["jayrank@tjcg.in"],"headersTruncated":false,"headers":[{"name":"Content-Type","value":"text/html; charset=utf-8"},{"name":"From","value":"jayrank@tjcg.in"},{"name":"To","value":"jayrank@tjcg.in"},{"name":"Subject","value":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},{"name":"Message-ID","value":"<06097697-9865-346c-bb40-5be44720e25a@tjcg.in>"},{"name":"Content-Transfer-Encoding","value":"quoted-printable"},{"name":"Date","value":"Mon, 03 Jul 2023 10:33:42 +0000"},{"name":"MIME-Version","value":"1.0"}],"commonHeaders":{"from":["jayrank@tjcg.in"],"date":"Mon, 03 Jul 2023 10:33:42 +0000","to":["jayrank@tjcg.in"],"messageId":"010901891b50bc55-f7d118de-e8bf-44ff-abaf-d318e513cbc9-000000","subject":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},"tags":{"ses:operation":["SendRawEmail"],"ses:configuration-set":["Testingemails"],"ses:source-ip":["103.105.234.242"],"ses:from-domain":["tjcg.in"],"ses:caller-identity":["root"]}},"send":{}}
+ 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 16:04:09 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{"eventType":"Send","mail":{"timestamp":"2023-07-03T10:33:07.470Z","source":"jayrank@tjcg.in","sourceArn":"arn:aws:ses:ap-south-1:379034229131:identity/jayrank@tjcg.in","sendingAccountId":"379034229131","messageId":"010901891b50308e-35418f94-716e-4ed1-ba25-ba31fd10b613-000000","destination":["jayrank@tjcg.in"],"headersTruncated":false,"headers":[{"name":"Content-Type","value":"text/html; charset=utf-8"},{"name":"From","value":"jayrank@tjcg.in"},{"name":"To","value":"jayrank@tjcg.in"},{"name":"Subject","value":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},{"name":"Message-ID","value":"<9fc36bbc-dd9f-bc09-0bfb-75ed5b55198d@tjcg.in>"},{"name":"Content-Transfer-Encoding","value":"quoted-printable"},{"name":"Date","value":"Mon, 03 Jul 2023 10:33:06 +0000"},{"name":"MIME-Version","value":"1.0"}],"commonHeaders":{"from":["jayrank@tjcg.in"],"date":"Mon, 03 Jul 2023 10:33:06 +0000","to":["jayrank@tjcg.in"],"messageId":"010901891b50308e-35418f94-716e-4ed1-ba25-ba31fd10b613-000000","subject":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},"tags":{"ses:operation":["SendRawEmail"],"ses:configuration-set":["Testingemails"],"ses:source-ip":["103.105.234.242"],"ses:from-domain":["tjcg.in"],"ses:caller-identity":["root"]}},"send":{}}
+ 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 16:04:47 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{"eventType":"Send","mail":{"timestamp":"2023-07-03T10:33:28.336Z","source":"jayrank@tjcg.in","sourceArn":"arn:aws:ses:ap-south-1:379034229131:identity/jayrank@tjcg.in","sendingAccountId":"379034229131","messageId":"010901891b508210-f2da9282-a4a0-411b-82a7-bbf2896dbc40-000000","destination":["jayrank@tjcg.in"],"headersTruncated":false,"headers":[{"name":"Content-Type","value":"text/html; charset=utf-8"},{"name":"From","value":"jayrank@tjcg.in"},{"name":"To","value":"jayrank@tjcg.in"},{"name":"Subject","value":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},{"name":"Message-ID","value":"<b62e4fce-a5a9-a204-1ac4-4cd3fd7c9760@tjcg.in>"},{"name":"Content-Transfer-Encoding","value":"quoted-printable"},{"name":"Date","value":"Mon, 03 Jul 2023 10:33:27 +0000"},{"name":"MIME-Version","value":"1.0"}],"commonHeaders":{"from":["jayrank@tjcg.in"],"date":"Mon, 03 Jul 2023 10:33:27 +0000","to":["jayrank@tjcg.in"],"messageId":"010901891b508210-f2da9282-a4a0-411b-82a7-bbf2896dbc40-000000","subject":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},"tags":{"ses:operation":["SendRawEmail"],"ses:configuration-set":["Testingemails"],"ses:source-ip":["103.105.234.242"],"ses:from-domain":["tjcg.in"],"ses:caller-identity":["root"]}},"send":{}}
+ 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 16:04:47 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{"eventType":"Delivery","mail":{"timestamp":"2023-07-03T10:33:28.336Z","source":"jayrank@tjcg.in","sourceArn":"arn:aws:ses:ap-south-1:379034229131:identity/jayrank@tjcg.in","sendingAccountId":"379034229131","messageId":"010901891b508210-f2da9282-a4a0-411b-82a7-bbf2896dbc40-000000","destination":["jayrank@tjcg.in"],"headersTruncated":false,"headers":[{"name":"Content-Type","value":"text/html; charset=utf-8"},{"name":"From","value":"jayrank@tjcg.in"},{"name":"To","value":"jayrank@tjcg.in"},{"name":"Subject","value":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},{"name":"Message-ID","value":"<b62e4fce-a5a9-a204-1ac4-4cd3fd7c9760@tjcg.in>"},{"name":"Content-Transfer-Encoding","value":"quoted-printable"},{"name":"Date","value":"Mon, 03 Jul 2023 10:33:27 +0000"},{"name":"MIME-Version","value":"1.0"}],"commonHeaders":{"from":["jayrank@tjcg.in"],"date":"Mon, 03 Jul 2023 10:33:27 +0000","to":["jayrank@tjcg.in"],"messageId":"010901891b508210-f2da9282-a4a0-411b-82a7-bbf2896dbc40-000000","subject":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},"tags":{"ses:operation":["SendRawEmail"],"ses:configuration-set":["Testingemails"],"ses:source-ip":["103.105.234.242"],"ses:from-domain":["tjcg.in"],"ses:caller-identity":["root"],"ses:outgoing-ip":["76.223.180.16"]}},"delivery":{"timestamp":"2023-07-03T10:33:31.666Z","processingTimeMillis":3330,"recipients":["jayrank@tjcg.in"],"smtpResponse":"250 2.0.0 Ok: queued as 4Qvj226NLdz9HGgK","reportingMTA":"c180-16.smtp-out.ap-south-1.amazonses.com"}}
+ 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 16:04:51 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{"eventType":"Send","mail":{"timestamp":"2023-07-03T10:34:00.805Z","source":"jayrank@tjcg.in","sourceArn":"arn:aws:ses:ap-south-1:379034229131:identity/jayrank@tjcg.in","sendingAccountId":"379034229131","messageId":"010901891b5100e5-b5a03964-c1cd-4ea4-8c1b-860a6566677a-000000","destination":["jayrank@tjcg.in"],"headersTruncated":false,"headers":[{"name":"Content-Type","value":"text/html; charset=utf-8"},{"name":"From","value":"jayrank@tjcg.in"},{"name":"To","value":"jayrank@tjcg.in"},{"name":"Subject","value":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},{"name":"Message-ID","value":"<ba426d96-7934-dfdf-47e4-58a05592ab15@tjcg.in>"},{"name":"Content-Transfer-Encoding","value":"quoted-printable"},{"name":"Date","value":"Mon, 03 Jul 2023 10:33:59 +0000"},{"name":"MIME-Version","value":"1.0"}],"commonHeaders":{"from":["jayrank@tjcg.in"],"date":"Mon, 03 Jul 2023 10:33:59 +0000","to":["jayrank@tjcg.in"],"messageId":"010901891b5100e5-b5a03964-c1cd-4ea4-8c1b-860a6566677a-000000","subject":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},"tags":{"ses:operation":["SendRawEmail"],"ses:configuration-set":["Testingemails"],"ses:source-ip":["103.105.234.242"],"ses:from-domain":["tjcg.in"],"ses:caller-identity":["root"]}},"send":{}}
+ 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 16:04:57 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{"eventType":"Delivery","mail":{"timestamp":"2023-07-03T10:33:43.253Z","source":"jayrank@tjcg.in","sourceArn":"arn:aws:ses:ap-south-1:379034229131:identity/jayrank@tjcg.in","sendingAccountId":"379034229131","messageId":"010901891b50bc55-f7d118de-e8bf-44ff-abaf-d318e513cbc9-000000","destination":["jayrank@tjcg.in"],"headersTruncated":false,"headers":[{"name":"Content-Type","value":"text/html; charset=utf-8"},{"name":"From","value":"jayrank@tjcg.in"},{"name":"To","value":"jayrank@tjcg.in"},{"name":"Subject","value":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},{"name":"Message-ID","value":"<06097697-9865-346c-bb40-5be44720e25a@tjcg.in>"},{"name":"Content-Transfer-Encoding","value":"quoted-printable"},{"name":"Date","value":"Mon, 03 Jul 2023 10:33:42 +0000"},{"name":"MIME-Version","value":"1.0"}],"commonHeaders":{"from":["jayrank@tjcg.in"],"date":"Mon, 03 Jul 2023 10:33:42 +0000","to":["jayrank@tjcg.in"],"messageId":"010901891b50bc55-f7d118de-e8bf-44ff-abaf-d318e513cbc9-000000","subject":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},"tags":{"ses:operation":["SendRawEmail"],"ses:configuration-set":["Testingemails"],"ses:source-ip":["103.105.234.242"],"ses:from-domain":["tjcg.in"],"ses:caller-identity":["root"],"ses:outgoing-ip":["76.223.180.13"]}},"delivery":{"timestamp":"2023-07-03T10:33:45.821Z","processingTimeMillis":2568,"recipients":["jayrank@tjcg.in"],"smtpResponse":"250 2.0.0 Ok: queued as 4Qvj2K1zpBz4wycG","reportingMTA":"c180-13.smtp-out.ap-south-1.amazonses.com"}}
+ 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 16:04:57 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{"eventType":"Delivery","mail":{"timestamp":"2023-07-03T10:33:07.470Z","source":"jayrank@tjcg.in","sourceArn":"arn:aws:ses:ap-south-1:379034229131:identity/jayrank@tjcg.in","sendingAccountId":"379034229131","messageId":"010901891b50308e-35418f94-716e-4ed1-ba25-ba31fd10b613-000000","destination":["jayrank@tjcg.in"],"headersTruncated":false,"headers":[{"name":"Content-Type","value":"text/html; charset=utf-8"},{"name":"From","value":"jayrank@tjcg.in"},{"name":"To","value":"jayrank@tjcg.in"},{"name":"Subject","value":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},{"name":"Message-ID","value":"<9fc36bbc-dd9f-bc09-0bfb-75ed5b55198d@tjcg.in>"},{"name":"Content-Transfer-Encoding","value":"quoted-printable"},{"name":"Date","value":"Mon, 03 Jul 2023 10:33:06 +0000"},{"name":"MIME-Version","value":"1.0"}],"commonHeaders":{"from":["jayrank@tjcg.in"],"date":"Mon, 03 Jul 2023 10:33:06 +0000","to":["jayrank@tjcg.in"],"messageId":"010901891b50308e-35418f94-716e-4ed1-ba25-ba31fd10b613-000000","subject":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},"tags":{"ses:operation":["SendRawEmail"],"ses:configuration-set":["Testingemails"],"ses:source-ip":["103.105.234.242"],"ses:from-domain":["tjcg.in"],"ses:caller-identity":["root"],"ses:outgoing-ip":["76.223.180.14"]}},"delivery":{"timestamp":"2023-07-03T10:33:13.926Z","processingTimeMillis":6456,"recipients":["jayrank@tjcg.in"],"smtpResponse":"250 2.0.0 Ok: queued as 4Qvj1d2Cz7z2Sm3K","reportingMTA":"c180-14.smtp-out.ap-south-1.amazonses.com"}}
+ 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 16:04:57 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{"eventType":"Send","mail":{"timestamp":"2023-07-03T10:33:07.470Z","source":"jayrank@tjcg.in","sourceArn":"arn:aws:ses:ap-south-1:379034229131:identity/jayrank@tjcg.in","sendingAccountId":"379034229131","messageId":"010901891b50308e-35418f94-716e-4ed1-ba25-ba31fd10b613-000000","destination":["jayrank@tjcg.in"],"headersTruncated":false,"headers":[{"name":"Content-Type","value":"text/html; charset=utf-8"},{"name":"From","value":"jayrank@tjcg.in"},{"name":"To","value":"jayrank@tjcg.in"},{"name":"Subject","value":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},{"name":"Message-ID","value":"<9fc36bbc-dd9f-bc09-0bfb-75ed5b55198d@tjcg.in>"},{"name":"Content-Transfer-Encoding","value":"quoted-printable"},{"name":"Date","value":"Mon, 03 Jul 2023 10:33:06 +0000"},{"name":"MIME-Version","value":"1.0"}],"commonHeaders":{"from":["jayrank@tjcg.in"],"date":"Mon, 03 Jul 2023 10:33:06 +0000","to":["jayrank@tjcg.in"],"messageId":"010901891b50308e-35418f94-716e-4ed1-ba25-ba31fd10b613-000000","subject":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},"tags":{"ses:operation":["SendRawEmail"],"ses:configuration-set":["Testingemails"],"ses:source-ip":["103.105.234.242"],"ses:from-domain":["tjcg.in"],"ses:caller-identity":["root"]}},"send":{}}
+ 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 16:04:57 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{"eventType":"Send","mail":{"timestamp":"2023-07-03T10:33:43.253Z","source":"jayrank@tjcg.in","sourceArn":"arn:aws:ses:ap-south-1:379034229131:identity/jayrank@tjcg.in","sendingAccountId":"379034229131","messageId":"010901891b50bc55-f7d118de-e8bf-44ff-abaf-d318e513cbc9-000000","destination":["jayrank@tjcg.in"],"headersTruncated":false,"headers":[{"name":"Content-Type","value":"text/html; charset=utf-8"},{"name":"From","value":"jayrank@tjcg.in"},{"name":"To","value":"jayrank@tjcg.in"},{"name":"Subject","value":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},{"name":"Message-ID","value":"<06097697-9865-346c-bb40-5be44720e25a@tjcg.in>"},{"name":"Content-Transfer-Encoding","value":"quoted-printable"},{"name":"Date","value":"Mon, 03 Jul 2023 10:33:42 +0000"},{"name":"MIME-Version","value":"1.0"}],"commonHeaders":{"from":["jayrank@tjcg.in"],"date":"Mon, 03 Jul 2023 10:33:42 +0000","to":["jayrank@tjcg.in"],"messageId":"010901891b50bc55-f7d118de-e8bf-44ff-abaf-d318e513cbc9-000000","subject":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},"tags":{"ses:operation":["SendRawEmail"],"ses:configuration-set":["Testingemails"],"ses:source-ip":["103.105.234.242"],"ses:from-domain":["tjcg.in"],"ses:caller-identity":["root"]}},"send":{}}
+ 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 16:05:14 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{"eventType":"Delivery","mail":{"timestamp":"2023-07-03T10:33:28.336Z","source":"jayrank@tjcg.in","sourceArn":"arn:aws:ses:ap-south-1:379034229131:identity/jayrank@tjcg.in","sendingAccountId":"379034229131","messageId":"010901891b508210-f2da9282-a4a0-411b-82a7-bbf2896dbc40-000000","destination":["jayrank@tjcg.in"],"headersTruncated":false,"headers":[{"name":"Content-Type","value":"text/html; charset=utf-8"},{"name":"From","value":"jayrank@tjcg.in"},{"name":"To","value":"jayrank@tjcg.in"},{"name":"Subject","value":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},{"name":"Message-ID","value":"<b62e4fce-a5a9-a204-1ac4-4cd3fd7c9760@tjcg.in>"},{"name":"Content-Transfer-Encoding","value":"quoted-printable"},{"name":"Date","value":"Mon, 03 Jul 2023 10:33:27 +0000"},{"name":"MIME-Version","value":"1.0"}],"commonHeaders":{"from":["jayrank@tjcg.in"],"date":"Mon, 03 Jul 2023 10:33:27 +0000","to":["jayrank@tjcg.in"],"messageId":"010901891b508210-f2da9282-a4a0-411b-82a7-bbf2896dbc40-000000","subject":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},"tags":{"ses:operation":["SendRawEmail"],"ses:configuration-set":["Testingemails"],"ses:source-ip":["103.105.234.242"],"ses:from-domain":["tjcg.in"],"ses:caller-identity":["root"],"ses:outgoing-ip":["76.223.180.16"]}},"delivery":{"timestamp":"2023-07-03T10:33:31.666Z","processingTimeMillis":3330,"recipients":["jayrank@tjcg.in"],"smtpResponse":"250 2.0.0 Ok: queued as 4Qvj226NLdz9HGgK","reportingMTA":"c180-16.smtp-out.ap-south-1.amazonses.com"}}
+ 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 16:05:14 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{"eventType":"Send","mail":{"timestamp":"2023-07-03T10:33:28.336Z","source":"jayrank@tjcg.in","sourceArn":"arn:aws:ses:ap-south-1:379034229131:identity/jayrank@tjcg.in","sendingAccountId":"379034229131","messageId":"010901891b508210-f2da9282-a4a0-411b-82a7-bbf2896dbc40-000000","destination":["jayrank@tjcg.in"],"headersTruncated":false,"headers":[{"name":"Content-Type","value":"text/html; charset=utf-8"},{"name":"From","value":"jayrank@tjcg.in"},{"name":"To","value":"jayrank@tjcg.in"},{"name":"Subject","value":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},{"name":"Message-ID","value":"<b62e4fce-a5a9-a204-1ac4-4cd3fd7c9760@tjcg.in>"},{"name":"Content-Transfer-Encoding","value":"quoted-printable"},{"name":"Date","value":"Mon, 03 Jul 2023 10:33:27 +0000"},{"name":"MIME-Version","value":"1.0"}],"commonHeaders":{"from":["jayrank@tjcg.in"],"date":"Mon, 03 Jul 2023 10:33:27 +0000","to":["jayrank@tjcg.in"],"messageId":"010901891b508210-f2da9282-a4a0-411b-82a7-bbf2896dbc40-000000","subject":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},"tags":{"ses:operation":["SendRawEmail"],"ses:configuration-set":["Testingemails"],"ses:source-ip":["103.105.234.242"],"ses:from-domain":["tjcg.in"],"ses:caller-identity":["root"]}},"send":{}}
+ 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 16:05:14 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{"eventType":"Send","mail":{"timestamp":"2023-07-03T10:34:00.805Z","source":"jayrank@tjcg.in","sourceArn":"arn:aws:ses:ap-south-1:379034229131:identity/jayrank@tjcg.in","sendingAccountId":"379034229131","messageId":"010901891b5100e5-b5a03964-c1cd-4ea4-8c1b-860a6566677a-000000","destination":["jayrank@tjcg.in"],"headersTruncated":false,"headers":[{"name":"Content-Type","value":"text/html; charset=utf-8"},{"name":"From","value":"jayrank@tjcg.in"},{"name":"To","value":"jayrank@tjcg.in"},{"name":"Subject","value":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},{"name":"Message-ID","value":"<ba426d96-7934-dfdf-47e4-58a05592ab15@tjcg.in>"},{"name":"Content-Transfer-Encoding","value":"quoted-printable"},{"name":"Date","value":"Mon, 03 Jul 2023 10:33:59 +0000"},{"name":"MIME-Version","value":"1.0"}],"commonHeaders":{"from":["jayrank@tjcg.in"],"date":"Mon, 03 Jul 2023 10:33:59 +0000","to":["jayrank@tjcg.in"],"messageId":"010901891b5100e5-b5a03964-c1cd-4ea4-8c1b-860a6566677a-000000","subject":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},"tags":{"ses:operation":["SendRawEmail"],"ses:configuration-set":["Testingemails"],"ses:source-ip":["103.105.234.242"],"ses:from-domain":["tjcg.in"],"ses:caller-identity":["root"]}},"send":{}}
+ 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 16:05:17 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{"eventType":"Delivery","mail":{"timestamp":"2023-07-03T10:34:00.805Z","source":"jayrank@tjcg.in","sourceArn":"arn:aws:ses:ap-south-1:379034229131:identity/jayrank@tjcg.in","sendingAccountId":"379034229131","messageId":"010901891b5100e5-b5a03964-c1cd-4ea4-8c1b-860a6566677a-000000","destination":["jayrank@tjcg.in"],"headersTruncated":false,"headers":[{"name":"Content-Type","value":"text/html; charset=utf-8"},{"name":"From","value":"jayrank@tjcg.in"},{"name":"To","value":"jayrank@tjcg.in"},{"name":"Subject","value":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},{"name":"Message-ID","value":"<ba426d96-7934-dfdf-47e4-58a05592ab15@tjcg.in>"},{"name":"Content-Transfer-Encoding","value":"quoted-printable"},{"name":"Date","value":"Mon, 03 Jul 2023 10:33:59 +0000"},{"name":"MIME-Version","value":"1.0"}],"commonHeaders":{"from":["jayrank@tjcg.in"],"date":"Mon, 03 Jul 2023 10:33:59 +0000","to":["jayrank@tjcg.in"],"messageId":"010901891b5100e5-b5a03964-c1cd-4ea4-8c1b-860a6566677a-000000","subject":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},"tags":{"ses:operation":["SendRawEmail"],"ses:configuration-set":["Testingemails"],"ses:source-ip":["103.105.234.242"],"ses:from-domain":["tjcg.in"],"ses:caller-identity":["root"],"ses:outgoing-ip":["76.223.180.16"]}},"delivery":{"timestamp":"2023-07-03T10:34:03.361Z","processingTimeMillis":2556,"recipients":["jayrank@tjcg.in"],"smtpResponse":"250 2.0.0 Ok: queued as 4Qvj2f4pgwz9HJTV","reportingMTA":"c180-16.smtp-out.ap-south-1.amazonses.com"}}
+ 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 16:05:47 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{"eventType":"Delivery","mail":{"timestamp":"2023-07-03T10:33:43.253Z","source":"jayrank@tjcg.in","sourceArn":"arn:aws:ses:ap-south-1:379034229131:identity/jayrank@tjcg.in","sendingAccountId":"379034229131","messageId":"010901891b50bc55-f7d118de-e8bf-44ff-abaf-d318e513cbc9-000000","destination":["jayrank@tjcg.in"],"headersTruncated":false,"headers":[{"name":"Content-Type","value":"text/html; charset=utf-8"},{"name":"From","value":"jayrank@tjcg.in"},{"name":"To","value":"jayrank@tjcg.in"},{"name":"Subject","value":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},{"name":"Message-ID","value":"<06097697-9865-346c-bb40-5be44720e25a@tjcg.in>"},{"name":"Content-Transfer-Encoding","value":"quoted-printable"},{"name":"Date","value":"Mon, 03 Jul 2023 10:33:42 +0000"},{"name":"MIME-Version","value":"1.0"}],"commonHeaders":{"from":["jayrank@tjcg.in"],"date":"Mon, 03 Jul 2023 10:33:42 +0000","to":["jayrank@tjcg.in"],"messageId":"010901891b50bc55-f7d118de-e8bf-44ff-abaf-d318e513cbc9-000000","subject":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},"tags":{"ses:operation":["SendRawEmail"],"ses:configuration-set":["Testingemails"],"ses:source-ip":["103.105.234.242"],"ses:from-domain":["tjcg.in"],"ses:caller-identity":["root"],"ses:outgoing-ip":["76.223.180.13"]}},"delivery":{"timestamp":"2023-07-03T10:33:45.821Z","processingTimeMillis":2568,"recipients":["jayrank@tjcg.in"],"smtpResponse":"250 2.0.0 Ok: queued as 4Qvj2K1zpBz4wycG","reportingMTA":"c180-13.smtp-out.ap-south-1.amazonses.com"}}
+ 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 16:05:48 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{"eventType":"Send","mail":{"timestamp":"2023-07-03T10:33:43.253Z","source":"jayrank@tjcg.in","sourceArn":"arn:aws:ses:ap-south-1:379034229131:identity/jayrank@tjcg.in","sendingAccountId":"379034229131","messageId":"010901891b50bc55-f7d118de-e8bf-44ff-abaf-d318e513cbc9-000000","destination":["jayrank@tjcg.in"],"headersTruncated":false,"headers":[{"name":"Content-Type","value":"text/html; charset=utf-8"},{"name":"From","value":"jayrank@tjcg.in"},{"name":"To","value":"jayrank@tjcg.in"},{"name":"Subject","value":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},{"name":"Message-ID","value":"<06097697-9865-346c-bb40-5be44720e25a@tjcg.in>"},{"name":"Content-Transfer-Encoding","value":"quoted-printable"},{"name":"Date","value":"Mon, 03 Jul 2023 10:33:42 +0000"},{"name":"MIME-Version","value":"1.0"}],"commonHeaders":{"from":["jayrank@tjcg.in"],"date":"Mon, 03 Jul 2023 10:33:42 +0000","to":["jayrank@tjcg.in"],"messageId":"010901891b50bc55-f7d118de-e8bf-44ff-abaf-d318e513cbc9-000000","subject":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},"tags":{"ses:operation":["SendRawEmail"],"ses:configuration-set":["Testingemails"],"ses:source-ip":["103.105.234.242"],"ses:from-domain":["tjcg.in"],"ses:caller-identity":["root"]}},"send":{}}
+ 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 16:06:05 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{"eventType":"Send","mail":{"timestamp":"2023-07-03T10:34:00.805Z","source":"jayrank@tjcg.in","sourceArn":"arn:aws:ses:ap-south-1:379034229131:identity/jayrank@tjcg.in","sendingAccountId":"379034229131","messageId":"010901891b5100e5-b5a03964-c1cd-4ea4-8c1b-860a6566677a-000000","destination":["jayrank@tjcg.in"],"headersTruncated":false,"headers":[{"name":"Content-Type","value":"text/html; charset=utf-8"},{"name":"From","value":"jayrank@tjcg.in"},{"name":"To","value":"jayrank@tjcg.in"},{"name":"Subject","value":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},{"name":"Message-ID","value":"<ba426d96-7934-dfdf-47e4-58a05592ab15@tjcg.in>"},{"name":"Content-Transfer-Encoding","value":"quoted-printable"},{"name":"Date","value":"Mon, 03 Jul 2023 10:33:59 +0000"},{"name":"MIME-Version","value":"1.0"}],"commonHeaders":{"from":["jayrank@tjcg.in"],"date":"Mon, 03 Jul 2023 10:33:59 +0000","to":["jayrank@tjcg.in"],"messageId":"010901891b5100e5-b5a03964-c1cd-4ea4-8c1b-860a6566677a-000000","subject":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},"tags":{"ses:operation":["SendRawEmail"],"ses:configuration-set":["Testingemails"],"ses:source-ip":["103.105.234.242"],"ses:from-domain":["tjcg.in"],"ses:caller-identity":["root"]}},"send":{}}
+ 
+ 
+ 
+ 
+ 
+ 
+Webhook Working ---- Mon Jul 03 2023 16:06:08 GMT+0530 (India Standard Time)
+ Data ::::::---> 
+{"eventType":"Delivery","mail":{"timestamp":"2023-07-03T10:34:00.805Z","source":"jayrank@tjcg.in","sourceArn":"arn:aws:ses:ap-south-1:379034229131:identity/jayrank@tjcg.in","sendingAccountId":"379034229131","messageId":"010901891b5100e5-b5a03964-c1cd-4ea4-8c1b-860a6566677a-000000","destination":["jayrank@tjcg.in"],"headersTruncated":false,"headers":[{"name":"Content-Type","value":"text/html; charset=utf-8"},{"name":"From","value":"jayrank@tjcg.in"},{"name":"To","value":"jayrank@tjcg.in"},{"name":"Subject","value":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},{"name":"Message-ID","value":"<ba426d96-7934-dfdf-47e4-58a05592ab15@tjcg.in>"},{"name":"Content-Transfer-Encoding","value":"quoted-printable"},{"name":"Date","value":"Mon, 03 Jul 2023 10:33:59 +0000"},{"name":"MIME-Version","value":"1.0"}],"commonHeaders":{"from":["jayrank@tjcg.in"],"date":"Mon, 03 Jul 2023 10:33:59 +0000","to":["jayrank@tjcg.in"],"messageId":"010901891b5100e5-b5a03964-c1cd-4ea4-8c1b-860a6566677a-000000","subject":"Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!"},"tags":{"ses:operation":["SendRawEmail"],"ses:configuration-set":["Testingemails"],"ses:source-ip":["103.105.234.242"],"ses:from-domain":["tjcg.in"],"ses:caller-identity":["root"],"ses:outgoing-ip":["76.223.180.16"]}},"delivery":{"timestamp":"2023-07-03T10:34:03.361Z","processingTimeMillis":2556,"recipients":["jayrank@tjcg.in"],"smtpResponse":"250 2.0.0 Ok: queued as 4Qvj2f4pgwz9HJTV","reportingMTA":"c180-16.smtp-out.ap-south-1.amazonses.com"}}
+ 
+ 
+ 
+ 
+ 
+ 

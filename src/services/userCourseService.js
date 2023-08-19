@@ -1,0 +1,1650 @@
+const { UserCourseModel, CourseWatchHistoryModel, UserModel, InvoiceModel, CartModel } = require("../database");
+const constants = require('../utils/constant');
+const { createSubscription , cancelSubscription } = require('../utils/paymentManagement');
+const { CallCourseQueryEvent,CallCourseQueryDataEvent, CallCourseEvents } = require('../utils/call-event-bus');
+const { coursePurchaseTemplate, subscriptionCancelTemplate } = require('../utils/email-template');
+const { createCronLogs, updateCronLogs, createApiCallLog, getNewDate, sendMail, generatePDF, sendPushNotification, findUniqueID } = require('../utils');
+const { encrypt, decrypt } = require('../utils/ccavenue');
+const moment = require('moment');
+const fs = require('fs');
+const qs = require('querystring');
+const { invoiceTemplate } = require('../utils/pdf-template');
+
+const assignCourse = async (userInputs,request) => {
+    try{
+        const { user_id, course_id, duration, duration_time  } = userInputs;
+        //get course data
+        const getFilterData = await UserCourseModel.filterUserCourseData({ user_id, course_id});
+        let courseData = await CallCourseQueryEvent("get_course_data_without_auth",{ id: course_id  }, request.get("Authorization"))
+
+        if(courseData){
+            if(courseData?.status !== 1 || courseData?.is_pause_enrollment === true){
+                return {
+                    status: false,
+                    status_code: constants.DATABASE_ERROR_RESPONSE,
+                    message: "Failed to assign course"
+                };
+            }
+        }else{
+            return {
+                status: false,
+                status_code: constants.DATABASE_ERROR_RESPONSE,
+                message: "Failed to assign course"
+            };
+        }
+
+        // Create a new date object
+        const date = await getNewDate(duration, duration_time); // Please make sure getNewDate is an asynchronous function
+
+        if(getFilterData == null || (getFilterData.type !== 1 && (getFilterData.course_subscription_type == 3 || (getFilterData.course_subscription_type == 4) && (getFilterData.payment_status !== 2 || getFilterData.is_expired == true)))){
+            //delete the course if not do the payment
+            await UserCourseModel.deleteAssignCourse(user_id,course_id)
+
+            const createUserCourse = await UserCourseModel.assignUserCourse({ 
+                user_id: user_id, 
+                course_id: course_id, 
+                duration: duration, 
+                duration_time: duration_time,
+                type: 1,
+                purchase_date: new Date(),
+                course_subscription_type: courseData ? courseData.course_subscription_type : '',
+                expire_date: date
+            });
+
+            if(createUserCourse !== false){
+                const getUserData = await UserModel.fatchUserById(user_id);
+                let subject = `Course Assiged - ${courseData.course_title}`;
+                let message = await coursePurchaseTemplate({ user_name: `${getUserData?.first_name} ${getUserData?.last_name}`, subject: subject, course_title: courseData.course_title});
+                let sendwait = await sendMail(getUserData?.email, message, subject, user_id, "Course Assign")
+
+                let id= createUserCourse?._id ? createUserCourse?._id : null;
+
+                if(getUserData?.notification_device_id){
+                    await sendPushNotification({notification_device_id:[getUserData?.notification_device_id], message: "Course has been purchased successfully.", template_id: "20a140f6-66bb-4995-94af-0a58632afd31"})
+                }
+
+                return {
+                    status: true,
+                    status_code: constants.SUCCESS_RESPONSE,
+                    message: "Course assign successfully",
+                    id: createUserCourse._id
+                };
+            }else{
+                return {
+                    status: false,
+                    status_code: constants.DATABASE_ERROR_RESPONSE,
+                    message: "Failed to assign course",
+                    id: null
+                };
+            }
+        }else{
+            return {
+                status: false,
+                status_code: constants.DATABASE_ERROR_RESPONSE,
+                message: "Course is already assign to the user",
+                error: {
+                    course_title: "Course is already assign to the user"
+                }
+            };
+        }
+    }catch (error) {
+        // Handle unexpected errors
+        console.error('Error in assignCourse:', error);
+        return {
+            status: false,
+            status_code: constants.EXCEPTION_ERROR_CODE,
+            message: 'Failed to assign course',
+            error: { server_error: 'An unexpected error occurred' },
+            data: null,
+        };
+    }
+}
+ 
+const getAssignCourseList = async (userInputs,request) => {
+    try{
+        const { user_id, startToken, endToken, course_subscription_type } = userInputs;
+
+        const perPage = parseInt(endToken) || 10; 
+        let page = Math.max((parseInt(startToken) || 1) - 1, 0); 
+        if (page !== 0) { 
+            page = perPage * page; 
+        }
+
+
+        //get course data
+        const getUserCourse = await UserCourseModel.getUserCourseData({ user_id,  page, perPage, course_subscription_type });
+        const countUserCourse = await UserCourseModel.getUserCourseCount({ user_id, course_subscription_type });
+
+        if(getUserCourse !== null){
+            
+            let cartData = [];
+            if(getUserCourse.length > 0){
+            
+                let promiseCartData = await new Promise(async (resolve, reject) => {
+                    let keyCount = 0
+                    await getUserCourse.map(async (cartElement, cartKey) => {
+                        await new Promise(async (resolve, reject) => {
+                            let validCourse = true
+                            if(cartElement.type !== 1 && ((cartElement.course_subscription_type == 3 || cartElement.course_subscription_type == 4) && (cartElement.payment_status !== 2 || cartElement.is_expired == true))){
+                                validCourse = false
+                            }
+
+                            if(validCourse){
+                                let course = await CallCourseQueryEvent("get_course_data_without_auth",{ id: cartElement.course_id  }, request.get("Authorization"))
+                                let courseWatchHistory = await CourseWatchHistoryModel.filterCourseWatchHistoryData(user_id, cartElement.course_id)
+                                
+                                let perForCompletedChapter = 0;
+                                if(courseWatchHistory!== null){
+                                    let courseChapterCount = await CallCourseQueryDataEvent("get_chapter_count",{ course_id: cartElement.course_id  }, request.get("Authorization"));
+                                    if(courseChapterCount.total_chapter > 0 && courseWatchHistory.completed_chapter.length > 0){
+                                        perForCompletedChapter = courseWatchHistory.completed_chapter.length * 100 / parseInt(courseChapterCount.total_chapter);
+                                    }
+                                }
+            
+                                if(course !== null){
+                                    await cartData.push({
+                                        _id: cartElement.id,
+                                        user_id: cartElement.user_id,
+                                        course_id: cartElement.course_id,
+                                        duration: cartElement.duration,
+                                        duration_time: cartElement.duration_time,
+                                        createdAt: cartElement.createdAt,
+                                        type: cartElement.type,
+                                        course_subscription_type: cartElement.course_subscription_type,
+                                        purchase_date: cartElement.purchase_date,
+                                        price: cartElement.price,
+                                        payment_method: cartElement.payment_method,
+                                        transaction_id: cartElement.transaction_id,
+                                        subscription_start_date: cartElement.subscription_start_date,
+                                        subscription_end_date: cartElement.subscription_end_date,
+                                        course_title: course ? course.course_title : '',
+                                        per_completed_chapter: parseInt(perForCompletedChapter),
+                                    })
+                                    resolve(true)
+                                    keyCount = keyCount + 1
+                                }else{
+                                    resolve(false)
+                                    keyCount = keyCount + 1
+                                }
+                            }else{
+                                resolve(false) 
+                                keyCount = keyCount + 1
+                            }
+                        })
+                
+                        if (getUserCourse.length === keyCount ) {
+                            resolve({
+                                status: true,
+                                status_code: constants.SUCCESS_RESPONSE,
+                                message: "Data get successfully",
+                                data: cartData,
+                                record_count: countUserCourse
+                            })
+                        }
+                    });
+                });
+
+                return promiseCartData;
+            }else{
+                return {
+                    status: true,
+                    status_code: constants.SUCCESS_RESPONSE,
+                    message: "Data get successfully",
+                    data: cartData,
+                    record_count: countUserCourse
+                }
+            }
+        }else{
+            return {
+                status: false,
+                status_code: constants.DATABASE_ERROR_RESPONSE,
+                message: "Data not found",
+                data: null
+            };
+        }
+    }catch (error) {
+        // Handle unexpected errors
+        console.error('Error in getAssignCourseList:', error);
+        return {
+            status: false,
+            status_code: constants.EXCEPTION_ERROR_CODE,
+            message: 'Failed to get the data',
+            error: { server_error: 'An unexpected error occurred' },
+            data: null,
+        };
+    }
+  
+}
+
+const deleteUserCourse = async (userInputs) => {
+    try{
+        const { id } = userInputs;
+
+        const updateUser = await UserCourseModel.updateUserCourse(id,{ 
+            is_deleted: true
+        });
+        
+        if(updateUser){
+            return {
+                status: true,
+                status_code: constants.SUCCESS_RESPONSE,
+                message: "Course deleted successfully"
+            };
+        }else{
+            return {
+                status: false,
+                status_code: constants.DATABASE_ERROR_RESPONSE,
+                message: "Failed to delete course"
+            };
+        }
+    }catch (error) {
+        // Handle unexpected errors
+        console.error('Error in deleteUserCourse:', error);
+        return {
+            status: false,
+            status_code: constants.EXCEPTION_ERROR_CODE,
+            message: 'Failed to delete course',
+            error: { server_error: 'An unexpected error occurred' },
+            data: null,
+        };
+    }
+    
+}
+
+const updateAssignCourse = async (userInputs,request) => {
+    try{
+        const { id, user_id, user_title, course_id, allowed_enrollment, duration, duration_time  } = userInputs;
+
+        //check duplicate user name
+        const getFilterData = await UserCourseModel.filterUserCourseData({ user_id, course_id});
+
+
+        if(getFilterData !== null && id !== getFilterData._id.toString()){
+            return {
+                status: false,
+                status_code: constants.ERROR_RESPONSE,
+                message: "Course is already assign to the user",
+            };
+        }else{
+
+            const createUserCourse = await UserCourseModel.updateUserCourse(id,{ 
+            user_id: user_id, 
+            user_title: user_title, 
+            course_id: course_id, 
+            allowed_enrollment: allowed_enrollment, 
+            duration: duration, 
+            duration_time: duration_time
+            });
+            
+            if(createUserCourse !== false){
+                return {
+                    status: true,
+                    status_code: constants.SUCCESS_RESPONSE,
+                    message: "Course assign successfully",
+                    id: createUserCourse._id
+                };
+            }else{
+                return {
+                    status: false,
+                    status_code: constants.DATABASE_ERROR_RESPONSE,
+                    message: "Failed to assign course",
+                    id: null
+                };
+            }
+        }
+    }catch (error) {
+        // Handle unexpected errors
+        console.error('Error in updateAssignCourse:', error);
+        return {
+            status: false,
+            status_code: constants.EXCEPTION_ERROR_CODE,
+            message: 'Failed to assign course',
+            error: { server_error: 'An unexpected error occurred' },
+            data: null,
+        };
+    }
+}
+
+const getAssignCourseById = async (userInputs,request) => {
+    try{
+        const { id } = userInputs;
+
+        const getFilterData = await UserCourseModel.filterUserCourseData({ id });
+
+        if(getFilterData !== null){
+            return {
+                status: true,
+                status_code: constants.SUCCESS_RESPONSE,
+                message: "Data get successfully",
+                data: getFilterData
+            };
+        }else{
+            return {
+                status: false,
+                status_code: constants.DATABASE_ERROR_RESPONSE,
+                message: "Data not found",
+                data: null
+            };
+        }
+    }catch (error) {
+        // Handle unexpected errors
+        console.error('Error in getAssignCourseById:', error);
+        return {
+            status: false,
+            status_code: constants.EXCEPTION_ERROR_CODE,
+            message: 'Failed to fetch the data',
+            error: { server_error: 'An unexpected error occurred' },
+            data: null,
+        };
+    }
+}
+ 
+const purchaseCourse = async (userInputs,request) => {
+    try{
+        const { user_id, course_id, subscription_type } = userInputs;
+
+        const getFilterData = await UserCourseModel.filterUserCourseData({ user_id, course_id});
+
+        if(getFilterData != null){
+            if(getFilterData.type == 1){
+                // course already assign to user
+                return {
+                    status: false,
+                    status_code: constants.ERROR_RESPONSE,
+                    message: "Course is already assign",
+                    error: {
+                        course_title: "Course is already assign"
+                    }
+                };
+            }else{
+                // course already purchased by user
+                if(getFilterData.type == 2 && getFilterData.payment_status == 2 && getFilterData.is_cancle_subscription == false){
+                    return {
+                        status: false,
+                        status_code: constants.ERROR_RESPONSE,
+                        message: "Course is already purchased",
+                        error: {
+                            course_title: "Course is already purchased"
+                        }
+                    };
+                }
+            }
+        }
+
+        let courseData = await CallCourseQueryEvent("get_course_data_without_auth",{ id: course_id  }, request.get("Authorization"))
+        if(courseData){
+            if(courseData?.status !== 1 || courseData?.is_pause_enrollment === true){
+                return {
+                    status: false,
+                    status_code: constants.DATABASE_ERROR_RESPONSE,
+                    message: "Sorry! Failed to purchase the course."
+                };
+            }
+        }else{
+            return {
+                status: false,
+                status_code: constants.DATABASE_ERROR_RESPONSE,
+                message: "Sorry! Failed to purchase the course."
+            };
+        }
+
+        let cronLogData = {}
+        let cronstartTime = Date.now()
+        //create cron log
+        let cronData = await createCronLogs({
+            type: "purchasecourse",
+            request: JSON.stringify(request.body),
+            header: request.get("Authorization"),
+            response: null,
+            url: "user/purchaseCourse",
+            start_time: new Date()
+        })
+        let cronId = cronData?.status ? cronData?.cron_id : ''
+
+        cronLogData['course_data'] = courseData
+
+        let courseInsertData = { 
+            user_id: user_id, 
+            course_id: course_id, 
+            type: 2,
+            purchase_date: new Date(),
+            course_subscription_type: courseData.course_subscription_type,
+            is_tax_inclusive: courseData?.is_tax_inclusive || true,
+            is_tax_exclusive: courseData?.is_tax_exclusive || false,
+            tax_percentage: courseData?.tax_percentage || 0
+        }
+
+        let invoiceData = {
+            user_id: user_id, 
+            course_id: course_id,
+            course_type: courseData.course_subscription_type
+        }
+        const getUserData = await UserModel.fatchUserById(user_id);
+
+        cronLogData['user_data'] = courseData
+
+        let orderId = ''
+        let paymentUrl = ''
+        if(courseData.course_subscription_type == 4){
+
+            if(subscription_type){
+
+               
+                cronLogData['user_data'] = getFilterData
+                
+
+                if(getFilterData?.course_subscription_type == 4 && getFilterData?.is_purchase == false && getFilterData?.duration == subscription_type){
+                    let currentTime = Math.floor(new Date().getTime() / 1000)
+                    const expireAt = Math.floor(new Date(getFilterData?.linkexpired_at).getTime() / 1000)
+
+                    if(expireAt > currentTime){
+                        cronLogData['subscribe_with'] = "old link"
+
+                        //update cron log
+                        await updateCronLogs(cronId,{
+                            end_time: new Date(),
+                            details: JSON.stringify(cronLogData),
+                            cronstart_time: cronstartTime
+                        })
+    
+                        return {
+                            status: true,
+                            status_code: constants.SUCCESS_RESPONSE,
+                            message: 'Please make a payment',
+                            id: getFilterData._id,
+                            payment_url: getFilterData.subscription_link
+                        };
+                    }
+                    
+                }
+
+                cronLogData['subscribe_with'] = "new link"
+                //subscription payment
+                let coursePlanData = await CallCourseEvents("get_course_plan_data",{ id: course_id, subscription_type }, request.get("Authorization"))
+
+                cronLogData['course_plan_data'] = courseData
+
+                if(coursePlanData && coursePlanData?.plan_id) {
+                    
+
+                    const expireBy = Math.floor(new Date(await getNewDate("month", 6)).getTime() / 1000)
+
+                    //reference_id, notify_by_email,  notify_by_mobil
+                    let subscriptionData ={
+                        razorPayPlanId: coursePlanData?.plan_id,
+                        customer_notify: 1, 
+                        total_count: 1200,
+                        reference_id: "",
+                        expire_by: expireBy,
+                        notify_by_email: getUserData?.mobile_no || null,
+                        notify_by_mobil: getUserData?.email || null
+                    }
+
+                    let courseSubscription = await createSubscription(subscriptionData)
+
+                    //create a api call
+                    await createApiCallLog({
+                        cron_id: cronId,
+                        type: "createsubscription",
+                        request: JSON.stringify(subscriptionData),
+                        header: request.get("Authorization"),
+                        response: JSON.stringify(courseSubscription),
+                        url: "user/purchaseCourse" ,
+                        details: JSON.stringify(subscriptionData),
+                        execution_time: new Date()
+                    })
+
+                    if(courseSubscription?.status){
+                        //payment url
+                        paymentUrl = courseSubscription?.data?.short_url
+
+                        //user course Data
+                        courseInsertData['duration'] = subscription_type
+                        courseInsertData['price'] = coursePlanData?.amount
+                        courseInsertData['plan_id'] = coursePlanData?.plan_id
+                        courseInsertData['payment_method'] = "razorpay"
+                        courseInsertData['subscription_start_date'] = new Date()
+                        courseInsertData['subscription_date'] = new Date()
+                        courseInsertData['linkexpired_at'] = await getNewDate("month", 6)
+                        courseInsertData['amount'] = coursePlanData?.price || 0,
+                        courseInsertData['discount_amount'] = coursePlanData?.discount_amount || 0,
+                        courseInsertData['discount'] = coursePlanData?.discount || 0
+
+                        if(subscription_type == 'month'){
+                            // Create a new date object
+                            const date = await getNewDate("month", 1)
+
+                            courseInsertData['duration_time'] = 1
+                            courseInsertData['subscription_recurring_date'] = date
+                        }else if(subscription_type == 'quarter'){
+                            // Create a new date object
+                            const date = await getNewDate("month", 3)
+
+                            courseInsertData['duration_time'] = 3
+                            courseInsertData['subscription_recurring_date'] = date
+                        }else if(subscription_type == 'year'){
+                            // Create a new date object
+                            const date = await getNewDate("year", 1)
+
+                            courseInsertData['duration_time'] = 1
+                            courseInsertData['subscription_recurring_date'] = date
+                        }else if(subscription_type == "two-year"){
+                             // Create a new date object
+                             const date = await getNewDate("year", 2)
+
+                             courseInsertData['duration_time'] = 1
+                             courseInsertData['subscription_recurring_date'] = date
+                        }
+                        courseInsertData['subscription_id'] = courseSubscription?.data?.id
+                        courseInsertData['subscription_link'] = paymentUrl
+
+                    }else{
+                        return {
+                            status: false,
+                            status_code: constants.EXCEPTION_ERROR_CODE,
+                            message: 'Sorry! Failed to subscribe the course.',
+                            data: null,
+                        };
+                    }
+                }else{
+                    return {
+                        status: false,
+                        status_code: constants.EXCEPTION_ERROR_CODE,
+                        message: 'Sorry! Failed to subscribe the course.',
+                        data: null,
+                    };
+                }
+            }else{
+                return {
+                    status: false,
+                    status_code: constants.EXCEPTION_ERROR_CODE,
+                    message: 'Please select a subscription',
+                    data: null,
+                };
+            }
+        }else if(courseData.course_subscription_type == 3){
+            //single time payment
+
+            let finalAmount = courseData.discount_amount
+            if(courseData.is_tax_exclusive){
+                let taxAmount = parseInt(courseData.discount_amount) * parseFloat(courseData.tax_percentage) / 100 
+                finalAmount = finalAmount + taxAmount
+            }
+        
+            courseInsertData['price'] = finalAmount
+            courseInsertData['is_lifetime_access'] = courseData?.is_lifetimefree || false
+            courseInsertData['payment_method'] = "razorpay",
+            courseInsertData['amount'] = courseData?.price || 0,
+            courseInsertData['discount_amount'] = courseData?.discount_amount || 0,
+            courseInsertData['discount'] = courseData?.discount || 0
+            
+            if(courseData?.is_limitedtime  && courseData?.is_limitedtime == true){
+
+                // Create a new date object
+                const date = await getNewDate(courseData?.interval_time, courseData?.interval_count)
+
+                courseInsertData['duration'] = courseData?.interval_time ? courseData?.interval_time : null
+                courseInsertData['duration_time'] = courseData?.interval_count ? courseData?.interval_count : null
+                courseInsertData['expire_date'] = date
+            }
+
+            let amount = finalAmount
+            if(amount > 0){
+                invoiceData['amount'] = amount
+
+                let workingKey = process.env.DEVELOPER_MODE == "development" ? process.env.CCAVENUE_KEY_TESTING : process.env.CCAVENUE_KEY
+                let accessCode = process.env.DEVELOPER_MODE == "development" ? process.env.CCAVENUE_ACCESS_CODE_TESTING : process.env.CCAVENUE_ACCESS_CODE
+                paymentUrl = process.env.DEVELOPER_MODE == "development" ? process.env.CCAVENUE_URL_TESTING : process.env.CCAVENUE_URL
+                let merchant_id = process.env.DEVELOPER_MODE == "development" ? process.env.CCAVENUE_MID_TESTING : process.env.CCAVENUE_MID
+                let redirectUrl = process.env.DEVELOPER_MODE == "development" ? process.env.CCAVENUE_REDIRECT_URL_TESTING : process.env.CCAVENUE_REDIRECT_URL
+                orderId = await findUniqueID()
+                let paymentData = {
+                    merchant_id: merchant_id,
+                    order_id: orderId,
+                    currency: "INR",
+                    amount: amount,
+                    language: "EN",
+                    billing_name: (getUserData?.first_name ? getUserData?.first_name : '') + " " + (getUserData?.last_name ? getUserData?.last_name : ''),
+                    billing_address:  'Santacruz', 
+                    billing_city: getUserData?.city || 'Rajkot',
+                    billing_state: getUserData?.state || 'Gujrat',
+                    billing_zip: getUserData?.pincode || '400054',
+                    billing_country: getUserData?.country || 'India',
+                    billing_tel: getUserData?.mobile_no || '9512742802',
+                    billing_email: getUserData?.email || 'demouser@gmail.com',
+                    merchant_param1: user_id,
+                    integration_type: "iframe_normal",
+                    redirect_url: redirectUrl,
+                    cancel_url: redirectUrl
+                }
+        
+                const stringified = qs.stringify(paymentData);
+                let encRequest = encrypt(stringified, workingKey)
+        
+                paymentUrl = paymentUrl + "command=initiateTransaction&merchant_id="+merchant_id+"&encRequest="+encRequest+"&access_code="+accessCode
+            
+                cronLogData['payment_url'] = paymentUrl
+
+                invoiceData['order_id'] = orderId
+                invoiceData['purchase_time'] = new Date()
+                invoiceData['invoice_type'] = 2
+                invoiceData['module_name'] = "Subscription/Payment";
+                const createInvoice = await InvoiceModel.createInvoice(invoiceData);
+        
+                cronLogData['create_invoice'] = createInvoice
+
+                courseInsertData['invoice_id'] = createInvoice?._id ? createInvoice?._id.toString() : null
+                    
+               
+            }else{
+                return {
+                    status: false,
+                    status_code: constants.EXCEPTION_ERROR_CODE,
+                    message: 'Sorry! Failed to purchase the course.',
+                    data: null,
+                };
+            } 
+        }
+
+        const createUserCourse = await UserCourseModel.assignUserCourse(courseInsertData);
+        cronLogData['create_user_course'] = courseData
+
+        //update cron log
+        await updateCronLogs(cronId,{
+            end_time: new Date(),
+            details: JSON.stringify(cronLogData),
+            cronstart_time: cronstartTime
+        })
+        
+        if(createUserCourse !== false){
+
+            let id= createUserCourse?._id ? createUserCourse?._id : null;
+            if(request?.user?.notification_device_id){
+                await sendPushNotification({notification_device_id:[request.user.notification_device_id], message: "Course has been purchased successfully."})
+            }
+            
+            return {
+                status: true,
+                status_code: constants.SUCCESS_RESPONSE,
+                message: "Course purchase successfully",
+                id: id,
+                order_id: orderId,
+                payment_url: paymentUrl
+            };
+        }else{
+            return {
+                status: false,
+                status_code: constants.DATABASE_ERROR_RESPONSE,
+                message: "Failed to purchase course",
+                id: null
+            };
+        }
+    }catch (error) {
+        // Handle unexpected errors
+        console.error('Error in purchaseCourse:', error);
+        return {
+            status: false,
+            status_code: constants.EXCEPTION_ERROR_CODE,
+            message: 'Failed to purchase course',
+            error: { server_error: 'An unexpected error occurred' },
+            data: null,
+        };
+    }
+  
+}
+
+const mylearning = async (userInputs,request) => {
+    try{
+        const { user_id, page_type } = userInputs;
+
+        //check duplicate user name
+        const getUserCourse = await UserCourseModel.getUserCourseLearningData({ user_id,  page_type });
+
+        if(getUserCourse !== null){
+            
+            let courseData = [];
+            if(getUserCourse.length > 0){
+                let promisecourseData = await new Promise(async (resolve, reject) => {
+                    let keyCount = 0
+                    await getUserCourse.map(async (courseElement, courseKey) => {
+                        //await new Promise(async (resolve, reject) => {
+                            let course = await CallCourseQueryEvent("get_course_data_without_auth",{ id: courseElement.course_id  }, request.get("Authorization"))
+                            let courseWatchHistory = await CourseWatchHistoryModel.filterCourseWatchHistoryData(user_id, courseElement.course_id)
+
+                            let perForCompletedChapter = 0;
+                            if(courseWatchHistory!== null){
+                                let courseChapterCount = await CallCourseQueryDataEvent("get_chapter_count",{ course_id: courseElement.course_id  }, request.get("Authorization"));
+
+                                if(courseChapterCount.total_chapter > 0 && courseWatchHistory.completed_chapter.length > 0){
+                                    perForCompletedChapter = courseWatchHistory.completed_chapter.length * 100 / parseInt(courseChapterCount.total_chapter);
+                                }
+                            }
+        
+                            if(course && ((page_type == 1) || (page_type == 2 && ((courseWatchHistory && courseWatchHistory.is_course_completed == false) || (courseWatchHistory == null))) || (page_type == 3 && courseWatchHistory && courseWatchHistory.is_course_completed == true) )){
+                                courseData[courseKey] = {
+                                    _id: courseElement.id,
+                                    user_id: courseElement.user_id,
+                                    course_id: courseElement.course_id,
+                                    duration: courseElement.duration,
+                                    duration_time: courseElement.duration_time,
+                                    createdAt: courseElement.createdAt,
+                                    type: courseElement.type,
+                                    course_subscription_type: courseElement.course_subscription_type,
+                                    purchase_date: courseElement.purchase_date,
+                                    price: courseElement.price,
+                                    payment_method: courseElement.payment_method,
+                                    transaction_id: courseElement.transaction_id,
+                                    subscription_start_date: courseElement.subscription_start_date,
+                                    subscription_end_date: courseElement.subscription_end_date,
+                                    course: {
+                                        course_title: course?.course_title ? course.course_title : '',
+                                        course_description: course?.short_description ? course.short_description : '',
+                                        image: course?.default_file_path?.small_thumbnail_image ? course.default_file_path.small_thumbnail_image : '',
+                                        publisher_id: course?.publisher_id ? course.publisher_id : '',
+                                        publisher_name: course?.publisher_name ? course.publisher_name : '',
+                                    },
+                                    per_completed_chapter: parseInt(perForCompletedChapter),
+                                }
+                                //resolve(true)
+                                
+                                keyCount = keyCount + 1
+                            }else{
+                               // resolve(false)
+                                
+                                keyCount = keyCount + 1
+                            }
+                        //})
+                
+                        if (getUserCourse.length === keyCount ) {
+                            resolve({
+                                status: true,
+                                status_code: constants.SUCCESS_RESPONSE,
+                                message: "Data get successfully",
+                                data: courseData
+                            })
+                        }
+                    });
+                });
+
+                return promisecourseData;
+            }else{
+                return {
+                    status: true,
+                    status_code: constants.SUCCESS_RESPONSE,
+                    message: "Data get successfully",
+                    data: courseData
+                }
+            }
+
+        
+        }else{
+            return {
+                status: false,
+                status_code: constants.DATABASE_ERROR_RESPONSE,
+                message: "Data not found",
+                data: null
+            };
+        }
+    }catch (error) {
+        // Handle unexpected errors
+        console.error('Error in mylearning:', error);
+        return {
+            status: false,
+            status_code: constants.EXCEPTION_ERROR_CODE,
+            message: 'Failed to fetch data',
+            error: { server_error: 'An unexpected error occurred' },
+            data: null,
+        };
+    }
+  
+}
+
+const countCourseUser = async (userInputs) => {
+    try{
+        const { course_id } = userInputs;
+
+        const countUser = await UserCourseModel.getUserCourseCount({ course_id });
+        
+        if(countUser){
+            return {
+                status: true,
+                status_code: constants.SUCCESS_RESPONSE,
+                message: "Data get successfully",
+                data: {count: countUser}
+            };
+        }else{
+            return {
+                status: false,
+                status_code: constants.DATABASE_ERROR_RESPONSE,
+                message: "Failed to get count",
+                data: {count: 0}
+            };
+        }
+    }catch (error) {
+        // Handle unexpected errors
+        console.error('Error in countCourseUser:', error);
+        return {
+            status: false,
+            status_code: constants.EXCEPTION_ERROR_CODE,
+            message: 'Failed to fetch data',
+            error: { server_error: 'An unexpected error occurred' },
+            data: null,
+        };
+    }
+    
+}
+
+const coursePaymentResponse = async (userInputs) => {
+    try{
+        const { order_id, payment_status, payment_response } = userInputs;
+
+        let subScriptionData = await InvoiceModel.findOrderData(order_id)
+
+        if(subScriptionData){
+            let statusCode = 3 // for failed
+            let paymentStatus = 'failed' // for failed
+            let invoive_id = subScriptionData._id.toString()
+
+            if(payment_status){
+                statusCode = 2 // for success
+                paymentStatus = 'paid'
+                // delete all cart item
+                await CartModel.removeAllCartData(subScriptionData.user_id);
+            }
+            //update invoice data
+            await InvoiceModel.updateInvoice(subScriptionData._id, {
+                payment_status: statusCode,
+                payment_response: payment_response,
+                payment_date: new Date()
+            })
+
+            //update user course data
+            await UserCourseModel.updateUserCourseUsingInvoice(invoive_id,{
+                payment_status: statusCode,
+                is_send_mail: true,
+                is_purchase: true
+            })
+
+            const userData = await UserModel.fatchUserById(subScriptionData.user_id);
+            let userCourseData =  await UserCourseModel.getUserCourse({ invoice_id: invoive_id })
+
+            //send a invoice mail
+            if(userCourseData && userData?.email){
+                let courseArray = []
+
+                if(userCourseData.length > 0){
+                    await Promise.all(
+                        userCourseData.map(async (element) => {
+                            let courseData = await CallCourseQueryEvent("get_course_data_without_auth",{ id: element?.course_id  },'')
+                            await courseArray.push({
+                                course_title: courseData?.course_title || "",
+                                amount: element?.price || 0,
+                            })
+                        })
+                    )
+                }
+                
+                const pdfName = order_id+".pdf";
+
+                await new Promise(async (resolve, reject) => {
+                    const invoiceData = {
+                        status: paymentStatus,
+                        amount:subScriptionData.amount,
+                        username: `${userData.first_name} ${userData.last_name}`,
+                        issue_data: moment(new Date()).format('MMMM.Do.YYYY'),
+                        due_date: moment(new Date()).format('MMMM.Do.YYYY'),
+                        course: courseArray
+                    };
+                    const pdfBody = await invoiceTemplate(invoiceData);
+                    const result = await generatePDF(pdfBody, pdfName);
+                    if(result){
+                        resolve(true)
+                    }
+                })
+            
+                let email = userData?.email
+                let subject = `Invoice for course payment`;
+            
+                let filePath = 'uploads/'+pdfName;
+
+                //send subscription invoice mail
+                let sendwait = await sendMail(email, "", subject, subScriptionData.user_id, "Course Payment", true, filePath, pdfName)
+
+                if(sendwait){
+                    if (fs.existsSync('uploads/'+pdfName)) {
+                        fs.unlinkSync('uploads/'+pdfName);
+                    }
+                }
+            }
+        }
+        
+        return {
+            status: true,
+            status_code: constants.SUCCESS_RESPONSE,
+            message: "Payment response store successfully",
+            data: null
+        };
+    }catch (error) {
+        // Handle unexpected errors
+        console.error('Error in coursePaymentResponse:', error);
+        return {
+            status: false,
+            status_code: constants.EXCEPTION_ERROR_CODE,
+            message: 'Failed to fetch data',
+            error: { server_error: 'An unexpected error occurred' },
+            data: null,
+        };
+    }
+    
+}
+
+const checkCourseSubscription = async (userInputs,request) => {
+    try{
+        const { user_id, course_id } = userInputs;
+
+        //get course data
+        const getFilterData = await UserCourseModel.filterUserCourseData({ user_id, course_id});
+
+        let isPurchase = false
+        if(getFilterData?.type){
+            if(getFilterData.type == 1){
+                isPurchase = true
+            }else{
+                if(getFilterData.type == 2 && getFilterData.payment_status == 2 && getFilterData.is_cancle_subscription == false){
+                    isPurchase = true
+                }
+            }
+        }
+
+        return {
+            status: true,
+            status_code: constants.SUCCESS_RESPONSE,
+            message: "User course data",
+            data:{
+                is_assign_course : isPurchase
+            }
+        };
+    }catch (error) {
+        // Handle unexpected errors
+        console.error('Error in assignCourse:', error);
+        return {
+            status: false,
+            status_code: constants.EXCEPTION_ERROR_CODE,
+            message: 'Failed to assign course',
+            error: { server_error: 'An unexpected error occurred' },
+            data: null,
+        };
+    }
+}
+
+const checkexpiredCourse = async () => {
+    try{
+       
+       const getFilterData = await UserCourseModel.checkCourseSubscription();
+       
+       if(getFilterData){
+            return {
+                status: true,
+                status_code: constants.SUCCESS_RESPONSE
+            };
+       }else{
+            return {
+                status: false,
+                status_code: constants.DATABASE_ERROR_RESPONSE
+            };
+       }
+      
+    }catch (error) {
+        // Handle unexpected errors
+        console.error('Error in assignCourse:', error);
+        return {
+            status: false,
+            status_code: constants.EXCEPTION_ERROR_CODE,
+            message: 'Failed to assign course',
+            error: { server_error: 'An unexpected error occurred' },
+        };
+    }
+}
+
+const getExpiringCourses = async () => {
+    try{
+        const getFilterData = await UserCourseModel.getExpiringSoonCourses({ expiration_days: 7 });
+        getFilterData.map(async (course, courseKey) => {
+            const getUserData = await UserModel.fatchUserById(course.user_id);
+            let courseData = await CallCourseQueryEvent("get_course_data_without_auth",{ id: course?.course_id  },' ')
+            console.log('getUserData:: ',getUserData);
+            console.log('course:: ',course)
+            if(getUserData && getUserData?.email && courseData){
+                const expireDate = moment(course.expire_date).format('MMMM Do YYYY');
+                let subject = "Tick Tock: "+courseData.course_title+" Expiring Soon";
+                let message = await welcomeTemplate({ user_name: `${getUserData.first_name} ${getUserData.last_name}`, subject: subject, course_name: courseData.course_title, expireDate: expireDate});
+                let sendMail = await sendMail(getUserData?.email, message, subject)
+            }
+        });
+        if(getFilterData){
+            return {
+                status: true,
+                status_code: constants.SUCCESS_RESPONSE
+            };
+        }else{
+            return {
+                status: false,
+                status_code: constants.DATABASE_ERROR_RESPONSE
+            };
+        }
+        
+    }catch (error) {
+        // Handle unexpected errors
+        console.error('Error in assignCourse:', error);
+        return {
+            status: false,
+            status_code: constants.EXCEPTION_ERROR_CODE,
+            message: 'Failed to assign course',
+            error: { server_error: 'An unexpected error occurred' },
+        };
+    }
+}
+
+const cancelCourseSubscription = async (userInputs,request) => {
+    try{
+        const { user_id, course_id } = userInputs;
+
+        let cronLogData = {}
+        let cronstartTime = Date.now()
+        //create cron log
+        let cronData = await createCronLogs({
+            type: "cancelcoursesubscription",
+            request: JSON.stringify(request.body),
+            header: request.get("Authorization"),
+            response: null,
+            url: "user/cancelCourseSubscription",
+            start_time: new Date()
+        })
+        let cronId = cronData?.status ? cronData?.cron_id : ''
+
+        const getFilterData = await UserCourseModel.filterUserCourseData({ user_id, course_id});
+        cronLogData['course_subscription_data'] = getFilterData
+
+        if(getFilterData != null && getFilterData?.subscription_id && !getFilterData?.is_cancle_subscription){
+            let subscriptionData = {
+                subscription_id: getFilterData?.subscription_id
+            }
+            let cancelcourseSubscription = await cancelSubscription(subscriptionData)
+
+            //create a api call
+            await createApiCallLog({
+                cron_id: cronId,
+                type: "cancelcoursesubscription",
+                request: JSON.stringify(subscriptionData),
+                header: request.get("Authorization"),
+                response: JSON.stringify(cancelcourseSubscription),
+                url: "user/cancelCourseSubscription" ,
+                details: JSON.stringify(subscriptionData),
+                execution_time: new Date()
+            })
+
+            if(cancelcourseSubscription?.status){
+                    //update SUBSCRIPRION
+                    await UserCourseModel.updateUserCourse(getFilterData._id,{
+                        end_time: new Date(),
+                        is_cancle_subscription: true,
+                        is_deleted: true
+                    })
+
+                    //update cron log
+                    await updateCronLogs(cronId,{
+                        end_time: new Date(),
+                        details: JSON.stringify(cronLogData),
+                        cronstart_time: cronstartTime
+                    })
+
+                    //send cancel mail
+                    let courseData = await CallCourseQueryEvent("get_course_data_without_auth",{ id: course_id  }, request.get("Authorization"))
+                    const getUserData = await UserModel.fatchUserById(user_id);
+                    let subject = `Course Subscription Cancellation - ${courseData?.course_title}`;
+                    let message = await subscriptionCancelTemplate({ user_name: `${getUserData?.first_name} ${getUserData?.last_name}`, subject: subject, course_title: courseData?.course_title});
+                    await sendMail(getUserData?.email, message, subject, user_id, "Course Payment");
+
+                    return {
+                        status: true,
+                        status_code: constants.SUCCESS_RESPONSE,
+                        message: 'Subscription canceled successfully',
+                        data: null,
+                    };
+            }else{
+                //update cron log
+                await updateCronLogs(cronId,{
+                    end_time: new Date(),
+                    details: JSON.stringify(cronLogData),
+                    cronstart_time: cronstartTime
+                })
+                return {
+                    status: false,
+                    status_code: constants.EXCEPTION_ERROR_CODE,
+                    message: 'Sorry! Failed to cancel course subscription.',
+                    data: null,
+                };
+            }
+        }else{
+           //update cron log
+            await updateCronLogs(cronId,{
+                end_time: new Date(),
+                details: JSON.stringify(cronLogData),
+                cronstart_time: cronstartTime
+            })
+            return {
+                status: false,
+                status_code: constants.EXCEPTION_ERROR_CODE,
+                message: 'Course is not subscribe by you',
+                data: null,
+            }; 
+        }
+
+    }catch (error) {
+        // Handle unexpected errors
+        console.error('Error in purchaseCourse:', error);
+        return {
+            status: false,
+            status_code: constants.EXCEPTION_ERROR_CODE,
+            message: 'Failed to cancel course subscription',
+            error: { server_error: 'An unexpected error occurred' },
+            data: null,
+        };
+    }
+  
+}
+
+const getPaymentHistory = async (userInputs,request) => {
+    try{
+        const { user_id, startToken, endToken, type } = userInputs;
+
+        const perPage = parseInt(endToken) || 10; 
+        let page = Math.max((parseInt(startToken) || 1) - 1, 0); 
+        if (page !== 0) { 
+            page = perPage * page; 
+        }
+
+        //get course data
+        const paymentHistory = await InvoiceModel.getPaymentHistory({ user_id,  page, perPage, type });
+
+        if(paymentHistory?.length > 0){
+            await Promise.all(
+                await paymentHistory.map(async (element, key) => {
+                    let invoive_id = element._id.toString()
+                    let userCourseData =  await UserCourseModel.getUserCourse({ invoice_id: invoive_id })
+
+                    let courseArray = []
+                    if(userCourseData && userCourseData?.length > 0){
+                        await Promise.all(
+                            userCourseData.map(async (element) => {
+                                let courseData = await CallCourseQueryEvent("get_course_data_without_auth",{ id: element?.course_id  },'')
+
+                                await courseArray.push({
+                                    course_id: courseData._id,
+                                    course_title: courseData?.course_title || "",
+                                    amount: element?.price || 0,
+                                    thumbnail_image: courseData?.default_file_path?.medium_thumbnail_image || null,
+                                    short_description: courseData?.short_description || null,
+                                })
+                            })
+                        )
+                    }
+
+                    await paymentHistory[key].set('course_detail', courseArray ,{strict:false})
+                })
+            )
+        }
+      
+        if(paymentHistory !== null){
+            return {
+                status: true,
+                status_code: constants.SUCCESS_RESPONSE,
+                message: "Data get successfully",
+                data: paymentHistory
+            }
+        }else{
+            return {
+                status: false,
+                status_code: constants.DATABASE_ERROR_RESPONSE,
+                message: "Data not found",
+                data: null
+            };
+        }
+    }catch (error) {
+        // Handle unexpected errors
+        console.error('Error in getPaymentHistory:', error);
+        return {
+            status: false,
+            status_code: constants.EXCEPTION_ERROR_CODE,
+            message: 'Failed to get the data',
+            error: { server_error: 'An unexpected error occurred' },
+            data: null,
+        };
+    }
+  
+}
+
+const getInvoice = async (userInputs) => {
+    try{
+        const { invoice_id, user_id } = userInputs;
+
+        const userData = await UserModel.fatchUserById(user_id);
+        let invoiceData = await InvoiceModel.findByIdData(invoice_id)
+       
+
+        //send a invoice mail
+        if(userData && invoiceData){
+
+            let userCourseData = []
+            if(invoiceData.invoice_type == 2){
+                userCourseData =  await UserCourseModel.getUserCourse({ invoice_id: invoice_id })
+            }else{
+                userCourseData =  await UserCourseModel.getUserBySubscriptionId(userCourseData.subscription_id)
+            }
+           
+
+            let courseArray = []
+
+            if(userCourseData.length > 0){
+                await Promise.all(
+                    userCourseData.map(async (element) => {
+                        let courseData = await CallCourseQueryEvent("get_course_data_without_auth",{ id: element?.course_id  },'')
+                        await courseArray.push({
+                            course_title: courseData?.course_title || "",
+                            amount: element?.price || 0,
+                            base_price: element?.amount || 0,
+                            discount_amount: element?.discount_amount || 0,
+                            discount: element?.discount || 0,
+                            is_tax_inclusive: element?.is_tax_inclusive || false,
+                            is_tax_exclusive: element?.is_tax_exclusive || false,
+                            tax_percentage: element?.tax_percentage || 0
+                        })
+                    })
+                )
+            }
+
+            let paymentStatus = "paid"
+
+            if(invoiceData.payment_status == 1){
+                paymentStatus = "unpaid"
+            }else if(invoiceData.payment_status == 2){
+                paymentStatus = "paid"
+            }else if(invoiceData.payment_status == 3 || invoiceData.payment_status == 8){
+                paymentStatus = "failed"
+            }else if(invoiceData.payment_status == 4){
+                paymentStatus = "unpaid"
+            }else if(invoiceData.payment_status == 5 || invoiceData.payment_status == 6 || invoiceData.payment_status == 7){
+                paymentStatus = "refunded"
+            }
+        
+            const invoice = {
+                status: paymentStatus, // unpaid, paid, failed, refunded
+                amount: invoiceData.amount,
+                username: `${userData.first_name} ${userData.last_name}`,
+                issue_data: moment(new Date()).format('MMMM.Do.YYYY'),
+                due_date: moment(new Date()).format('MMMM.Do.YYYY'),
+                course: courseArray,
+                invoice_id: invoiceData?.invoice_id ? invoiceData?.invoice_id : ( invoiceData?.order_id ? invoiceData?.order_id : '')
+            };
+            //const pdfBody = await invoiceTemplate(invoice);
+
+            return {
+                status: true,
+                status_code: constants.SUCCESS_RESPONSE,
+                message: 'Invoice successfully download',
+                data: invoice,
+            };
+        }else{
+            return {
+                status: false,
+                status_code: constants.DATABASE_ERROR_RESPONSE,
+                message: 'Failed to download invoice'
+            };
+        }
+    }catch (error) {
+        // Handle unexpected errors
+        console.error('Error in getPaymentHistory:', error);
+        return {
+            status: false,
+            status_code: constants.EXCEPTION_ERROR_CODE,
+            message: 'Failed to get the data',
+            error: { server_error: 'An unexpected error occurred' },
+            data: null,
+        };
+    }
+}
+
+const singleTimePayment = async (userInputs,request) => {
+    try{
+        const { user_id, course_id } = userInputs;
+
+        const getFilterData = await UserCourseModel.filterUserCourseData({ user_id, course_id});
+
+        if(getFilterData != null){
+            if(getFilterData.type == 1){
+                // course already assign to user
+                return {
+                    status: false,
+                    status_code: constants.ERROR_RESPONSE,
+                    message: "Course is already assign",
+                    error: {
+                        course_title: "Course is already assign"
+                    }
+                };
+            }else{
+                // course already purchased by user
+                if(getFilterData.type == 2 && getFilterData.payment_status == 2 && getFilterData.is_cancle_subscription == false){
+                    return {
+                        status: false,
+                        status_code: constants.ERROR_RESPONSE,
+                        message: "Course is already purchased",
+                        error: {
+                            course_title: "Course is already purchased"
+                        }
+                    };
+                }
+            }
+        }
+
+        let courseData = await CallCourseQueryEvent("get_course_data_without_auth",{ id: course_id  }, request.get("Authorization"))
+        if(courseData){
+            if(courseData?.status !== 1 || courseData?.is_pause_enrollment === true){
+                return {
+                    status: false,
+                    status_code: constants.DATABASE_ERROR_RESPONSE,
+                    message: "Sorry! Failed to purchase the course."
+                };
+            }
+        }else{
+            return {
+                status: false,
+                status_code: constants.DATABASE_ERROR_RESPONSE,
+                message: "Sorry! Failed to purchase the course."
+            };
+        }
+
+        let cronLogData = {}
+        let cronstartTime = Date.now()
+        //create cron log
+        let cronData = await createCronLogs({
+            type: "purchasecourse",
+            request: JSON.stringify(request.body),
+            header: request.get("Authorization"),
+            response: null,
+            url: "user/paymenturl",
+            start_time: new Date()
+        })
+        let cronId = cronData?.status ? cronData?.cron_id : ''
+
+        cronLogData['course_data'] = courseData
+        cronLogData['user_data'] = getFilterData
+
+        if(courseData.course_subscription_type == 3){
+
+            const getUserData = await UserModel.fatchUserById(user_id);
+
+            cronLogData['user_data'] = getUserData
+            
+            //single time payment
+            let finalAmount = courseData.discount_amount
+            if(courseData.is_tax_exclusive){
+                let taxAmount = parseInt(courseData.discount_amount) * parseFloat(courseData.tax_percentage) / 100 
+                finalAmount = finalAmount + taxAmount
+            }
+        
+            let amount = finalAmount
+            let workingKey = process.env.DEVELOPER_MODE == "development" ? process.env.CCAVENUE_KEY_TESTING : process.env.CCAVENUE_KEY
+            let accessCode = process.env.DEVELOPER_MODE == "development" ? process.env.CCAVENUE_ACCESS_CODE_TESTING : process.env.CCAVENUE_ACCESS_CODE
+            let paymentUrl = process.env.DEVELOPER_MODE == "development" ? process.env.CCAVENUE_URL_TESTING : process.env.CCAVENUE_URL
+            let merchant_id = process.env.DEVELOPER_MODE == "development" ? process.env.CCAVENUE_MID_TESTING : process.env.CCAVENUE_MID
+            let redirectUrl = process.env.DEVELOPER_MODE == "development" ? process.env.CCAVENUE_REDIRECT_URL_TESTING : process.env.CCAVENUE_REDIRECT_URL
+
+            let paymentData = {
+                merchant_id: merchant_id,
+                order_id: "123456789",
+                currency: "INR",
+                amount: amount,
+                language: "EN",
+                billing_name: (getUserData?.first_name ? getUserData?.first_name : '') + " " + (getUserData?.last_name ? getUserData?.last_name : ''),
+                billing_address:  'Santacruz', 
+                billing_city: getUserData?.city || 'Rajkot',
+                billing_state: getUserData?.state || 'Gujrat',
+                billing_zip: getUserData?.pincode || '400054',
+                billing_country: getUserData?.country || 'India',
+                billing_tel: getUserData?.mobile_no || '9512742802',
+                billing_email: getUserData?.email || 'demouser@gmail.com',
+                merchant_param1: course_id,
+                merchant_param2: user_id,
+                integration_type: "iframe_normal",
+                redirect_url: redirectUrl,
+                cancel_url: redirectUrl
+            }
+    
+            const stringified = qs.stringify(paymentData);
+            let encRequest = encrypt(stringified, workingKey)
+    
+            paymentUrl = paymentUrl + "command=initiateTransaction&merchant_id="+merchant_id+"&encRequest="+encRequest+"&access_code="+accessCode
+            
+            cronLogData['create_user_course'] = courseData
+            cronLogData['payment_url'] = paymentUrl
+
+            //update cron log
+            await updateCronLogs(cronId,{
+                end_time: new Date(),
+                details: JSON.stringify(cronLogData),
+                cronstart_time: cronstartTime
+            })
+
+            return {
+                status: true,
+                status_code: constants.SUCCESS_RESPONSE,
+                message: 'Payment url',
+                data: paymentUrl,
+            };
+        }else{
+            return {
+                status: false,
+                status_code: constants.EXCEPTION_ERROR_CODE,
+                message: 'This course is not valid for single time payment',
+                data: null,
+            };
+        }
+        
+    }catch (error) {
+        // Handle unexpected errors
+        console.error('Error in purchaseCourse:', error);
+        return {
+            status: false,
+            status_code: constants.EXCEPTION_ERROR_CODE,
+            message: 'Failed to purchase course',
+            error: { server_error: 'An unexpected error occurred' },
+            data: null,
+        };
+    }
+  
+}
+
+const paymentResponse = async (request,response) => { 
+    var ccavEncResponse='',
+	ccavResponse = '',
+	ccavPOST = '';
+   let workingKey = process.env.DEVELOPER_MODE == "development" ? process.env.CCAVENUE_KEY_TESTING : process.env.CCAVENUE_KEY
+
+    if(request?.body?.encResp){
+        var encryption = request.body.encResp;
+        ccavResponse = decrypt(encryption,workingKey);
+        var strArray = ccavResponse.split("&");
+        let dataArray = []
+        await Promise.all(
+            strArray.map(element => {
+                var parameter = element.split("=");
+                dataArray[parameter[0]] = parameter[1]
+            })
+        )
+
+        let orserId = dataArray.order_id
+        let userId = dataArray.merchant_param1
+        let paymentStatus = dataArray.order_status
+        const userData = await UserModel.fatchUserById(userId);
+        let invoiceData = await InvoiceModel.findOrderData(orserId)
+        let userCourseData =  await UserCourseModel.getUserCourse({ invoice_id: invoiceData._id })
+
+        if(paymentStatus == "Success"){
+
+            //update user course data
+            await UserCourseModel.updateUserCourseUsingInvoice(invoiceData._id,{
+                payment_status: 2,
+                is_send_mail: true,
+                is_purchase: true
+            })
+
+          
+            await InvoiceModel.updateInvoice(invoiceData._id, {  
+                payment_id: dataArray.tracking_id, 
+                payment_method: dataArray.payment_mode,
+                payment_response: ccavResponse,
+                payment_date: dataArray.trans_date,
+                payment_status: 2
+            })
+            
+            if(userData?.notification_device_id){
+                await sendPushNotification({notification_device_id:[getUserDatanotification_device_id], message: "Course has been purchased successfully."})
+            }
+            
+        }else if(paymentStatus == "Failure"){
+            //update user course data
+            await UserCourseModel.updateUserCourseUsingInvoice(invoiceData._id,{
+                payment_status: 3,
+                is_send_mail: false,
+                is_purchase: false
+            })
+
+            await InvoiceModel.updateInvoice(invoiceData._id, {  
+                payment_id: dataArray.tracking_id, 
+                payment_method: dataArray.payment_mode,
+                payment_response: ccavResponse,
+                payment_date: dataArray.trans_date,
+                payment_status: 3
+            })
+        }
+
+        //send a invoice mail
+        if(userCourseData && userData?.email){
+            let courseArray = []
+
+            if(userCourseData.length > 0){
+                await Promise.all(
+                    userCourseData.map(async (element) => {
+                        let courseData = await CallCourseQueryEvent("get_course_data_without_auth",{ id: element?.course_id  },'')
+                        await courseArray.push({
+                            course_title: courseData?.course_title || "",
+                            amount: element?.price || 0,
+                        })
+                    })
+                )
+            }
+            
+            const pdfName = orserId+".pdf";
+
+            await new Promise(async (resolve, reject) => {
+                const invoiceData = {
+                    status: paymentStatus,
+                    amount:dataArray.amount,
+                    username: `${userData.first_name} ${userData.last_name}`,
+                    issue_data: moment(new Date()).format('MMMM.Do.YYYY'),
+                    due_date: moment(new Date()).format('MMMM.Do.YYYY'),
+                    course: courseArray
+                };
+                const pdfBody = await invoiceTemplate(invoiceData);
+                const result = await generatePDF(pdfBody, pdfName);
+                if(result){
+                    resolve(true)
+                }
+            })
+        
+            let email = userData?.email
+            let subject = `Invoice for course payment`;
+        
+            let filePath = 'uploads/'+pdfName;
+
+            //send subscription invoice mail
+            let sendwait = await sendMail(email, "", subject, userId, "Course Payment", true, filePath, pdfName)
+
+            if(sendwait){
+                if (fs.existsSync('uploads/'+pdfName)) {
+                    fs.unlinkSync('uploads/'+pdfName);
+                }
+            }
+        }
+        return {
+            status: true,
+            payment_status: paymentStatus
+        };
+       
+        //payment reszponse
+        // dataArray :::  [
+        //     order_id: '1234564789',
+        //     tracking_id: '312010061999',
+        //     bank_ref_no: '1691122381736',
+        //     order_status: 'Success',
+        //     failure_message: '',
+        //     payment_mode: 'Net Banking',
+        //     card_name: 'AvenuesTest',
+        //     status_code: 'null',
+        //     status_message: 'Y',
+        //     currency: 'INR',
+        //     amount: '1.00',
+        //     billing_name: 'Peter',
+        //     billing_address: 'Santacruz',
+        //     billing_city: 'Mumbai',
+        //     billing_state: 'MH',
+        //     billing_zip: '400054',
+        //     billing_country: 'India',
+        //     billing_tel: '9876543210',
+        //     billing_email: 'testing@domain.com',
+        //     delivery_name: '',
+        //     delivery_address: '',
+        //     delivery_city: '',
+        //     delivery_state: '',
+        //     delivery_zip: '',
+        //     delivery_country: '',
+        //     delivery_tel: '',
+        //     merchant_param1: '',
+        //     merchant_param2: '',
+        //     merchant_param3: '',
+        //     merchant_param4: '',
+        //     merchant_param5: '',
+        //     vault: 'N',
+        //     offer_type: 'null',
+        //     offer_code: 'null',
+        //     discount_value: '0.0',
+        //     mer_amount: '1.00',
+        //     eci_value: 'null',
+        //     retry: 'N',
+        //     response_code: '0',
+        //     billing_notes: '',
+        //     trans_date: '04/08/2023 09:43:05',
+        //     bin_countr
+        // ]
+    }
+}
+
+module.exports = {
+    assignCourse,
+    getAssignCourseList,
+    deleteUserCourse,
+    updateAssignCourse,
+    getAssignCourseById,
+    purchaseCourse,
+    mylearning,
+    countCourseUser,
+    coursePaymentResponse,
+    checkCourseSubscription,
+    checkexpiredCourse,
+    getExpiringCourses,
+    cancelCourseSubscription,
+    getPaymentHistory,
+    getInvoice,
+    singleTimePayment,
+    paymentResponse
+}

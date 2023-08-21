@@ -1,7 +1,8 @@
-const { PaymentHistoryModel, UserCourseModel } = require("../database");
+const { PaymentHistoryModel, UserCourseModel, InvoiceModel } = require("../database");
 const constants = require('../utils/constant');
+const { CallCourseQueryEvent } = require('../utils/call-event-bus');
 
-const addPaymentHistory = async (userInputs) => {
+const addPaymentHistory = async (userInputs, request) => {
     try{
         const { user_id, course_id, transaction_id } = userInputs;
 
@@ -12,6 +13,38 @@ const addPaymentHistory = async (userInputs) => {
         });
 
         if(createPaymentHistory){
+
+            let courseData = await CallCourseQueryEvent("get_course_data_by_id",{ id: course_id }, request.get("Authorization"))
+
+            let finalAmount = 0
+            if(courseData){
+                finalAmount = courseData.discount_amount
+                let taxAmount = 0
+                if(courseData.is_tax_exclusive){
+                    taxAmount = parseInt(courseData.discount_amount) * parseFloat(courseData.tax_percentage) / 100 
+                    finalAmount = finalAmount + taxAmount
+                }
+            }
+            
+
+            let createInvoiceData = {
+                user_id: user_id, 
+                course_id: course_id,
+                reference_id: null,
+                payment_id: transaction_id,
+                order_id: null,
+                course_type: 'N/A',
+                amount: finalAmount,
+                purchase_time: new Date(),
+                subscription_id: '',
+                invoice_type: 2,
+                title: "Subscription Charged",
+                payment_method: null,
+                module_name: "Checkout",
+                payment_status: 2
+            }
+            await InvoiceModel.createInvoice(createInvoiceData);
+
             return {
                 status: true,
                 status_code: constants.SUCCESS_RESPONSE,

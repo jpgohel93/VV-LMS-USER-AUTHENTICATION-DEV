@@ -162,7 +162,8 @@ const loginWithSocialAccount = async (userInputs) => {
                 mobile_no : getUserData.mobile_no,
                 user_type: getUserData.user_type,
                 user_login_type: getUserData.user_signup_with,
-                last_login_type: user_signup_with
+                last_login_type: user_signup_with,
+                profile_image : getUserData?.profile_image || null,
             }
 
             let jwtToken = await GenerateSignature(jwtData);
@@ -255,6 +256,7 @@ const loginWithSocialAccount = async (userInputs) => {
                     country_code : country_code,
                     mobile_no : mobile_no,
                     last_login_type: user_signup_with,
+                    profile_image : null
                 }
 
                 let jwtToken = await GenerateSignature(jwtData);

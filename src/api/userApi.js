@@ -1318,7 +1318,7 @@ module.exports = async (app) => {
             module,
             response
         } = req.body;
-        console.log('req.body :: ', req.body);
+
         const data = await userService.saveEmailLogs({
             user_id,
             message_id,

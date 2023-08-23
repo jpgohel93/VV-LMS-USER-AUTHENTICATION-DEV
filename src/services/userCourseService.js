@@ -9,6 +9,8 @@ const moment = require('moment');
 const fs = require('fs');
 const qs = require('querystring');
 const { invoiceTemplate } = require('../utils/pdf-template');
+const axios = require('axios');
+const crypto = require('crypto');
 
 const assignCourse = async (userInputs,request) => {
     try{
@@ -1631,6 +1633,120 @@ const paymentResponse = async (request,response) => {
     }
 }
 
+const testSubscription = async (userInputs,request) => {
+    try{
+      
+        let workingKey = process.env.DEVELOPER_MODE == "development" ? process.env.CCAVENUE_KEY_TESTING : process.env.CCAVENUE_KEY
+        let accessCode = process.env.DEVELOPER_MODE == "development" ? process.env.CCAVENUE_ACCESS_CODE_TESTING : process.env.CCAVENUE_ACCESS_CODE
+        let subscriptionPlanUrl = process.env.DEVELOPER_MODE == "development" ? process.env.CCAVENUE_URL_TESTING : process.env.CCAVENUE_URL
+        let merchantId = process.env.DEVELOPER_MODE == "development" ? process.env.CCAVENUE_MID_TESTING : process.env.CCAVENUE_MID
+        let redirectUrl = process.env.DEVELOPER_MODE == "development" ? process.env.CCAVENUE_REDIRECT_URL_TESTING : process.env.CCAVENUE_REDIRECT_URL
+        let orderId = await findUniqueID()
+        //let redirectUrl = process.env.DEVELOPER_MODE == "development" ? process.env.CCAVENUE_REDIRECT_URL_TESTING : process.env.CCAVENUE_REDIRECT_URL
+
+        console.log("subscriptionPlanUrl ::: ", subscriptionPlanUrl)
+        console.log("orderId ::: ", orderId)
+        console.log("workingKey ::: ", workingKey)
+        console.log("accessCode ::: ", accessCode)
+        console.log("merchantId ::: ", merchantId)
+        console.log("redirectUrl ::: ", redirectUrl)
+
+        // Construct the payment-related parameters
+        const subscriptionPlanData = {
+            // merchant_id: merchantId,
+            // order_id: orderId,
+            // currency: 'INR',
+            // amount: '100.00', // Subscription amount
+            // billing_frequency: '1', // 1 for monthly, 3 for quarterly, 12 for annually
+            // billing_name: "DEMO USER",
+            // billing_address:  'Santacruz', 
+            // billing_city: 'Rajkot',
+            // billing_state:'Gujrat',
+            // billing_zip:  '400054',
+            // billing_country:  'India',
+            // billing_tel:  '9512742802',
+            // billing_email:'demouser@gmail.com',
+            // integration_type: "iframe_normal",
+            // redirect_url: redirectUrl,
+            // cancel_url: redirectUrl
+
+
+            merchant_id: merchantId,
+            order_id: orderId,
+            currency: "INR",
+            amount: 100,
+            language: "EN",
+            billing_name: "DEMO",
+            billing_address:  'Santacruz', 
+            billing_city: 'Rajkot',
+            billing_state:  'Gujrat',
+            billing_zip:  '400054',
+            billing_country: 'India',
+            billing_tel: '9512742802',
+            billing_email: 'demouser@gmail.com',
+            merchant_param1: 1,
+            si_type: "Fixed",
+            si_mer_ref_no: merchantId,
+            currency: 'INR',
+            si_amount: '100.00',
+            si_setup_amount: '100.00',
+            si_frequency: "Month",
+            si_frequency_no: 1,
+            //si_billing_cycle: "",
+            //si_start_date: ""
+            integration_type: "iframe_normal",
+            redirect_url: redirectUrl,
+            cancel_url: redirectUrl
+        };
+
+        const stringified = qs.stringify(subscriptionPlanData);
+        let encRequest = encrypt(stringified, workingKey)
+
+        subscriptionPlanUrl = subscriptionPlanUrl + "command=initiateTransaction&merchant_id="+merchantId+"&encRequest="+encRequest+"&access_code="+accessCode
+
+        return subscriptionPlanUrl;
+
+
+        // Calculate and add the checksum to subscriptionPlanData
+        // const checksumString = `${merchantId}|${subscriptionPlanData.order_id}|${subscriptionPlanData.amount}|${subscriptionPlanData.currency}|${accessCode}|${workingKey}`;
+        // const checksum = crypto.createHash('sha256').update(checksumString).digest('hex');
+        // subscriptionPlanData.checksum = checksum;
+
+        // // Add payment details to the subscription plan data
+        // subscriptionPlanData.card_number = '4200000000000000';
+        // subscriptionPlanData.expiry_month = '02';
+        // subscriptionPlanData.expiry_year = '2025';
+        // subscriptionPlanData.cvv = '123';
+        // subscriptionPlanData.card_holder_name = 'DEMO CARD';
+
+        // console.log("subscriptionPlanData ::: ", subscriptionPlanData)
+
+        // return axios.post(subscriptionPlanUrl, subscriptionPlanData)
+        // .then(response => {
+        //     // Handle the API response here
+        //     console.log('Subscription plan creation response:', response.data);
+        //     return response.data
+        // })
+        // .catch(error => {
+        //     // Handle errors
+        //     console.error('Subscription plan creation error:', error);
+        //     return error
+        // });
+
+    }catch (error) {
+        // Handle unexpected errors
+        console.error('Error in purchaseCourse:', error);
+        return {
+            status: false,
+            status_code: constants.EXCEPTION_ERROR_CODE,
+            message: 'Failed to purchase course',
+            error: { server_error: 'An unexpected error occurred' },
+            data: null,
+        };
+    }
+  
+}
+
 module.exports = {
     assignCourse,
     getAssignCourseList,
@@ -1648,5 +1764,6 @@ module.exports = {
     getPaymentHistory,
     getInvoice,
     singleTimePayment,
-    paymentResponse
+    paymentResponse,
+    testSubscription
 }

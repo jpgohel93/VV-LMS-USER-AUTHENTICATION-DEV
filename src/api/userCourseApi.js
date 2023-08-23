@@ -302,4 +302,11 @@ module.exports = async (app) => {
 
         res.status(data.status_code).json(data);
     });
+
+    app.post('/user/testSubscription', async (req, res, next) => {
+       
+        const data = await userCourseService.testSubscription();
+
+        res.status(200).json(data);
+    });
 }

@@ -55,12 +55,12 @@ const assignCourse = async (userInputs,request) => {
                 const getUserData = await UserModel.fatchUserById(user_id);
                 let subject = `Course Assiged - ${courseData.course_title}`;
                 let message = await coursePurchaseTemplate({ user_name: `${getUserData?.first_name} ${getUserData?.last_name}`, subject: subject, course_title: courseData.course_title});
-                let sendwait = await sendMail(getUserData?.email, message, subject, user_id, "Course Assign")
+                let sendwait = sendMail(getUserData?.email, message, subject, user_id, "Course Assign")
 
                 let id= createUserCourse?._id ? createUserCourse?._id : null;
 
                 if(getUserData?.notification_device_id){
-                    await sendPushNotification({notification_device_id:[getUserData?.notification_device_id], message: "Course has been purchased successfully.", template_id: "20a140f6-66bb-4995-94af-0a58632afd31"})
+                    sendPushNotification({notification_device_id:[getUserData?.notification_device_id], message: "Course has been purchased successfully.", template_id: "20a140f6-66bb-4995-94af-0a58632afd31"})
                 }
 
                 return {
@@ -502,7 +502,8 @@ const purchaseCourse = async (userInputs,request) => {
                         courseInsertData['duration'] = subscription_type
                         courseInsertData['price'] = coursePlanData?.amount
                         courseInsertData['plan_id'] = coursePlanData?.plan_id
-                        courseInsertData['payment_method'] = "razorpay"
+                        //courseInsertData['payment_method'] = "razorpay"
+                        courseInsertData['payment_method'] = "ccavenue"
                         courseInsertData['subscription_start_date'] = new Date()
                         courseInsertData['subscription_date'] = new Date()
                         courseInsertData['linkexpired_at'] = await getNewDate("month", 6)
@@ -573,7 +574,8 @@ const purchaseCourse = async (userInputs,request) => {
         
             courseInsertData['price'] = finalAmount
             courseInsertData['is_lifetime_access'] = courseData?.is_lifetimefree || false
-            courseInsertData['payment_method'] = "razorpay",
+            //courseInsertData['payment_method'] = "razorpay",
+            courseInsertData['payment_method'] = "ccavenue",
             courseInsertData['amount'] = courseData?.price || 0,
             courseInsertData['discount_amount'] = courseData?.discount_amount || 0,
             courseInsertData['discount'] = courseData?.discount || 0

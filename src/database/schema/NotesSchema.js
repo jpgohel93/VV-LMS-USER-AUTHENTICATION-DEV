@@ -9,7 +9,11 @@ const UserNotesSchema = new Schema({
     topic_id: String,
     title: String,
     description: String,
-    time: String
+    time: String,
+    note_type: {
+        type: Number,
+        default: 1 // 1. topic , 2. general
+    }
 },{ timestamps: true }); 
 
 UserNotesSchema.index( { user_id : 1 } )

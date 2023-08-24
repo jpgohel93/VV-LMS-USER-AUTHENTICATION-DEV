@@ -21,10 +21,10 @@ module.exports = async (app) => {
             .notEmpty()
             .withMessage('Time is required.'),
 
-            body('topic_id')
-            .notEmpty()
-            .withMessage('Topic id is required.')
-            .isMongoId().withMessage("Topic id is not valid"),
+            // body('topic_id')
+            // .notEmpty()
+            // .withMessage('Topic id is required.')
+            // .isMongoId().withMessage("Topic id is not valid"),
 
             body('description')
             .notEmpty()
@@ -69,10 +69,10 @@ module.exports = async (app) => {
           .withMessage('Enter a valid end token value')
       ]), async (req,res,next) => {
 
-        const { user_id, course_id, chapter_id, topic_id, startToken, endToken } = req.body;
+        const { user_id, course_id, chapter_id, topic_id, startToken, endToken, note_type } = req.body;
 
         
-        const data = await notesService.getNotesData({ user_id, course_id,chapter_id, topic_id, startToken, endToken }, req); 
+        const data = await notesService.getNotesData({ user_id, course_id,chapter_id, topic_id, startToken, endToken, note_type }, req); 
             
         res.status(data.status_code).json(data);
     }); 

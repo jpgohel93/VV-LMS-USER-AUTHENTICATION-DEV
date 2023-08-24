@@ -51,6 +51,12 @@ const fatchNotesList = async (userInput) => {
         })
     }
 
+    if(userInput.note_type){
+        filter.push({
+            note_type: userInput.note_type
+        })
+    }
+
     const notesData = await NotesSchema.find({ 
         $and: filter
     }).skip(userInput.page).limit(userInput.perPage).sort({ createdAt: -1 }).then((data) => {

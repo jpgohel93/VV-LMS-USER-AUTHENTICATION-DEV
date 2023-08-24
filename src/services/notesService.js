@@ -6,6 +6,7 @@ const addNotes = async (userInputs) => {
     try{
         const { user_id, course_id,chapter_id, topic_id, description, title, time } = userInputs;
 
+        let noteType = topic_id ? 1 : 2
         const createNotes = await NotesModel.createNotes({ 
             user_id: user_id,
             course_id: course_id,
@@ -13,7 +14,8 @@ const addNotes = async (userInputs) => {
             topic_id: topic_id,
             description: description,
             title: title,
-            time: time
+            time: time,
+            note_type: noteType
         });
 
         if(createNotes !== false){
@@ -87,7 +89,7 @@ const updateNotes = async (userInputs) => {
 const getNotesData = async (userInputs, request) => {
 
     try {
-        const { user_id, course_id,chapter_id, topic_id, startToken, endToken  } = userInputs;
+        const { user_id, course_id,chapter_id, topic_id, startToken, endToken, note_type  } = userInputs;
 
         const perPage = parseInt(endToken) || 10;
         let page = Math.max((parseInt(startToken) || 1) - 1, 0); 
@@ -95,7 +97,7 @@ const getNotesData = async (userInputs, request) => {
             page = perPage * page;
         }
 
-        const getNotesData = await NotesModel.fatchNotesList({user_id, course_id,chapter_id, topic_id, page, perPage});
+        const getNotesData = await NotesModel.fatchNotesList({user_id, course_id,chapter_id, topic_id, page, perPage, note_type});
         
         if(getNotesData){
             let notesData = [];

@@ -77,7 +77,7 @@ module.exports = async (app) => {
         res.status(data.status_code).json(data);
     }); 
 
-    app.post('/notes/deleteNotesItem', UserAuth ,
+    app.post('/notes/deleteNote', UserAuth ,
         await validateFormFields([
             body('id')
             .notEmpty()

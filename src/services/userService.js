@@ -3554,10 +3554,12 @@ const getOSUsage = async (userInputs) => {
             not_any: 0,
             not_any_per: 0,
         }
+       
         if(osUsage){
             let countTotalRecord = 0
+            let notAnyCount = 0
             await Promise.all(
-                osUsage.map((element) => {
+                await osUsage.map((element) => {
                     if(element._id == "ios"){
                         countTotalRecord = countTotalRecord + element.count
                         responseData['ios'] = element.count
@@ -3566,10 +3568,12 @@ const getOSUsage = async (userInputs) => {
                         responseData['android'] = element.count
                     }else{
                         countTotalRecord = countTotalRecord + element.count
-                        responseData['not_any'] = element.count
+                        notAnyCount = notAnyCount + element.count
+                        responseData['not_any'] = notAnyCount
                     }
                 })
             )
+
             responseData['ios_per'] = responseData?.ios > 0 ? responseData.ios * 100/ countTotalRecord : 0;
             responseData['android_per'] = responseData?.android > 0 ? responseData.android * 100/ countTotalRecord : 0;
             responseData['not_any_per'] = responseData?.not_any > 0 ? responseData.not_any * 100/ countTotalRecord : 0;

@@ -126,7 +126,8 @@ const getNotesData = async (userInputs, request) => {
                                     content_video: course?.topics?.content_video || "",
                                     topic_type: course?.topics?.topic_type || "",
                                     content_type: course?.topics?.content_type || "",
-                                    time: notesElement?.time|| ""
+                                    time: notesElement?.time|| "",
+                                    note_type: notesElement?.note_type || 2
                                 }
                                 resolve(true)
                                 

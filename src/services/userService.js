@@ -1185,7 +1185,8 @@ const updateAccountData= async (userInputs) => {
                     country_code: country_code,
                     user_type: getUserData?.user_type || "",
                     user_login_type: getUserData?.user_signup_with || "",
-                    last_login_type: getUserData?.last_login_type || ""
+                    last_login_type: getUserData?.last_login_type || "",
+                    profile_image: getUserData?.profile_image || "",
                 }
             };
         }else{

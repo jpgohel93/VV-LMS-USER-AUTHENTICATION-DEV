@@ -20,7 +20,16 @@ module.exports = async (app) => {
     app.post('/user/singin', await validateFormFields([
         body('username')
         .notEmpty()
-        .withMessage('Username is required'),
+        .withMessage('Username is required')
+        .custom((value) => {
+            let email = /^[a-z0-9][a-z0-9-_\.]+@([a-z]|[a-z0-9]?[a-z0-9-]+[a-z0-9])\.[a-z0-9]{2,10}(?:\.[a-z]{2,10})?$/i
+            let mobileNo = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/
+
+            if (!mobileNo.test(value) && !email.test(value)) {
+                throw new Error("Invaild Email / Mobile Number")
+            }
+            return true
+        }),
 
         body('password')
         .notEmpty()
@@ -677,7 +686,7 @@ module.exports = async (app) => {
         res.status(data.status_code).json(data);
     });
 
-    app.post('/user/chnageNotificationStatus', UserAuth, await validateFormFields([
+    app.post('/user/changeNotificationStatus', UserAuth, await validateFormFields([
         body('id')
         .notEmpty()
         .withMessage('User id is required')
@@ -688,7 +697,7 @@ module.exports = async (app) => {
             id,
             status
         } = req.body;
-        const data = await userService.chnageNotificationStatus({
+        const data = await userService.changeNotificationStatus({
             id,
             status
         });
@@ -696,7 +705,7 @@ module.exports = async (app) => {
         res.status(data.status_code).json(data);
     });
 
-    app.post('/user/chnageApplicationLanguage', UserAuth, await validateFormFields([
+    app.post('/user/changeApplicationLanguage', UserAuth, await validateFormFields([
         body('id')
         .notEmpty()
         .withMessage('User id is required')
@@ -707,7 +716,7 @@ module.exports = async (app) => {
             id,
             language
         } = req.body;
-        const data = await userService.chnageApplicationLanguage({
+        const data = await userService.changeApplicationLanguage({
             id,
             language
         });
@@ -863,7 +872,7 @@ module.exports = async (app) => {
         const {
             id
         } = req.body;
-        const data = await userService.chnageProfileImage({
+        const data = await userService.changeProfileImage({
             id,
             profile_image: profileImage
         });

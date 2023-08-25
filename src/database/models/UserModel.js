@@ -16,7 +16,7 @@ const createUser = async (insertData) => {
 
 const fatchUserData = async (username, google_login_id = null, facebook_login_id = null, linkdin_login_id = null, apple_login_id = null) => {
     let filter = [];
-    if(username != undefined && username != ""){
+    if(username){
         filter.push(
             {
                 mobile_no: username
@@ -90,7 +90,7 @@ const fatchUserfilterData = async (userFilter) => {
 
 const fatchStudents = async (search, start, limit, institute_id) => {
     let searchFilter = [];
-    if(search !== ''){
+    if(search){
         searchFilter.push({
             $or: [
                 {

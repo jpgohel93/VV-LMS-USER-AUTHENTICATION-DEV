@@ -1088,7 +1088,7 @@ const changePassword = async (userInputs) => {
                     return {
                         status: false,
                         status_code: constants.ERROR_RESPONSE,
-                        message: "Sorry! Falied to chnage the password"
+                        message: "Sorry! Falied to change the password"
                     };
                 }
             }else{
@@ -1192,7 +1192,7 @@ const updateAccountData= async (userInputs) => {
             return {
                 status: false,
                 status_code: constants.ERROR_RESPONSE,
-                message: "Sorry! Falied to chnage the password",
+                message: "Sorry! Falied to change the password",
                 data: null
             };
         }
@@ -1202,7 +1202,7 @@ const updateAccountData= async (userInputs) => {
         return {
             status: false,
             status_code: constants.EXCEPTION_ERROR_CODE,
-            message: 'Sorry! Falied to chnage the password',
+            message: 'Sorry! Falied to change the password',
             error: { server_error: 'An unexpected error occurred' },
             data: null,
         };
@@ -1239,7 +1239,7 @@ const changeAccountPassword = async (userInputs) => {
                         return {
                             status: false,
                             status_code: constants.ERROR_RESPONSE,
-                            message: "Sorry! Falied to chnage the password"
+                            message: "Sorry! Falied to change the password"
                         };
                     }
                 }else{
@@ -1269,14 +1269,14 @@ const changeAccountPassword = async (userInputs) => {
         return {
             status: false,
             status_code: constants.EXCEPTION_ERROR_CODE,
-            message: 'Sorry! Falied to chnage the password',
+            message: 'Sorry! Falied to change the password',
             error: { server_error: 'An unexpected error occurred' },
             data: null,
         };
     }
 }
 
-const chnageNotificationStatus = async (userInputs) => {
+const changeNotificationStatus = async (userInputs) => {
     try{
         const { id,status } = userInputs;
 
@@ -1294,17 +1294,17 @@ const chnageNotificationStatus = async (userInputs) => {
             return {
                 status: false,
                 status_code: constants.DATABASE_ERROR_RESPONSE,
-                message: "Failed to chnage nofitication status"
+                message: "Failed to change nofitication status"
             };
         }
 
     }catch (error) {
         // Handle unexpected errors
-        console.error('Error in chnageNotificationStatus:', error);
+        console.error('Error in changeNotificationStatus:', error);
         return {
             status: false,
             status_code: constants.EXCEPTION_ERROR_CODE,
-            message: 'Failed to chnage nofitication status',
+            message: 'Failed to change nofitication status',
             error: { server_error: 'An unexpected error occurred' },
             data: null,
         };
@@ -1312,7 +1312,7 @@ const chnageNotificationStatus = async (userInputs) => {
     
 }
 
-const chnageApplicationLanguage = async (userInputs) => {
+const changeApplicationLanguage = async (userInputs) => {
     try{
         const { id,language } = userInputs;
 
@@ -1330,16 +1330,16 @@ const chnageApplicationLanguage = async (userInputs) => {
             return {
                 status: false,
                 status_code: constants.DATABASE_ERROR_RESPONSE,
-                message: "Failed to chnage application language"
+                message: "Failed to change application language"
             };
         }
     }catch (error) {
         // Handle unexpected errors
-        console.error('Error in chnageApplicationLanguage:', error);
+        console.error('Error in changeApplicationLanguage:', error);
         return {
             status: false,
             status_code: constants.EXCEPTION_ERROR_CODE,
-            message: 'Failed to chnage application language',
+            message: 'Failed to change application language',
             error: { server_error: 'An unexpected error occurred' },
             data: null,
         };
@@ -1475,7 +1475,7 @@ const changeStudentPassword = async (userInputs) => {
                     return {
                         status: false,
                         status_code: constants.DATABASE_ERROR_RESPONSE,
-                        message: "Sorry! Falied to chnage the password"
+                        message: "Sorry! Falied to change the password"
                     };
                 }
             }else{
@@ -1498,7 +1498,7 @@ const changeStudentPassword = async (userInputs) => {
         return {
             status: false,
             status_code: constants.EXCEPTION_ERROR_CODE,
-            message: 'Sorry! Falied to chnage the password',
+            message: 'Sorry! Falied to change the password',
             error: { server_error: 'An unexpected error occurred' },
             data: null,
         };
@@ -1639,7 +1639,7 @@ const deleteStudent = async (userInputs) => {
     }
 }
 
-const chnageProfileImage = async (userInputs) => {
+const changeProfileImage = async (userInputs) => {
     try{
         const { id,profile_image } = userInputs;
 
@@ -1673,7 +1673,7 @@ const chnageProfileImage = async (userInputs) => {
         }
     }catch (error) {
         // Handle unexpected errors
-        console.error('Error in chnageProfileImage:', error);
+        console.error('Error in changeProfileImage:', error);
         return {
             status: false,
             status_code: constants.EXCEPTION_ERROR_CODE,
@@ -3787,13 +3787,13 @@ module.exports = {
     getStudentAccountDetail,
     updateAccountData,
     changeAccountPassword,
-    chnageNotificationStatus,
-    chnageApplicationLanguage,
+    changeNotificationStatus,
+    changeApplicationLanguage,
     addStudent,
     changeStudentPassword,
     updateStudentData,
     deleteStudent,
-    chnageProfileImage,
+    changeProfileImage,
     checkUserData,
     getAgeData,
     getGenderData,

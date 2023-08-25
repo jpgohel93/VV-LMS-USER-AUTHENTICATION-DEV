@@ -490,20 +490,20 @@ const makeCourseAsACompleted = async (userInputs) => {
                 return {
                     status: true,
                     status_code: constants.SUCCESS_RESPONSE,
-                    message: "Course status chnage successfully",
+                    message: "Course status change successfully",
                 };
             }else{
                 return {
                     status: false,
                     status_code: constants.DATABASE_ERROR_RESPONSE,
-                    message: "Failed to chnage the course status"
+                    message: "Failed to change the course status"
                 };
             }
         }else{
             return {
                 status: false,
                 status_code: constants.DATABASE_ERROR_RESPONSE,
-                message: "Failed to chnage the course status"
+                message: "Failed to change the course status"
             };
         }
     }catch (error) {
@@ -512,7 +512,7 @@ const makeCourseAsACompleted = async (userInputs) => {
         return {
             status: false,
             status_code: constants.EXCEPTION_ERROR_CODE,
-            message: 'Failed to chnage the course status',
+            message: 'Failed to change the course status',
             error: { server_error: 'An unexpected error occurred' },
             data: null,
         };

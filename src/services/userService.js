@@ -3210,7 +3210,8 @@ const verifyMobileOtp = async (userInputs) => {
                     mobile_no : mobile_no,
                     user_type: userData.user_type,
                     user_login_type: userData.user_signup_with,
-                    last_login_type: 1
+                    last_login_type: 1,
+                    profile_image: userData?.profile_image || ''
                 }
 
                 let jwtToken = await GenerateSignature(jwtData);

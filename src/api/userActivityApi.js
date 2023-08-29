@@ -8,7 +8,6 @@ module.exports = async (app) => {
         body('module')
         .notEmpty()
         .withMessage('Module is required')
-        .isMongoId().withMessage("User id is not valid"),
     ]), async (req,res,next) => {
         
         const { module, reference_id } = req.body;
@@ -22,7 +21,7 @@ module.exports = async (app) => {
         body('activity_id')
         .notEmpty()
         .withMessage('Activity id is required')
-        .isMongoId().withMessage("Activity id is not valid"),
+        .isMongoId().withMessage("Activity id is not valid")
     ]), async (req,res,next) => {
         
         const { activity_id, end_time } = req.body;

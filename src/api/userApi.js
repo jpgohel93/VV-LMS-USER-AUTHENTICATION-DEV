@@ -450,16 +450,18 @@ module.exports = async (app) => {
         .isNumeric()
         .withMessage('Country code not valid')
         .notEmpty()
-        .withMessage('Country code not valid'),
+        .withMessage('Country code not valid')
     ]), async (req, res, next) => {
 
         const {
             mobile_no,
-            country_code
+            country_code,
+            user_id
         } = req.body;
         const data = await userService.sendOtp({
             mobile_no,
-            country_code
+            country_code,
+            user_id
         });
 
         res.status(data.status_code).json(data);

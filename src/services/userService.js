@@ -764,8 +764,14 @@ const importStudents = async (userInputs) => {
 //send otp
 const sendOtp = async (userInputs) => {
     try{
-        const { mobile_no, country_code } = userInputs;
-        const getUserData = await UserModel.fatchUserData(mobile_no);
+        const { mobile_no, country_code, user_id } = userInputs;
+        let getUserData = null
+        if(user_id){
+            getUserData = await UserModel.fatchUserById(user_id);
+        }else if(mobile_no){
+            getUserData = await UserModel.fatchUserData(mobile_no);
+        }
+       
         if(getUserData !== null){
             if (getUserData?.opt_expired_at) {
                 let optExpiredAt = await DateToTimestamp(getUserData.opt_expired_at);

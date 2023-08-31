@@ -3,7 +3,7 @@ module.exports = {
     ERROR_RESPONSE: 400,
     DATABASE_ERROR_RESPONSE: 500,
     CONFLICT_RESPONSE: 409,
-    OTP_EXPIRE_MINUTE: 5,
+    OTP_EXPIRE_MINUTE: 1,
     EXCEPTION_ERROR_CODE:410,
 
     //send mail address configuration

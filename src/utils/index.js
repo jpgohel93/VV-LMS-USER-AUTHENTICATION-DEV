@@ -160,7 +160,7 @@ module.exports.sendSingleSms = async (country_code, mobile_no, message, template
 					template_id: template_id,
 					to_number: mobileno,
 					status: 3,
-					sms_response: '',
+					sms_response: responseData ? JSON.stringify(responseData) : '',
 					sender_id: process.env.SMS_SENDERID ? process.env.SMS_SENDERID : '',
 					sms_type: sms_type
 				})

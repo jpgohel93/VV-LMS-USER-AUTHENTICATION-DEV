@@ -791,7 +791,7 @@ const sendOtp = async (userInputs) => {
 
             //Send an otp SMS :: START
             let message = "Welcome to Virtual Vidyapith! Your OTP for signup is " + otp + ". Enter it to complete your registration. Have a great learning experience!"
-            let smsResponse = await sendSingleSms(country_code,mobile_no, message, process.env.SMS_OTP_TEMPLATEID, id,1)
+            let smsResponse = sendSingleSms(country_code,mobile_no, message, process.env.SMS_OTP_TEMPLATEID, id,1)
             //Send an otp SMS :: END
             
             if(smsResponse){

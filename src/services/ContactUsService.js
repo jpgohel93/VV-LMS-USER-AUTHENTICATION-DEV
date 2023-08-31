@@ -23,7 +23,8 @@ const addContactUs = async (userInputs) => {
 
         let emailSub = "Contact Us Inquire Has Been Received";
         let message = await contactUsInquirySubmission({ user_name: first_name, id: email, email: emailSub, subject: subject, your_message:your_message});
-        let sendwait = await sendMail(process.env.MAIL_SMTP_FROM, message, emailSub, "", "Contact US Inquiry Mail");
+        let sendwait = sendMail(process.env.MAIL_SMTP_FROM, message, emailSub, "", "Contact US Inquiry Mail");
+        
         return {
             status: true,
             message: "Thank you for contacting us! Your inquiry has been successfully submitted.",

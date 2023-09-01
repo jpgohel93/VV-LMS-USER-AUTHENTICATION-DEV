@@ -714,6 +714,8 @@ const mylearning = async (userInputs,request) => {
                         //await new Promise(async (resolve, reject) => {
                             let course = await CallCourseQueryEvent("get_course_data_without_auth",{ id: courseElement.course_id  }, request.get("Authorization"))
                             let courseWatchHistory = await CourseWatchHistoryModel.filterCourseWatchHistoryData(user_id, courseElement.course_id)
+                            let courseDefault = await CallCourseQueryEvent("get_course_default_promotional_content",{ course_id: courseElement.course_id  }, request.get("Authorization"))
+
 
                             let perForCompletedChapter = 0;
                             if(courseWatchHistory!== null){
@@ -743,7 +745,7 @@ const mylearning = async (userInputs,request) => {
                                     course: {
                                         course_title: course?.course_title ? course.course_title : '',
                                         course_description: course?.short_description ? course.short_description : '',
-                                        image: course?.default_file_path?.small_thumbnail_image ? course.default_file_path.small_thumbnail_image : '',
+                                        image: courseDefault?.web_image ? courseDefault.web_image : '',
                                         publisher_id: course?.publisher_id ? course.publisher_id : '',
                                         publisher_name: course?.publisher_name ? course.publisher_name : '',
                                     },
@@ -1182,12 +1184,13 @@ const getPaymentHistory = async (userInputs,request) => {
                         await Promise.all(
                             userCourseData.map(async (element) => {
                                 let courseData = await CallCourseQueryEvent("get_course_data_without_auth",{ id: element?.course_id  },'')
+                                let courseDefault = await CallCourseQueryEvent("get_course_default_promotional_content",{ course_id: element?.course_id  }, request.get("Authorization"))
 
                                 await courseArray.push({
                                     course_id: courseData._id,
                                     course_title: courseData?.course_title || "",
                                     amount: element?.price || 0,
-                                    thumbnail_image: courseData?.default_file_path?.medium_thumbnail_image || null,
+                                    thumbnail_image: courseDefault?.web_image || null,
                                     short_description: courseData?.short_description || null,
                                 })
                             })

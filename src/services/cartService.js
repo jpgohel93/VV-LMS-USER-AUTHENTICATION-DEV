@@ -71,6 +71,7 @@ const getCartsData = async (userInputs, request) => {
                     getCartData.map(async (cartElement, cartKey) => {
 
                         let course = await CallCourseQueryEvent("get_course_data_by_id",{ id: cartElement.course_id  }, request.get("Authorization"))
+                        let courseDefault = await CallCourseQueryEvent("get_course_default_promotional_content",{ course_id: cartElement.course_id  }, request.get("Authorization"))
 
                         await cartData.push({
                             _id: cartElement.id,
@@ -78,7 +79,7 @@ const getCartsData = async (userInputs, request) => {
                             course_id: course?.course_id,
                             short_description: course?.short_description,
                             course_title: course?.course_title,
-                            file_path: course?.default_file_path ? course?.default_file_path : null,
+                            file_path: courseDefault?.web_image ? courseDefault?.web_image : null,
                             course_level: course?.course_level ? course?.course_level : null,
                             leason_count: course?.leason_count ? course?.leason_count : 0,
                             total_watch_hours: course?.total_watch_hours ? course?.total_watch_hours : 0,

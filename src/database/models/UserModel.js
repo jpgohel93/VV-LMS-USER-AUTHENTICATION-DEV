@@ -88,7 +88,7 @@ const fatchUserfilterData = async (userFilter) => {
     return getFilterData;
 }
 
-const fatchStudents = async (search, start, limit, institute_id) => {
+const fatchStudents = async (search, start, limit, institute_id, referral_code) => {
     let searchFilter = [];
     if(search){
         searchFilter.push({
@@ -112,6 +112,11 @@ const fatchStudents = async (search, start, limit, institute_id) => {
     if(institute_id){
         searchFilter.push({
             institute_id: institute_id
+        })
+    }
+    if(referral_code){
+        searchFilter.push({
+            referral_code: referral_code
         })
     }
 
@@ -134,7 +139,7 @@ const fatchStudents = async (search, start, limit, institute_id) => {
     return studentsData;
 }
 
-const countStudents = async (search,institute_id, startDate, endDate) => {
+const countStudents = async (search,institute_id, startDate, endDate, referral_code) => {
     let searchFilter = [];
     if(search){
         searchFilter.push({
@@ -158,6 +163,12 @@ const countStudents = async (search,institute_id, startDate, endDate) => {
     if(institute_id){
         searchFilter.push({
             institute_id: institute_id
+        })
+    }
+
+    if(referral_code){
+        searchFilter.push({
+            referral_code: referral_code
         })
     }
 

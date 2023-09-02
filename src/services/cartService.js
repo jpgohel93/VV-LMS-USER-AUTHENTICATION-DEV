@@ -355,13 +355,25 @@ const qrCheckOut = async (userInputs,request) => {
         const { user_id, course_id } = userInputs;
 
         let courseData = await CallCourseQueryEvent("get_course_data_by_id",{ id: course_id }, request.get("Authorization"))
-
+ 
         if(courseData){
             let finalAmount = courseData.discount_amount
             let taxAmount = 0
             if(courseData.is_tax_exclusive){
                 taxAmount = parseInt(courseData.discount_amount) * parseFloat(courseData.tax_percentage) / 100 
                 finalAmount = finalAmount + taxAmount
+            }
+
+            const getUserCourseData = await UserCourseModel.getUserCourseList({ user_id: user_id});
+            const getUserData = await UserModel.fatchUserById(user_id);
+            let hemanDiscount = 0
+            if(getUserData && getUserData?.referral_code && getUserCourseData && getUserCourseData?.length == 0){
+                let hemanData = await CallEventBus("get_heman_by_code",{ referral_code: getUserData.referral_code }, request.get("Authorization"))
+
+                if(hemanData?.student_discount){
+                    hemanDiscount = courseData.student_discount
+                    finalAmount = finalAmount - hemanDiscount
+                }
             }
 
             return {
@@ -381,7 +393,8 @@ const qrCheckOut = async (userInputs,request) => {
                     tax_percentage: courseData?.tax_percentage || 0,
                     tax_amount: taxAmount,
                     final_amount: finalAmount,
-                    convince_fee: courseData?.convince_fee
+                    convince_fee: courseData?.convince_fee,
+                    referral_discount: hemanDiscount
                 }
             };
         }else{

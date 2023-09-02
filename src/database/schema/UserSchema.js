@@ -83,7 +83,11 @@ const UserSchema = new Schema({
     operating_system: {
         type: String,
         default: null
-    }, //ios or android 
+    }, //ios or android
+    referral_code: {
+        type: String,
+        default: null
+    } 
 },{ timestamps: true }); 
 
 UserSchema.index( { email : 1 } )

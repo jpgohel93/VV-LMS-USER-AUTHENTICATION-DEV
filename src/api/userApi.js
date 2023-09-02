@@ -60,7 +60,8 @@ module.exports = async (app) => {
             firebase_token,
             ip_address,
             notification_device_id,
-            operating_system
+            operating_system,
+            referral_code
         } = req.body;
 
         const data = await userService.userSignin({
@@ -70,7 +71,8 @@ module.exports = async (app) => {
             firebase_token,
             ip_address,
             notification_device_id,
-            operating_system
+            operating_system,
+            referral_code
         });
 
         res.status(data.status_code).json(data);
@@ -95,7 +97,8 @@ module.exports = async (app) => {
             notification_device_id,
             ip_address,
             device_type,
-            operating_system
+            operating_system,
+            referral_code
         } = req.body;
         const data = await userService.loginWithSocialAccount({
             google_login_id,
@@ -114,7 +117,8 @@ module.exports = async (app) => {
             notification_device_id,
             ip_address,
             device_type,
-            operating_system
+            operating_system,
+            referral_code
         });
 
         res.status(data.status_code).json(data);
@@ -200,7 +204,8 @@ module.exports = async (app) => {
                 notification_device_id,
                 ip_address,
                 device_type,
-                operating_system
+                operating_system,
+                referral_code
             } = req.body;
 
             const data = await userService.addUser({
@@ -220,10 +225,11 @@ module.exports = async (app) => {
                 notification_device_id,
                 ip_address,
                 device_type,
-                operating_system
+                operating_system,
+                referral_code
             });
             res.status(data.status_code).json(data);
-        });
+    });
 
     app.post('/user/addStudents', UserAuth, uploadFile.single('profile_image'),
         await validateFormFields([
@@ -366,11 +372,6 @@ module.exports = async (app) => {
         });
 
     app.post('/user/getStudentList', UserAuth, await validateFormFields([
-        body('search')
-        .optional()
-        .matches(/^[a-zA-Z0-9\s\-_.]*$/)
-        .withMessage('Enter a valid search value'),
-
         body('startToken')
         .isNumeric()
         .withMessage('Enter a valid start token value'),
@@ -391,14 +392,16 @@ module.exports = async (app) => {
             search,
             startToken,
             endToken,
-            institution_id
+            institution_id,
+            referral_code
         } = req.body;
 
         const data = await userService.getStudentsData({
             search,
             startToken,
             endToken,
-            institution_id
+            institution_id,
+            referral_code
         });
 
         res.status(data.status_code).json(data);

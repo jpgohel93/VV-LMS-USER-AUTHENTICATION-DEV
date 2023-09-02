@@ -93,7 +93,7 @@ const getLinkedinData = async (userInputs) => {
 //login with social media account (google / facebook / linkdin)
 const loginWithSocialAccount = async (userInputs) => {
     try {
-        const { google_login_id, facebook_login_id,apple_login_id, linkdin_login_id, is_tc_verify , user_signup_with, first_name, last_name, email, country_code, mobile_no, device_uuid, firebase_token, notification_device_id, ip_address, device_type, operating_system } = userInputs;
+        const { google_login_id, facebook_login_id,apple_login_id, linkdin_login_id, is_tc_verify , user_signup_with, first_name, last_name, email, country_code, mobile_no, device_uuid, firebase_token, notification_device_id, ip_address, device_type, operating_system, referral_code } = userInputs;
         
         //check duplicate login data
         const getEmailData = email ? await UserModel.fatchUserfilterData({ email: email }) : null;
@@ -102,6 +102,7 @@ const loginWithSocialAccount = async (userInputs) => {
 
 
         if(checkMobileDuplication || getEmailData || getUserData){
+         
             if(getUserData){
                 getUserData = getUserData
             }else if(getEmailData){
@@ -121,7 +122,7 @@ const loginWithSocialAccount = async (userInputs) => {
                 }
 
                 if(notification_device_id){
-                    updateUserData['notification_device_id'] = notification_device_id;
+                    updateData['notification_device_id'] = notification_device_id;
                 }
                 UserModel.updateUser(getUserData._id,updateData);
             }else if(checkMobileDuplication){
@@ -176,6 +177,13 @@ const loginWithSocialAccount = async (userInputs) => {
             if(notification_device_id){
                 updateUserData['notification_device_id'] = notification_device_id;
             }
+            if(referral_code){
+                const getUserCourseData = await UserCourseModel.getUserCourseList({ user_id: getUserData._id });
+                if(getUserCourseData?.length == 0){
+                    updateUserData['referral_code'] = referral_code
+                }
+            }
+            
             // console.log('updateUserData :: ',updateUserData);
             UserModel.updateUser(getUserData._id,updateUserData);
 
@@ -218,7 +226,8 @@ const loginWithSocialAccount = async (userInputs) => {
                 last_login_time: new Date(),
                 is_verify_otp: true,
                 device_type: device_type,
-                operating_system: operating_system
+                operating_system: operating_system,
+                referral_code: referral_code
             }
             if(notification_device_id){
                 studentData['notification_device_id'] = notification_device_id;
@@ -299,7 +308,7 @@ const loginWithSocialAccount = async (userInputs) => {
 //signin
 const userSignin = async (userInputs) => {
     try{
-        const { username, password, device_uuid, firebase_token, ip_address, notification_device_id, operating_system } = userInputs;
+        const { username, password, device_uuid, firebase_token, ip_address, notification_device_id, operating_system, referral_code } = userInputs;
         
         /* const rateLimiterRes = await limiter.consume(ip_address).then((data) => {
             return data;
@@ -343,6 +352,8 @@ const userSignin = async (userInputs) => {
                 let validPassword = await ValidatePassword(password, getUserData.password, getUserData.password_salt);
 
                 if(validPassword){
+
+                   
                     
                     //update last login time
                     const updateUserData = { 
@@ -355,6 +366,13 @@ const userSignin = async (userInputs) => {
                     if(notification_device_id){
                         updateUserData['notification_device_id'] = notification_device_id;
                     }
+                    if(referral_code){
+                        const getUserCourseData = await UserCourseModel.getUserCourseList({ user_id: getUserData._id });
+                        if(getUserCourseData?.length == 0){
+                            updateUserData['referral_code'] = referral_code
+                        }
+                    }
+                    
                     UserModel.updateUser(getUserData._id,updateUserData);
 
                     let jwtData = {
@@ -497,7 +515,7 @@ const userSignin = async (userInputs) => {
 const addUser = async (userInputs) => {
     try{
         const { 
-            first_name, last_name, email, country_code, mobile_no, birth_date, gender, password, is_tc_verify , note, device_uuid, firebase_token, notification_device_id, ip_address, device_type, operating_system
+            first_name, last_name, email, country_code, mobile_no, birth_date, gender, password, is_tc_verify , note, device_uuid, firebase_token, notification_device_id, ip_address, device_type, operating_system, referral_code
         } = userInputs;
 
         let errorArray = []
@@ -580,6 +598,15 @@ const addUser = async (userInputs) => {
 
             if(notification_device_id){
                 studentData['notification_device_id'] = notification_device_id;
+            }
+
+            if(referral_code && studentId) {
+                const getUserCourseData = await UserCourseModel.getUserCourseList({ user_id: studentId });
+                if(getUserCourseData?.length == 0){
+                    studentData['referral_code'] = referral_code
+                }
+            }else if (referral_code) {
+                studentData['referral_code'] = referral_code
             }
 
             let createStudent = null
@@ -948,7 +975,7 @@ const verifyOtp = async (userInputs) => {
 
 const getStudentsData = async (userInputs) => {
     try{
-        const { search, startToken, endToken, institution_id } = userInputs;
+        const { search, startToken, endToken, institution_id, referral_code } = userInputs;
         
         const perPage = parseInt(endToken) || 10; 
         let page = Math.max((parseInt(startToken) || 1) - 1, 0); 
@@ -956,8 +983,8 @@ const getStudentsData = async (userInputs) => {
             page = perPage * page; 
         }
 
-        const getStudentsData = await UserModel.fatchStudents(search, page, perPage, institution_id);
-        const countStudents = await UserModel.countStudents(search,institution_id);
+        const getStudentsData = await UserModel.fatchStudents(search, page, perPage, institution_id, referral_code);
+        const countStudents = await UserModel.countStudents(search,institution_id,'','', referral_code);
         
         if(getStudentsData !== null){
             return {

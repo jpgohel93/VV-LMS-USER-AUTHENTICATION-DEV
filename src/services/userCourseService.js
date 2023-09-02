@@ -1,7 +1,7 @@
 const { UserCourseModel, CourseWatchHistoryModel, UserModel, InvoiceModel, CartModel } = require("../database");
 const constants = require('../utils/constant');
 const { createSubscription , cancelSubscription } = require('../utils/paymentManagement');
-const { CallCourseQueryEvent,CallCourseQueryDataEvent, CallCourseEvents } = require('../utils/call-event-bus');
+const { CallCourseQueryEvent,CallCourseQueryDataEvent, CallCourseEvents, CallEventBus } = require('../utils/call-event-bus');
 const { coursePurchaseTemplate, subscriptionCancelTemplate } = require('../utils/email-template');
 const { createCronLogs, updateCronLogs, createApiCallLog, getNewDate, sendMail, generatePDF, sendPushNotification, findUniqueID } = require('../utils');
 const { encrypt, decrypt } = require('../utils/ccavenue');
@@ -9,8 +9,6 @@ const moment = require('moment');
 const fs = require('fs');
 const qs = require('querystring');
 const { invoiceTemplate } = require('../utils/pdf-template');
-const axios = require('axios');
-const crypto = require('crypto');
 
 const assignCourse = async (userInputs,request) => {
     try{
@@ -57,13 +55,36 @@ const assignCourse = async (userInputs,request) => {
                 const getUserData = await UserModel.fatchUserById(user_id);
                 let subject = `Course Assiged - ${courseData.course_title}`;
                 let message = await coursePurchaseTemplate({ user_name: `${getUserData?.first_name} ${getUserData?.last_name}`, subject: subject, course_title: courseData.course_title});
-                let sendwait = sendMail(getUserData?.email, message, subject, user_id, "Course Assign")
+                //let sendwait = sendMail(getUserData?.email, message, subject, user_id, "Course Assign")
 
                 let id= createUserCourse?._id ? createUserCourse?._id : null;
 
                 if(getUserData?.notification_device_id){
-                    sendPushNotification({notification_device_id:[getUserData?.notification_device_id], message: "Course has been purchased successfully.", template_id: "20a140f6-66bb-4995-94af-0a58632afd31"})
+                    //sendPushNotification({notification_device_id:[getUserData?.notification_device_id], message: "Course has been purchased successfully.", template_id: "20a140f6-66bb-4995-94af-0a58632afd31"})
                 }
+
+                //add a referral amount to heman
+                const getUserCourseData = await UserCourseModel.getUserCourseList({ user_id: user_id});
+
+                if(getUserData?.referral_code && getUserCourseData?.length == 1){
+                    let hemanData = await CallEventBus("get_heman_by_code",{ referral_code: getUserData.referral_code }, request.get("Authorization"))
+                    let courseData = await CallCourseQueryEvent("get_course_data_by_id",{ id: course_id }, request.get("Authorization"))
+
+                    if(hemanData && courseData && courseData?.discount_amount){
+                        let courseAmount = courseData.discount_amount
+                        let hemanPercentageAmount = (courseAmount * hemanData.percentage) / 100
+                        let hemanAmount = hemanData.amount + hemanPercentageAmount
+                        let hemanuser = {
+                            user_id: user_id,
+                            course_id: course_id,
+                            amount: hemanAmount,
+                            assign_at: new Date()
+                        }
+
+                        let response = await CallEventBus("add_heman_user",{ heman_id: hemanData._id, user: hemanuser, amount: hemanAmount }, request.get("Authorization"))
+                    }
+                }
+              
 
                 return {
                     status: true,

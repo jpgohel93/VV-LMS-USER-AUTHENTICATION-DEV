@@ -498,6 +498,23 @@ const getUserBaseCount = async (userFilter) => {
     return getFilterData;
 }
 
+const getUserCourseList = async (userFilter) => {
+
+    let filter = [];
+    if(userFilter.user_id){
+        filter.push({
+            user_id: userFilter.user_id
+        })
+    }
+
+    let getFilterData =  await UserCourseSchema.find( { $and: filter }).then((data) => {
+        return data
+    }).catch((err) => {
+        return null
+    });
+
+    return getFilterData;
+}
 
 module.exports = {
     assignUserCourse,
@@ -517,5 +534,6 @@ module.exports = {
     updateUserCourseUsingInvoice,
     getExpiringSoonCourses,
     deleteAssignCourse,
-    getUserBaseCount
+    getUserBaseCount,
+    getUserCourseList
 }

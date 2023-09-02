@@ -288,7 +288,7 @@ module.exports = async (app) => {
             .withMessage('Transactopn id is required'),
     ]), UserAuth ,async (req,res,next) => {
         const { course_id, transaction_id } = req.body;
-        let user_id = req.user !== undefined ? req.user.user_id : null;
+        let user_id = req.user !== undefined ? req.user.user_id : null; 
 
         const data = await paymentHistoryService.addPaymentHistory({ course_id , user_id, transaction_id }, req); 
 

@@ -1,6 +1,6 @@
-const { PaymentHistoryModel, UserCourseModel, InvoiceModel } = require("../database");
+const { PaymentHistoryModel, UserCourseModel, InvoiceModel, UserModel } = require("../database");
 const constants = require('../utils/constant');
-const { CallCourseQueryEvent } = require('../utils/call-event-bus');
+const { CallCourseQueryEvent, CallEventBus } = require('../utils/call-event-bus');
 
 const addPaymentHistory = async (userInputs, request) => {
     try{
@@ -24,6 +24,21 @@ const addPaymentHistory = async (userInputs, request) => {
                     taxAmount = parseInt(courseData.discount_amount) * parseFloat(courseData.tax_percentage) / 100 
                     finalAmount = finalAmount + taxAmount
                 }
+            } 
+
+            const getUserCourseData = await UserCourseModel.getUserCourseList({ user_id: user_id});
+            const getUserData = await UserModel.fatchUserById(user_id);
+            let hemanDiscount = 0
+            let referralCode = ''
+            let basicAmount = finalAmount
+            if(getUserData && getUserData?.referral_code && getUserCourseData && getUserCourseData?.length == 0){
+                let hemanData = await CallEventBus("get_heman_by_code",{ referral_code: getUserData.referral_code }, request.get("Authorization"))
+
+                if(hemanData?.student_discount){
+                    referralCode = getUserData.referral_code
+                    hemanDiscount = hemanData.student_discount
+                    finalAmount = finalAmount - hemanDiscount
+                }
             }
             
 
@@ -41,9 +56,19 @@ const addPaymentHistory = async (userInputs, request) => {
                 title: "Subscription Charged",
                 payment_method: null,
                 module_name: "Checkout",
-                payment_status: 2
+                payment_status: 2,
+                referral_code: referralCode,
+                referral_amount: hemanDiscount,
+                basic_amount: basicAmount
             }
             await InvoiceModel.createInvoice(createInvoiceData);
+
+            PaymentHistoryModel.updatePaymentHistory(createPaymentHistory._id,{
+                amount: finalAmount,
+                referral_code: referralCode,
+                referral_amount: hemanDiscount,
+                basic_amount: basicAmount
+            })
 
             return {
                 status: true,

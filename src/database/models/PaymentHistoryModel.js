@@ -15,6 +15,18 @@ const createPaymentHistory = async (insertData) => {
     return PaymentHistoryResult;
 }
 
+const updatePaymentHistory = async (id,updateData) => {
+
+    const paymentLog = PaymentHistorySchema.updateOne({_id: id}, updateData).then((model) => {
+        return true
+    }).catch((err) => {
+        return false
+    });
+
+   return paymentLog;
+}
+
+
 const fatchPaymentHistoryList = async (userInput) => {
 
     let filter = [];
@@ -109,5 +121,6 @@ const countPaymentHistoryList = async (userInput) => {
 module.exports = {
     createPaymentHistory,
     fatchPaymentHistoryList,
-    countPaymentHistoryList
+    countPaymentHistoryList,
+    updatePaymentHistory
 }

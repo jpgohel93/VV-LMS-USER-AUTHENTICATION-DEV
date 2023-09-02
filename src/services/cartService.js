@@ -1,6 +1,6 @@
 const { CartModel, UserCourseModel, UserModel, InvoiceModel } = require("../database");
 const constants = require('../utils/constant');
-const { CallCourseQueryEvent } = require('../utils/call-event-bus');
+const { CallCourseQueryEvent, CallEventBus } = require('../utils/call-event-bus');
 const { createCronLogs, updateCronLogs, createApiCallLog, getNewDate, findUniqueID } = require('../utils');
 const { encrypt } = require('../utils/ccavenue');
 const qs = require('querystring');
@@ -369,9 +369,8 @@ const qrCheckOut = async (userInputs,request) => {
             let hemanDiscount = 0
             if(getUserData && getUserData?.referral_code && getUserCourseData && getUserCourseData?.length == 0){
                 let hemanData = await CallEventBus("get_heman_by_code",{ referral_code: getUserData.referral_code }, request.get("Authorization"))
-
                 if(hemanData?.student_discount){
-                    hemanDiscount = courseData.student_discount
+                    hemanDiscount = hemanData.student_discount
                     finalAmount = finalAmount - hemanDiscount
                 }
             }

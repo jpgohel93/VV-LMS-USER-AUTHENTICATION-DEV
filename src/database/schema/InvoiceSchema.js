@@ -30,7 +30,19 @@ const InvoiceSchema = new Schema({
     is_send_mail: {
         default: false,
         type: Boolean
-    }
+    },
+    referral_code:  {
+        default: null,
+        type: String 
+    },
+    referral_amount:  {
+        default: 0,
+        type: Number 
+    },
+    basic_amount: {
+        default: 0,
+        type: Number 
+    } 
 },{ timestamps: true }); 
 
 InvoiceSchema.index( { user_id : 1 } )

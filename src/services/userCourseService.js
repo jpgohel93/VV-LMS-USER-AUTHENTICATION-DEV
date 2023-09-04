@@ -71,14 +71,16 @@ const assignCourse = async (userInputs,request) => {
                     let courseData = await CallCourseQueryEvent("get_course_data_by_id",{ id: course_id }, request.get("Authorization"))
 
                     if(hemanData && courseData && courseData?.discount_amount){
-                        let courseAmount = courseData.discount_amount
+                        let studentDiscount = hemanData?.student_discount ? hemanData.student_discount  : 0
+                        let courseAmount = parseInt(courseData.discount_amount) - parseInt(studentDiscount)
                         let hemanPercentageAmount = (courseAmount * hemanData.percentage) / 100
                         let hemanAmount = hemanData.amount + hemanPercentageAmount
                         let hemanuser = {
                             user_id: user_id,
                             course_id: course_id,
                             amount: hemanAmount,
-                            assign_at: new Date()
+                            assign_at: new Date(),
+                            course_amount: courseAmount
                         }
 
                         let response = await CallEventBus("add_heman_user",{ heman_id: hemanData._id, user: hemanuser, amount: hemanAmount }, request.get("Authorization"))

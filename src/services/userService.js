@@ -986,7 +986,16 @@ const getStudentsData = async (userInputs) => {
         const getStudentsData = await UserModel.fatchStudents(search, page, perPage, institution_id, referral_code);
         const countStudents = await UserModel.countStudents(search,institution_id,'','', referral_code);
         
-        if(getStudentsData !== null){
+        if(getStudentsData.length > 0){
+            if(referral_code){
+                await Promise.all(
+                    await getStudentsData.map(async (element, key) => {
+                        let getUserCourseData = await UserCourseModel.getUserCourseList({ user_id: element._id });
+                        await getStudentsData[key].set('isCoursePurchase', getUserCourseData?.length == 0 ? 0 : 1 ,{strict:false})
+                        await getStudentsData[key].set('isSignup',  1 ,{strict:false})
+                    })
+                )
+            }
             return {
                 status: true,
                 status_code: constants.SUCCESS_RESPONSE,
@@ -3808,6 +3817,127 @@ const testNotification = async () => {
     // await sendPushNotification({notification_device_id:[getUserData?.notification_device_id], message: "", template_id: "20a140f6-66bb-4995-94af-0a58632afd31"})
     console.log('response :: ',response);
 }
+
+//add user data
+const assignReferralCode = async (userInputs) => {
+    try{
+        const { referral_code, user_id } = userInputs;
+
+        if(referral_code){
+            const getUserCourseData = await UserCourseModel.getUserCourseList({ user_id: user_id });
+            if(getUserCourseData?.length == 0){
+                UserModel.updateUser(user_id,{
+                    referral_code: referral_code
+                });
+            }
+        }
+      
+        return {
+            status: true,
+            status_code: constants.SUCCESS_RESPONSE,
+            message: "Data saved successfully"
+        };
+    }catch (error) {
+        // Handle unexpected errors
+        console.error('Error in addUser:', error);
+        return {
+            status: false,
+            status_code: constants.EXCEPTION_ERROR_CODE,
+            message: 'Sorry! User signup failed.',
+            error: { server_error: 'An unexpected error occurred' },
+            data: null,
+        };
+    }  
+}
+
+//add user data
+const sendDailyReportMail = async (userInputs) => {
+    try{
+        let data = {}
+
+        //over all data
+        let totalStudent = await UserModel.countStudents("","","","")
+        data['total_users'] = totalStudent
+
+        //yesterday signup user
+        let startDate = new Date(new Date(moment(new Date()).subtract(1, 'days').format("YYYY-MM-DD")).setUTCHours(0, 0, 0, 0)).toISOString()
+        let endDate = new Date(new Date(moment(new Date()).subtract(1, 'days').format("YYYY-MM-DD")).setUTCHours(23, 59, 59, 999)).toISOString()
+        let yesterdaySignup = await UserModel.countStudents( "", "", startDate, endDate)
+        data['yesterday_signup'] = yesterdaySignup
+
+        //yesterday signup user
+        let todayStartDate = new Date(new Date().setUTCHours(0, 0, 0, 0)).toISOString()
+        let todayEndDate = new Date(new Date().setUTCHours(23, 59, 59, 999)).toISOString()
+        let todaySignup = await UserModel.countStudents( "", "", todayStartDate, todayEndDate)
+        data['today_signup'] = todaySignup
+
+        //get the chart data gender wise
+        const getGenderData = await UserModel.getGenderData(todayStartDate, todayEndDate);
+       
+        let maleCount = 0;
+        let femaleCount = 0;
+        let totalCount = 0;
+        if(getGenderData !== null){
+            if(getGenderData.length > 0){
+                if(getGenderData[0]){
+                    maleCount = getGenderData[0].male ?  getGenderData[0].male : 0
+                    femaleCount = getGenderData[0].female ?  getGenderData[0].female : 0
+                }
+            }
+        }
+
+        data['gender_wise'] = {
+            male: maleCount,
+            female: femaleCount,
+            total: totalCount
+        }
+
+        //state and city distributation
+        const stateDistribution = await UserModel.getStateWiseLocationDistributionData(todayStartDate, todayEndDate);
+        const cityDistribution = await UserModel.getCityWiseLocationDistributionData(todayStartDate, todayEndDate);
+        data['state_distribution'] = stateDistribution
+        data['city_distribution'] = cityDistribution
+
+        //user user engagement in a day
+        let responseData = await UserMobileActivityModel.getUserEngagement({ startDate, endDate });
+
+        let hoursData = []
+        if(responseData){
+            responseData.map(element => {
+                hoursData[element._id] = element.count
+            });
+        }
+
+        let hoursDataResponse = []
+        for (let i = 1; i < 25; i++) {
+            hoursDataResponse.push({
+                hour : i,
+                userCount : hoursData[i] ?? 0
+            })
+        }
+
+        data['user_engagement'] = hoursDataResponse
+        
+        return {
+            status: true,
+            status_code: constants.SUCCESS_RESPONSE,
+            message: "Mail send successfully",
+            data: data
+        };
+
+    }catch (error) {
+        // Handle unexpected errors
+        console.error('Error in sendDailyReportMail:', error);
+        return {
+            status: false,
+            status_code: constants.EXCEPTION_ERROR_CODE,
+            message: 'Failed to fetch the data',
+            error: { server_error: 'An unexpected error occurred' },
+            data: null,
+        }
+    }  
+}
+
 module.exports = {
     getLinkedinData,
     userSignin,
@@ -3867,5 +3997,7 @@ module.exports = {
     saveEmailLogs,
     getStudentsByIds,
     getStudentsCount,
-    testNotification
+    testNotification,
+    assignReferralCode,
+    sendDailyReportMail
 }

@@ -1361,4 +1361,20 @@ module.exports = async (app) => {
             message:"testing "
         });
     });
+
+    app.post('/user/assignReferralCode', UserAuth, async (req, res, next) => {
+        const { referral_code } = req.body;
+        let userId = req?.user?.user_id ? req?.user?.user_id : null
+        const data = await userService.userEngagement({ referral_code, user_id: userId });
+
+        res.json(data);
+    });
+
+    app.post('/user/sendDailyReportMail', async (req, res, next) => {
+        const { referral_code } = req.body;
+        let userId = req?.user?.user_id ? req?.user?.user_id : null
+        const data = await userService.sendDailyReportMail({ referral_code, user_id: userId });
+
+        res.json(data);
+    });
 }

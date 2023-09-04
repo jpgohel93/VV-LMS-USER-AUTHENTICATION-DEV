@@ -30,6 +30,26 @@ const updatePaymentHistory = async (id,updateData) => {
 const fatchPaymentHistoryList = async (userInput) => {
 
     let filter = [];
+    
+    if(userInput.search){
+        let orCondition = [];
+        orCondition.push({
+            "user_data.first_name": { $regex: '.*' + userInput.search + '.*', $options: 'i' }
+        })
+        orCondition.push({
+            "user_data.last_name": { $regex: '.*' + userInput.search + '.*', $options: 'i' }
+        })
+        orCondition.push({
+            "user_data.email": { $regex: '.*' + userInput.search + '.*', $options: 'i' }
+        })
+        orCondition.push({
+            "user_data.mobile_no": { $regex: '.*' + userInput.search + '.*', $options: 'i' }
+        })
+
+        filter.push({
+            $or: orCondition
+        })
+    }
     if(userInput.user_id){
         filter.push({
             user_id: new ObjectId(userInput.user_id)
@@ -74,6 +94,26 @@ const fatchPaymentHistoryList = async (userInput) => {
 const countPaymentHistoryList = async (userInput) => {
 
     let filter = [];
+
+    if(userInput.search){
+        let orCondition = [];
+        orCondition.push({
+            "user_data.first_name": { $regex: '.*' + userInput.search + '.*', $options: 'i' }
+        })
+        orCondition.push({
+            "user_data.last_name": { $regex: '.*' + userInput.search + '.*', $options: 'i' }
+        })
+        orCondition.push({
+            "user_data.email": { $regex: '.*' + userInput.search + '.*', $options: 'i' }
+        })
+        orCondition.push({
+            "user_data.mobile_no": { $regex: '.*' + userInput.search + '.*', $options: 'i' }
+        })
+        filter.push({
+            $or: orCondition
+        })
+    }
+    
     if(userInput.user_id){
         filter.push({
             user_id: new ObjectId(userInput.user_id)

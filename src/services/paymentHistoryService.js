@@ -100,7 +100,7 @@ const addPaymentHistory = async (userInputs, request) => {
 const getPaymentHistoryData = async (userInputs, request) => {
 
     try {
-        const { user_id, startToken, endToken  } = userInputs;
+        const { user_id, startToken, endToken, search  } = userInputs;
 
         const perPage = parseInt(endToken) || 10;
         let page = Math.max((parseInt(startToken) || 1) - 1, 0); 
@@ -108,8 +108,8 @@ const getPaymentHistoryData = async (userInputs, request) => {
             page = perPage * page;
         }
 
-        const PaymentHistoryData = await PaymentHistoryModel.fatchPaymentHistoryList({user_id, page, perPage});
-        const countPaymentHistoryData = await PaymentHistoryModel.countPaymentHistoryList({user_id});
+        const PaymentHistoryData = await PaymentHistoryModel.fatchPaymentHistoryList({user_id, page, perPage, search});
+        const countPaymentHistoryData = await PaymentHistoryModel.countPaymentHistoryList({user_id,search});
         
         if(PaymentHistoryData){
 

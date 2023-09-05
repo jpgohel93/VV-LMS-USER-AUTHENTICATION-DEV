@@ -1085,8 +1085,9 @@ module.exports = async (app) => {
     });
 
     app.post('/user/getallstudent', UserAuth, async (req, res, next) => {
-
-        const data = await userService.getAllStudent();
+        const { referral_code } = req.body;
+        
+        const data = await userService.getAllStudent({ referral_code });
 
         res.json(data);
     });
@@ -1371,9 +1372,7 @@ module.exports = async (app) => {
     });
 
     app.post('/user/sendDailyReportMail', async (req, res, next) => {
-        const { referral_code } = req.body;
-        let userId = req?.user?.user_id ? req?.user?.user_id : null
-        const data = await userService.sendDailyReportMail({ referral_code, user_id: userId });
+        const data = await userService.sendDailyReportMail();
 
         res.json(data);
     });

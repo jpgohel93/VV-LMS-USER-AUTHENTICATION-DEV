@@ -993,6 +993,13 @@ const getStudentsData = async (userInputs) => {
                         let getUserCourseData = await UserCourseModel.getUserCourseList({ user_id: element._id });
                         await getStudentsData[key].set('isCoursePurchase', getUserCourseData?.length == 0 ? 0 : 1 ,{strict:false})
                         await getStudentsData[key].set('isSignup',  1 ,{strict:false})
+
+                        const getHemanData = await CallAdminEvent("get_heman_user_data",{ referral_code:referral_code, user_id: element._id.toString() }, "");
+                        
+                        await getStudentsData[key].set('heman_share',  getHemanData?.amount ? getHemanData.amount : 0 ,{strict:false})
+                        await getStudentsData[key].set('course_base_amount',  getHemanData?.course_amount ? getHemanData.course_amount : 0  ,{strict:false})
+                        await getStudentsData[key].set('assign_at',  getHemanData?.assign_at ? getHemanData.assign_at : ''  ,{strict:false})
+                        await getStudentsData[key].set('course_price_with_gst',  getHemanData?.course_tax_amount ? getHemanData.course_tax_amount : 0  ,{strict:false})
                     })
                 )
             }
@@ -1005,8 +1012,8 @@ const getStudentsData = async (userInputs) => {
             };
         }else{
             return {
-                status: false,
-                status_code: constants.DATABASE_ERROR_RESPONSE,
+                status: true,
+                status_code: constants.SUCCESS_RESPONSE,
                 message: "Data not found",
                 data: null,
                 record_count: 0
@@ -3072,7 +3079,7 @@ const getCourseCompletionRateData = async () => {
 
 const getAllStudent = async (userInputs) => {
     try{
-        const getStudentsData = await UserModel.getAllStudent();
+        const getStudentsData = await UserModel.getAllStudent(userInputs);
     
         if(getStudentsData !== null){
             return {
@@ -3851,28 +3858,17 @@ const assignReferralCode = async (userInputs) => {
 }
 
 //add user data
-const sendDailyReportMail = async (userInputs) => {
+const sendDailyReportMail = async () => {
     try{
         let data = {}
-
-        //over all data
-        let totalStudent = await UserModel.countStudents("","","","")
-        data['total_users'] = totalStudent
-
         //yesterday signup user
-        let startDate = new Date(new Date(moment(new Date()).subtract(1, 'days').format("YYYY-MM-DD")).setUTCHours(0, 0, 0, 0)).toISOString()
-        let endDate = new Date(new Date(moment(new Date()).subtract(1, 'days').format("YYYY-MM-DD")).setUTCHours(23, 59, 59, 999)).toISOString()
-        let yesterdaySignup = await UserModel.countStudents( "", "", startDate, endDate)
-        data['yesterday_signup'] = yesterdaySignup
-
-        //yesterday signup user
-        let todayStartDate = new Date(new Date().setUTCHours(0, 0, 0, 0)).toISOString()
-        let todayEndDate = new Date(new Date().setUTCHours(23, 59, 59, 999)).toISOString()
-        let todaySignup = await UserModel.countStudents( "", "", todayStartDate, todayEndDate)
+        let startDate = new Date(new Date().setUTCHours(0, 0, 0, 0)).toISOString()
+        let endDate = new Date(new Date().setUTCHours(23, 59, 59, 999)).toISOString()
+        let todaySignup = await UserModel.countStudents( "", "", startDate, endDate)
         data['today_signup'] = todaySignup
 
         //get the chart data gender wise
-        const getGenderData = await UserModel.getGenderData(todayStartDate, todayEndDate);
+        const getGenderData = await UserModel.getGenderData(startDate, endDate);
        
         let maleCount = 0;
         let femaleCount = 0;
@@ -3888,13 +3884,12 @@ const sendDailyReportMail = async (userInputs) => {
 
         data['gender_wise'] = {
             male: maleCount,
-            female: femaleCount,
-            total: totalCount
+            female: femaleCount
         }
 
         //state and city distributation
-        const stateDistribution = await UserModel.getStateWiseLocationDistributionData(todayStartDate, todayEndDate);
-        const cityDistribution = await UserModel.getCityWiseLocationDistributionData(todayStartDate, todayEndDate);
+        const stateDistribution = await UserModel.getStateWiseLocationDistributionData(startDate, endDate);
+        const cityDistribution = await UserModel.getCityWiseLocationDistributionData(startDate, endDate);
         data['state_distribution'] = stateDistribution
         data['city_distribution'] = cityDistribution
 
@@ -3915,8 +3910,44 @@ const sendDailyReportMail = async (userInputs) => {
                 userCount : hoursData[i] ?? 0
             })
         }
-
         data['user_engagement'] = hoursDataResponse
+
+        //user base
+        let nonPremium = await UserCourseModel.getUserBaseCount({ type: 1 , startDate, endDate})
+        let premium = await UserCourseModel.getUserBaseCount({ type: 2, startDate, endDate })
+
+        data['user_base'] = {
+            non_premium: nonPremium,
+            premium: premium,
+        }
+        //os based
+        const osUsage = await UserModel.getOSUsage(startDate, endDate);
+    
+        let osUsageData = {
+            ios: 0,
+            android: 0,
+            not_any: 0
+        }
+       
+        if(osUsage){
+            let notAnyCount = 0
+            await Promise.all(
+                await osUsage.map((element) => {
+                    if(element._id == "ios"){
+                        osUsageData['ios'] = element.count
+                    }else if(element._id == "android"){
+                        osUsageData['android'] = element.count
+                    }else{
+                        notAnyCount = notAnyCount + element.count
+                        osUsageData['not_any'] = notAnyCount
+                    }
+                })
+            )
+        }
+        data['os_base'] = {
+            non_premium: nonPremium,
+            premium: premium
+        }
         
         return {
             status: true,

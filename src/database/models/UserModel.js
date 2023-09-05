@@ -292,7 +292,8 @@ const getGenderData = async (startDate, endDate) => {
                 createdAt: {
                     $gte: new Date(startDate),
                     $lte: new Date(endDate),
-                }
+                },
+                is_deleted: false
             },
         },
         {$project: {
@@ -409,8 +410,15 @@ const getRegistrationRateData = async (start_date, dateformate) => {
     return usermobileactivityData;
 }
 
-const getAllStudent = async () => {
+const getAllStudent = async (userFilter) => {
     let searchFilter = [];
+    
+    if(userFilter.referral_code){
+        searchFilter.push({
+            referral_code: userFilter.referral_code
+        });
+    
+    }
     
     searchFilter.push({
         is_deleted: false
@@ -434,7 +442,8 @@ const getStateWiseLocationDistributionData = async (startDate, endDate) => {
                 createdAt: {
                     $gte: new Date(startDate),
                     $lte: new Date(endDate),
-                }
+                },
+                is_deleted: false
             },
         },
         {
@@ -477,7 +486,8 @@ const getCityWiseLocationDistributionData = async (startDate, endDate) => {
                 createdAt: {
                     $gte: new Date(startDate),
                     $lte: new Date(endDate),
-                }
+                },
+                is_deleted: false
             },
         },
         {
@@ -520,7 +530,8 @@ const getSignupDistribution = async (startDate, endDate) => {
                 createdAt: {
                     $gte: new Date(startDate),
                     $lte: new Date(endDate),
-                }
+                },
+                is_deleted: false
             },
         },
         {
@@ -545,7 +556,8 @@ const getOSUsage = async (startDate, endDate) => {
                 createdAt: {
                     $gte: new Date(startDate),
                     $lte: new Date(endDate),
-                }
+                },
+                is_deleted: false
             },
         },
         {

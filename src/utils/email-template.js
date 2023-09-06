@@ -343,3 +343,350 @@ module.exports.sendLoginCredencialTemplate = async (data) => {
 
 module.exports.courseAssignTemplate = async (data) => {
 }
+
+module.exports.dailySnapshot = async (data) => {
+
+    let stateDistribution = ''
+    let cityDistribution = ''
+
+    const cityDistributionArray = [];
+    if(data?.cityDistribution){
+        for (const city in data.cityDistribution) {
+            if (Object.hasOwnProperty.call(data.cityDistribution, city)) {
+                const cityData = data.cityDistribution[city];
+                const cityObject = {
+                    city,
+                    ...cityData
+                };
+                cityDistributionArray.push(cityObject);
+            }
+        }
+    }
+
+    const stateDistributionArray = [];
+    if(data?.stateDistribution){
+        for (const state in data.stateDistribution) {
+            if (Object.hasOwnProperty.call(data.stateDistribution, state)) {
+                const stateData = data.stateDistribution[state];
+                const stateObject = {
+                    state,
+                    ...stateData
+                };
+                stateDistributionArray.push(stateObject);
+            }
+        }
+    }
+   
+    if(stateDistributionArray?.length > 0){
+        stateDistributionArray.forEach((element, key) => {
+            stateDistribution += ` <tr style="border: 1px solid #e8e8eb;">`
+
+            stateDistribution += `<td style="padding: 8px; border: 1px solid #e8e8eb; font-size: 0.9rem; font-weight: 500; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
+            font-family: Montserrat, sans-serif;">${element.state}</td>`
+
+            stateDistribution += `<td style="padding: 8px; border: 1px solid #e8e8eb; font-size: 0.9rem; font-weight: 500; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
+            font-family: Montserrat, sans-serif;">${element?.stateTodayDistribution || 0}</td>`
+
+            stateDistribution += `<td style="padding: 8px; border: 1px solid #e8e8eb; font-size: 0.9rem; font-weight: 500; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
+            font-family: Montserrat, sans-serif;">${element?.stateLastSevrnDayDistribution || 0}</td>`
+
+            stateDistribution += `<td style="padding: 8px; border: 1px solid #e8e8eb; font-size: 0.9rem; font-weight: 500; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
+            font-family: Montserrat, sans-serif;">${element?.stateOverallDistribution || 0}</td>`
+
+            stateDistribution += ` </tr>`
+        })
+    }
+
+    if(cityDistributionArray?.length > 0){
+        cityDistributionArray.forEach((element) => {
+            cityDistribution += ` <tr style="border: 1px solid #e8e8eb;">`
+
+            cityDistribution += `<td style="padding: 8px; border: 1px solid #e8e8eb; font-size: 0.9rem; font-weight: 500; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
+            font-family: Montserrat, sans-serif;">${element.city}</td>`
+
+            cityDistribution += `<td style="padding: 8px; border: 1px solid #e8e8eb; font-size: 0.9rem; font-weight: 500; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
+            font-family: Montserrat, sans-serif;">${element?.cityTodayDistribution || 0}</td>`
+
+            cityDistribution += `<td style="padding: 8px; border: 1px solid #e8e8eb; font-size: 0.9rem; font-weight: 500; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
+            font-family: Montserrat, sans-serif;">${element?.cityLastSevrnDayDistribution || 0}</td>`
+
+            cityDistribution += `<td style="padding: 8px; border: 1px solid #e8e8eb; font-size: 0.9rem; font-weight: 500; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
+            font-family: Montserrat, sans-serif;">${element?.cityOverallDistribution || 0}</td>`
+
+            cityDistribution += ` </tr>`
+        });
+    }
+    console.log("constants.EMAIL_TEMPLATE_LOGO_URL ::: ", constants.EMAIL_TEMPLATE_LOGO_URL)
+   
+    return await `<!DOCTYPE html>
+    <html lang="en">
+    
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    
+    <body>
+        <div style="max-width: 480px; margin: auto;">
+            <div
+                style="display: flex; align-items: center; justify-content: space-between; height: fit-content; padding: 10px 10px 0 10px;">
+                <div>
+                    <img src="${constants.EMAIL_TEMPLATE_LOGO_URL}" alt="Your Logo" style="max-height: 80px;" />
+                </div>
+                <div style=" background: #fff;
+                text-align: right;
+                padding: 8px 13px;
+                margin-left: auto;
+                border-radius: 5px;">
+                    <!-- Add your date and time here -->
+                    <p style="margin: 0; color: rgba(76, 78, 100, 0.87);  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
+                    font-family: Montserrat, sans-serif;">${data.date}</p>
+                </div>
+            </div>
+    
+            <div>
+                <p style="font-weight: 600;
+                font-size: 1.1rem;
+                color: rgba(76, 78, 100, 0.87);
+                text-align: left;
+                line-height: 1;
+                margin-top: 10px;
+                margin-bottom: 12px;
+                @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
+                font-family: Montserrat, sans-serif;">Admin Insights: A Daily Snapshot</p>
+            </div>
+    
+            
+            <table style="color: rgba(76, 78, 100, 0.87); width: 100%; border-collapse: collapse; margin-top: 10px;">
+                <tr style="border: 1px solid #e8e8eb;">
+                    <th style="padding: 8px; border: 1px solid #e8e8eb; font-size: 1rem;color: black; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
+        font-family: Montserrat, sans-serif;"><strong>Metrics</strong></th>
+                    <th style="padding: 8px; border: 1px solid #e8e8eb; font-size: 1rem;color: black; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
+        font-family: Montserrat, sans-serif;"><strong>Today</strong></th>
+                    <th style="padding: 8px; border: 1px solid #e8e8eb; font-size: 1rem;color: black; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
+        font-family: Montserrat, sans-serif;"><strong>Last 7 Days</strong></th>
+                    <th style="padding: 8px; border: 1px solid #e8e8eb; font-size: 1rem;color: black; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
+        font-family: Montserrat, sans-serif;"><strong>Overall</strong></th>
+                </tr>
+                <tr style="border: 1px solid #e8e8eb;">
+                    <td style="padding: 8px; border: 1px solid #e8e8eb;"></td>
+                    <td style="padding: 8px; border: 1px solid #e8e8eb;"></td>
+                    <td style="padding: 8px; border: 1px solid #e8e8eb;"></td>
+                    <td style="padding: 8px; border: 1px solid #e8e8eb;"></td>
+                </tr>
+                <tr style="border: 1px solid #e8e8eb;">
+                    <td style="padding: 8px; border: 1px solid #e8e8eb; color:black; font-weight: 700; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
+        font-family: Montserrat, sans-serif;"><strong>User Growth</strong></td>
+                    <td style="padding: 8px; border: 1px solid #e8e8eb;"></td>
+                    <td style="padding: 8px; border: 1px solid #e8e8eb;"></td>
+                    <td style="padding: 8px; border: 1px solid #e8e8eb;"></td>
+                </tr>
+                <tr style="border: 1px solid #e8e8eb;">
+                    <td style="padding: 8px; border: 1px solid #e8e8eb; font-size: 0.9rem; font-weight: 500; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
+        font-family: Montserrat, sans-serif;">New Users</td>
+                    <td style="padding: 8px; border: 1px solid #e8e8eb; font-size: 0.9rem; font-weight: 500; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
+        font-family: Montserrat, sans-serif;">${data.todaySignup}</td>
+                    <td style="padding: 8px; border: 1px solid #e8e8eb; font-size: 0.9rem; font-weight: 500; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
+        font-family: Montserrat, sans-serif;">${data.lastSevrnDaySignup}</td>
+                    <td style="padding: 8px; border: 1px solid #e8e8eb; font-size: 0.9rem; font-weight: 500; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
+        font-family: Montserrat, sans-serif;">${data.overallSignup}</td>
+                </tr>
+                <tr style="border: 1px solid #e8e8eb;">
+                    <td style="padding: 8px; border: 1px solid #e8e8eb; font-size: 0.9rem; font-weight: 500; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
+        font-family: Montserrat, sans-serif;">Active Users</td>
+                    <td style="padding: 8px; border: 1px solid #e8e8eb; font-size: 0.9rem; font-weight: 500; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
+        font-family: Montserrat, sans-serif;">${data.todayActiveUsersData}</td>
+                    <td style="padding: 8px; border: 1px solid #e8e8eb; font-size: 0.9rem; font-weight: 500; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
+        font-family: Montserrat, sans-serif;">${data.lastSevrnDayActiveUsersData}</td>
+                    <td style="padding: 8px; border: 1px solid #e8e8eb; font-size: 0.9rem; font-weight: 500; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
+        font-family: Montserrat, sans-serif;">${data.overallActiveUsersData}</td>
+                </tr>
+                <tr style="border: 1px solid #e8e8eb;">
+                    <td style="padding: 8px; border: 1px solid #e8e8eb; font-size: 0.9rem; font-weight: 500; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
+        font-family: Montserrat, sans-serif;">Referral Traffic</td>
+                    <td style="padding: 8px; border: 1px solid #e8e8eb; font-size: 0.9rem; font-weight: 500; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
+        font-family: Montserrat, sans-serif;">${data.todayReferral}</td>
+                    <td style="padding: 8px; border: 1px solid #e8e8eb; font-size: 0.9rem; font-weight: 500; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
+        font-family: Montserrat, sans-serif;">${data.lastSevrnDayReferral}</td>
+                    <td style="padding: 8px; border: 1px solid #e8e8eb; font-size: 0.9rem; font-weight: 500; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
+        font-family: Montserrat, sans-serif;">${data.overallReferral}</td>
+                </tr>
+                <tr style="border: 1px solid #e8e8eb;">
+                    <td style="padding: 8px; border: 1px solid #e8e8eb;"></td>
+                    <td style="padding: 8px; border: 1px solid #e8e8eb;"></td>
+                    <td style="padding: 8px; border: 1px solid #e8e8eb;"></td>
+                    <td style="padding: 8px; border: 1px solid #e8e8eb;"></td>
+                </tr>
+                <tr style="border: 1px solid #e8e8eb;">
+                    <td style="padding: 8px; border: 1px solid #e8e8eb; color:black; font-weight: 700; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
+        font-family: Montserrat, sans-serif;"><strong>Engagement</strong></td>
+                    <td style="padding: 8px; border: 1px solid #e8e8eb;"></td>
+                    <td style="padding: 8px; border: 1px solid #e8e8eb;"></td>
+                    <td style="padding: 8px; border: 1px solid #e8e8eb;"></td>
+                </tr>
+                <tr style="border: 1px solid #e8e8eb;">
+                    <td style="padding: 8px; border: 1px solid #e8e8eb; font-size: 0.9rem; font-weight: 500; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
+        font-family: Montserrat, sans-serif;">session duration</td>
+                    <td style="padding: 8px; border: 1px solid #e8e8eb; font-size: 0.9rem; font-weight: 500; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
+        font-family: Montserrat, sans-serif;">${data.todaySessionDurationsData}</td>
+                    <td style="padding: 8px; border: 1px solid #e8e8eb; font-size: 0.9rem; font-weight: 500; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
+        font-family: Montserrat, sans-serif;">${data.lastSevrnDaySessionDurationsData}</td>
+                    <td style="padding: 8px; border: 1px solid #e8e8eb; font-size: 0.9rem; font-weight: 500; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
+        font-family: Montserrat, sans-serif;">${data.overallSessionDurationsData}</td>
+                </tr>
+                <tr style="border: 1px solid #e8e8eb;">
+                    <td style="padding: 8px; border: 1px solid #e8e8eb;"></td>
+                    <td style="padding: 8px; border: 1px solid #e8e8eb;"></td>
+                    <td style="padding: 8px; border: 1px solid #e8e8eb;"></td>
+                    <td style="padding: 8px; border: 1px solid #e8e8eb;"></td>
+                </tr>
+                <tr style="border: 1px solid #e8e8eb;">
+                    <td style="padding: 8px; border: 1px solid #e8e8eb; color:black; font-weight: 700; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
+        font-family: Montserrat, sans-serif;"><strong>Monetization</strong></td>
+                    <td style="padding: 8px; border: 1px solid #e8e8eb;"></td>
+                    <td style="padding: 8px; border: 1px solid #e8e8eb;"></td>
+                    <td style="padding: 8px; border: 1px solid #e8e8eb;"></td>
+                </tr>
+                <tr style="border: 1px solid #e8e8eb;">
+                    <td style="padding: 8px; border: 1px solid #e8e8eb; font-size: 0.9rem; font-weight: 500; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
+        font-family: Montserrat, sans-serif;">Revenue</td>
+                    <td style="padding: 8px; border: 1px solid #e8e8eb; font-size: 0.9rem; font-weight: 500; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
+        font-family: Montserrat, sans-serif;">${ data?.todayRevenueData?.amount || 0 }</td>
+                    <td style="padding: 8px; border: 1px solid #e8e8eb; font-size: 0.9rem; font-weight: 500; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
+        font-family: Montserrat, sans-serif;">${ data?.lastSevrnDayRevenueData?.amount || 0 }</td>
+                    <td style="padding: 8px; border: 1px solid #e8e8eb; font-size: 0.9rem; font-weight: 500; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
+        font-family: Montserrat, sans-serif;">${ data?.overallRevenueData?.amount || 0 }</td>
+                </tr>
+                <tr style="border: 1px solid #e8e8eb;">
+                    <td style="padding: 8px; border: 1px solid #e8e8eb; font-size: 0.9rem; font-weight: 500; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
+        font-family: Montserrat, sans-serif;">Paid Subscriptions</td>
+                    <td style="padding: 8px; border: 1px solid #e8e8eb; font-size: 0.9rem; font-weight: 500; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
+        font-family: Montserrat, sans-serif;">${ data?.todayRevenueData?.user_count || 0 }</td>
+                    <td style="padding: 8px; border: 1px solid #e8e8eb; font-size: 0.9rem; font-weight: 500; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
+        font-family: Montserrat, sans-serif;">${ data?.lastSevrnDayRevenueData?.user_count || 0 }</td>
+                    <td style="padding: 8px; border: 1px solid #e8e8eb; font-size: 0.9rem; font-weight: 500; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
+        font-family: Montserrat, sans-serif;">${ data?.overallRevenueData?.user_count || 0 }</td>
+                </tr>
+                <tr style="border: 1px solid #e8e8eb;">
+                    <td style="padding: 8px; border: 1px solid #e8e8eb;"></td>
+                    <td style="padding: 8px; border: 1px solid #e8e8eb;"></td>
+                    <td style="padding: 8px; border: 1px solid #e8e8eb;"></td>
+                    <td style="padding: 8px; border: 1px solid #e8e8eb;"></td>
+                </tr>
+                <tr style="border: 1px solid #e8e8eb;">
+                    <td style="padding: 8px; border: 1px solid #e8e8eb; color:black; font-weight: 700; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
+                        font-family: Montserrat, sans-serif;"><strong>State Demographics</strong></td>
+                    <td style="padding: 8px; border: 1px solid #e8e8eb;"></td>
+                    <td style="padding: 8px; border: 1px solid #e8e8eb;"></td>
+                    <td style="padding: 8px; border: 1px solid #e8e8eb;"></td>
+                </tr>
+                ${stateDistribution}
+
+                <tr style="border: 1px solid #e8e8eb;">
+                    <td style="padding: 8px; border: 1px solid #e8e8eb;"></td>
+                    <td style="padding: 8px; border: 1px solid #e8e8eb;"></td>
+                    <td style="padding: 8px; border: 1px solid #e8e8eb;"></td>
+                    <td style="padding: 8px; border: 1px solid #e8e8eb;"></td>
+                </tr>
+                <tr style="border: 1px solid #e8e8eb;">
+                    <td style="padding: 8px; border: 1px solid #e8e8eb; color:black; font-weight: 700; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
+                        font-family: Montserrat, sans-serif;"><strong>City Demographics</strong></td>
+                    <td style="padding: 8px; border: 1px solid #e8e8eb;"></td>
+                    <td style="padding: 8px; border: 1px solid #e8e8eb;"></td>
+                    <td style="padding: 8px; border: 1px solid #e8e8eb;"></td>
+                </tr>
+                ${cityDistribution}
+                <tr style="border: 1px solid #e8e8eb;">
+                    <td style="padding: 8px; border: 1px solid #e8e8eb;"></td>
+                    <td style="padding: 8px; border: 1px solid #e8e8eb;"></td>
+                    <td style="padding: 8px; border: 1px solid #e8e8eb;"></td>
+                    <td style="padding: 8px; border: 1px solid #e8e8eb;"></td>
+                </tr>
+                <tr style="border: 1px solid #e8e8eb;">
+                    <td style="padding: 8px; border: 1px solid #e8e8eb; font-size: 0.9rem; font-weight: 500; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
+                        font-family: Montserrat, sans-serif;"><strong>Age Ranges</strong></td>
+                    <td style="padding: 8px; border: 1px solid #e8e8eb;"></td>
+                    <td style="padding: 8px; border: 1px solid #e8e8eb;"></td>
+                    <td style="padding: 8px; border: 1px solid #e8e8eb;"></td>
+                </tr>
+                <tr style="border: 1px solid #e8e8eb;">
+                    <td style="padding: 8px; border: 1px solid #e8e8eb; font-size: 0.9rem; font-weight: 500; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
+        font-family: Montserrat, sans-serif;">below 16</td>
+                    <td style="padding: 8px; border: 1px solid #e8e8eb; font-size: 0.9rem; font-weight: 500; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
+        font-family: Montserrat, sans-serif;">${ data?.todayAgeRagngeData?.first_range_count || 0 }</td>
+                    <td style="padding: 8px; border: 1px solid #e8e8eb; font-size: 0.9rem; font-weight: 500; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
+        font-family: Montserrat, sans-serif;">${ data?.lastSevrnDayAgeRagngeData?.first_range_count || 0 }</td>
+                    <td style="padding: 8px; border: 1px solid #e8e8eb; font-size: 0.9rem; font-weight: 500; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
+        font-family: Montserrat, sans-serif;">${ data?.overallAgeRagngeData?.first_range_count || 0 }</td>
+                </tr>
+
+                <tr style="border: 1px solid #e8e8eb;">
+                    <td style="padding: 8px; border: 1px solid #e8e8eb; font-size: 0.9rem; font-weight: 500; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
+        font-family: Montserrat, sans-serif;">17 - 28</td>
+                    <td style="padding: 8px; border: 1px solid #e8e8eb; font-size: 0.9rem; font-weight: 500; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
+        font-family: Montserrat, sans-serif;">${ data?.todayAgeRagngeData?.second_range_count || 0 }</td>
+                    <td style="padding: 8px; border: 1px solid #e8e8eb; font-size: 0.9rem; font-weight: 500; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
+        font-family: Montserrat, sans-serif;">${ data?.lastSevrnDayAgeRagngeData?.second_range_count || 0 }</td>
+                    <td style="padding: 8px; border: 1px solid #e8e8eb; font-size: 0.9rem; font-weight: 500; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
+        font-family: Montserrat, sans-serif;">${ data?.overallAgeRagngeData?.second_range_count || 0 }</td>
+                </tr>
+
+                <tr style="border: 1px solid #e8e8eb;">
+                    <td style="padding: 8px; border: 1px solid #e8e8eb; font-size: 0.9rem; font-weight: 500; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
+        font-family: Montserrat, sans-serif;">28 - 45</td>
+                    <td style="padding: 8px; border: 1px solid #e8e8eb; font-size: 0.9rem; font-weight: 500; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
+        font-family: Montserrat, sans-serif;">${ data?.todayAgeRagngeData?.third_range_count || 0 }</td>
+                    <td style="padding: 8px; border: 1px solid #e8e8eb; font-size: 0.9rem; font-weight: 500; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
+        font-family: Montserrat, sans-serif;">${ data?.lastSevrnDayAgeRagngeData?.third_range_count || 0 }</td>
+                    <td style="padding: 8px; border: 1px solid #e8e8eb; font-size: 0.9rem; font-weight: 500; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
+        font-family: Montserrat, sans-serif;">${ data?.overallAgeRagngeData?.third_range_count || 0 }</td>
+                </tr>
+
+                <tr style="border: 1px solid #e8e8eb;">
+                    <td style="padding: 8px; border: 1px solid #e8e8eb; font-size: 0.9rem; font-weight: 500; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
+        font-family: Montserrat, sans-serif;">45+</td>
+                    <td style="padding: 8px; border: 1px solid #e8e8eb; font-size: 0.9rem; font-weight: 500; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
+        font-family: Montserrat, sans-serif;">${ data?.todayAgeRagngeData?.forth_range_count || 0 }</td>
+                    <td style="padding: 8px; border: 1px solid #e8e8eb; font-size: 0.9rem; font-weight: 500; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
+        font-family: Montserrat, sans-serif;">${ data?.lastSevrnDayAgeRagngeData?.forth_range_count || 0 }</td>
+                    <td style="padding: 8px; border: 1px solid #e8e8eb; font-size: 0.9rem; font-weight: 500; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
+        font-family: Montserrat, sans-serif;">${ data?.overallAgeRagngeData?.forth_range_count || 0 }</td>
+                </tr>
+            </table>
+    </body>
+    
+    </html>`;
+
+    // <tr style="border: 1px solid #e8e8eb;">
+    //                 <td style="padding: 8px; border: 1px solid #e8e8eb; font-size: 0.9rem; font-weight: 500; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
+    //     font-family: Montserrat, sans-serif;">Video Views</td>
+    //                 <td style="padding: 8px; border: 1px solid #e8e8eb; font-size: 0.9rem; font-weight: 500; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
+    //     font-family: Montserrat, sans-serif;">${0}</td>
+    //                 <td style="padding: 8px; border: 1px solid #e8e8eb; font-size: 0.9rem; font-weight: 500; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
+    //     font-family: Montserrat, sans-serif;">${0}</td>
+    //                 <td style="padding: 8px; border: 1px solid #e8e8eb; font-size: 0.9rem; font-weight: 500; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
+    //     font-family: Montserrat, sans-serif;">${0}</td>
+    //             </tr>
+    //             <tr style="border: 1px solid #e8e8eb;">
+    //                 <td style="padding: 8px; border: 1px solid #e8e8eb; font-size: 0.9rem; font-weight: 500; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
+    //     font-family: Montserrat, sans-serif;">Video Completion %</td>
+    //                 <td style="padding: 8px; border: 1px solid #e8e8eb; font-size: 0.9rem; font-weight: 500; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
+    //     font-family: Montserrat, sans-serif;">${0}</td>
+    //                 <td style="padding: 8px; border: 1px solid #e8e8eb; font-size: 0.9rem; font-weight: 500; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
+    //     font-family: Montserrat, sans-serif;">${0}</td>
+    //                 <td style="padding: 8px; border: 1px solid #e8e8eb; font-size: 0.9rem; font-weight: 500; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
+    //     font-family: Montserrat, sans-serif;">${0}</td>
+    //             </tr>
+
+    // <tr style="border: 1px solid #e8e8eb;">
+    //                 <td style="padding: 8px; border: 1px solid #e8e8eb; font-size: 0.9rem; font-weight: 500; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
+    //     font-family: Montserrat, sans-serif;">Conversion Rate</td>
+    //                 <td style="padding: 8px; border: 1px solid #e8e8eb; font-size: 0.9rem; font-weight: 500; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
+    //     font-family: Montserrat, sans-serif;">${0}</td>
+    //                 <td style="padding: 8px; border: 1px solid #e8e8eb; font-size: 0.9rem; font-weight: 500; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
+    //     font-family: Montserrat, sans-serif;">${0}</td>
+    //                 <td style="padding: 8px; border: 1px solid #e8e8eb; font-size: 0.9rem; font-weight: 500; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
+    //     font-family: Montserrat, sans-serif;">${0}</td>
+    //             </tr>
+}

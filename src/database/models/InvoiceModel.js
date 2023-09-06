@@ -138,6 +138,47 @@ const getPaymentHistory = async (userFilter) => {
     return getFilterData;
 }
 
+const revenueData = async (startDate, endDate) => {
+    let condition = []
+
+    if(startDate && endDate){
+        condition.push({
+            $match: {
+                createdAt: {
+                    $gte: new Date(startDate),
+                    $lte: new Date(endDate),
+                },
+                payment_status: 2
+            }
+        })
+    }else{
+        condition.push({
+            $match: {
+                payment_status: 2
+            }
+        })
+    }
+
+    condition.push( {
+        $group: {
+          _id: null,
+          amount: {
+            $sum: "$amount",
+          },
+          user_count: {$sum: 1}
+        }
+      }, { $project: { _id: 0, amount: 1, user_count: 1 } })
+
+    let data = await InvoiceSchema.aggregate(condition).then((userData) => {
+        return userData?.length > 0 ? userData[0] : {}
+    }).catch((err) => {
+        return false
+    });
+
+   return data;
+}
+
+
 module.exports = {
     createInvoice,
     updateInvoice,
@@ -146,5 +187,6 @@ module.exports = {
     findInvoiceById,
     getPaymentHistory,
     findOrderById,
-    findByIdData
+    findByIdData,
+    revenueData
 }

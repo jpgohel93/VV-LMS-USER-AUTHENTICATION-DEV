@@ -333,6 +333,79 @@ const getUserEngagement = async ({ startDate, endDate }) => {
        return hourlyChartData;
 }
 
+const getUserEngagementByDay = async (startDate, endDate) => {
+
+    let condition = []
+
+    if(startDate && endDate){
+        condition.push({
+            $match: {
+                createdAt: {
+                    $gte: new Date(startDate),
+                    $lte: new Date(endDate),
+                }
+            }
+        })
+    }
+
+    condition.push( {
+        $group: {
+          _id: null,
+          user_count: {$sum: 1}
+        }
+    }, { $project: { _id: 0, user_count: 1 } })
+
+     // Execute the aggregation pipeline
+     const hourlyChartData = await UserMobileActivitySchema.aggregate(condition).then((model) => {
+     return model?.length > 0 ?  model[0].user_count : 0
+     }).catch((err) => {
+         return false
+     });
+
+    return hourlyChartData;
+}
+
+const getSessionDuration = async (startDate, endDate) => {
+
+    let condition = []
+
+    if(startDate && endDate){
+        condition.push({
+            $match: {
+                createdAt: {
+                    $gte: new Date(startDate),
+                    $lte: new Date(endDate),
+                }
+            }
+        })
+    }
+
+    condition.push({
+        $project: {
+            hour: { $hour: '$start_time' },
+            duration: { $subtract: ['$end_time', '$start_time'] },
+        }
+    })
+
+    condition.push( {
+        $group: {
+          _id: null,
+          duration: {
+            $avg: "$duration"
+          }
+        }
+      }, { $project: { _id: 0, duration: 1} })
+
+    // Execute the aggregation pipeline
+    const hourlyChartData = await UserMobileActivitySchema.aggregate(condition).then((model) => {
+     return model?.length > 0 ? model[0].duration : 0
+     }).catch((err) => {
+         return false
+     });
+
+    return hourlyChartData;
+}
+
 
 module.exports = {
     createUserMobileActivity,
@@ -345,5 +418,7 @@ module.exports = {
     getMobileUsageInMonthData,
     getLoginHistoryData,
     getLoginFrequencyData,
-    getUserEngagement
+    getUserEngagement,
+    getUserEngagementByDay,
+    getSessionDuration
 }

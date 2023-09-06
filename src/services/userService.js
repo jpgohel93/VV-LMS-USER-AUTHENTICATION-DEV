@@ -1,11 +1,11 @@
-const { UserModel, UserMobileActivityModel, UserCourseModel, CourseWatchHistoryModel, EmailLogsModel } = require("../database");
-const { GeneratePassword, GenerateSalt , CheckPassword, ValidateEmail, ValidateMobileNumber, ValidatePassword, GenerateSignature, sendSingleSms, GetUserLocation, encryptDecryptString, sendPushNotification } = require('../utils');
+const { UserModel, UserMobileActivityModel, UserCourseModel, CourseWatchHistoryModel, EmailLogsModel, InvoiceModel } = require("../database");
+const { GeneratePassword, GenerateSalt , CheckPassword, ValidateEmail, ValidateMobileNumber, ValidatePassword, GenerateSignature, sendSingleSms, GetUserLocation, encryptDecryptString, sendPushNotification, millisecToTime } = require('../utils');
 const constants = require('../utils/constant');
 const moment = require('moment');
 const axios = require('axios');
 const { RandomNumber, DateToTimestamp, sendMail } = require('../utils');
 const { CallAdminEvent, CallCourseQueryEvent } = require('../utils/call-event-bus');
-const { welcomeTemplate, forgotPasswordTemplate, welcomeWithCredetialsTemplate } = require('../utils/email-template');
+const { welcomeTemplate, forgotPasswordTemplate, welcomeWithCredetialsTemplate, dailySnapshot } = require('../utils/email-template');
 const { RateLimiterMemory } = require('rate-limiter-flexible');
 const { deleteFile } = require('../utils/aws');
 
@@ -3864,105 +3864,256 @@ const sendDailyReportMail = async () => {
         //yesterday signup user
         let startDate = new Date(new Date().setUTCHours(0, 0, 0, 0)).toISOString()
         let endDate = new Date(new Date().setUTCHours(23, 59, 59, 999)).toISOString()
-        let todaySignup = await UserModel.countStudents( "", "", startDate, endDate)
-        data['today_signup'] = todaySignup
 
-        //get the chart data gender wise
-        const getGenderData = await UserModel.getGenderData(startDate, endDate);
-       
-        let maleCount = 0;
-        let femaleCount = 0;
-        let totalCount = 0;
-        if(getGenderData !== null){
-            if(getGenderData.length > 0){
-                if(getGenderData[0]){
-                    maleCount = getGenderData[0].male ?  getGenderData[0].male : 0
-                    femaleCount = getGenderData[0].female ?  getGenderData[0].female : 0
+        //yesterday signup user
+        let startSevenDate = new Date(new Date(moment(new Date()).subtract(7, 'days').format("YYYY-MM-DD")).setUTCHours(0, 0, 0, 0)).toISOString()
+        let endSevenDate = new Date(new Date(moment(new Date()).subtract(1, 'days').format("YYYY-MM-DD")).setUTCHours(23, 59, 59, 999)).toISOString()
+
+        let todaySignup = await UserModel.countStudents( "", "", startDate, endDate)
+        let lastSevrnDaySignup = await UserModel.countStudents( "", "", startSevenDate, endSevenDate)
+        let overallSignup = await UserModel.countStudents( "", "", "", "")
+
+        data['todaySignup'] = todaySignup
+        data['lastSevrnDaySignup'] = lastSevrnDaySignup
+        data['overallSignup'] = overallSignup
+
+        let todayReferral = await UserModel.countStudents( "", "", startDate, endDate, 1)
+        let lastSevrnDayReferral = await UserModel.countStudents( "", "", startSevenDate, endSevenDate, 1)
+        let overallReferral = await UserModel.countStudents( "", "", "", "", 1)
+
+        data['todayReferral'] = todayReferral
+        data['lastSevrnDayReferral'] = lastSevrnDayReferral
+        data['overallReferral'] = overallReferral
+
+
+        //get the chart data age wise
+        const todayAgeData = await UserModel.dailyReportAgeData(startDate, endDate);
+        const lastSevrnDayAgeData = await UserModel.dailyReportAgeData(startSevenDate, endSevenDate);
+        const overallAgeData = await UserModel.dailyReportAgeData("", "");
+
+        data['todayAgeData'] = todayAgeData
+        data['lastSevrnDayAgeData'] = lastSevrnDayAgeData
+        data['overallAgeData'] = overallAgeData
+
+        let firstRangeCount = 0;
+        let secondRangeCount = 0;
+        let thirdRangeCount = 0;
+        let forthRangeCount = 0;
+        
+        let todayAgeRagngeData = {
+            first_range_count: firstRangeCount,
+            second_range_count: secondRangeCount,
+            third_range_count: thirdRangeCount,
+            forth_range_count: forthRangeCount
+        }
+        let lastSevrnDayAgeRagngeData = {
+            first_range_count: firstRangeCount,
+            second_range_count: secondRangeCount,
+            third_range_count: thirdRangeCount,
+            forth_range_count: forthRangeCount
+        }
+        let overallAgeRagngeData = {
+            first_range_count: firstRangeCount,
+            second_range_count: secondRangeCount,
+            third_range_count: thirdRangeCount,
+            forth_range_count: forthRangeCount
+        }
+
+        if(todayAgeData && todayAgeData?.length > 0){
+            todayAgeData.map((ageElement) => {
+                if(ageElement.age == "below 16"){
+                    firstRangeCount = ageElement.personas
+                }else if(ageElement.age == "17 - 28"){
+                    secondRangeCount = ageElement.personas
+                }else if(ageElement.age == "28 - 45"){
+                    thirdRangeCount = ageElement.personas
+                }else if(ageElement.age == "45+"){
+                    forthRangeCount = ageElement.personas
                 }
+            });
+            todayAgeRagngeData = {
+                first_range_count: firstRangeCount,
+                second_range_count: secondRangeCount,
+                third_range_count: thirdRangeCount,
+                forth_range_count: forthRangeCount
             }
         }
 
-        data['gender_wise'] = {
-            male: maleCount,
-            female: femaleCount
+        if(lastSevrnDayAgeData && lastSevrnDayAgeData?.length > 0){
+            lastSevrnDayAgeData.map((ageElement) => {
+                if(ageElement.age == "below 16"){
+                    firstRangeCount = ageElement.personas
+                }else if(ageElement.age == "17 - 28"){
+                    secondRangeCount = ageElement.personas
+                }else if(ageElement.age == "28 - 45"){
+                    thirdRangeCount = ageElement.personas
+                }else if(ageElement.age == "45+"){
+                    forthRangeCount = ageElement.personas
+                }
+            });
+            lastSevrnDayAgeRagngeData = {
+                first_range_count: firstRangeCount,
+                second_range_count: secondRangeCount,
+                third_range_count: thirdRangeCount,
+                forth_range_count: forthRangeCount
+            }
         }
 
-        //state and city distributation
-        const stateDistribution = await UserModel.getStateWiseLocationDistributionData(startDate, endDate);
-        const cityDistribution = await UserModel.getCityWiseLocationDistributionData(startDate, endDate);
-        data['state_distribution'] = stateDistribution
-        data['city_distribution'] = cityDistribution
+        if(overallAgeData && overallAgeData?.length > 0){
+            overallAgeData.map((ageElement) => {
+                if(ageElement.age == "below 16"){
+                    firstRangeCount = ageElement.personas
+                }else if(ageElement.age == "17 - 28"){
+                    secondRangeCount = ageElement.personas
+                }else if(ageElement.age == "28 - 45"){
+                    thirdRangeCount = ageElement.personas
+                }else if(ageElement.age == "45+"){
+                    forthRangeCount = ageElement.personas
+                }
+            });
+            overallAgeRagngeData = {
+                first_range_count: firstRangeCount,
+                second_range_count: secondRangeCount,
+                third_range_count: thirdRangeCount,
+                forth_range_count: forthRangeCount
+            }
+        }
 
-        //user user engagement in a day
-        let responseData = await UserMobileActivityModel.getUserEngagement({ startDate, endDate });
+        data['todayAgeRagngeData'] = todayAgeRagngeData
+        data['lastSevrnDayAgeRagngeData'] = lastSevrnDayAgeRagngeData
+        data['overallAgeRagngeData'] = overallAgeRagngeData
 
-        let hoursData = []
-        if(responseData){
-            responseData.map(element => {
-                hoursData[element._id] = element.count
+        let stateData = {}; // Initialize as an empty object
+        let cityData = {};  // Initialize as an empty object
+        
+        const stateTodayDistribution = await UserModel.getStateWiseLocationDistributionData(startDate, endDate);
+        const cityTodayDistribution = await UserModel.getCityWiseLocationDistributionData(startDate, endDate);
+        
+        if (stateTodayDistribution.length > 0) {
+            stateTodayDistribution.forEach((element) => {
+                if (element.state !== "Other") {
+                    if (!stateData[element.state]) {
+                        stateData[element.state] = {}; // Initialize as an empty object
+                    }
+                    stateData[element.state]['stateTodayDistribution'] = element.count;
+                }
+            });
+        }
+        
+        if (cityTodayDistribution.length > 0) {
+            cityTodayDistribution.forEach((element) => {
+                if (element.city !== "Other") {
+                    if (!cityData[element.city]) {
+                        cityData[element.city] = {}; // Initialize as an empty object
+                    }
+                    cityData[element.city]['cityTodayDistribution'] = element.count;
+                }
+            });
+        }
+        
+        const stateLastSevrnDayDistribution = await UserModel.getStateWiseLocationDistributionData(startSevenDate, endSevenDate);
+        const cityLastSevrnDayDistribution = await UserModel.getCityWiseLocationDistributionData(startSevenDate, endSevenDate);
+        
+        if (stateLastSevrnDayDistribution.length > 0) {
+            stateLastSevrnDayDistribution.forEach((element) => {
+                if (element.state !== "Other") {
+                    if (!stateData[element.state]) {
+                        stateData[element.state] = {}; // Initialize as an empty object
+                    }
+                    stateData[element.state]['stateLastSevrnDayDistribution'] = element.count;
+                }
+            });
+        }
+        
+        if (cityLastSevrnDayDistribution.length > 0) {
+            cityLastSevrnDayDistribution.forEach((element) => {
+                if (element.city !== "Other") {
+                    if (!cityData[element.city]) {
+                        cityData[element.city] = {}; // Initialize as an empty object
+                    }
+                    cityData[element.city]['cityLastSevrnDayDistribution'] = element.count;
+                }
             });
         }
 
-        let hoursDataResponse = []
-        for (let i = 1; i < 25; i++) {
-            hoursDataResponse.push({
-                hour : i,
-                userCount : hoursData[i] ?? 0
-            })
-        }
-        data['user_engagement'] = hoursDataResponse
+      
+        const stateOverallDistribution = await UserModel.getStateWiseLocationDistributionData("", "");
+        const cityOverallDistribution = await UserModel.getCityWiseLocationDistributionData("", "");
 
-        //user base
-        let nonPremium = await UserCourseModel.getUserBaseCount({ type: 1 , startDate, endDate})
-        let premium = await UserCourseModel.getUserBaseCount({ type: 2, startDate, endDate })
 
-        data['user_base'] = {
-            non_premium: nonPremium,
-            premium: premium,
-        }
-        //os based
-        const osUsage = await UserModel.getOSUsage(startDate, endDate);
-    
-        let osUsageData = {
-            ios: 0,
-            android: 0,
-            not_any: 0
-        }
-       
-        if(osUsage){
-            let notAnyCount = 0
-            await Promise.all(
-                await osUsage.map((element) => {
-                    if(element._id == "ios"){
-                        osUsageData['ios'] = element.count
-                    }else if(element._id == "android"){
-                        osUsageData['android'] = element.count
-                    }else{
-                        notAnyCount = notAnyCount + element.count
-                        osUsageData['not_any'] = notAnyCount
+        if (stateOverallDistribution.length > 0) {
+            stateOverallDistribution.forEach((element) => {
+                if (element.state !== "Other") {
+                    if (!stateData[element.state]) {
+                        stateData[element.state] = {}; // Initialize as an empty object
                     }
-                })
-            )
-        }
-        data['os_base'] = {
-            non_premium: nonPremium,
-            premium: premium
+                    stateData[element.state]['stateOverallDistribution'] = element.count;
+                }
+            });
         }
         
+        if (cityOverallDistribution.length > 0) {
+            cityOverallDistribution.forEach((element) => {
+                if (element.city !== "Other") {
+                    if (!cityData[element.city]) {
+                        cityData[element.city] = {}; // Initialize as an empty object
+                    }
+                    cityData[element.city]['cityOverallDistribution'] = element.count;
+                }
+            });
+        }
+
+        data['stateDistribution'] = stateData
+        data['cityDistribution'] = cityData
+
+        //get the chart data age wise
+        const todayRevenueData = await InvoiceModel.revenueData(startDate, endDate);
+        const lastSevrnDayRevenueData = await InvoiceModel.revenueData(startSevenDate, endSevenDate);
+        const overallRevenueData = await InvoiceModel.revenueData("", "");
+
+        data['todayRevenueData'] = todayRevenueData
+        data['lastSevrnDayRevenueData'] = lastSevrnDayRevenueData
+        data['overallRevenueData'] = overallRevenueData
+
+        //get the chart data age wise
+        const todayActiveUsersData = await UserMobileActivityModel.getUserEngagementByDay(startDate, endDate);
+        const lastSevrnDayActiveUsersData = await UserMobileActivityModel.getUserEngagementByDay(startSevenDate, endSevenDate);
+        const overallActiveUsersData = await UserMobileActivityModel.getUserEngagementByDay("", "");
+
+        data['todayActiveUsersData'] = todayActiveUsersData
+        data['lastSevrnDayActiveUsersData'] = lastSevrnDayActiveUsersData
+        data['overallActiveUsersData'] = overallActiveUsersData
+
+        //get the chart data age wise
+        const todaySessionDurationsData = await UserMobileActivityModel.getSessionDuration(startDate, endDate);
+        const lastSevrnDaySessionDurationsData = await UserMobileActivityModel.getSessionDuration(startSevenDate, endSevenDate);
+        const overallSessionDurationsData = await UserMobileActivityModel.getSessionDuration("", "");
+
+        data['todaySessionDurationsData'] = await millisecToTime(todaySessionDurationsData)
+        data['lastSevrnDaySessionDurationsData'] = await millisecToTime(lastSevrnDaySessionDurationsData)
+        data['overallSessionDurationsData'] = await millisecToTime(overallSessionDurationsData)
+
+        const date = moment().format('MMMM D, YYYY, h:mm A');
+
+        data['date'] = date
+
+        let subject = "Daily Snapshot";
+        let message = await dailySnapshot(data);
+        sendMail("tjcloudtest@gmail.com", message, subject, '', "Daily Snapshot");
+
         return {
             status: true,
             status_code: constants.SUCCESS_RESPONSE,
-            message: "Mail send successfully",
-            data: data
-        };
+            message: "Mail send successfully"
+        }
 
     }catch (error) {
         // Handle unexpected errors
-        console.error('Error in sendDailyReportMail:', error);
+        console.log("error :: ", error)
         return {
             status: false,
             status_code: constants.EXCEPTION_ERROR_CODE,
-            message: 'Failed to fetch the data',
+            message: 'Failed to send mail successfully',
             error: { server_error: 'An unexpected error occurred' },
             data: null,
         }

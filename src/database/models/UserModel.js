@@ -167,9 +167,15 @@ const countStudents = async (search,institute_id, startDate, endDate, referral_c
     }
 
     if(referral_code){
-        searchFilter.push({
-            referral_code: referral_code
-        })
+        if(referral_code == 1){
+            searchFilter.push({
+                referral_code: {$ne : null}
+            })
+        }else{
+            searchFilter.push({
+                referral_code: referral_code
+            })
+        }
     }
 
     if(startDate && endDate){
@@ -236,17 +242,20 @@ const fatchUserDataById = async (id) => {
 }
 
 const getAgeData = async (startDate, endDate) => {
+    let condition = []
 
-    let data = await UserSchema.aggregate([
-        {
+    if(startDate && endDate){
+        condition.push({
             $match: {
                 createdAt: {
                     $gte: new Date(startDate),
                     $lte: new Date(endDate),
                 }
             },
-        },
-        { 
+        })
+    }
+
+    condition.push( { 
             "$project": {
                 "age": {
                     "$divide": [
@@ -275,7 +284,9 @@ const getAgeData = async (startDate, endDate) => {
             }
         },
         { "$project": { "_id": 0, "age": "$_id", "personas": 1 } }
-    ]).then((userData) => {
+    )
+
+    let data = await UserSchema.aggregate(condition).then((userData) => {
         return userData
     }).catch((err) => {
         return false
@@ -436,8 +447,10 @@ const getAllStudent = async (userFilter) => {
 
 const getStateWiseLocationDistributionData = async (startDate, endDate) => {
 
-    const chartData = await UserSchema.aggregate([
-        {
+    let condition = []
+
+    if(startDate && endDate){
+        condition.push({
             $match: {
                 createdAt: {
                     $gte: new Date(startDate),
@@ -445,8 +458,16 @@ const getStateWiseLocationDistributionData = async (startDate, endDate) => {
                 },
                 is_deleted: false
             },
-        },
-        {
+        })
+    }else{
+        condition.push({
+            $match: {
+                is_deleted: false
+            }
+        })
+    }
+
+    condition.push({
             $group: {
                 _id:  "$state",
                 count: { $sum: 1 }
@@ -470,7 +491,9 @@ const getStateWiseLocationDistributionData = async (startDate, endDate) => {
                 count: 1
             }
         }
-    ]).then((data) => {
+    )
+
+    const chartData = await UserSchema.aggregate(condition).then((data) => {
         return data
     }).catch((err) => {
         return null
@@ -480,8 +503,10 @@ const getStateWiseLocationDistributionData = async (startDate, endDate) => {
 
 const getCityWiseLocationDistributionData = async (startDate, endDate) => {
 
-    const chartData = await UserSchema.aggregate([
-        {
+    let condition = []
+
+    if(startDate && endDate){
+        condition.push({
             $match: {
                 createdAt: {
                     $gte: new Date(startDate),
@@ -489,8 +514,16 @@ const getCityWiseLocationDistributionData = async (startDate, endDate) => {
                 },
                 is_deleted: false
             },
-        },
-        {
+        })
+    }else{
+        condition.push({
+            $match: {
+                is_deleted: false
+            }
+        })
+    }
+
+    condition.push({
             $group: {
                 _id:  "$city",
                 count: { $sum: 1 }
@@ -514,7 +547,9 @@ const getCityWiseLocationDistributionData = async (startDate, endDate) => {
                 count: 1
             }
         }
-    ]).then((data) => {
+    )
+
+    const chartData = await UserSchema.aggregate(condition).then((data) => {
         return data
     }).catch((err) => {
         return null
@@ -587,6 +622,68 @@ const getStudentsByIds = async (id) => {
    return userResult;
 }
 
+const dailyReportAgeData = async (startDate, endDate) => {
+    let condition = []
+
+    if(startDate && endDate){
+        condition.push({
+            $match: {
+                createdAt: {
+                    $gte: new Date(startDate),
+                    $lte: new Date(endDate),
+                },
+                is_deleted: false
+            },
+        })
+    }else{
+        condition.push({
+            $match: {
+                is_deleted: false
+            }
+        })
+    }
+
+    condition.push( { 
+            "$project": {
+                "age": {
+                    "$divide": [
+                        {
+                            "$subtract": [
+                                new Date(),
+                                { "$ifNull": ["$birth_date", new Date()] }
+                            ]
+                        },
+                        1000 * 86400 * 365
+                    ]
+                }
+            }
+        },
+        {
+            "$group": {
+                "_id": {
+                    "$concat": [
+                        { "$cond": [ { "$and": [ { "$gt":  ["$age", 0 ] }, { "$lt": ["$age", 16] } ]}, "below 16", ""] },
+                        { "$cond": [ { "$and": [ { "$gte": ["$age", 17] }, { "$lt": ["$age", 28] } ]}, "17 - 28", ""] },
+                        { "$cond": [ { "$and": [ { "$gte": ["$age", 28] }, { "$lte": ["$age", 45] } ]}, "28 - 45", ""] },
+                        { "$cond": [  {"$gt": ["$age", 45]}, "45+", ""] }
+                    ]
+                },
+                "personas": { "$sum": 1 }
+            }
+        },
+        { "$project": { "_id": 0, "age": "$_id", "personas": 1 } }
+    )
+
+    let data = await UserSchema.aggregate(condition).then((userData) => {
+        return userData
+    }).catch((err) => {
+        return false
+    });
+
+   return data;
+}
+
+
 module.exports = {
     createUser,
     updateUser,
@@ -606,5 +703,6 @@ module.exports = {
     getCityWiseLocationDistributionData,
     getSignupDistribution,
     getOSUsage,
-    getStudentsByIds
+    getStudentsByIds,
+    dailyReportAgeData
 }

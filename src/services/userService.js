@@ -4142,6 +4142,58 @@ const sendDailyReportMail = async () => {
     }  
 }
 
+
+//add user data
+const cityDropdown = async () => {
+    try{
+
+        const getUserCourseData = await UserModel.getCityList();
+     
+        return {
+            status: true,
+            status_code: constants.SUCCESS_RESPONSE,
+            message: "Data list successfully",
+            data: getUserCourseData
+        };
+    }catch (error) {
+        // Handle unexpected errors
+        console.error('Error in addUser:', error);
+        return {
+            status: false,
+            status_code: constants.EXCEPTION_ERROR_CODE,
+            message: 'An unexpected error occurred',
+            error: { server_error: 'An unexpected error occurred' },
+            data: null,
+        };
+    }  
+}
+
+//add user data
+const stateDropdown = async () => {
+    try{
+
+        const getUserCourseData = await UserModel.getStateList();
+     
+        return {
+            status: true,
+            status_code: constants.SUCCESS_RESPONSE,
+            message: "Data list successfully",
+            data: getUserCourseData
+        };
+    }catch (error) {
+        // Handle unexpected errors
+        console.error('Error in addUser:', error);
+        return {
+            status: false,
+            status_code: constants.EXCEPTION_ERROR_CODE,
+            message: 'An unexpected error occurred',
+            error: { server_error: 'An unexpected error occurred' },
+            data: null,
+        };
+    }  
+}
+
+
 module.exports = {
     getLinkedinData,
     userSignin,
@@ -4203,5 +4255,7 @@ module.exports = {
     getStudentsCount,
     testNotification,
     assignReferralCode,
-    sendDailyReportMail
+    sendDailyReportMail,
+    cityDropdown,
+    stateDropdown
 }

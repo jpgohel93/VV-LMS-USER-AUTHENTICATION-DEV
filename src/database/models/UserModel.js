@@ -683,6 +683,58 @@ const dailyReportAgeData = async (startDate, endDate) => {
    return data;
 }
 
+const getCityList = async () => {
+    const data = await UserSchema.aggregate([
+        {
+            $match: {
+                city: { $ne: null}
+            }
+        },
+        { 
+            $group: {
+                _id: "$city"
+            }
+        },{
+            $project:{
+                _id: 0,
+                city: "$_id"
+            }
+        }
+    ]).then((userData) => {
+        return userData
+    }).catch((err) => {
+        return false
+    });
+
+   return data;
+}
+
+const getStateList = async () => {
+    const data = await UserSchema.aggregate([
+        {
+            $match: {
+                state: { $ne: null}
+            }
+        },
+        { 
+            $group: {
+                _id: "$state"
+            }
+        },{
+            $project:{
+                _id: 0,
+                state: "$_id"
+            }
+        }
+    ]).then((userData) => {
+        return userData
+    }).catch((err) => {
+        return false
+    });
+
+   return data;
+}
+
 
 module.exports = {
     createUser,
@@ -704,5 +756,7 @@ module.exports = {
     getSignupDistribution,
     getOSUsage,
     getStudentsByIds,
-    dailyReportAgeData
+    dailyReportAgeData,
+    getCityList,
+    getStateList
 }

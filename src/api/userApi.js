@@ -1376,4 +1376,16 @@ module.exports = async (app) => {
 
         res.json(data);
     });
+
+    app.get('/user/cityDropdown', UserAuth, async (req, res, next) => {
+        const data = await userService.cityDropdown();
+
+        res.json(data);
+    });
+    
+    app.get('/user/stateDropdown', UserAuth, async (req, res, next) => {
+        const data = await userService.stateDropdown();
+
+        res.json(data);
+    });
 }

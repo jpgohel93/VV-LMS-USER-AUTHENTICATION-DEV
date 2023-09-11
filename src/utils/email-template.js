@@ -416,7 +416,6 @@ module.exports.dailySnapshot = async (data) => {
             cityDistribution += ` </tr>`
         });
     }
-    console.log("constants.EMAIL_TEMPLATE_LOGO_URL ::: ", constants.EMAIL_TEMPLATE_LOGO_URL)
    
     return await `<!DOCTYPE html>
     <html lang="en">
@@ -678,27 +677,6 @@ module.exports.dailySnapshot = async (data) => {
     </body>
     
     </html>`;
-
-    // <tr style="border: 1px solid #e8e8eb;">
-    //                 <td style="padding: 8px; border: 1px solid #e8e8eb; font-size: 0.9rem; font-weight: 500; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
-    //     font-family: Montserrat, sans-serif;">Video Views</td>
-    //                 <td style="padding: 8px; border: 1px solid #e8e8eb; font-size: 0.9rem; font-weight: 500; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
-    //     font-family: Montserrat, sans-serif;">${0}</td>
-    //                 <td style="padding: 8px; border: 1px solid #e8e8eb; font-size: 0.9rem; font-weight: 500; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
-    //     font-family: Montserrat, sans-serif;">${0}</td>
-    //                 <td style="padding: 8px; border: 1px solid #e8e8eb; font-size: 0.9rem; font-weight: 500; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
-    //     font-family: Montserrat, sans-serif;">${0}</td>
-    //             </tr>
-    //             <tr style="border: 1px solid #e8e8eb;">
-    //                 <td style="padding: 8px; border: 1px solid #e8e8eb; font-size: 0.9rem; font-weight: 500; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
-    //     font-family: Montserrat, sans-serif;">Video Completion %</td>
-    //                 <td style="padding: 8px; border: 1px solid #e8e8eb; font-size: 0.9rem; font-weight: 500; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
-    //     font-family: Montserrat, sans-serif;">${0}</td>
-    //                 <td style="padding: 8px; border: 1px solid #e8e8eb; font-size: 0.9rem; font-weight: 500; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
-    //     font-family: Montserrat, sans-serif;">${0}</td>
-    //                 <td style="padding: 8px; border: 1px solid #e8e8eb; font-size: 0.9rem; font-weight: 500; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
-    //     font-family: Montserrat, sans-serif;">${0}</td>
-    //             </tr>
 
     // <tr style="border: 1px solid #e8e8eb;">
     //                 <td style="padding: 8px; border: 1px solid #e8e8eb; font-size: 0.9rem; font-weight: 500; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');

@@ -107,12 +107,13 @@ const timeSpendByModule = async (user_id) => {
 }
 
 const subjectTimeSpend = async (user_id, chapter_id) => {
+  
 
   const pipeline = [
       {
           $match: {
-            module: "chapter",
-            reference_id: { $in : chapter_id},
+            module: "subject",
+            reference_id: chapter_id,
             user_id: user_id
           }
       },

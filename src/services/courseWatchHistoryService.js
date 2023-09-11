@@ -149,7 +149,8 @@ const addCourseTopicWatchHistory = async (userInputs) => {
 
             const updateCourseWatchHistoryData = await CourseWatchHistoryModel.addCourseTopicWatchHistory(checkCourseWatchHistoryData._id,{ 
                 topics_id: topic_id,
-                view_completed_time: view_completed_time
+                view_completed_time: view_completed_time,
+                view_at: new Date()
             });
 
             if(updateCourseWatchHistoryData !== false){
@@ -258,6 +259,11 @@ const addCompletedTopic = async (userInputs) => {
                 await CourseWatchHistoryModel.deleteCompletedTopic(user_id, course_id,topic_id);
 
                 const updateCourseWatchHistoryData = await CourseWatchHistoryModel.addCompletedTopic(checkCourseWatchHistoryData._id,topic_id);
+
+                CourseWatchHistoryModel.addCompletedTopic(checkCourseWatchHistoryData._id,{
+                    topics_id: topic_id,
+                    view_at: new  Date()
+                });
 
                 if(updateCourseWatchHistoryData !== false){
                     return {

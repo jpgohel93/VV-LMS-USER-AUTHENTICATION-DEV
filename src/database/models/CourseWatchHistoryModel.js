@@ -145,6 +145,18 @@ const addCompletedTopic = async (id, topic_id) => {
 
 }
 
+const addCompletedTopicHistory = async (id, data) => {
+
+    const addCourseWatchHistoryData = await CourseWatchHistorySchema.findOneAndUpdate({ _id: id }, { $push:  { "completed_topic_at": data } }, { new: true }).then((data) => {
+        return data
+    }).catch((err) => {
+        return false
+    });
+
+    return addCourseWatchHistoryData;
+
+}
+
 const deleteCompletedTopic = async (user_id, course_id,topic_id) => {
     const topicData = await CourseWatchHistorySchema.findOneAndUpdate({ user_id: user_id,course_id: course_id}, { $pull: { progress: { topics_id: topic_id } } }, { new: true }).then((model) => {
         return true
@@ -251,8 +263,6 @@ const getCourseCompletionRateCourseWiseInWeek = async (start_date) => {
 
 const getCourseCompletionRateData = async (start_date) => {
 
-    console.log("start_date ::: ", start_date)
-
     const data = await CourseWatchHistorySchema.aggregate([
         {
             $match: {
@@ -301,14 +311,60 @@ const getCourseCompletionRateData = async (start_date) => {
           }
         }
       ]).then((userData) => {
-        console.log("userData ::", userData)
         return userData
     }).catch((err) => {
-        console.log("err ::", err)
         return false
     });
 
    return data;
+}
+
+
+const continueWatchingVideoCount = async (startDate, endDate) => {
+
+    const coursewatchhistoryData = await CourseWatchHistorySchema.aggregate([
+        { $unwind: "$progress" },
+        {
+            $match: {
+                view_at: {
+                    $gte: new Date(startDate),
+                    $lte: new Date(endDate),
+                }
+            }
+        }
+    ]).then((data) => {
+        return data ? data.length : 0
+    }).catch((err) => {
+        return null
+    });
+
+    return coursewatchhistoryData;
+}
+
+const completedVideoCount = async (startDate, endDate) => {
+
+    let condition = []
+
+    condition.push({ $unwind: "$completed_topic_at" })
+
+    if(startDate && endDate){
+        condition.push({
+            $match: {
+                createdAt: {
+                    $gte: new Date(startDate),
+                    $lte: new Date(endDate),
+                }
+            }
+        })
+    }
+
+    const coursewatchhistoryData = await CourseWatchHistorySchema.aggregate(condition).then((data) => {
+        return data ? data.length : 0
+    }).catch((err) => {
+        return null
+    });
+
+    return coursewatchhistoryData;
 }
 
 
@@ -327,5 +383,8 @@ module.exports = {
     getCourseCompletionRateCourseWise,
     getCourseCompletionRateCourseWiseInWeek,
     getCourseCompletionRateData,
-    fetchCourseWatchHistory
+    fetchCourseWatchHistory,
+    continueWatchingVideoCount,
+    addCompletedTopicHistory,
+    completedVideoCount
 }

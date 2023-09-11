@@ -4084,7 +4084,7 @@ const sendDailyReportMail = async () => {
         data['lastSevrnDayActiveUsersData'] = lastSevrnDayActiveUsersData
         data['overallActiveUsersData'] = overallActiveUsersData
 
-        //get the chart data age wise
+        //get the sessionData
         const todaySessionDurationsData = await UserMobileActivityModel.getSessionDuration(startDate, endDate);
         const lastSevrnDaySessionDurationsData = await UserMobileActivityModel.getSessionDuration(startSevenDate, endSevenDate);
         const overallSessionDurationsData = await UserMobileActivityModel.getSessionDuration("", "");
@@ -4096,6 +4096,24 @@ const sendDailyReportMail = async () => {
         const date = moment().format('MMMM D, YYYY, h:mm A');
 
         data['date'] = date
+
+        //get the sessionData
+        const todayWatchingVideo= await CourseWatchHistoryModel.continueWatchingVideoCount(startDate, endDate);
+        const todayCompletedVideo = await CourseWatchHistoryModel.completedVideoCount(startDate, endDate);
+
+        const lastSevrnDayWatchingVideo = await CourseWatchHistoryModel.continueWatchingVideoCount(startSevenDate, endSevenDate);
+        const lastSevrnDayCompletedVideo = await CourseWatchHistoryModel.completedVideoCount(startSevenDate, endSevenDate);
+
+        const overallWatchingVideo = await CourseWatchHistoryModel.continueWatchingVideoCount("", "");
+        const overallCompletedVideo = await CourseWatchHistoryModel.completedVideoCount("", "");
+
+        let todayWatchVideo = todayWatchingVideo + todayCompletedVideo
+        let lastSevrnDayWatchVideo = lastSevrnDayWatchingVideo + lastSevrnDayCompletedVideo
+        let overallWatchVideo = overallWatchingVideo + overallCompletedVideo
+
+        data['todayWatchVideo'] = todayWatchVideo
+        data['lastSevrnDayWatchVideo'] = lastSevrnDayWatchVideo
+        data['overallWatchingVideo'] = overallWatchVideo
 
         let subject = "Daily Snapshot";
         let message = await dailySnapshot(data);

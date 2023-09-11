@@ -14,10 +14,15 @@ const CourseWatchHistorySchema = new Schema({
     },
     progress: [{
         topics_id: String,
-        view_completed_time: String
+        view_completed_time: String,
+        view_at: Date
     }],
     completed_chapter: [String],
     completed_topics: [String],
+    completed_topic_at: [{
+        topics_id: String,
+        view_at: Date
+    }],
     is_course_completed : {
         type: Boolean,
         default: false

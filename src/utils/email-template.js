@@ -432,7 +432,7 @@ module.exports.dailySnapshot = async (data) => {
             <div
                 style="display: flex; align-items: center; justify-content: space-between; height: fit-content; padding: 10px 10px 0 10px;">
                 <div>
-                    <img src="${constants.EMAIL_TEMPLATE_LOGO_URL}" alt="Your Logo" style="max-height: 80px;" />
+                    <img src="${constants.EMAIL_TEMPLATE_LOGO_URL}" alt="Virtualafsar" style="max-height: 80px;" />
                 </div>
                 <div style=" background: #fff;
                 text-align: right;
@@ -527,13 +527,23 @@ module.exports.dailySnapshot = async (data) => {
                 </tr>
                 <tr style="border: 1px solid #e8e8eb;">
                     <td style="padding: 8px; border: 1px solid #e8e8eb; font-size: 0.9rem; font-weight: 500; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
-        font-family: Montserrat, sans-serif;">session duration</td>
+        font-family: Montserrat, sans-serif;">Session Duration</td>
                     <td style="padding: 8px; border: 1px solid #e8e8eb; font-size: 0.9rem; font-weight: 500; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
         font-family: Montserrat, sans-serif;">${data.todaySessionDurationsData}</td>
                     <td style="padding: 8px; border: 1px solid #e8e8eb; font-size: 0.9rem; font-weight: 500; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
         font-family: Montserrat, sans-serif;">${data.lastSevrnDaySessionDurationsData}</td>
                     <td style="padding: 8px; border: 1px solid #e8e8eb; font-size: 0.9rem; font-weight: 500; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
         font-family: Montserrat, sans-serif;">${data.overallSessionDurationsData}</td>
+                </tr>
+                <tr style="border: 1px solid #e8e8eb;">
+                                <td style="padding: 8px; border: 1px solid #e8e8eb; font-size: 0.9rem; font-weight: 500; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
+                    font-family: Montserrat, sans-serif;">Video Views</td>
+                                <td style="padding: 8px; border: 1px solid #e8e8eb; font-size: 0.9rem; font-weight: 500; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
+                    font-family: Montserrat, sans-serif;">${data.todayWatchVideo}</td>
+                                <td style="padding: 8px; border: 1px solid #e8e8eb; font-size: 0.9rem; font-weight: 500; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
+                    font-family: Montserrat, sans-serif;">${data.lastSevrnDayWatchVideo}</td>
+                                <td style="padding: 8px; border: 1px solid #e8e8eb; font-size: 0.9rem; font-weight: 500; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
+                    font-family: Montserrat, sans-serif;">${data.overallWatchingVideo}</td>
                 </tr>
                 <tr style="border: 1px solid #e8e8eb;">
                     <td style="padding: 8px; border: 1px solid #e8e8eb;"></td>

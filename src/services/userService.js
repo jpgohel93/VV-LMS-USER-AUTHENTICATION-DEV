@@ -4115,6 +4115,10 @@ const sendDailyReportMail = async () => {
         data['lastSevrnDayWatchVideo'] = lastSevrnDayWatchVideo
         data['overallWatchingVideo'] = overallWatchVideo
 
+        data['todayCompletedVideo'] = todayWatchVideo && todayCompletedVideo ? parseFloat(todayCompletedVideo * 100 / todayWatchVideo).toFixed(2) : 0
+        data['lastSevrnDayCompletedVideo'] = lastSevrnDayWatchVideo && lastSevrnDayCompletedVideo ? parseFloat(lastSevrnDayCompletedVideo * 100 / lastSevrnDayWatchVideo).toFixed(2)  : 0
+        data['overallCompletedingVideo'] = overallWatchVideo && overallCompletedVideo ? parseFloat(overallCompletedVideo * 100 / overallWatchVideo).toFixed(2) : 0
+        
         let subject = "Daily Snapshot";
         let message = await dailySnapshot(data);
         sendMail("tjcloudtest@gmail.com", message, subject, '', "Daily Snapshot");

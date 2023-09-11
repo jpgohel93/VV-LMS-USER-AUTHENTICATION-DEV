@@ -545,6 +545,17 @@ module.exports.dailySnapshot = async (data) => {
                                 <td style="padding: 8px; border: 1px solid #e8e8eb; font-size: 0.9rem; font-weight: 500; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
                     font-family: Montserrat, sans-serif;">${data.overallWatchingVideo}</td>
                 </tr>
+
+                <tr style="border: 1px solid #e8e8eb;">
+                                <td style="padding: 8px; border: 1px solid #e8e8eb; font-size: 0.9rem; font-weight: 500; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
+                    font-family: Montserrat, sans-serif;">Video Completion</td>
+                                <td style="padding: 8px; border: 1px solid #e8e8eb; font-size: 0.9rem; font-weight: 500; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
+                    font-family: Montserrat, sans-serif;">${data.todayCompletedVideo}%</td>
+                                <td style="padding: 8px; border: 1px solid #e8e8eb; font-size: 0.9rem; font-weight: 500; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
+                    font-family: Montserrat, sans-serif;">${data.lastSevrnDayCompletedVideo}%</td>
+                                <td style="padding: 8px; border: 1px solid #e8e8eb; font-size: 0.9rem; font-weight: 500; text-align: left;  @importurl ('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@500;0,&display=swap');
+                    font-family: Montserrat, sans-serif;">${data.overallCompletedingVideo}%</td>
+                </tr>
                 <tr style="border: 1px solid #e8e8eb;">
                     <td style="padding: 8px; border: 1px solid #e8e8eb;"></td>
                     <td style="padding: 8px; border: 1px solid #e8e8eb;"></td>

@@ -808,7 +808,10 @@ const studentData = async (userFilter) => {
                 first_name: "$first_name",
                 last_name: "$last_name",
                 device_uuid: "$device_uuid",
-                notification_device_id: "$notification_device_id"
+                notification_device_id: "$notification_device_id",
+                email: "$email",
+                country_code: "$country_code",
+                mobile_no: "$mobile_no"
             }
         })
 
@@ -840,7 +843,10 @@ const studentData = async (userFilter) => {
             first_name: "$first_name",
             last_name: "$last_name",
             device_uuid: "$device_uuid",
-            notification_device_id: "$notification_device_id"
+            notification_device_id: "$notification_device_id",
+            email: "$email",
+            country_code: "$country_code",
+            mobile_no: "$mobile_no"
         }
     })
 

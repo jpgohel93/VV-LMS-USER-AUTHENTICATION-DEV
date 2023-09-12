@@ -4193,6 +4193,31 @@ const stateDropdown = async () => {
     }  
 }
 
+//add user data
+const studentData = async (userInputs) => {
+    try{
+        const { city, state, start_date, end_date, age_group, gender, is_count_record } = userInputs;
+
+        const studentData = await UserModel.studentData({ city, state, start_date, end_date, age_group, gender, is_count_record });
+     
+        return {
+            status: true,
+            status_code: constants.SUCCESS_RESPONSE,
+            message: "Data list successfully",
+            data: studentData
+        };
+    }catch (error) {
+        // Handle unexpected errors
+        console.error('Error in addUser:', error);
+        return {
+            status: false,
+            status_code: constants.EXCEPTION_ERROR_CODE,
+            message: 'An unexpected error occurred',
+            error: { server_error: 'An unexpected error occurred' },
+            data: null,
+        };
+    }  
+}
 
 module.exports = {
     getLinkedinData,
@@ -4257,5 +4282,6 @@ module.exports = {
     assignReferralCode,
     sendDailyReportMail,
     cityDropdown,
-    stateDropdown
+    stateDropdown,
+    studentData
 }

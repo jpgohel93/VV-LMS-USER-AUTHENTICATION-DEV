@@ -1388,4 +1388,12 @@ module.exports = async (app) => {
 
         res.json(data);
     });
+
+    app.post('/user/studentData', UserAuth, async (req, res, next) => {
+        const { city, state, start_date, end_date, age_group, gender, is_count_record } = req.body;
+
+        const data = await userService.studentData({ city, state, start_date, end_date, age_group, gender, is_count_record });
+
+        res.json(data);
+    });
 }

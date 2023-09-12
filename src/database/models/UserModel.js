@@ -643,7 +643,8 @@ const dailyReportAgeData = async (startDate, endDate) => {
         })
     }
 
-    condition.push( { 
+    condition.push(
+        { 
             "$project": {
                 "age": {
                     "$divide": [
@@ -735,6 +736,106 @@ const getStateList = async () => {
    return data;
 }
 
+const studentData = async (userFilter) => {
+    let condition = []
+    let matchcondition = {}
+
+    matchcondition['is_deleted'] = false
+
+    if(userFilter?.city?.length > 0){
+        matchcondition['city'] = { $in : userFilter.city }
+    }
+
+    if(userFilter?.state?.length > 0){
+        matchcondition['state'] = { $in : userFilter.state }
+    }
+
+    if(userFilter.start_date && userFilter.end_date){
+        let startDate = new Date(userFilter.start_date).toISOString();
+        let endDate = new Date(userFilter.end_date + " 23:59:59").toISOString();
+
+        matchcondition['createdAt'] = {
+            $gte: new Date(startDate),
+            $lte: new Date(endDate),
+        }
+    }
+
+    if(userFilter.gender && userFilter.gender !== "all"){
+        matchcondition['gender'] = userFilter.gender
+    }
+
+    if(userFilter?.age_group?.length > 0){
+        condition.push({ 
+            $project: {
+                age: {
+                    $divide: [
+                        {
+                            $subtract: [
+                                new Date(),
+                                { $ifNull: ["$birth_date", new Date()] }
+                            ]
+                        },
+                        1000 * 86400 * 365
+                    ]
+                },
+                is_deleted: "$is_deleted",
+                gender: "$gender",
+                createdAt: "$createdAt",
+                city: "$city",
+                state: "$state",
+                first_name: "$first_name",
+                last_name: "$last_name",
+                device_uuid: "$device_uuid",
+                notification_device_id: "$notification_device_id"
+            }
+        })
+
+        let orCondition = []
+
+        userFilter.age_group.forEach(element => {
+            if(element == 1){
+                orCondition.push({ age :{ $gte: 10, $lte: 16 }})
+            }else if(element == 2){
+                orCondition.push({ age :{ $gte: 17, $lte: 28 }})
+            }else if(element == 3){
+                orCondition.push({ age :{ $gte: 29, $lte: 45 }})
+            }else if(element == 4){
+                orCondition.push({ age :{ $gte: 45, $lte: 60 }})
+            }else if(element == 5){
+                orCondition.push({ age :{ $gt: 60 }})
+            }
+        });
+
+        matchcondition['$or'] = orCondition
+    }
+   
+    condition.push({
+        $match: matchcondition
+    })
+
+    condition.push({
+        $project: {
+            first_name: "$first_name",
+            last_name: "$last_name",
+            device_uuid: "$device_uuid",
+            notification_device_id: "$notification_device_id"
+        }
+    })
+
+    const data = await UserSchema.aggregate(condition).then((userData) => {
+        if(userFilter.is_count_record){
+            return userData?.length || 0
+        }else{
+            return userData
+        }
+       
+    }).catch((err) => {
+        return false
+    });
+
+   return data;
+}
+
 
 module.exports = {
     createUser,
@@ -758,5 +859,6 @@ module.exports = {
     getStudentsByIds,
     dailyReportAgeData,
     getCityList,
-    getStateList
+    getStateList,
+    studentData
 }

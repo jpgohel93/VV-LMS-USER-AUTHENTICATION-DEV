@@ -702,6 +702,9 @@ const getCityList = async () => {
             }
         }
     ]).then((userData) => {
+        userData.push({
+            city: "Other"
+        })
         return userData
     }).catch((err) => {
         return false
@@ -714,7 +717,7 @@ const getStateList = async () => {
     const data = await UserSchema.aggregate([
         {
             $match: {
-                state: { $ne: null}
+                state: { $ne: null }
             }
         },
         { 
@@ -728,6 +731,9 @@ const getStateList = async () => {
             }
         }
     ]).then((userData) => {
+        userData.push({
+            state: "Other"
+        })
         return userData
     }).catch((err) => {
         return false
@@ -743,11 +749,27 @@ const studentData = async (userFilter) => {
     matchcondition['is_deleted'] = false
 
     if(userFilter?.city?.length > 0){
-        matchcondition['city'] = { $in : userFilter.city }
+        if(userFilter.city.includes("Other")){
+            let orCondition = []
+            orCondition.push( { city :{ $in : userFilter.city } })
+            orCondition.push( { city :{ $eq: null } })
+        
+            matchcondition['$or'] = orCondition
+        }else{
+            matchcondition['city'] = { $in : userFilter.city }
+        }
     }
 
     if(userFilter?.state?.length > 0){
-        matchcondition['state'] = { $in : userFilter.state }
+        if(userFilter.state.includes("Other")){
+            let orCondition = []
+            orCondition.push( { state :{ $in : userFilter.state } })
+            orCondition.push( { state :{ $eq: null } })
+        
+            matchcondition['$or'] = orCondition
+        }else{
+            matchcondition['state'] = { $in : userFilter.state }
+        }
     }
 
     if(userFilter.start_date && userFilter.end_date){

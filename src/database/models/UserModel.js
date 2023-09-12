@@ -761,7 +761,7 @@ const studentData = async (userFilter) => {
     }
 
     if(userFilter.gender && userFilter.gender !== "all"){
-        matchcondition['gender'] = userFilter.gender
+        matchcondition['gender'] = { $regex: new RegExp(userFilter.gender, "i") }
     }
 
     if(userFilter?.age_group?.length > 0){

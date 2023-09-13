@@ -818,16 +818,17 @@ const studentData = async (userFilter) => {
         let orCondition = []
 
         userFilter.age_group.forEach(element => {
-            if(element == 1){
+            if(element == "10 to 16"){
                 orCondition.push({ age :{ $gte: 10, $lte: 16 }})
-            }else if(element == 2){
+            }else if(element == "17 to 28"){
                 orCondition.push({ age :{ $gte: 17, $lte: 28 }})
-            }else if(element == 3){
+            }else if(element == "29 to 45"){
                 orCondition.push({ age :{ $gte: 29, $lte: 45 }})
-            }else if(element == 4){
+            }else if(element == "45 to 60"){
                 orCondition.push({ age :{ $gte: 45, $lte: 60 }})
-            }else if(element == 5){
+            }else if(element == "Other"){
                 orCondition.push({ age :{ $gt: 60 }})
+                orCondition.push({ age :{ $gte: 0, $lt: 10 }})
             }
         });
 

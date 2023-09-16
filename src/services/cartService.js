@@ -370,13 +370,26 @@ const qrCheckOut = async (userInputs,request) => {
             if(getUserData && getUserData?.referral_code && getUserCourseData && getUserCourseData?.length == 0){
                 let hemanData = await CallEventBus("get_heman_by_code",{ referral_code: getUserData.referral_code }, request.get("Authorization"))
 
-                if(hemanData?.student_discount){
-                    let studentDiscount = hemanData?.student_discount ? hemanData.student_discount  : 0
-                    if(hemanData.student_discount_type == 1){
-                        finalAmount = parseInt(finalAmount) - parseInt(studentDiscount)
-                    }else if(hemanData.student_discount_type == 2){
-                        let discount = parseInt(finalAmount) * parseFloat(studentDiscount) / 100 
-                        finalAmount = parseInt(finalAmount) - parseInt(discount)
+                if(hemanData.parent_heman_id){
+                    let parentHemanData = await CallEventBus("get_heman_by_id",{ id: hemanData.parent_heman_id }, request.get("Authorization"))
+                    if(parentHemanData?.student_discount){ 
+                        let studentDiscount = parentHemanData?.student_discount ? parentHemanData.student_discount  : 0
+                        if(parentHemanData.student_discount_type == 1){
+                            finalAmount = parseInt(finalAmount) - parseInt(studentDiscount)
+                        }else if(parentHemanData.student_discount_type == 2){
+                            let discount = parseInt(finalAmount) * parseFloat(studentDiscount) / 100 
+                            finalAmount = parseInt(finalAmount) - parseInt(discount)
+                        }
+                    }
+                }else{
+                    if(hemanData?.student_discount){ 
+                        let studentDiscount = hemanData?.student_discount ? hemanData.student_discount  : 0
+                        if(hemanData.student_discount_type == 1){
+                            finalAmount = parseInt(finalAmount) - parseInt(studentDiscount)
+                        }else if(hemanData.student_discount_type == 2){
+                            let discount = parseInt(finalAmount) * parseFloat(studentDiscount) / 100 
+                            finalAmount = parseInt(finalAmount) - parseInt(discount)
+                        }
                     }
                 }
             }

@@ -369,9 +369,15 @@ const qrCheckOut = async (userInputs,request) => {
             let hemanDiscount = 0
             if(getUserData && getUserData?.referral_code && getUserCourseData && getUserCourseData?.length == 0){
                 let hemanData = await CallEventBus("get_heman_by_code",{ referral_code: getUserData.referral_code }, request.get("Authorization"))
+
                 if(hemanData?.student_discount){
-                    hemanDiscount = hemanData.student_discount
-                    finalAmount = finalAmount - hemanDiscount
+                    let studentDiscount = hemanData?.student_discount ? hemanData.student_discount  : 0
+                    if(hemanData.student_discount_type == 1){
+                        finalAmount = parseInt(finalAmount) - parseInt(studentDiscount)
+                    }else if(hemanData.student_discount_type == 2){
+                        let discount = parseInt(finalAmount) * parseFloat(studentDiscount) / 100 
+                        finalAmount = parseInt(finalAmount) - parseInt(discount)
+                    }
                 }
             }
 

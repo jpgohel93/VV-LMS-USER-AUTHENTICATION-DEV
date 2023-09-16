@@ -51,6 +51,10 @@ const assignCourse = async (userInputs,request) => {
                 expire_date: date
             });
 
+            UserCourseModel.updateUserCourse(user_id,{ 
+                is_purchase_course: true
+            });
+
             if(createUserCourse !== false){
                 const getUserData = await UserModel.fatchUserById(user_id);
                 let subject = `Course Assiged - ${courseData.course_title}`;
@@ -89,7 +93,7 @@ const assignCourse = async (userInputs,request) => {
                                 let studentDiscount = parentHemanData?.student_discount ? parentHemanData.student_discount  : 0
                                 if(parentHemanData.student_discount_type == 1){
                                     userDiscount = studentDiscount
-                                    courseAmount = parseInt(courseData.discount_amount) - parseInt(studentDiscount)
+                                    courseAmount = parseInt(finalAmount) - parseInt(studentDiscount)
                                 }else if(parentHemanData.student_discount_type == 2){
                                     let discount = parseInt(finalAmount) * parseFloat(studentDiscount) / 100 
                                     userDiscount = discount

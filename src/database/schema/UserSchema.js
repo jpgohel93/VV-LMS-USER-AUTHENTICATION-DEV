@@ -25,6 +25,10 @@ const UserSchema = new Schema({
     note: String,
     user_signup_with: Number, //1 = Manual , 2 = Google, 3 = Facebook, 4 = linkdin, 5 = web, 6 = institute, 7 = apple 
     profile_image: String,
+    is_purchase_course: {
+        type: Boolean,
+        default: false
+    },
     is_deleted: {
         type: Boolean,
         default: false

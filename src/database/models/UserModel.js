@@ -422,7 +422,27 @@ const getRegistrationRateData = async (start_date, dateformate) => {
 }
 
 const getAllStudent = async (userFilter) => {
+
     let searchFilter = [];
+
+    if(userFilter.search){
+        searchFilter.push({
+            $or: [
+                {
+                    first_name: { $regex: '.*' + userFilter.search + '.*', $options:'i' }
+                },
+                {
+                    last_name: { $regex: '.*' + userFilter.search + '.*', $options:'i' }
+                },
+                {
+                    email: { $regex: '.*' + userFilter.search + '.*', $options:'i' }
+                },
+                {
+                    mobile_no: { $regex: '.*' + userFilter.search + '.*', $options:'i' }
+                }
+            ]
+        })
+    }
 
     if(userFilter.referral_code_array && userFilter.referral_code_array.length > 0){
         searchFilter.push({
@@ -433,19 +453,44 @@ const getAllStudent = async (userFilter) => {
             referral_code: userFilter.referral_code
         });
     }
+
+    if(userFilter.purchase_course){
+        if(userFilter.purchase_course == 1){
+            searchFilter.push({
+                purchase_course: { $eq: true }
+            });
+        }else if(userFilter.purchase_course == 2){
+            searchFilter.push({
+                purchase_course: { $eq: false }
+            });
+        }
+    }
     
     searchFilter.push({
         is_deleted: false
     });
 
-    const studentsData = await UserSchema.find({ 
-        $and: searchFilter
-    }).then((data) => {
-        return data
-    }).catch((err) => {
-        return null
-    });
-    return studentsData;
+    if(userFilter.endToken){
+        const studentsData = await UserSchema.find({ 
+            $and: searchFilter
+        },{createdAt: 1,country_code: 1,email: 1,first_name: 1,last_name: 1,mobile_no: 1,profile_image :1}).skip(userFilter.startToken).limit(userFilter.endToken).then((data) => {
+            return data
+        }).catch((err) => {
+            return null
+        });
+        return studentsData;
+    }else{
+
+        const studentsData = await UserSchema.find({ 
+            $and: searchFilter
+        },{createdAt: 1,country_code: 1,email: 1,first_name: 1,last_name: 1,mobile_no: 1,profile_image :1}).then((data) => {
+            return data
+        }).catch((err) => {
+            return null
+        });
+        return studentsData;
+    }
+
 }
 
 const getStateWiseLocationDistributionData = async (startDate, endDate) => {

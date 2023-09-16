@@ -423,12 +423,15 @@ const getRegistrationRateData = async (start_date, dateformate) => {
 
 const getAllStudent = async (userFilter) => {
     let searchFilter = [];
-    
-    if(userFilter.referral_code){
+
+    if(userFilter.referral_code_array && userFilter.referral_code_array.length > 0){
+        searchFilter.push({
+            referral_code: { $in : userFilter.referral_code_array }
+        });
+    }else if(userFilter.referral_code){
         searchFilter.push({
             referral_code: userFilter.referral_code
         });
-    
     }
     
     searchFilter.push({

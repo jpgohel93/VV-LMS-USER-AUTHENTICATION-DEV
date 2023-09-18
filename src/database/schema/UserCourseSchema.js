@@ -59,7 +59,11 @@ const UserCourseSchema = new Schema({
     is_send_mail: {
         default: false,
         type: Boolean
-    }
+    },
+    tax_amount: Number,
+    heman_discount_amount: Number,
+    convince_fee: Number,
+    convince_fee_amount: Number,
 },{ timestamps: true });
 
 UserCourseSchema.index( { user_id : 1 } )

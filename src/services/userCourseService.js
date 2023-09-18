@@ -567,6 +567,7 @@ const purchaseCourse = async (userInputs,request) => {
             course_type: courseData.course_subscription_type
         }
         const getUserData = await UserModel.fatchUserById(user_id);
+        const getUserCourseData = await UserCourseModel.getUserCourseList({ user_id: user_id});
 
         cronLogData['user_data'] = courseData
 
@@ -713,10 +714,50 @@ const purchaseCourse = async (userInputs,request) => {
         }else if(courseData.course_subscription_type == 3){
             //single time payment
 
-            let finalAmount = courseData.discount_amount
-            if(courseData.is_tax_exclusive){
-                let taxAmount = parseInt(courseData.discount_amount) * parseFloat(courseData.tax_percentage) / 100 
-                finalAmount = finalAmount + taxAmount
+            let courseAmount = courseData.discount_amount
+            let taxAmount = 0
+            let finalAmount = 0
+            if(courseData?.is_tax_exclusive){
+                taxAmount = parseInt(courseAmount) * parseFloat(courseData.tax_percentage) / 100 
+                finalAmount = courseAmount + taxAmount
+            }
+
+            let convinceFeeAmount = 0
+            if(courseData?.convince_fee){
+                convinceFeeAmount = parseInt(courseAmount) * parseFloat(courseData.convince_fee) / 100 
+                finalAmount = finalAmount + convinceFeeAmount
+            }
+            
+            let hemanDiscount = 0
+            if(getUserData && getUserData?.referral_code && getUserCourseData && getUserCourseData?.length == 0){
+                let hemanData = await CallEventBus("get_heman_by_code",{ referral_code: getUserData.referral_code }, request.get("Authorization"))
+
+                if(hemanData.parent_heman_id){
+                    let parentHemanData = await CallEventBus("get_heman_by_id",{ id: hemanData.parent_heman_id }, request.get("Authorization"))
+                    if(parentHemanData?.student_discount){ 
+                        let studentDiscount = parentHemanData?.student_discount ? parentHemanData.student_discount  : 0
+                        if(parentHemanData.student_discount_type == 1){
+                            hemanDiscount = studentDiscount
+                            finalAmount = parseInt(finalAmount) - parseInt(studentDiscount)
+                        }else if(parentHemanData.student_discount_type == 2){
+                            let discount = parseInt(finalAmount) * parseFloat(studentDiscount) / 100 
+                            hemanDiscount = discount
+                            finalAmount = parseInt(finalAmount) - parseInt(discount)
+                        }
+                    }
+                }else{
+                    if(hemanData?.student_discount){ 
+                        let studentDiscount = hemanData?.student_discount ? hemanData.student_discount  : 0
+                        if(hemanData.student_discount_type == 1){
+                            hemanDiscount = studentDiscount
+                            finalAmount = parseInt(finalAmount) - parseInt(studentDiscount)
+                        }else if(hemanData.student_discount_type == 2){
+                            let discount = parseInt(finalAmount) * parseFloat(studentDiscount) / 100 
+                            hemanDiscount = discount
+                            finalAmount = parseInt(finalAmount) - parseInt(discount)
+                        }
+                    }
+                }
             }
         
             courseInsertData['price'] = finalAmount
@@ -725,7 +766,10 @@ const purchaseCourse = async (userInputs,request) => {
             courseInsertData['payment_method'] = "ccavenue",
             courseInsertData['amount'] = courseData?.price || 0,
             courseInsertData['discount_amount'] = courseData?.discount_amount || 0,
-            courseInsertData['discount'] = courseData?.discount || 0
+            courseInsertData['tax_amount'] = taxAmount
+            courseInsertData['heman_discount_amount'] = hemanDiscount
+            courseInsertData['convince_fee'] = courseData?.convince_fee || 0
+            courseInsertData['convince_fee_amount'] = convinceFeeAmount
             
             if(courseData?.is_limitedtime  && courseData?.is_limitedtime == true){
 

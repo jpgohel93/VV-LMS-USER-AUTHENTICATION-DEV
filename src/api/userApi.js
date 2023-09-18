@@ -1085,12 +1085,13 @@ module.exports = async (app) => {
     });
 
     app.post('/user/getallstudent', UserAuth, async (req, res, next) => {
-        const { referral_code, referral_code_array, startToken, endToken, search, purchase_course } = req.body;
+        const { referral_code, referral_code_array, startToken, endToken, search, purchase_course, count_record } = req.body;
         
-        const data = await userService.getAllStudent({ referral_code, referral_code_array, startToken, endToken, search, purchase_course });
+        const data = await userService.getAllStudent({ referral_code, referral_code_array, startToken, endToken, search, purchase_course, count_record });
 
         res.status(data.status_code).json(data);
     });
+    
 
     app.post('/user/resetProfileImage', UserAuth, await validateFormFields([
         body('id')

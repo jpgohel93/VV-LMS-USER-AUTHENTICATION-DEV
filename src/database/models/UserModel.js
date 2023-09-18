@@ -479,6 +479,15 @@ const getAllStudent = async (userFilter) => {
             return null
         });
         return studentsData;
+    }else if(userFilter.count_record){
+        const studentsData = await UserSchema.count({ 
+            $and: searchFilter
+        }).then((data) => {
+            return data
+        }).catch((err) => {
+            return null
+        });
+        return studentsData;
     }else{
 
         const studentsData = await UserSchema.find({ 

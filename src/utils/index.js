@@ -440,7 +440,7 @@ module.exports.sendMail = async (email, body, subject, userId, module, attachmen
 		EmailLogsModel.createEmailLog({
 			user_id: userId,
 			message_id: data.messageId,
-			from: process.env.MAIL_AWS_DEFAULT_MAIL,
+			from: process.env.MAIL_SMTP_FROM, 
 			message: body,
 			to: email,
 			subject,

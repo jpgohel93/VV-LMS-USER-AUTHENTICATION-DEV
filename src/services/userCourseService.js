@@ -85,9 +85,15 @@ const assignCourse = async (userInputs,request) => {
                                 taxAmount = parseInt(courseData.discount_amount) * parseFloat(courseData.tax_percentage) / 100 
                                 finalAmount = finalAmount + taxAmount
                             }
+
+                            let convinceFeeAmount = 0
+                            if(courseData?.convince_fee){
+                                convinceFeeAmount = parseInt(courseAmount) * parseFloat(courseData.convince_fee) / 100 
+                                finalAmount = finalAmount + convinceFeeAmount
+                            }
  
                             // decrease the student discount amount 
-                            let courseAmount = finalAmount
+                            let courseAmount = courseData.discount_amount
                             let userDiscount = 0
                             if(parentHemanData?.student_discount){
                                 let studentDiscount = parentHemanData?.student_discount ? parentHemanData.student_discount  : 0
@@ -103,10 +109,6 @@ const assignCourse = async (userInputs,request) => {
                           
                             // decrease the course amount
                             let coursePrice = courseAmount
-                            if(courseData.is_tax_exclusive){
-                                 taxAmount = parseInt(coursePrice) * parseFloat(courseData.tax_percentage) / 100 
-                                 coursePrice = coursePrice - taxAmount
-                             }
  
                             // calculate the heman commssion
                             let subHemanAmount = 0
@@ -125,7 +127,7 @@ const assignCourse = async (userInputs,request) => {
                                 if(parentHemanData.admin_heman_commission_type == 1){
                                     hemanAmount = parentHemanData.admin_heman_commission
                                 }else if(parentHemanData.admin_heman_commission_type == 2){
-                                   let hemanCommission = parseInt(subHemanAmount) * parseFloat(parentHemanData.admin_heman_commission) / 100 
+                                   let hemanCommission = parseInt(coursePrice) * parseFloat(parentHemanData.admin_heman_commission) / 100 
                                    hemanAmount = hemanCommission
                                 }
                             }
@@ -157,8 +159,14 @@ const assignCourse = async (userInputs,request) => {
                                 finalAmount = finalAmount + taxAmount
                             }
 
+                            let convinceFeeAmount = 0
+                            if(courseData?.convince_fee){
+                                convinceFeeAmount = parseInt(courseAmount) * parseFloat(courseData.convince_fee) / 100 
+                                finalAmount = finalAmount + convinceFeeAmount
+                            }
+
                             // decrease the student discount amount 
-                            let courseAmount = finalAmount
+                            let courseAmount = courseData.discount_amount
                             let userDiscount = 0
                             if(hemanData?.student_discount){
                                 let studentDiscount = hemanData?.student_discount ? hemanData.student_discount  : 0
@@ -174,11 +182,7 @@ const assignCourse = async (userInputs,request) => {
                          
                             // decrease the course amount
                             let coursePrice = courseAmount
-                            if(courseData.is_tax_exclusive){
-                                taxAmount = parseInt(coursePrice) * parseFloat(courseData.tax_percentage) / 100 
-                                coursePrice = coursePrice - taxAmount
-                            }
-
+                        
                             // calculate the heman commssion
                             let hemanAmount = 0
                             if(hemanData?.heman_commission){
@@ -744,10 +748,7 @@ const purchaseCourse = async (userInputs,request) => {
                         }
 
                         // decrease the course amount
-                        let coursePrice = courseAmount
-                        if(courseData.is_tax_exclusive){
-                            coursePrice = coursePrice -  (parseInt(coursePrice) * parseFloat(courseData.tax_percentage) / 100) 
-                        }
+                        let coursePrice =  courseData.discount_amount
 
                         // calculate the heman commssion
                         let subHemanAmount = 0
@@ -766,7 +767,7 @@ const purchaseCourse = async (userInputs,request) => {
                             if(parentHemanData.admin_heman_commission_type == 1){
                                 hemanAmount = parentHemanData.admin_heman_commission
                             }else if(parentHemanData.admin_heman_commission_type == 2){
-                            let hemanCommission = parseInt(subHemanAmount) * parseFloat(parentHemanData.admin_heman_commission) / 100 
+                            let hemanCommission = parseInt(coursePrice) * parseFloat(parentHemanData.admin_heman_commission) / 100 
                             hemanAmount = hemanCommission
                             }
                         }
@@ -802,11 +803,8 @@ const purchaseCourse = async (userInputs,request) => {
                         }
 
                         // decrease the course amount
-                        let coursePrice = courseAmount
-                        if(courseData.is_tax_exclusive){
-                            coursePrice = coursePrice - (parseInt(coursePrice) * parseFloat(courseData.tax_percentage) / 100)
-                        }
-
+                        let coursePrice =  courseData.discount_amount
+                
                         // calculate the heman commssion
                         let hemanAmount = 0
                         if(hemanData?.heman_commission){

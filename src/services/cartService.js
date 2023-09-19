@@ -539,10 +539,112 @@ const qrCheckOut = async (userInputs,request) => {
   
 }
 
+const courseCheckOut = async (userInputs, request) => {
+   
+    try{
+
+        const { user_id, course_id } = userInputs;
+
+        const getUserCourseData = await UserCourseModel.getUserCourseList({ user_id: user_id});
+        const getUserData = await UserModel.fatchUserById(user_id);
+        
+        let course = await CallCourseQueryEvent("get_course_data_by_id",{ id: course_id }, request.get("Authorization"))
+        let courseDefault = await CallCourseQueryEvent("get_course_default_promotional_content",{ course_id: course_id  }, request.get("Authorization"))
+
+        let courseAmount = course.discount_amount
+        let taxAmount = 0
+        let finalAmount = 0
+        if(course.is_tax_exclusive){
+            taxAmount = parseInt(courseAmount) * parseFloat(course.tax_percentage) / 100 
+            finalAmount = courseAmount + taxAmount
+        }
+
+        let convinceFeeAmount = 0
+        if(course?.convince_fee){
+            convinceFeeAmount = parseInt(courseAmount) * parseFloat(course.convince_fee) / 100 
+            finalAmount = finalAmount + convinceFeeAmount
+        }
+        
+        let hemanDiscount = 0
+        if(getUserData && getUserData?.referral_code && getUserCourseData && getUserCourseData?.length == 0){
+            let hemanData = await CallEventBus("get_heman_by_code",{ referral_code: getUserData.referral_code }, request.get("Authorization"))
+
+            if(hemanData.parent_heman_id){
+                let parentHemanData = await CallEventBus("get_heman_by_id",{ id: hemanData.parent_heman_id }, request.get("Authorization"))
+                if(parentHemanData?.student_discount){ 
+                    let studentDiscount = parentHemanData?.student_discount ? parentHemanData.student_discount  : 0
+                    if(parentHemanData.student_discount_type == 1){
+                        hemanDiscount = studentDiscount
+                        finalAmount = parseInt(finalAmount) - parseInt(studentDiscount)
+                    }else if(parentHemanData.student_discount_type == 2){
+                        let discount = parseInt(finalAmount) * parseFloat(studentDiscount) / 100 
+                        hemanDiscount = discount
+                        finalAmount = parseInt(finalAmount) - parseInt(discount)
+                    }
+                }
+            }else{
+                if(hemanData?.student_discount){ 
+                    let studentDiscount = hemanData?.student_discount ? hemanData.student_discount  : 0
+                    if(hemanData.student_discount_type == 1){
+                        hemanDiscount = studentDiscount
+                        finalAmount = parseInt(finalAmount) - parseInt(studentDiscount)
+                    }else if(hemanData.student_discount_type == 2){
+                        let discount = parseInt(finalAmount) * parseFloat(studentDiscount) / 100 
+                        hemanDiscount = discount
+                        finalAmount = parseInt(finalAmount) - parseInt(discount)
+                    }
+                }
+            }
+        }
+
+        let checkOutData = {
+            course_title: course?.course_title,
+            course_id: course?.course_id,
+            short_description: course?.short_description,
+            course_title: course?.course_title,
+            file_path: courseDefault?.web_image ? courseDefault?.web_image : null,
+            course_level: course?.course_level ? course?.course_level : null,
+            leason_count: course?.leason_count ? course?.leason_count : 0,
+            total_watch_hours: course?.total_watch_hours ? course?.total_watch_hours : 0,
+            average_review: course?.average_review ? course?.average_review : 0,
+            price: course?.price ? course?.price : 0,
+            currency: course?.currency ? course?.currency : 0,
+            discount: course?.discount ? course?.discount : 0,
+            discount_amount: course?.discount_amount ? course?.discount_amount : 0,
+            convince_fee: course?.convince_fee || 0,
+            convince_fee_amount: convinceFeeAmount,
+            tax_amount: taxAmount,
+            is_tax_exclusive: course?.is_tax_exclusive || false,
+            tax_percentage: course?.tax_percentage || 0,
+            referral_discount: hemanDiscount,
+            final_amount: finalAmount
+        }
+
+        return {
+            status: true,
+            status_code: constants.SUCCESS_RESPONSE,
+            message: "Data get successfully",
+            data: checkOutData
+        };
+       
+    }catch (error) {
+        // Handle unexpected errors
+        console.error('Error in getCartsData:', error);
+        return {
+            status: false,
+            status_code: constants.EXCEPTION_ERROR_CODE,
+            message: 'Failed to fetch data',
+            error: { server_error: 'An unexpected error occurred' },
+            data: null,
+        };
+    }
+}
+
 module.exports = {
     addCart,
     getCartsData,
     deleteCartItem,
     checkOut,
-    qrCheckOut
+    qrCheckOut,
+    courseCheckOut
 }

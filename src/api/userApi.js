@@ -1397,4 +1397,12 @@ module.exports = async (app) => {
 
         res.json(data);
     });
+
+    app.post('/user/studentDropdown', UserAuth, async (req, res, next) => {
+        const { startToken, endToken, search } = req.body;
+        
+        const data = await userService.getAllStudent({ startToken, endToken, search});
+
+        res.status(data.status_code).json(data);
+    });
 }

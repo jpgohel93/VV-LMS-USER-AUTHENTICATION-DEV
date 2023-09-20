@@ -59,10 +59,10 @@ module.exports = async (app) => {
     });
 
     app.post('/cart/checkOut', UserAuth ,async (req,res,next) => {
-        const { course_id } = req.body;
+        const { course_id, coupon_code } = req.body;
         let user_id = req.user !== undefined ? req.user.user_id : null;
 
-        const data = await cartService.checkOut({ course_id , user_id }, req); 
+        const data = await cartService.checkOut({ course_id , user_id, coupon_code }, req); 
 
         res.status(data.status_code).json(data);
     });
@@ -81,6 +81,15 @@ module.exports = async (app) => {
         let user_id = req.user !== undefined ? req.user.user_id : null;
 
         const data = await cartService.courseCheckOut({ course_id , user_id }, req); 
+
+        res.status(data.status_code).json(data);
+    });
+
+    app.post('/cart/applyCoupon', UserAuth ,async (req,res,next) => {
+        const { course_id, coupon_code } = req.body;
+        let user_id = req.user !== undefined ? req.user.user_id : null;
+
+        const data = await cartService.applyCoupon({ course_id , user_id, coupon_code }, req); 
 
         res.status(data.status_code).json(data);
     });

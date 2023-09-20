@@ -109,8 +109,8 @@ module.exports = async (app) => {
             .withMessage('Course id is required.')
             .isMongoId().withMessage("Course id is not valid")
         ]), async (req,res,next) => {
-        const { user_id, course_id, subscription_type } = req.body;
-        const data = await userCourseService.purchaseCourse({ user_id, course_id , subscription_type}, req); 
+        const { user_id, course_id, subscription_type, coupon_code } = req.body;
+        const data = await userCourseService.purchaseCourse({ user_id, course_id , subscription_type, coupon_code}, req); 
         res.status(data.status_code).json(data);
     });
 

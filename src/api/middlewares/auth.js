@@ -67,7 +67,8 @@ module.exports = async (req,res,next) => {
                             'getEnrollmentData','getCourseCompletionRateBycourse','getMobileUsageData','getLoginHistoryData','getRegistrationHistoryData','getRegistrationRateData',
                             'getEnrollmentRateData','getLoginFrequencyData','assignCourse','addStudents','updateStudentData','deleteStudent','assignCourseList','deleteUserCourse',
                             'resetProfileImage','changeStudentPassword','paymentHistory','locationdistribution','invoice','stateWiseLocationDistribution','cityWiseLocationDistribution', 
-                            'signupDistribution','osUsage','userBase','fetch','userEngagement',"getStudentCount", "delete","getPaymentHistory","cityDropdown","studentData","stateDropdown"]
+                            'signupDistribution','osUsage','userBase','fetch','userEngagement',"getStudentCount", "delete","getPaymentHistory","cityDropdown","studentData","stateDropdown",
+                            'studentDropdown']
             if(moduleArray.includes(module) && apiArray.includes(apiname)){
                 return next();
             }else{

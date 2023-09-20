@@ -492,7 +492,7 @@ const getAssignCourseById = async (userInputs,request) => {
  
 const purchaseCourse = async (userInputs,request) => {
     try{
-        const { user_id, course_id, subscription_type } = userInputs;
+        const { user_id, course_id, subscription_type, coupon_code } = userInputs;
 
         const getFilterData = await UserCourseModel.filterUserCourseData({ user_id, course_id});
 
@@ -832,6 +832,22 @@ const purchaseCourse = async (userInputs,request) => {
                         hemanAmount = hemanAmount  + (hemanData.amount || 0)
 
                         CallEventBus("add_heman_user",{ heman_id: hemanData._id,sub_heman_id: null, user: hemanuser, heman_amount: hemanAmount, sub_heman_amount: 0 }, request.get("Authorization"))
+                    }
+                }
+            }
+
+            let couponAmount = 0
+            if(coupon_code){
+                let couponData = await CallEventBus("get_coupon_data",{ coupon_code: coupon_code }, request.get("Authorization"))
+
+                if(couponData){
+                    if(couponData.discount_type == 1){
+                        couponAmount = couponData.discount
+                        amount = parseInt(finalAmount) - parseInt(couponAmount)
+                    }else if(hemanData.discount_type == 2){
+                        let discount = parseInt(finalAmount) * parseFloat(couponData.discount) / 100 
+                        couponAmount = discount
+                        amount = parseInt(finalAmount) - parseInt(discount)
                     }
                 }
             }

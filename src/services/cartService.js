@@ -361,6 +361,10 @@ const checkOut = async (userInputs,request) => {
                     await UserCourseModel.assignUserCourse(userelement);
                 });
 
+                UserCourseModel.updateUserCourse(user_id,{ 
+                    is_purchase_course: true
+                });
+
                 let workingKey = process.env.DEVELOPER_MODE == "development" ? process.env.CCAVENUE_KEY_TESTING : process.env.CCAVENUE_KEY
                 let accessCode = process.env.DEVELOPER_MODE == "development" ? process.env.CCAVENUE_ACCESS_CODE_TESTING : process.env.CCAVENUE_ACCESS_CODE
                 let paymentUrl = process.env.DEVELOPER_MODE == "development" ? process.env.CCAVENUE_URL_TESTING : process.env.CCAVENUE_URL

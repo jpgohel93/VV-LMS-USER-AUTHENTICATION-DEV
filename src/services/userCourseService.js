@@ -918,6 +918,10 @@ const purchaseCourse = async (userInputs,request) => {
         const createUserCourse = await UserCourseModel.assignUserCourse(courseInsertData);
         cronLogData['create_user_course'] = courseData
 
+        UserCourseModel.updateUserCourse(user_id,{ 
+            is_purchase_course: true
+        });
+
         //update cron log
         await updateCronLogs(cronId,{
             end_time: new Date(),

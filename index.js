@@ -29,7 +29,7 @@ app.use('/email_assets', express.static(path.join(__dirname, 'uploads/email_asse
 app.use('/invoice_assets', express.static(path.join(__dirname, 'uploads/invoice_assets/')));
 
 Sentry.init({
-    dsn: "https://d7e7abfba6a84167b504ed1d8b0deaca@o1140263.ingest.sentry.io/4505278483726336",
+    dsn: process.env.SENTRY_URL,
     integrations: [
         // enable HTTP calls tracing
         new Sentry.Integrations.Http({ tracing: true }),

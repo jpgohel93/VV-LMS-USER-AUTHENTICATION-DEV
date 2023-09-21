@@ -3,7 +3,7 @@ const { GeneratePassword, GenerateSalt , CheckPassword, ValidateEmail, ValidateM
 const constants = require('../utils/constant');
 const moment = require('moment');
 const axios = require('axios');
-const { RandomNumber, DateToTimestamp, sendMail } = require('../utils');
+const { RandomNumber, DateToTimestamp, sendMail,findUserReferralCode } = require('../utils');
 const { CallAdminEvent, CallCourseQueryEvent } = require('../utils/call-event-bus');
 const { welcomeTemplate, forgotPasswordTemplate, welcomeWithCredetialsTemplate, dailySnapshot } = require('../utils/email-template');
 const { RateLimiterMemory } = require('rate-limiter-flexible');
@@ -227,7 +227,8 @@ const loginWithSocialAccount = async (userInputs) => {
                 is_verify_otp: true,
                 device_type: device_type,
                 operating_system: operating_system,
-                referral_code: referral_code
+                referral_code: referral_code,
+                user_referral_code: await findUserReferralCode()
             }
             if(notification_device_id){
                 studentData['notification_device_id'] = notification_device_id;
@@ -243,7 +244,7 @@ const loginWithSocialAccount = async (userInputs) => {
                 studentData['longitude'] = locationData?.longitude || null
             }
 
-            const createStudent = await UserModel.createUser(studentData);
+            const createStudent = await UserModel.createUser(studentData); 
 
             if(createStudent){
 
@@ -613,6 +614,9 @@ const addUser = async (userInputs) => {
             if(isOtpNotValidate && studentId){
                 createStudent = await UserModel.updateUser(studentId,studentData);
             }else{
+                
+                studentData['user_referral_code'] = await findUserReferralCode()
+
                 createStudent = await UserModel.createUser(studentData);
                 studentId = createStudent._id
             }
@@ -753,7 +757,8 @@ const importStudents = async (userInputs) => {
                 is_verify_otp: true,
                 status: 1,
                 user_type: 3,
-                user_signup_with: 6
+                user_signup_with: 6,
+                user_referral_code: await findUserReferralCode()
             });
 
             let subject = "Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!";
@@ -1487,7 +1492,8 @@ const addStudent = async (userInputs) => {
                 note: note,
                 is_tc_verify: true,
                 is_verify_otp: true,
-                profile_image: profile_image
+                profile_image: profile_image,
+                user_referral_code: await findUserReferralCode()
             };
             if(notification_device_id){
                 createUserData['notification_device_id'] = notification_device_id;

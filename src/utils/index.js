@@ -5,7 +5,7 @@ var validator = require('validator');
 var pdf = require('html-pdf');
 const axios = require("axios");
 const nodemailer = require("nodemailer");
-const { SmsLogModel, ApiCallsModel, ConjobLogModel, EmailLogsModel, InvoiceModel} = require('../database');
+const { SmsLogModel, ApiCallsModel, ConjobLogModel, EmailLogsModel, InvoiceModel, UserModel} = require('../database');
 var AWS = require('aws-sdk');
 var ip2location = require('ip-to-location');
 
@@ -537,7 +537,7 @@ module.exports.findUniqueID = async () => {
 	}
   
 	return uniqueId;
-  }
+}
 
   module.exports.encryptDecryptString = async (string, type = 0) => {
 	try {
@@ -588,4 +588,20 @@ module.exports.millisecToTime = async (millisec) => {
 		return "00:00:00";
 	}
 	
+}
+
+module.exports.findUserReferralCode = async () => {
+	let isUnique = false;
+	let uniqueId;
+  
+	while (!isUnique) {
+	  uniqueId = this.randomString(8);
+	  const existingDoc = await UserModel.fatchUserfilterData({ user_referral_code: uniqueId });
+  
+	  if (!existingDoc) {
+		isUnique = true;
+	  }
+	}
+  
+	return uniqueId;
 }

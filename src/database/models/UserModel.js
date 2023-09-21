@@ -75,6 +75,12 @@ const fatchUserfilterData = async (userFilter) => {
         })
     }
 
+    if(userFilter.user_referral_code){
+        filter.push({
+            user_referral_code: userFilter.user_referral_code
+        })
+    }
+
     filter.push({
         is_deleted: false
     });

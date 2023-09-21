@@ -56,9 +56,7 @@ const addCart = async (userInputs) => {
 }
 
 const getCartsData = async (userInputs, request) => {
-   
     try{
-
         const { user_id  } = userInputs;
 
         const getCartData = await CartModel.fatchCartList(user_id);
@@ -213,7 +211,7 @@ const deleteCartItem = async (userInputs) => {
 
 const checkOut = async (userInputs,request) => {
     try{
-        const { user_id, course_id, coupon_code } = userInputs;
+        const { user_id, course_id, coupon_code, user_referral_code } = userInputs;
 
         const getUserData = await UserModel.fatchUserById(user_id);
 
@@ -472,7 +470,7 @@ const checkOut = async (userInputs,request) => {
 
 const qrCheckOut = async (userInputs,request) => {
     try{
-        const { user_id, course_id } = userInputs;
+        const { user_id, course_id, user_referral_code } = userInputs;
 
         let courseData = await CallCourseQueryEvent("get_course_data_by_id",{ id: course_id }, request.get("Authorization"))
  
@@ -562,7 +560,7 @@ const courseCheckOut = async (userInputs, request) => {
    
     try{
 
-        const { user_id, course_id } = userInputs;
+        const { user_id, course_id, user_referral_code } = userInputs;
 
         const getUserCourseData = await UserCourseModel.getUserCourseList({ user_id: user_id});
         const getUserData = await UserModel.fatchUserById(user_id);
@@ -661,11 +659,11 @@ const courseCheckOut = async (userInputs, request) => {
 
 const applyCoupon = async (userInputs, request) => {
     try{
-        const { user_id, course_id, coupon_code } = userInputs;
+        const { user_id, course_id, coupon_code, user_referral_code } = userInputs;
 
         let couponData = await CallEventBus("get_coupon_data",{ coupon_code: coupon_code }, request.get("Authorization"))
 
-      // check all the coupon condition
+        // check all the coupon condition
         if(coupon_code){
             let isValidCoupon = false
             let checkCoupon = await CallEventBus("get_coupon_used_data",{ coupon_id: couponData._id, user_id: user_id }, request.get("Authorization"))
@@ -704,6 +702,27 @@ const applyCoupon = async (userInputs, request) => {
     
                 if(couponData?.course?.length > 0){
                     if(couponData.course.includes(course_id)){
+                        isValidCoupon = true
+                    }else{
+                        isValidCoupon = false 
+                    }
+                }
+
+                let currentDate = Date.now()
+                if(couponData?.start_date){
+                    let startDate = new Date(moment(couponData.start_date).format("YYYY-MM-DD") + " 00:00:00").valueOf();
+                    
+                    if(currentDate > startDate){
+                        isValidCoupon = true
+                    }else{
+                        isValidCoupon = false 
+                    }
+                }
+
+                if(couponData?.end_date){
+                   let endDate = new Date(moment(couponData.end_date).format("YYYY-MM-DD") + " 23:59:59").valueOf()
+
+                    if(currentDate < endDate){
                         isValidCoupon = true
                     }else{
                         isValidCoupon = false 

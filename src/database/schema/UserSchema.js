@@ -95,7 +95,8 @@ const UserSchema = new Schema({
     is_heman: {
         type: Boolean,
         default: false
-    }  
+    } ,
+    user_referral_code: String 
 },{ timestamps: true }); 
 
 UserSchema.index( { email : 1 } )

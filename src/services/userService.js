@@ -1167,6 +1167,40 @@ const changePassword = async (userInputs) => {
     }
 }
 
+const getStudentById = async (userInputs) => {
+    try{
+        const { id } = userInputs;
+
+        const getUserData = await UserModel.fatchUserById(id);
+
+        if(getUserData !== null){
+            return {
+                status: true,
+                status_code: constants.SUCCESS_RESPONSE,
+                message: "Data fatch successfully",
+                data: getUserData
+            };
+        }else{
+            return {
+                status: false,
+                status_code: constants.ERROR_RESPONSE,
+                message: "Failed to get the student data"
+            };
+        }
+    }catch (error) {
+        // Handle unexpected errors
+        console.error('Error in getStudentAccountDetail:', error);
+        return {
+            status: false,
+            status_code: constants.EXCEPTION_ERROR_CODE,
+            message: 'Failed to get the student data',
+            error: { server_error: 'An unexpected error occurred' },
+            data: null,
+        };
+    }
+
+}
+
 const getStudentAccountDetail = async (userInputs) => {
     try{
         const { id } = userInputs;
@@ -4219,6 +4253,44 @@ const studentData = async (userInputs) => {
     }  
 }
 
+const changeHemanStatus= async (userInputs) => {
+    try{
+
+        let { id,heman_status } = userInputs;
+
+        let updateData = {
+            is_heman: heman_status
+        }
+    
+        let updateStudent = UserModel.updateUser(id,updateData);
+
+        if(updateStudent){
+            return {
+                status: true,
+                status_code: constants.SUCCESS_RESPONSE,
+                message: "Account update successfully"
+            };
+        }else{
+            return {
+                status: false,
+                status_code: constants.ERROR_RESPONSE,
+                message: "Sorry! Falied update status"
+            };
+        }
+       
+    }catch (error) {
+        // Handle unexpected errors
+        return {
+            status: false,
+            status_code: constants.EXCEPTION_ERROR_CODE,
+            message: 'An unexpected error occurred',
+            error: { server_error: 'An unexpected error occurred' },
+            data: null,
+        };
+    }
+
+}
+
 module.exports = {
     getLinkedinData,
     userSignin,
@@ -4283,5 +4355,7 @@ module.exports = {
     sendDailyReportMail,
     cityDropdown,
     stateDropdown,
-    studentData
+    studentData,
+    changeHemanStatus,
+    getStudentById
 }

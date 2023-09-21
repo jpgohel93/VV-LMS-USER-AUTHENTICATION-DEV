@@ -130,7 +130,7 @@ const fatchStudents = async (search, start, limit, institute_id, referral_code) 
 
     const studentsData = await UserSchema.find({ 
         $and: searchFilter
-    },{user_type: 1,status: 1,is_get_notification: 1,app_language: 1,createdAt: 1,updatedAt: 1,birth_date: 1,country_code: 1,email: 1,first_name: 1,gender: 1,last_name: 1,mobile_no: 1,note: 1,profile_image :1,user_signup_with: 1})
+    },{user_type: 1,status: 1,is_get_notification: 1,app_language: 1,createdAt: 1,updatedAt: 1,birth_date: 1,country_code: 1,email: 1,first_name: 1,gender: 1,last_name: 1,mobile_no: 1,note: 1,profile_image :1,user_signup_with: 1, is_heman: 1})
     .sort({ createdAt: -1 }).skip(start).limit(limit).then((data) => {
         return data
     }).catch((err) => {

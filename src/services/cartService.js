@@ -1,7 +1,7 @@
 const { CartModel, UserCourseModel, UserModel, InvoiceModel } = require("../database");
 const constants = require('../utils/constant');
 const { CallCourseQueryEvent, CallEventBus } = require('../utils/call-event-bus');
-const { createCronLogs, updateCronLogs, createApiCallLog, getNewDate, findUniqueID } = require('../utils');
+const { createCronLogs, updateCronLogs, getNewDate, findUniqueID } = require('../utils');
 const { encrypt } = require('../utils/ccavenue');
 const qs = require('querystring');
 
@@ -664,12 +664,27 @@ const applyCoupon = async (userInputs, request) => {
         const { user_id, course_id, coupon_code } = userInputs;
 
         let couponData = await CallEventBus("get_coupon_data",{ coupon_code: coupon_code }, request.get("Authorization"))
-        
+
+      // check all the coupon condition
         if(coupon_code){
             let isValidCoupon = false
+            let checkCoupon = await CallEventBus("get_coupon_used_data",{ coupon_id: couponData._id, user_id: user_id }, request.get("Authorization"))
+
+            if(checkCoupon?.length > 0){
+                return {
+                    status: false,
+                    status_code: constants.SUCCESS_RESPONSE,
+                    message: "Coupon has been already used"
+                };
+            }
+
             if(couponData){
                 if(couponData?.usage_limit > 0){
-                    let count = 1
+                    //count for coupon used Data
+                    let couponUsedData = await CallEventBus("get_coupon_used_data",{ coupon_id: couponData._id }, request.get("Authorization"))
+
+                    let count = couponUsedData?.length || 0
+
                     if(count >= couponData.usage_limit){
                         isValidCoupon = false
                     }else{
@@ -698,19 +713,18 @@ const applyCoupon = async (userInputs, request) => {
 
             if(!isValidCoupon){
                 return {
-                    status: true,
+                    status: false,
                     status_code: constants.SUCCESS_RESPONSE,
                     message: "Enter valid coupon code"
                 }; 
             }
         }else{
             return {
-                status: true,
+                status: false,
                 status_code: constants.SUCCESS_RESPONSE,
                 message: "Enter valid coupon code"
             };
         }
-
        
         const getUserCourseData = await UserCourseModel.getUserCourseList({ user_id: user_id});
         const getUserData = await UserModel.fatchUserById(user_id);

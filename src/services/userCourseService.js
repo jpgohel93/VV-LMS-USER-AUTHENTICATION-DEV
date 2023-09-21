@@ -849,6 +849,8 @@ const purchaseCourse = async (userInputs,request) => {
                         couponAmount = discount
                         amount = parseInt(finalAmount) - parseInt(discount)
                     }
+                    //add the coupon history
+                    await CallEventBus("add_coupon_used_data",{ coupon_id: couponData._id, user_id: user_id, amount: couponAmount,coupon_code: coupon_code, course_id: course_id }, request.get("Authorization"))
                 }
             }
         

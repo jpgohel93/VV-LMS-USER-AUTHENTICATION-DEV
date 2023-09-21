@@ -570,6 +570,22 @@ module.exports = async (app) => {
         res.status(data.status_code).json(data);
     });
 
+    app.post('/user/getStudentWithAllData', UserAuth, await validateFormFields([
+        body('id')
+        .notEmpty()
+        .withMessage('User id is required')
+        .isMongoId().withMessage("Id is not valid")
+    ]), async (req, res, next) => {
+        const {
+            id
+        } = req.body;
+        const data = await userService.getStudentById({
+            id
+        });
+
+        res.status(data.status_code).json(data);
+    });
+
     app.post('/user/updateAccountData', UserAuth,
         await validateFormFields([
             body('first_name')
@@ -1402,6 +1418,20 @@ module.exports = async (app) => {
         const { startToken, endToken, search } = req.body;
         
         const data = await userService.getAllStudent({ startToken, endToken, search});
+
+        res.status(data.status_code).json(data);
+    });
+
+    app.post('/user/changeHemanStatus', UserAuth, async (req, res, next) => {
+        const {
+            id,
+            heman_status
+        } = req.body;
+        console.log("{ _id: ObjectId('650bd88586fc7290f1fa3d91') } ::")
+        const data = await userService.changeHemanStatus({
+            id,
+            heman_status
+        });
 
         res.status(data.status_code).json(data);
     });

@@ -61,6 +61,7 @@ module.exports = async (req,res,next) => {
                 /user/userBase
                 /user/userEngagement
             */
+           console.log("apiname :: ", apiname)
             let moduleArray = ['user','personalizedquiz','coursewatchhistory', 'feedback']
             let apiArray = ['bulkImport','checkUserEmail','checkUserMobile','addInstituteStudent','updateInstituteStudent','getStudentList','getallstudent','getAccountData',
                             'addQuiz','getStudentById','countCourseUser','checkUserSubscription','getCourseWatchHistory','getUserAgeData','getGenderData','getLanguageData',
@@ -68,7 +69,7 @@ module.exports = async (req,res,next) => {
                             'getEnrollmentRateData','getLoginFrequencyData','assignCourse','addStudents','updateStudentData','deleteStudent','assignCourseList','deleteUserCourse',
                             'resetProfileImage','changeStudentPassword','paymentHistory','locationdistribution','invoice','stateWiseLocationDistribution','cityWiseLocationDistribution', 
                             'signupDistribution','osUsage','userBase','fetch','userEngagement',"getStudentCount", "delete","getPaymentHistory","cityDropdown","studentData","stateDropdown",
-                            'studentDropdown']
+                            'studentDropdown','changeHemanStatus','getStudentWithAllData']
             if(moduleArray.includes(module) && apiArray.includes(apiname)){
                 return next();
             }else{

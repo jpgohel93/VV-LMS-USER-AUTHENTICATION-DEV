@@ -91,7 +91,11 @@ const UserSchema = new Schema({
     referral_code: {
         type: String,
         default: null
-    } 
+    },
+    is_heman: {
+        type: Boolean,
+        default: false
+    }  
 },{ timestamps: true }); 
 
 UserSchema.index( { email : 1 } )

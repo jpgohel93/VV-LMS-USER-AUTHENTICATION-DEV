@@ -93,7 +93,7 @@ const getLinkedinData = async (userInputs) => {
 //login with social media account (google / facebook / linkdin)
 const loginWithSocialAccount = async (userInputs) => {
     try {
-        const { google_login_id, facebook_login_id,apple_login_id, linkdin_login_id, is_tc_verify , user_signup_with, first_name, last_name, email, country_code, mobile_no, device_uuid, firebase_token, notification_device_id, ip_address, device_type, operating_system, referral_code } = userInputs;
+        const { google_login_id, facebook_login_id,apple_login_id, linkdin_login_id, is_tc_verify , user_signup_with, first_name, last_name, email, country_code, mobile_no, device_uuid, firebase_token, notification_device_id, ip_address, device_type, operating_system, referral_code, user_referral_code } = userInputs;
         
         //check duplicate login data
         const getEmailData = email ? await UserModel.fatchUserfilterData({ email: email }) : null;
@@ -177,14 +177,20 @@ const loginWithSocialAccount = async (userInputs) => {
             if(notification_device_id){
                 updateUserData['notification_device_id'] = notification_device_id;
             }
-            if(referral_code){
+
+            if(referral_code || user_referral_code){
                 const getUserCourseData = await UserCourseModel.getUserCourseList({ user_id: getUserData._id });
                 if(getUserCourseData?.length == 0){
-                    updateUserData['referral_code'] = referral_code
+                    if(referral_code){
+                        updateUserData['referral_code'] = referral_code
+                        updateUserData['referral_type'] = 1
+                    }else if(user_referral_code){
+                        updateUserData['users_referral_code'] = user_referral_code
+                        updateUserData['referral_type'] = 2
+                    }
                 }
             }
             
-            // console.log('updateUserData :: ',updateUserData);
             UserModel.updateUser(getUserData._id,updateUserData);
 
             await UserMobileActivityModel.createUserLoginHistory({ 
@@ -227,7 +233,6 @@ const loginWithSocialAccount = async (userInputs) => {
                 is_verify_otp: true,
                 device_type: device_type,
                 operating_system: operating_system,
-                referral_code: referral_code,
                 user_referral_code: await findUserReferralCode()
             }
             if(notification_device_id){
@@ -242,6 +247,16 @@ const loginWithSocialAccount = async (userInputs) => {
                 studentData['pincode'] = locationData?.zip_code || null
                 studentData['latitude'] = locationData?.latitude || null
                 studentData['longitude'] = locationData?.longitude || null
+            }
+
+            if(referral_code || user_referral_code){
+                if(referral_code){
+                    studentData['referral_type'] = 1
+                    studentData['referral_code'] = referral_code
+                }else if(user_referral_code){
+                    studentData['referral_type'] = 2
+                    studentData['users_referral_code'] = user_referral_code
+                }
             }
 
             const createStudent = await UserModel.createUser(studentData); 
@@ -309,7 +324,7 @@ const loginWithSocialAccount = async (userInputs) => {
 //signin
 const userSignin = async (userInputs) => {
     try{
-        const { username, password, device_uuid, firebase_token, ip_address, notification_device_id, operating_system, referral_code } = userInputs;
+        const { username, password, device_uuid, firebase_token, ip_address, notification_device_id, operating_system, referral_code, user_referral_code } = userInputs;
         
         /* const rateLimiterRes = await limiter.consume(ip_address).then((data) => {
             return data;
@@ -353,9 +368,6 @@ const userSignin = async (userInputs) => {
                 let validPassword = await ValidatePassword(password, getUserData.password, getUserData.password_salt);
 
                 if(validPassword){
-
-                   
-                    
                     //update last login time
                     const updateUserData = { 
                         last_login_type: 1,
@@ -367,10 +379,16 @@ const userSignin = async (userInputs) => {
                     if(notification_device_id){
                         updateUserData['notification_device_id'] = notification_device_id;
                     }
-                    if(referral_code){
+                    if(referral_code || user_referral_code){
                         const getUserCourseData = await UserCourseModel.getUserCourseList({ user_id: getUserData._id });
                         if(getUserCourseData?.length == 0){
-                            updateUserData['referral_code'] = referral_code
+                            if(referral_code){
+                                updateUserData['referral_code'] = referral_code
+                                updateUserData['referral_type'] = 1
+                            }else if(user_referral_code){
+                                updateUserData['users_referral_code'] = user_referral_code
+                                updateUserData['referral_type'] = 2
+                            }
                         }
                     }
                     
@@ -516,7 +534,7 @@ const userSignin = async (userInputs) => {
 const addUser = async (userInputs) => {
     try{
         const { 
-            first_name, last_name, email, country_code, mobile_no, birth_date, gender, password, is_tc_verify , note, device_uuid, firebase_token, notification_device_id, ip_address, device_type, operating_system, referral_code
+            first_name, last_name, email, country_code, mobile_no, birth_date, gender, password, is_tc_verify , note, device_uuid, firebase_token, notification_device_id, ip_address, device_type, operating_system, referral_code, user_referral_code
         } = userInputs;
 
         let errorArray = []
@@ -601,13 +619,25 @@ const addUser = async (userInputs) => {
                 studentData['notification_device_id'] = notification_device_id;
             }
 
-            if(referral_code && studentId) {
+            if((referral_code || user_referral_code) && studentId) {
                 const getUserCourseData = await UserCourseModel.getUserCourseList({ user_id: studentId });
                 if(getUserCourseData?.length == 0){
-                    studentData['referral_code'] = referral_code
+                    if(referral_code){
+                        studentData['referral_code'] = referral_code
+                        studentData['referral_type'] = 1
+                    }else if(user_referral_code){
+                        studentData['users_referral_code'] = user_referral_code
+                        studentData['referral_type'] = 2
+                    }
                 }
-            }else if (referral_code) {
-                studentData['referral_code'] = referral_code
+            }else if (referral_code || user_referral_code) {
+                if(referral_code){
+                    studentData['referral_code'] = referral_code
+                    studentData['referral_type'] = 1
+                }else if(user_referral_code){
+                    studentData['users_referral_code'] = user_referral_code
+                    studentData['referral_type'] = 2
+                }
             }
 
             let createStudent = null

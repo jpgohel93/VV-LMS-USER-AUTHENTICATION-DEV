@@ -61,7 +61,8 @@ module.exports = async (app) => {
             ip_address,
             notification_device_id,
             operating_system,
-            referral_code
+            referral_code,
+            user_referral_code
         } = req.body;
 
         const data = await userService.userSignin({
@@ -72,7 +73,8 @@ module.exports = async (app) => {
             ip_address,
             notification_device_id,
             operating_system,
-            referral_code
+            referral_code,
+            user_referral_code
         });
 
         res.status(data.status_code).json(data);
@@ -98,7 +100,8 @@ module.exports = async (app) => {
             ip_address,
             device_type,
             operating_system,
-            referral_code
+            referral_code,
+            user_referral_code
         } = req.body;
         const data = await userService.loginWithSocialAccount({
             google_login_id,
@@ -118,7 +121,8 @@ module.exports = async (app) => {
             ip_address,
             device_type,
             operating_system,
-            referral_code
+            referral_code,
+            user_referral_code
         });
 
         res.status(data.status_code).json(data);
@@ -205,7 +209,8 @@ module.exports = async (app) => {
                 ip_address,
                 device_type,
                 operating_system,
-                referral_code
+                referral_code,
+                user_referral_code
             } = req.body;
 
             const data = await userService.addUser({
@@ -226,7 +231,8 @@ module.exports = async (app) => {
                 ip_address,
                 device_type,
                 operating_system,
-                referral_code
+                referral_code,
+                user_referral_code
             });
             res.status(data.status_code).json(data);
     });

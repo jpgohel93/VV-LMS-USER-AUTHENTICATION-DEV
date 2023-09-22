@@ -96,7 +96,12 @@ const UserSchema = new Schema({
         type: Boolean,
         default: false
     } ,
-    user_referral_code: String 
+    user_referral_code: String,
+    users_referral_code: {
+        type: String,
+        default: null
+    },
+    referral_type: Number // 1. heman, 2. user
 },{ timestamps: true }); 
 
 UserSchema.index( { email : 1 } )

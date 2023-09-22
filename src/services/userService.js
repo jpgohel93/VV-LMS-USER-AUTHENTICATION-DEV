@@ -4327,6 +4327,57 @@ const changeHemanStatus= async (userInputs) => {
 
 }
 
+const userReferral= async (userInputs) => {
+    try{
+
+        let { id, referral_code, user_referral_code } = userInputs;
+
+        const getUserCourseData = await UserCourseModel.getUserCourseList({ user_id: getUserData._id });
+        if(getUserCourseData?.length == 0){
+            let updateUserData = {}
+            if(referral_code){
+                updateUserData['referral_code'] = referral_code
+                updateUserData['referral_type'] = 1
+            }else if(user_referral_code){
+                updateUserData['users_referral_code'] = user_referral_code
+                updateUserData['referral_type'] = 2
+            }
+
+            let updateStudent = UserModel.updateUser(id,updateUserData);
+
+            if(updateStudent){
+                return {
+                    status: true,
+                    status_code: constants.SUCCESS_RESPONSE,
+                    message: "Referral successfully"
+                };
+            }else{
+                return {
+                    status: false,
+                    status_code: constants.ERROR_RESPONSE,
+                    message: "Sorry! Falied to referral"
+                };
+            }
+        }else{
+            return {
+                status: true,
+                status_code: constants.SUCCESS_RESPONSE,
+                message: "Referral successfully"
+            };
+        }
+    }catch (error) {
+        // Handle unexpected errors
+        return {
+            status: false,
+            status_code: constants.EXCEPTION_ERROR_CODE,
+            message: 'An unexpected error occurred',
+            error: { server_error: 'An unexpected error occurred' },
+            data: null,
+        };
+    }
+
+}
+
 module.exports = {
     getLinkedinData,
     userSignin,
@@ -4393,5 +4444,6 @@ module.exports = {
     stateDropdown,
     studentData,
     changeHemanStatus,
-    getStudentById
+    getStudentById,
+    userReferral
 }

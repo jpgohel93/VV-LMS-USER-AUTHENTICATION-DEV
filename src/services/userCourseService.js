@@ -492,7 +492,7 @@ const getAssignCourseById = async (userInputs,request) => {
  
 const purchaseCourse = async (userInputs,request) => {
     try{
-        const { user_id, course_id, subscription_type, coupon_code, user_referral_code } = userInputs;
+        const { user_id, course_id, subscription_type, coupon_code } = userInputs;
 
         const getFilterData = await UserCourseModel.filterUserCourseData({ user_id, course_id});
 

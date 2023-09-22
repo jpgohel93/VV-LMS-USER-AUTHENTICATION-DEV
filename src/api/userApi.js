@@ -1433,10 +1433,26 @@ module.exports = async (app) => {
             id,
             heman_status
         } = req.body;
-        console.log("{ _id: ObjectId('650bd88586fc7290f1fa3d91') } ::")
         const data = await userService.changeHemanStatus({
             id,
             heman_status
+        });
+
+        res.status(data.status_code).json(data);
+    });
+
+    app.post('/user/userreferral', UserAuth, async (req, res, next) => {
+        const {
+            referral_code,
+            user_referral_code
+        } = req.body;
+  
+        let user_id = req.user !== undefined ? req.user.user_id : null;
+
+        const data = await userService.userReferral({
+            id: user_id,
+            referral_code,
+            user_referral_code
         });
 
         res.status(data.status_code).json(data);

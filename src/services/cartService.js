@@ -211,7 +211,7 @@ const deleteCartItem = async (userInputs) => {
 
 const checkOut = async (userInputs,request) => {
     try{
-        const { user_id, course_id, coupon_code, user_referral_code } = userInputs;
+        const { user_id, course_id, coupon_code } = userInputs;
 
         const getUserData = await UserModel.fatchUserById(user_id);
 
@@ -470,7 +470,7 @@ const checkOut = async (userInputs,request) => {
 
 const qrCheckOut = async (userInputs,request) => {
     try{
-        const { user_id, course_id, user_referral_code } = userInputs;
+        const { user_id, course_id } = userInputs;
 
         let courseData = await CallCourseQueryEvent("get_course_data_by_id",{ id: course_id }, request.get("Authorization"))
  
@@ -560,7 +560,7 @@ const courseCheckOut = async (userInputs, request) => {
    
     try{
 
-        const { user_id, course_id, user_referral_code } = userInputs;
+        const { user_id, course_id } = userInputs;
 
         const getUserCourseData = await UserCourseModel.getUserCourseList({ user_id: user_id});
         const getUserData = await UserModel.fatchUserById(user_id);
@@ -581,37 +581,55 @@ const courseCheckOut = async (userInputs, request) => {
             convinceFeeAmount = parseInt(courseAmount) * parseFloat(course.convince_fee) / 100 
             finalAmount = finalAmount + convinceFeeAmount
         }
-        
-        let hemanDiscount = 0
-        if(getUserData && getUserData?.referral_code && getUserCourseData && getUserCourseData?.length == 0){
-            let hemanData = await CallEventBus("get_heman_by_code",{ referral_code: getUserData.referral_code }, request.get("Authorization"))
 
-            if(hemanData.parent_heman_id){
-                let parentHemanData = await CallEventBus("get_heman_by_id",{ id: hemanData.parent_heman_id }, request.get("Authorization"))
-                if(parentHemanData?.student_discount){ 
-                    let studentDiscount = parentHemanData?.student_discount ? parentHemanData.student_discount  : 0
-                    if(parentHemanData.student_discount_type == 1){
+        let hemanDiscount = 0
+        if(getUserData && (getUserData?.referral_code || getUserData?.users_referral_code)  && getUserCourseData && getUserCourseData?.length == 0){
+            if(getUserData?.referral_type == 1){
+                let hemanData = await CallEventBus("get_heman_by_code",{ referral_code: getUserData.referral_code }, request.get("Authorization"))
+
+                if(hemanData.parent_heman_id){
+                    let parentHemanData = await CallEventBus("get_heman_by_id",{ id: hemanData.parent_heman_id }, request.get("Authorization"))
+                    if(parentHemanData?.student_discount){ 
+                        let studentDiscount = parentHemanData?.student_discount ? parentHemanData.student_discount  : 0
+                        if(parentHemanData.student_discount_type == 1){
+                            hemanDiscount = studentDiscount
+                            finalAmount = parseInt(finalAmount) - parseInt(studentDiscount)
+                        }else if(parentHemanData.student_discount_type == 2){
+                            let discount = parseInt(finalAmount) * parseFloat(studentDiscount) / 100 
+                            hemanDiscount = discount
+                            finalAmount = parseInt(finalAmount) - parseInt(discount)
+                        }
+                    }
+                }else{
+                    if(hemanData?.student_discount){ 
+                        let studentDiscount = hemanData?.student_discount ? hemanData.student_discount  : 0
+                        if(hemanData.student_discount_type == 1){
+                            hemanDiscount = studentDiscount
+                            finalAmount = parseInt(finalAmount) - parseInt(studentDiscount)
+                        }else if(hemanData.student_discount_type == 2){
+                            let discount = parseInt(finalAmount) * parseFloat(studentDiscount) / 100 
+                            hemanDiscount = discount
+                            finalAmount = parseInt(finalAmount) - parseInt(discount)
+                        }
+                    }
+                }
+            }else if(getUserData?.referral_type == 2){
+                let accountSettingData = await CallEventBus("get_account_setting_data",{  }, request.get("Authorization"))
+
+                if(accountSettingData){
+                    let studentDiscount = accountSettingData?.student_discount_amount ? accountSettingData.student_discount_amount  : 0
+                    if(accountSettingData.student_discount_type == 1){
                         hemanDiscount = studentDiscount
                         finalAmount = parseInt(finalAmount) - parseInt(studentDiscount)
-                    }else if(parentHemanData.student_discount_type == 2){
+                    }else if(accountSettingData.student_discount_type == 2){
                         let discount = parseInt(finalAmount) * parseFloat(studentDiscount) / 100 
                         hemanDiscount = discount
                         finalAmount = parseInt(finalAmount) - parseInt(discount)
                     }
                 }
-            }else{
-                if(hemanData?.student_discount){ 
-                    let studentDiscount = hemanData?.student_discount ? hemanData.student_discount  : 0
-                    if(hemanData.student_discount_type == 1){
-                        hemanDiscount = studentDiscount
-                        finalAmount = parseInt(finalAmount) - parseInt(studentDiscount)
-                    }else if(hemanData.student_discount_type == 2){
-                        let discount = parseInt(finalAmount) * parseFloat(studentDiscount) / 100 
-                        hemanDiscount = discount
-                        finalAmount = parseInt(finalAmount) - parseInt(discount)
-                    }
-                }
+        
             }
+            
         }
 
         let checkOutData = {
@@ -659,12 +677,12 @@ const courseCheckOut = async (userInputs, request) => {
 
 const applyCoupon = async (userInputs, request) => {
     try{
-        const { user_id, course_id, coupon_code, user_referral_code } = userInputs;
+        const { user_id, course_id, coupon_code } = userInputs;
 
         let couponData = await CallEventBus("get_coupon_data",{ coupon_code: coupon_code }, request.get("Authorization"))
 
         // check all the coupon condition
-        if(coupon_code){
+        if(coupon_code && couponData?.has_club_coupon){
             let isValidCoupon = false
             let checkCoupon = await CallEventBus("get_coupon_used_data",{ coupon_id: couponData._id, user_id: user_id }, request.get("Authorization"))
 
@@ -766,35 +784,53 @@ const applyCoupon = async (userInputs, request) => {
         }
         
         let hemanDiscount = 0
-        if(getUserData && getUserData?.referral_code && getUserCourseData && getUserCourseData?.length == 0){
-            let hemanData = await CallEventBus("get_heman_by_code",{ referral_code: getUserData.referral_code }, request.get("Authorization"))
+        if(getUserData && (getUserData?.referral_code || getUserData?.users_referral_code)  && getUserCourseData && getUserCourseData?.length == 0){
+            if(getUserData?.referral_type == 1){
+                let hemanData = await CallEventBus("get_heman_by_code",{ referral_code: getUserData.referral_code }, request.get("Authorization"))
 
-            if(hemanData.parent_heman_id){
-                let parentHemanData = await CallEventBus("get_heman_by_id",{ id: hemanData.parent_heman_id }, request.get("Authorization"))
-                if(parentHemanData?.student_discount){ 
-                    let studentDiscount = parentHemanData?.student_discount ? parentHemanData.student_discount  : 0
-                    if(parentHemanData.student_discount_type == 1){
+                if(hemanData.parent_heman_id){
+                    let parentHemanData = await CallEventBus("get_heman_by_id",{ id: hemanData.parent_heman_id }, request.get("Authorization"))
+                    if(parentHemanData?.student_discount){ 
+                        let studentDiscount = parentHemanData?.student_discount ? parentHemanData.student_discount  : 0
+                        if(parentHemanData.student_discount_type == 1){
+                            hemanDiscount = studentDiscount
+                            finalAmount = parseInt(finalAmount) - parseInt(studentDiscount)
+                        }else if(parentHemanData.student_discount_type == 2){
+                            let discount = parseInt(finalAmount) * parseFloat(studentDiscount) / 100 
+                            hemanDiscount = discount
+                            finalAmount = parseInt(finalAmount) - parseInt(discount)
+                        }
+                    }
+                }else{
+                    if(hemanData?.student_discount){ 
+                        let studentDiscount = hemanData?.student_discount ? hemanData.student_discount  : 0
+                        if(hemanData.student_discount_type == 1){
+                            hemanDiscount = studentDiscount
+                            finalAmount = parseInt(finalAmount) - parseInt(studentDiscount)
+                        }else if(hemanData.student_discount_type == 2){
+                            let discount = parseInt(finalAmount) * parseFloat(studentDiscount) / 100 
+                            hemanDiscount = discount
+                            finalAmount = parseInt(finalAmount) - parseInt(discount)
+                        }
+                    }
+                }
+            }else if(getUserData?.referral_type == 2){
+                let accountSettingData = await CallEventBus("get_account_setting_data",{  }, request.get("Authorization"))
+
+                if(accountSettingData){
+                    let studentDiscount = accountSettingData?.student_discount_amount ? accountSettingData.student_discount_amount  : 0
+                    if(accountSettingData.student_discount_type == 1){
                         hemanDiscount = studentDiscount
                         finalAmount = parseInt(finalAmount) - parseInt(studentDiscount)
-                    }else if(parentHemanData.student_discount_type == 2){
+                    }else if(accountSettingData.student_discount_type == 2){
                         let discount = parseInt(finalAmount) * parseFloat(studentDiscount) / 100 
                         hemanDiscount = discount
                         finalAmount = parseInt(finalAmount) - parseInt(discount)
                     }
                 }
-            }else{
-                if(hemanData?.student_discount){ 
-                    let studentDiscount = hemanData?.student_discount ? hemanData.student_discount  : 0
-                    if(hemanData.student_discount_type == 1){
-                        hemanDiscount = studentDiscount
-                        finalAmount = parseInt(finalAmount) - parseInt(studentDiscount)
-                    }else if(hemanData.student_discount_type == 2){
-                        let discount = parseInt(finalAmount) * parseFloat(studentDiscount) / 100 
-                        hemanDiscount = discount
-                        finalAmount = parseInt(finalAmount) - parseInt(discount)
-                    }
-                }
+        
             }
+            
         }
 
         let couponAmount = 0

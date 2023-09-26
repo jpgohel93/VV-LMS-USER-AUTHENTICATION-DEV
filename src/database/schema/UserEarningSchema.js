@@ -9,9 +9,9 @@ const UserEarningSchema = new Schema({
     course_amount: Number,
     assign_at: Date,
     course_tax_amount: Number,
-    heman_amount: Number,
-    sub_heman_amount: Number,
+    amount: Number,
     user_discount: Number, 
+    order_id: String, 
     amount_credited: {
         type: Boolean,
         default: false

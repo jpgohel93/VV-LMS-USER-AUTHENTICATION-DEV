@@ -516,7 +516,7 @@ const getUserCourseList = async (userFilter) => {
     return getFilterData;
 }
 
-const userEarningSchema = async (insertData) => {
+const userEarning = async (insertData) => {
 
     const userCourse = new UserEarningSchema(insertData)
 
@@ -529,22 +529,14 @@ const userEarningSchema = async (insertData) => {
     return userCourseResult;
 }
 
-const getCouponUserList = async (userFilter) => {
+const deleteUserEarning = async (orderId) => {
 
-    let filter = [];
-    if(userFilter.user_id){
-        filter.push({
-            user_id: userFilter.user_id
-        })
-    }
-
-    let getFilterData =  await UserCourseSchema.find( { $and: filter }).then((data) => {
-        return data
+    const deleteData = await UserEarningSchema.deleteOne({ order_id: orderId }).then((data) => {
+        return true
     }).catch((err) => {
-        return null
+        return false
     });
-
-    return getFilterData;
+    return deleteData;
 }
 
 module.exports = {
@@ -567,5 +559,6 @@ module.exports = {
     deleteAssignCourse,
     getUserBaseCount,
     getUserCourseList,
-    userEarningSchema
+    userEarning,
+    deleteUserEarning
 }

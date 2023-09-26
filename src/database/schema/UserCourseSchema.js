@@ -64,6 +64,9 @@ const UserCourseSchema = new Schema({
     heman_discount_amount: Number,
     convince_fee: Number,
     convince_fee_amount: Number,
+    order_id: String,
+    coupon_code: String,
+    coupon_amount: String,
 },{ timestamps: true });
 
 UserCourseSchema.index( { user_id : 1 } )

@@ -267,6 +267,7 @@ module.exports = async (app) => {
 
         const data = await userCourseService.paymentResponse(req, res);
 
+
         if(data.payment_status == "Success"){
             res.redirect(process.env.DEVELOPER_MODE == "development" ? process.env.CCAVENUE_SUCCESS_URL_TESTING : process.env.CCAVENUE_SUCCESS_URL);
         }else if(data.payment_status == "Failure"){

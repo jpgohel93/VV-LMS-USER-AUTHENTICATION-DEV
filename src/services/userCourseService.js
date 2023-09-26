@@ -67,152 +67,169 @@ const assignCourse = async (userInputs,request) => {
                     sendPushNotification({notification_device_id:[getUserData?.notification_device_id], message: "Course has been purchased successfully.", template_id: "20a140f6-66bb-4995-94af-0a58632afd31"})
                 }
 
-                //add a referral amount to heman
-                const getUserCourseData = await UserCourseModel.getUserCourseList({ user_id: user_id});
+                // //add a referral amount to heman
+                // const getUserCourseData = await UserCourseModel.getUserCourseList({ user_id: user_id});
 
-                if(getUserData?.referral_code && getUserCourseData?.length == 1){
-                    let hemanData = await CallEventBus("get_heman_by_code",{ referral_code: getUserData.referral_code }, request.get("Authorization"))
-                    let courseData = await CallCourseQueryEvent("get_course_data_by_id",{ id: course_id }, request.get("Authorization"))
+                // if(getUserData && (getUserData?.referral_code || getUserData?.users_referral_code) && getUserCourseData?.length == 1){
+                //     let courseData = await CallCourseQueryEvent("get_course_data_by_id",{ id: course_id }, request.get("Authorization"))
+                //     if(getUserData?.referral_type == 1){
+                //         let hemanData = await CallEventBus("get_heman_by_code",{ referral_code: getUserData.referral_code }, request.get("Authorization"))                        
 
-                    if(hemanData && courseData &&  courseData.discount_amount){
-                        if(hemanData.parent_heman_id){
-                            let parentHemanData = await CallEventBus("get_heman_by_id",{ id: hemanData.parent_heman_id }, request.get("Authorization"))
+                //         if(hemanData && courseData &&  courseData.discount_amount){
+                //             if(hemanData.parent_heman_id){
+                //                 let parentHemanData = await CallEventBus("get_heman_by_id",{ id: hemanData.parent_heman_id }, request.get("Authorization"))
 
-                            // add the tax amount
-                            let finalAmount = courseData.discount_amount
-                            let taxAmount = 0
-                            if(courseData.is_tax_exclusive){
-                                taxAmount = parseInt(courseData.discount_amount) * parseFloat(courseData.tax_percentage) / 100 
-                                finalAmount = finalAmount + taxAmount
-                            }
+                //                 // add the tax amount
+                //                 let finalAmount = courseData.discount_amount
+                //                 let taxAmount = 0
+                //                 if(courseData.is_tax_exclusive){
+                //                     taxAmount = parseInt(courseData.discount_amount) * parseFloat(courseData.tax_percentage) / 100 
+                //                     finalAmount = finalAmount + taxAmount
+                //                 }
 
-                            let convinceFeeAmount = 0
-                            if(courseData?.convince_fee){
-                                convinceFeeAmount = parseInt(courseAmount) * parseFloat(courseData.convince_fee) / 100 
-                                finalAmount = finalAmount + convinceFeeAmount
-                            }
- 
-                            // decrease the student discount amount 
-                            let courseAmount = courseData.discount_amount
-                            let userDiscount = 0
-                            if(parentHemanData?.student_discount){
-                                let studentDiscount = parentHemanData?.student_discount ? parentHemanData.student_discount  : 0
-                                if(parentHemanData.student_discount_type == 1){
-                                    userDiscount = studentDiscount
-                                    courseAmount = parseInt(finalAmount) - parseInt(studentDiscount)
-                                }else if(parentHemanData.student_discount_type == 2){
-                                    let discount = parseInt(finalAmount) * parseFloat(studentDiscount) / 100 
-                                    userDiscount = discount
-                                    courseAmount = parseInt(finalAmount) - parseInt(discount)
-                                }
-                            }
-                          
-                            // decrease the course amount
-                            let coursePrice = courseAmount
- 
-                            // calculate the heman commssion
-                            let subHemanAmount = 0
-                            if(parentHemanData?.sub_heman_commission){
-                                if(parentHemanData.sub_heman_commission_type == 1){
-                                    subHemanAmount = parentHemanData.sub_heman_commission
-                                }else if(parentHemanData.sub_heman_commission_type == 2){
-                                    let hemanCommission = parseInt(coursePrice) * parseFloat(parentHemanData.sub_heman_commission) / 100 
-                                    subHemanAmount = hemanCommission
-                                }
-                            }
-
-                            // calculate the heman commssion
-                            let hemanAmount = 0
-                            if(parentHemanData?.admin_heman_commission){
-                                if(parentHemanData.admin_heman_commission_type == 1){
-                                    hemanAmount = parentHemanData.admin_heman_commission
-                                }else if(parentHemanData.admin_heman_commission_type == 2){
-                                   let hemanCommission = parseInt(coursePrice) * parseFloat(parentHemanData.admin_heman_commission) / 100 
-                                   hemanAmount = hemanCommission
-                                }
-                            }
-                             
-                            let hemanuser = {
-                                user_id: user_id,
-                                course_id: course_id,
-                                assign_at: new Date(),
-                                course_amount: courseAmount,
-                                course_tax_amount: finalAmount,
-                                code: getUserData.referral_code,
-                                heman_id: hemanData.parent_heman_id,
-                                sub_heman_id: hemanData._id,
-                                heman_amount: hemanAmount,
-                                sub_heman_amount: subHemanAmount,
-                                user_discount: userDiscount
-                             } 
-                             subHemanAmount = subHemanAmount  + (hemanData.amount || 0)
-                             hemanAmount = hemanAmount  + (parentHemanData.amount || 0)
-
-                             CallEventBus("add_heman_user",{  heman_id: hemanData.parent_heman_id, sub_heman_id: hemanData._id, user: hemanuser, heman_amount: hemanAmount, sub_heman_amount: subHemanAmount }, request.get("Authorization"))
-                        }else{    
-
-                            // add the tax amount
-                            let finalAmount = courseData.discount_amount
-                            let taxAmount = 0
-                            if(courseData.is_tax_exclusive){
-                                taxAmount = parseInt(courseData.discount_amount) * parseFloat(courseData.tax_percentage) / 100 
-                                finalAmount = finalAmount + taxAmount
-                            }
-
-                            let convinceFeeAmount = 0
-                            if(courseData?.convince_fee){
-                                convinceFeeAmount = parseInt(courseAmount) * parseFloat(courseData.convince_fee) / 100 
-                                finalAmount = finalAmount + convinceFeeAmount
-                            }
-
-                            // decrease the student discount amount 
-                            let courseAmount = courseData.discount_amount
-                            let userDiscount = 0
-                            if(hemanData?.student_discount){
-                                let studentDiscount = hemanData?.student_discount ? hemanData.student_discount  : 0
-                                if(hemanData.student_discount_type == 1){
-                                    userDiscount = studentDiscount
-                                    courseAmount = parseInt(courseData.discount_amount) - parseInt(studentDiscount)
-                                }else if(hemanData.student_discount_type == 2){
-                                   let discount = parseInt(finalAmount) * parseFloat(studentDiscount) / 100 
-                                   userDiscount = discount
-                                   courseAmount = parseInt(finalAmount) - parseInt(discount)
-                                }
-                            }
-                         
-                            // decrease the course amount
-                            let coursePrice = courseAmount
-                        
-                            // calculate the heman commssion
-                            let hemanAmount = 0
-                            if(hemanData?.heman_commission){
-                                if(hemanData.heman_commission_type == 1){
-                                    hemanAmount = hemanData.heman_commission
-                                }else if(hemanData.heman_commission_type == 2){
-                                   let hemanCommission = parseInt(coursePrice) * parseFloat(hemanData.heman_commission) / 100 
-                                   hemanAmount = hemanCommission
-                                }
-                            }
+                //                 let convinceFeeAmount = 0
+                //                 if(courseData?.convince_fee){
+                //                     convinceFeeAmount = parseInt(courseAmount) * parseFloat(courseData.convince_fee) / 100 
+                //                     finalAmount = finalAmount + convinceFeeAmount
+                //                 }
+    
+                //                 // decrease the student discount amount 
+                //                 let courseAmount = courseData.discount_amount
+                //                 let userDiscount = 0
+                //                 if(parentHemanData?.student_discount){
+                //                     let studentDiscount = parentHemanData?.student_discount ? parentHemanData.student_discount  : 0
+                //                     if(parentHemanData.student_discount_type == 1){
+                //                         userDiscount = studentDiscount
+                //                         courseAmount = parseInt(finalAmount) - parseInt(studentDiscount)
+                //                     }else if(parentHemanData.student_discount_type == 2){
+                //                         let discount = parseInt(finalAmount) * parseFloat(studentDiscount) / 100 
+                //                         userDiscount = discount
+                //                         courseAmount = parseInt(finalAmount) - parseInt(discount)
+                //                     }
+                //                 }
                             
-                            let hemanuser = {
-                                user_id: user_id,
-                                course_id: course_id,
-                                assign_at: new Date(),
-                                course_amount: courseAmount,
-                                course_tax_amount: finalAmount,
-                                code: getUserData.referral_code,
-                                heman_id: hemanData.id,
-                                sub_heman_id: null,
-                                heman_amount: hemanAmount,
-                                sub_heman_amount: 0,
-                                user_discount: userDiscount
-                            } 
-                            hemanAmount = hemanAmount  + (hemanData.amount || 0)
+                //                 // decrease the course amount
+                //                 let coursePrice = courseAmount
+    
+                //                 // calculate the heman commssion
+                //                 let subHemanAmount = 0
+                //                 if(parentHemanData?.sub_heman_commission){
+                //                     if(parentHemanData.sub_heman_commission_type == 1){
+                //                         subHemanAmount = parentHemanData.sub_heman_commission
+                //                     }else if(parentHemanData.sub_heman_commission_type == 2){
+                //                         let hemanCommission = parseInt(coursePrice) * parseFloat(parentHemanData.sub_heman_commission) / 100 
+                //                         subHemanAmount = hemanCommission
+                //                     }
+                //                 }
 
-                            CallEventBus("add_heman_user",{ heman_id: hemanData._id,sub_heman_id: null, user: hemanuser, heman_amount: hemanAmount, sub_heman_amount: 0 }, request.get("Authorization"))
-                        }
-                    }
-                }
+                //                 // calculate the heman commssion
+                //                 let hemanAmount = 0
+                //                 if(parentHemanData?.admin_heman_commission){
+                //                     if(parentHemanData.admin_heman_commission_type == 1){
+                //                         hemanAmount = parentHemanData.admin_heman_commission
+                //                     }else if(parentHemanData.admin_heman_commission_type == 2){
+                //                     let hemanCommission = parseInt(coursePrice) * parseFloat(parentHemanData.admin_heman_commission) / 100 
+                //                     hemanAmount = hemanCommission
+                //                     }
+                //                 }
+                                
+                //                 let hemanuser = {
+                //                     user_id: user_id,
+                //                     course_id: course_id,
+                //                     assign_at: new Date(),
+                //                     course_amount: courseAmount,
+                //                     course_tax_amount: finalAmount,
+                //                     code: getUserData.referral_code,
+                //                     heman_id: hemanData.parent_heman_id,
+                //                     sub_heman_id: hemanData._id,
+                //                     heman_amount: hemanAmount,
+                //                     sub_heman_amount: subHemanAmount,
+                //                     user_discount: userDiscount
+                //                 } 
+                //                 subHemanAmount = subHemanAmount  + (hemanData.amount || 0)
+                //                 hemanAmount = hemanAmount  + (parentHemanData.amount || 0)
+
+                //                 CallEventBus("add_heman_user",{  heman_id: hemanData.parent_heman_id, sub_heman_id: hemanData._id, user: hemanuser, heman_amount: hemanAmount, sub_heman_amount: subHemanAmount }, request.get("Authorization"))
+                //             }else{    
+
+                //                 // add the tax amount
+                //                 let finalAmount = courseData.discount_amount
+                //                 let taxAmount = 0
+                //                 if(courseData.is_tax_exclusive){
+                //                     taxAmount = parseInt(courseData.discount_amount) * parseFloat(courseData.tax_percentage) / 100 
+                //                     finalAmount = finalAmount + taxAmount
+                //                 }
+
+                //                 let convinceFeeAmount = 0
+                //                 if(courseData?.convince_fee){
+                //                     convinceFeeAmount = parseInt(courseAmount) * parseFloat(courseData.convince_fee) / 100 
+                //                     finalAmount = finalAmount + convinceFeeAmount
+                //                 }
+
+                //                 // decrease the student discount amount 
+                //                 let courseAmount = courseData.discount_amount
+                //                 let userDiscount = 0
+                //                 if(hemanData?.student_discount){
+                //                     let studentDiscount = hemanData?.student_discount ? hemanData.student_discount  : 0
+                //                     if(hemanData.student_discount_type == 1){
+                //                         userDiscount = studentDiscount
+                //                         courseAmount = parseInt(courseData.discount_amount) - parseInt(studentDiscount)
+                //                     }else if(hemanData.student_discount_type == 2){
+                //                     let discount = parseInt(finalAmount) * parseFloat(studentDiscount) / 100 
+                //                     userDiscount = discount
+                //                     courseAmount = parseInt(finalAmount) - parseInt(discount)
+                //                     }
+                //                 }
+                            
+                //                 // decrease the course amount
+                //                 let coursePrice = courseAmount
+                            
+                //                 // calculate the heman commssion
+                //                 let hemanAmount = 0
+                //                 if(hemanData?.heman_commission){
+                //                     if(hemanData.heman_commission_type == 1){
+                //                         hemanAmount = hemanData.heman_commission
+                //                     }else if(hemanData.heman_commission_type == 2){
+                //                     let hemanCommission = parseInt(coursePrice) * parseFloat(hemanData.heman_commission) / 100 
+                //                     hemanAmount = hemanCommission
+                //                     }
+                //                 }
+                                
+                //                 let hemanuser = {
+                //                     user_id: user_id,
+                //                     course_id: course_id,
+                //                     assign_at: new Date(),
+                //                     course_amount: courseAmount,
+                //                     course_tax_amount: finalAmount,
+                //                     code: getUserData.referral_code,
+                //                     heman_id: hemanData.id,
+                //                     sub_heman_id: null,
+                //                     heman_amount: hemanAmount,
+                //                     sub_heman_amount: 0,
+                //                     user_discount: userDiscount
+                //                 } 
+                //                 hemanAmount = hemanAmount  + (hemanData.amount || 0)
+
+                //                 CallEventBus("add_heman_user",{ heman_id: hemanData._id,sub_heman_id: null, user: hemanuser, heman_amount: hemanAmount, sub_heman_amount: 0 }, request.get("Authorization"))
+                //             }
+                //         }
+                //     }else if(getUserData?.referral_type == 2){
+                //         let accountSettingData = await CallEventBus("get_account_setting_data",{  }, request.get("Authorization"))
+        
+                //         if(accountSettingData){
+                //             let studentDiscount = accountSettingData?.student_discount_amount ? accountSettingData.student_discount_amount  : 0
+                //             if(accountSettingData.student_discount_type == 1){
+                //                 hemanDiscount = studentDiscount
+                //                 finalAmount = parseInt(finalAmount) - parseInt(studentDiscount)
+                //             }else if(accountSettingData.student_discount_type == 2){
+                //                 let discount = parseInt(finalAmount) * parseFloat(studentDiscount) / 100 
+                //                 hemanDiscount = discount
+                //                 finalAmount = parseInt(finalAmount) - parseInt(discount)
+                //             }
+                //         }
+                
+                //     }
+                // }
               
                 return {
                     status: true,
@@ -1775,12 +1792,12 @@ const paymentResponse = async (request,response) => {
                 dataArray[parameter[0]] = parameter[1]
             })
         )
-
-        let orserId = dataArray.order_id
+        
+        let orderId = dataArray.order_id
         let userId = dataArray.merchant_param1
         let paymentStatus = dataArray.order_status
         const userData = await UserModel.fatchUserById(userId);
-        let invoiceData = await InvoiceModel.findOrderData(orserId)
+        let invoiceData = await InvoiceModel.findOrderData(orderId)
         let userCourseData =  await UserCourseModel.getUserCourse({ invoice_id: invoiceData._id })
 
         if(paymentStatus == "Success"){
@@ -1820,6 +1837,10 @@ const paymentResponse = async (request,response) => {
                 payment_date: dataArray.trans_date,
                 payment_status: 3
             })
+
+            CallEventBus("delete_heman_user",{ orderId: orderId },'')
+
+            UserCourseModel.deleteUserEarning({ orderId: orderId })
         }
 
         //send a invoice mail

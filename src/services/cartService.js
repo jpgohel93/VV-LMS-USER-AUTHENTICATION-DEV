@@ -4,6 +4,7 @@ const { CallCourseQueryEvent, CallEventBus } = require('../utils/call-event-bus'
 const { createCronLogs, updateCronLogs, getNewDate, findUniqueID } = require('../utils');
 const { encrypt } = require('../utils/ccavenue');
 const qs = require('querystring');
+const moment = require('moment');
 
 const addCart = async (userInputs) => {
     try {
@@ -237,119 +238,231 @@ const checkOut = async (userInputs,request) => {
         })
         let cronId = cronData?.status ? cronData?.cron_id : ''
 
-        let course = await CallCourseQueryEvent("get_course_data_by_id_array",{ id: course_id }, request.get("Authorization"))
-        cronLogData['course_data'] = course
+        let courseData = await CallCourseQueryEvent("get_course_data_by_id",{ id: course_id }, request.get("Authorization"))
+        cronLogData['course_data'] = courseData
 
         const getUserCourseData = await UserCourseModel.getUserCourseList({ user_id: user_id});
 
-        if(course?.length > 0){
+        if(courseData){
             let userCourseArray = []
-            let totalAmount = 0
 
-            await Promise.all(
-                await course.map(async (element , index) => {
+            let courseAmount = courseData.discount_amount
+            let taxAmount = 0
+            let finalAmount = 0
+            let orderId = await findUniqueID()
+            if(courseData?.is_tax_exclusive){
+                taxAmount = parseInt(courseAmount) * parseFloat(courseData.tax_percentage) / 100 
+                finalAmount = courseAmount + taxAmount
+            }
 
-                    let courseAmount = element.discount_amount
-                    let taxAmount = 0
-                    let finalAmount = 0
-                    if(element?.is_tax_exclusive){
-                        taxAmount = parseInt(courseAmount) * parseFloat(element.tax_percentage) / 100 
-                        finalAmount = courseAmount + taxAmount
-                    }
-
-                    let convinceFeeAmount = 0
-                    if(element?.convince_fee){
-                        convinceFeeAmount = parseInt(courseAmount) * parseFloat(element.convince_fee) / 100 
-                        finalAmount = finalAmount + convinceFeeAmount
-                    }
-                    
-                    let hemanDiscount = 0
-                    if(getUserData && getUserData?.referral_code && getUserCourseData && getUserCourseData?.length == 0){
-                        let hemanData = await CallEventBus("get_heman_by_code",{ referral_code: getUserData.referral_code }, request.get("Authorization"))
-        
+            let convinceFeeAmount = 0
+            if(courseData?.convince_fee){
+                convinceFeeAmount = parseInt(courseAmount) * parseFloat(courseData.convince_fee) / 100 
+                finalAmount = finalAmount + convinceFeeAmount
+            }
+            
+            let hemanDiscount = 0
+           
+            if(getUserData && (getUserData?.referral_code || getUserData?.users_referral_code) && getUserCourseData?.length == 0){
+                if(getUserData?.referral_type == 1){
+                    let hemanData = await CallEventBus("get_heman_by_code",{ referral_code: getUserData.referral_code }, request.get("Authorization"))                        
+                    if(hemanData){
                         if(hemanData.parent_heman_id){
                             let parentHemanData = await CallEventBus("get_heman_by_id",{ id: hemanData.parent_heman_id }, request.get("Authorization"))
-                            if(parentHemanData?.student_discount){ 
+
+                            // decrease the student discount amount 
+                            if(parentHemanData?.student_discount){
                                 let studentDiscount = parentHemanData?.student_discount ? parentHemanData.student_discount  : 0
                                 if(parentHemanData.student_discount_type == 1){
                                     hemanDiscount = studentDiscount
-                                    finalAmount = parseInt(finalAmount) - parseInt(studentDiscount)
+                                    courseAmount = parseInt(finalAmount) - parseInt(studentDiscount)
                                 }else if(parentHemanData.student_discount_type == 2){
-                                    let discount = parseInt(finalAmount) * parseFloat(studentDiscount) / 100 
+                                    let discount = parseInt(courseAmount) * parseFloat(studentDiscount) / 100 
                                     hemanDiscount = discount
-                                    finalAmount = parseInt(finalAmount) - parseInt(discount)
+                                    courseAmount = parseInt(finalAmount) - parseInt(discount)
                                 }
                             }
-                        }else{
-                            if(hemanData?.student_discount){ 
+                        
+                            // decrease the course amount
+                            let coursePrice = courseAmount
+
+                            // calculate the heman commssion
+                            let subHemanAmount = 0
+                            if(parentHemanData?.sub_heman_commission){
+                                if(parentHemanData.sub_heman_commission_type == 1){
+                                    subHemanAmount = parentHemanData.sub_heman_commission
+                                }else if(parentHemanData.sub_heman_commission_type == 2){
+                                    let hemanCommission = parseInt(coursePrice) * parseFloat(parentHemanData.sub_heman_commission) / 100 
+                                    subHemanAmount = hemanCommission
+                                }
+                            }
+
+                            // calculate the heman commssion
+                            let hemanAmount = 0
+                            if(parentHemanData?.admin_heman_commission){
+                                if(parentHemanData.admin_heman_commission_type == 1){
+                                    hemanAmount = parentHemanData.admin_heman_commission
+                                }else if(parentHemanData.admin_heman_commission_type == 2){
+                                let hemanCommission = parseInt(coursePrice) * parseFloat(parentHemanData.admin_heman_commission) / 100 
+                                hemanAmount = hemanCommission
+                                }
+                            }
+                            
+                            let hemanuser = {
+                                user_id: user_id,
+                                course_id: course_id,
+                                assign_at: new Date(),
+                                course_amount: courseAmount,
+                                course_tax_amount: finalAmount,
+                                code: getUserData.referral_code,
+                                heman_id: hemanData.parent_heman_id,
+                                sub_heman_id: hemanData._id,
+                                heman_amount: hemanAmount,
+                                sub_heman_amount: subHemanAmount,
+                                user_discount: hemanDiscount,
+                                order_id: orderId
+                            } 
+                            subHemanAmount = subHemanAmount  + (hemanData.amount || 0)
+                            hemanAmount = hemanAmount  + (parentHemanData.amount || 0)
+
+                            CallEventBus("add_heman_user",{  heman_id: hemanData.parent_heman_id, sub_heman_id: hemanData._id, user: hemanuser, heman_amount: hemanAmount, sub_heman_amount: subHemanAmount }, request.get("Authorization"))
+                        }else{    
+                            // decrease the student discount amount 
+                            if(hemanData?.student_discount){
                                 let studentDiscount = hemanData?.student_discount ? hemanData.student_discount  : 0
                                 if(hemanData.student_discount_type == 1){
                                     hemanDiscount = studentDiscount
                                     finalAmount = parseInt(finalAmount) - parseInt(studentDiscount)
                                 }else if(hemanData.student_discount_type == 2){
-                                    let discount = parseInt(finalAmount) * parseFloat(studentDiscount) / 100 
+                                    let discount = parseInt(courseAmount) * parseFloat(studentDiscount) / 100 
                                     hemanDiscount = discount
                                     finalAmount = parseInt(finalAmount) - parseInt(discount)
                                 }
                             }
+                        
+                            // decrease the course amount
+                            let coursePrice = courseAmount
+                        
+                            // calculate the heman commssion
+                            let hemanAmount = 0
+                            if(hemanData?.heman_commission){
+                                if(hemanData.heman_commission_type == 1){
+                                    hemanAmount = hemanData.heman_commission
+                                }else if(hemanData.heman_commission_type == 2){
+                                let hemanCommission = parseInt(coursePrice) * parseFloat(hemanData.heman_commission) / 100 
+                                    hemanAmount = hemanCommission
+                                }
+                            }
+                            
+                            let hemanuser = {
+                                user_id: user_id,
+                                course_id: course_id,
+                                assign_at: new Date(),
+                                course_amount: courseAmount,
+                                course_tax_amount: finalAmount,
+                                code: getUserData.referral_code,
+                                heman_id: hemanData.id,
+                                sub_heman_id: null,
+                                heman_amount: hemanAmount,
+                                sub_heman_amount: 0,
+                                user_discount: hemanDiscount,
+                                order_id: orderId
+                            } 
+                            hemanAmount = hemanAmount  + (hemanData.amount || 0)
+
+                            CallEventBus("add_heman_user",{ heman_id: hemanData._id,sub_heman_id: null, user: hemanuser, heman_amount: hemanAmount, sub_heman_amount: 0 }, request.get("Authorization"))
                         }
                     }
+                }else if(getUserData?.referral_type == 2){
+                    let accountSettingData = await CallEventBus("get_account_setting_data",{  }, request.get("Authorization"))
+    
+                    if(accountSettingData){
+                        let studentDiscount = accountSettingData?.student_discount_amount ? accountSettingData.student_discount_amount  : 0
+                        if(accountSettingData.student_discount_type == 1){
+                            hemanDiscount = studentDiscount
+                            finalAmount = parseInt(finalAmount) - parseInt(studentDiscount)
+                        }else if(accountSettingData.student_discount_type == 2){
+                            let discount = parseInt(courseAmount) * parseFloat(studentDiscount) / 100 
+                            hemanDiscount = discount
+                            finalAmount = parseInt(finalAmount) - parseInt(discount)
+                        }
 
-                    let userCourseData = {
-                        user_id: user_id, 
-                        course_id: element.course_id, 
-                        type: 2,
-                        purchase_date: new Date(),
-                        course_subscription_type: element.course_subscription_type,
-                        price: courseAmount,
-                        payment_method: "ccavenue",
-                        amount: element.price,
-                        discount_amount: element.discount_amount,
-                        discount: element.discount,
-                        is_tax_inclusive: element.is_tax_inclusive,
-                        is_tax_exclusive: element.is_tax_exclusive,
-                        tax_percentage: element.tax_percentage,
-                        tax_amount: taxAmount,
-                        heman_discount_amount: hemanDiscount,
-                        convince_fee: element?.convince_fee || 0,
-                        convince_fee_amount: convinceFeeAmount
-                    }
+                        let commissionAmount = 0
+                        let userAmount = accountSettingData?.referral_discount_amount ? accountSettingData.referral_discount_amount  : 0
+                        if(userAmount){
+                            if(accountSettingData.referral_discount_type == 1){
+                                commissionAmount = userAmount
+                            }else if(accountSettingData.referral_discount_type == 2){
+                                let discount = parseInt(courseAmount) * parseFloat(userAmount) / 100 
+                                commissionAmount = discount
+                            }
 
-                    if(element?.is_limitedtime  && element?.is_limitedtime == true){
-                        // Create a new date object
-                        const date = await getNewDate(element?.interval_time, element?.interval_count)
-        
-                        userCourseData['duration'] = element?.interval_time ? element?.interval_time : null
-                        userCourseData['duration_time'] = element?.interval_count ? element?.interval_count : null
-                        userCourseData['expire_date'] = date
-                    }
-
-                    await userCourseArray.push(userCourseData)
-
-                    totalAmount = finalAmount + totalAmount
-                })
-            )
-
-            cronLogData['amount'] = totalAmount
-            let amount = totalAmount
-            let couponAmount = 0
-            if(totalAmount > 0){
-
-                if(coupon_code){
-                    let couponData = await CallEventBus("get_coupon_data",{ coupon_code: coupon_code }, request.get("Authorization"))
-
-                    if(couponData){
-                        if(couponData.discount_type == 1){
-                            couponAmount = couponData.discount
-                            amount = parseInt(finalAmount) - parseInt(couponAmount)
-                        }else if(hemanData.discount_type == 2){
-                            let discount = parseInt(finalAmount) * parseFloat(couponData.discount) / 100 
-                            couponAmount = discount
-                            amount = parseInt(finalAmount) - parseInt(discount)
+                            await UserCourseModel.userEarning({
+                                code: getUserData.referral_code,
+                                user_id: user_id,
+                                course_id: course_id,
+                                course_amount: courseAmount,
+                                assign_at: new Date(),
+                                amount: commissionAmount,
+                                user_discount: hemanDiscount,
+                                order_id: orderId
+                            })
                         }
                     }
                 }
-                let orderId = await findUniqueID()
+            }
+
+            let userCourseData = {
+                user_id: user_id, 
+                course_id: courseData.course_id, 
+                type: 2,
+                purchase_date: new Date(),
+                course_subscription_type: courseData.course_subscription_type,
+                price: courseAmount,
+                payment_method: "ccavenue",
+                amount: finalAmount,
+                discount_amount: courseData.discount_amount,
+                discount: courseData.discount,
+                is_tax_inclusive: courseData.is_tax_inclusive,
+                is_tax_exclusive: courseData.is_tax_exclusive,
+                tax_percentage: courseData.tax_percentage,
+                tax_amount: taxAmount,
+                heman_discount_amount: hemanDiscount,
+                convince_fee: courseData?.convince_fee || 0,
+                convince_fee_amount: convinceFeeAmount
+            }
+
+            if(courseData?.is_limitedtime  && courseData?.is_limitedtime == true){
+                // Create a new date object
+                const date = await getNewDate(courseData?.interval_time, courseData?.interval_count)
+
+                userCourseData['duration'] = courseData?.interval_time ? courseData?.interval_time : null
+                userCourseData['duration_time'] = courseData?.interval_count ? courseData?.interval_count : null
+                userCourseData['expire_date'] = date
+            }
+
+            let couponAmount = 0
+            if(coupon_code){
+                let couponData = await CallEventBus("get_coupon_data",{ coupon_code: coupon_code }, request.get("Authorization"))
+
+                if(couponData){
+                    if(couponData.discount_type == 1){
+                        couponAmount = couponData.discount
+                        amount = parseInt(finalAmount) - parseInt(couponAmount)
+                    }else if(hemanData.discount_type == 2){
+                        let discount = parseInt(finalAmount) * parseFloat(couponData.discount) / 100 
+                        couponAmount = discount
+                        amount = parseInt(finalAmount) - parseInt(discount)
+                    }
+
+                    userCourseData['coupon_code'] = coupon_code
+                    userCourseData['coupon_amount'] = couponAmount
+                }
+            }
+
+            cronLogData['amount'] = finalAmount
+            let amount = finalAmount
+            if(amount > 0){
 
                 let invoiceData = {
                     user_id: user_id, 
@@ -369,10 +482,9 @@ const checkOut = async (userInputs,request) => {
 
                 let invoiceid = createInvoice?._id ? createInvoice?._id.toString() : null
 
-                await userCourseArray.map(async (userelement) => {
-                    userelement['invoice_id'] = invoiceid
-                    await UserCourseModel.assignUserCourse(userelement);
-                });
+                userCourseData['invoice_id'] = invoiceid
+                userCourseData['order_id'] = orderId
+                await UserCourseModel.assignUserCourse(userelement);
 
                 UserCourseModel.updateUserCourse(user_id,{ 
                     is_purchase_course: true
@@ -410,7 +522,6 @@ const checkOut = async (userInputs,request) => {
                 paymentUrl = paymentUrl + "command=initiateTransaction&merchant_id="+merchant_id+"&encRequest="+encRequest+"&access_code="+accessCode
             
                 cronLogData['payment_url'] = paymentUrl
-
 
                 //update cron log
                 await updateCronLogs(cronId,{
@@ -836,7 +947,7 @@ const applyCoupon = async (userInputs, request) => {
             if(couponData.discount_type == 1){
                 couponAmount = couponData.discount
                 finalAmount = parseInt(finalAmount) - parseInt(couponAmount)
-            }else if(hemanData.discount_type == 2){
+            }else if(couponData.discount_type == 2){
                 let discount = parseInt(finalAmount) * parseFloat(couponData.discount) / 100 
                 couponAmount = discount
                 finalAmount = parseInt(finalAmount) - parseInt(discount)

@@ -1840,7 +1840,7 @@ const paymentResponse = async (request,response) => {
 
             CallEventBus("delete_heman_user",{ orderId: orderId },'')
 
-            UserCourseModel.deleteUserEarning({ orderId: orderId })
+            UserCourseModel.deleteUserEarning( orderId )
         }
 
         //send a invoice mail

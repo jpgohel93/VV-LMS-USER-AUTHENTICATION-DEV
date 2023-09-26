@@ -627,9 +627,7 @@ const courseCheckOut = async (userInputs, request) => {
                         finalAmount = parseInt(finalAmount) - parseInt(discount)
                     }
                 }
-        
             }
-            
         }
 
         let checkOutData = {

@@ -1,4 +1,4 @@
-const { UserCourseSchema } = require('../schema');
+const { UserCourseSchema, UserEarningSchema } = require('../schema');
 const moment = require('moment');
 
 const assignUserCourse = async (insertData) => {
@@ -516,6 +516,37 @@ const getUserCourseList = async (userFilter) => {
     return getFilterData;
 }
 
+const userEarningSchema = async (insertData) => {
+
+    const userCourse = new UserEarningSchema(insertData)
+
+    const userCourseResult = await userCourse.save().then((data) => {
+        return data
+    }).catch((err) => {
+        return false
+    });
+
+    return userCourseResult;
+}
+
+const getCouponUserList = async (userFilter) => {
+
+    let filter = [];
+    if(userFilter.user_id){
+        filter.push({
+            user_id: userFilter.user_id
+        })
+    }
+
+    let getFilterData =  await UserCourseSchema.find( { $and: filter }).then((data) => {
+        return data
+    }).catch((err) => {
+        return null
+    });
+
+    return getFilterData;
+}
+
 module.exports = {
     assignUserCourse,
     filterUserCourseData,
@@ -535,5 +566,6 @@ module.exports = {
     getExpiringSoonCourses,
     deleteAssignCourse,
     getUserBaseCount,
-    getUserCourseList
+    getUserCourseList,
+    userEarningSchema
 }

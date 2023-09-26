@@ -928,6 +928,56 @@ const studentData = async (userFilter) => {
    return data;
 }
 
+const getCouponUserList = async (userFilter) => {
+
+    let searchFilter = [];
+
+    if(userFilter.search){
+        searchFilter.push({
+            $or: [
+                {
+                    first_name: { $regex: '.*' + userFilter.search + '.*', $options:'i' }
+                },
+                {
+                    last_name: { $regex: '.*' + userFilter.search + '.*', $options:'i' }
+                },
+                {
+                    email: { $regex: '.*' + userFilter.search + '.*', $options:'i' }
+                },
+                {
+                    mobile_no: { $regex: '.*' + userFilter.search + '.*', $options:'i' }
+                }
+            ]
+        })
+    }
+
+    if(userFilter.list_type && userFilter?.coupon_students?.length > 0 ){
+        if(userFilter.list_type == 1){
+            searchFilter.push({
+                _id: { $nin: userFilter.coupon_students }
+            });
+        }else if(userFilter.list_type == 2){
+            searchFilter.push({
+                _id: { $in: userFilter.coupon_students }
+            });
+        }
+    }
+    
+    searchFilter.push({
+        is_deleted: false
+    });
+
+    const studentsData = await UserSchema.find({ 
+        $and: searchFilter
+    },{createdAt: 1,country_code: 1,email: 1,first_name: 1,last_name: 1,mobile_no: 1,profile_image :1}).skip(userFilter.page).limit(userFilter.perPage).then((data) => {
+        return data
+    }).catch((err) => {
+        return null
+    });
+    return studentsData;
+
+}
+
 
 module.exports = {
     createUser,
@@ -952,5 +1002,6 @@ module.exports = {
     dailyReportAgeData,
     getCityList,
     getStateList,
-    studentData
+    studentData,
+    getCouponUserList
 }

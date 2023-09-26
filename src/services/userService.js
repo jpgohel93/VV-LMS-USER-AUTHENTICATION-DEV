@@ -4378,6 +4378,48 @@ const userReferral= async (userInputs) => {
 
 }
 
+const getCouponUserList= async (userInputs) => {
+    
+    try{
+        
+        const { coupon_students, list_type, search, startToken, endToken } = userInputs;
+        
+        const perPage = parseInt(endToken) || 10; 
+        let page = Math.max((parseInt(startToken) || 1) - 1, 0); 
+        if (page !== 0) { 
+            page = perPage * page; 
+        }
+
+        const getStudentsData = await UserModel.getCouponUserList({coupon_students, list_type, perPage, page, search });
+    
+        if(getStudentsData.length > 0){
+            return {
+                status: true,
+                status_code: constants.SUCCESS_RESPONSE,
+                message: "Data found successfully",
+                data: getStudentsData
+            };
+        }else{
+            return {
+                status: true,
+                status_code: constants.SUCCESS_RESPONSE,
+                message: "Data not found",
+                data: null
+            };
+        }
+    }catch (error) {
+        // Handle unexpected errors
+        return {
+            status: false,
+            status_code: constants.EXCEPTION_ERROR_CODE,
+            message: 'An unexpected error occurred',
+            error: { server_error: 'An unexpected error occurred' },
+            data: null,
+        };
+    }
+
+}
+
 module.exports = {
     getLinkedinData,
     userSignin,
@@ -4445,5 +4487,6 @@ module.exports = {
     studentData,
     changeHemanStatus,
     getStudentById,
-    userReferral
+    userReferral,
+    getCouponUserList
 }

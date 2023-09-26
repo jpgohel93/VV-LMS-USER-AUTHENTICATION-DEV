@@ -1457,4 +1457,23 @@ module.exports = async (app) => {
 
         res.status(data.status_code).json(data);
     });
+
+    app.post('/user/getCouponUserList', UserAuth, await validateFormFields([
+        body('startToken')
+        .isNumeric()
+        .withMessage('Enter a valid start token value'),
+
+        body('endToken')
+        .notEmpty()
+        .withMessage('End token is required')
+        .isNumeric()
+        .withMessage('Enter a valid end token value')
+    ]), async (req, res, next) => {
+        const { coupon_students, list_type, search, startToken, endToken } = req.body;
+  
+
+        const data = await userService.getCouponUserList({coupon_students, list_type, search, startToken, endToken});
+
+        res.status(data.status_code).json(data);
+    });
 }

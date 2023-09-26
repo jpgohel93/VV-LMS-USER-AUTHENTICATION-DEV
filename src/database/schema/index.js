@@ -18,5 +18,6 @@ module.exports = {
     UserActivitySchema: require("./UserActivitySchema"),
     FeedbackSchema: require("./FeedbackSchema"),
     ContactUsSchema: require("./ContactUsSchema"),
-    PaymentHistorySchema: require("./PaymentHistorySchema")
+    PaymentHistorySchema: require("./PaymentHistorySchema"),
+    UserEarningSchema: require("./UserEarningSchema"),
 }

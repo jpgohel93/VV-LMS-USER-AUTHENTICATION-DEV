@@ -484,7 +484,7 @@ const checkOut = async (userInputs,request) => {
 
                 userCourseData['invoice_id'] = invoiceid
                 userCourseData['order_id'] = orderId
-                await UserCourseModel.assignUserCourse(userelement);
+                await UserCourseModel.assignUserCourse(userCourseData);
 
                 UserCourseModel.updateUserCourse(user_id,{ 
                     is_purchase_course: true
@@ -801,7 +801,10 @@ const applyCoupon = async (userInputs, request) => {
                 return {
                     status: false,
                     status_code: constants.SUCCESS_RESPONSE,
-                    message: "Coupon has been already used"
+                    message: "Coupon has been already used",
+                    error: {
+                        coupon_code: "Coupon has been already used"
+                    }
                 };
             }
 
@@ -810,6 +813,17 @@ const applyCoupon = async (userInputs, request) => {
                     isValidCoupon = true
                 }else{
                     isValidCoupon = false
+                }
+
+                if(!isValidCoupon){
+                    return {
+                        status: false,
+                        status_code: constants.SUCCESS_RESPONSE,
+                        message: "Enter valid coupon code",
+                        error: {
+                            coupon_code: "Enter valid coupon code"
+                        }
+                    }; 
                 }
             }
             
@@ -872,14 +886,20 @@ const applyCoupon = async (userInputs, request) => {
                 return {
                     status: false,
                     status_code: constants.SUCCESS_RESPONSE,
-                    message: "Enter valid coupon code"
+                    message: "Enter valid coupon code",
+                    error: {
+                        coupon_code: "Enter valid coupon code"
+                    }
                 }; 
             }
         }else{
             return {
                 status: false,
                 status_code: constants.SUCCESS_RESPONSE,
-                message: "Enter valid coupon code"
+                message: "Enter valid coupon code",
+                error: {
+                    coupon_code: "Enter valid coupon code"
+                }
             };
         }
         

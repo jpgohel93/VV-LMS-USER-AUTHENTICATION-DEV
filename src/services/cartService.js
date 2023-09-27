@@ -791,7 +791,9 @@ const applyCoupon = async (userInputs, request) => {
         let couponData = await CallEventBus("get_coupon_data",{ coupon_code: coupon_code }, request.get("Authorization"))
 
         // check all the coupon condition
-        if(coupon_code && couponData?.has_club_coupon){
+        const getUserData = await UserModel.fatchUserById(user_id);
+        const getUserCourseData = await UserCourseModel.getUserCourseList({ user_id: user_id});
+        if(coupon_code){
             let isValidCoupon = false
             let checkCoupon = await CallEventBus("get_coupon_used_data",{ coupon_id: couponData._id, user_id: user_id }, request.get("Authorization"))
 
@@ -803,6 +805,14 @@ const applyCoupon = async (userInputs, request) => {
                 };
             }
 
+            if(getUserCourseData && getUserCourseData?.length == 0  && (getUserData?.referral_code || getUserData?.users_referral_code)){
+                if(couponData?.has_club_coupon){
+                    isValidCoupon = true
+                }else{
+                    isValidCoupon = false
+                }
+            }
+            
             if(couponData){
                 if(couponData?.usage_limit > 0){
                     //count for coupon used Data
@@ -819,7 +829,7 @@ const applyCoupon = async (userInputs, request) => {
                     isValidCoupon = true
                 } 
     
-                if(couponData?.users?.length > 0){
+                if(couponData?.users?.length > 0 && isValidCoupon){
                     if(couponData.users.includes(user_id)){
                         isValidCoupon = true
                     }else{
@@ -827,7 +837,7 @@ const applyCoupon = async (userInputs, request) => {
                     }
                 }
     
-                if(couponData?.course?.length > 0){
+                if(couponData?.course?.length > 0 && isValidCoupon){
                     if(couponData.course.includes(course_id)){
                         isValidCoupon = true
                     }else{
@@ -836,24 +846,25 @@ const applyCoupon = async (userInputs, request) => {
                 }
 
                 let currentDate = Date.now()
-                if(couponData?.start_date){
-                    let startDate = new Date(moment(couponData.start_date).format("YYYY-MM-DD") + " 00:00:00").valueOf();
+                if(couponData?.start_date && isValidCoupon){
+                    let startDate = new Date(moment(couponData.start_date).format("YYYY-MM-DD")).valueOf();
                     
-                    if(currentDate > startDate){
+                    if(currentDate >= startDate){
                         isValidCoupon = true
                     }else{
                         isValidCoupon = false 
                     }
                 }
 
-                if(couponData?.end_date){
-                   let endDate = new Date(moment(couponData.end_date).format("YYYY-MM-DD") + " 23:59:59").valueOf()
+                if(couponData?.end_date && isValidCoupon){
+                   let endDate = new Date(moment(couponData.end_date).format("YYYY-MM-DD") + " 23:59:59").valueOf();
 
-                    if(currentDate < endDate){
+                    if(currentDate <= endDate){
                         isValidCoupon = true
                     }else{
                         isValidCoupon = false 
                     }
+
                 }
             }
 
@@ -871,9 +882,6 @@ const applyCoupon = async (userInputs, request) => {
                 message: "Enter valid coupon code"
             };
         }
-       
-        const getUserCourseData = await UserCourseModel.getUserCourseList({ user_id: user_id});
-        const getUserData = await UserModel.fatchUserById(user_id);
         
         let course = await CallCourseQueryEvent("get_course_data_by_id",{ id: course_id }, request.get("Authorization"))
         let courseDefault = await CallCourseQueryEvent("get_course_default_promotional_content",{ course_id: course_id  }, request.get("Authorization"))

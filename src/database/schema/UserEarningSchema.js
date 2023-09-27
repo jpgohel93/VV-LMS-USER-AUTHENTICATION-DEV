@@ -20,7 +20,8 @@ const UserEarningSchema = new Schema({
         type: Boolean,
         default: false
     }, 
-    transaction_id: String
+    transaction_id: String,
+    transaction_type: Number // 1. credit, 2. debit
 },{ timestamps: true });  
 
 module.exports =  mongoose.model('user_earning', UserEarningSchema);

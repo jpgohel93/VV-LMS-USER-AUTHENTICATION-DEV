@@ -4,7 +4,8 @@ const {
     createS3Client
 } = require('../utils/aws');
 const {
-    GetUserLocation
+    GetUserLocation,
+    randomString
 } = require('../utils');
 const {
     validateFormFields
@@ -1475,5 +1476,58 @@ module.exports = async (app) => {
         const data = await userService.getCouponUserList({coupon_students, list_type, search, startToken, endToken});
 
         res.status(data.status_code).json(data);
+    });
+
+    app.post('/user/funnel',
+        await validateFormFields([
+            body('first_name')
+            .notEmpty()
+            .withMessage('First name is required')
+            .matches(/^[a-zA-Z0-9\s\-_.]*$/)
+            .withMessage('Enter a valid first name'),
+
+            body('email')
+            .notEmpty()
+            .withMessage('Email id is required')
+            .matches(/^[a-z0-9][a-z0-9-_\.]+@([a-z]|[a-z0-9]?[a-z0-9-]+[a-z0-9])\.[a-z0-9]{2,10}(?:\.[a-z]{2,10})?$/i)
+            .withMessage('Please enter valid email id'),
+
+            body('mobile_no')
+            .notEmpty()
+            .withMessage('Mobile no is required')
+            .matches(/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/)
+            .withMessage('Please enter valid mobile no'),
+
+            body('operating_system')
+            .matches(/^[A-Za-z\s]+$/)
+            .withMessage('OS must be alphabetic only')
+        ]), async (req, res, next) => {
+
+            const {
+                first_name,
+                email,
+                country_code,
+                mobile_no,
+                ip_address,
+                device_type,
+                operating_system,
+                referral_code,
+                user_referral_code
+            } = req.body;
+
+            let password = await randomString(8);
+            const data = await userService.addUser({
+                first_name,
+                email,
+                country_code,
+                mobile_no,
+                ip_address,
+                device_type,
+                operating_system,
+                referral_code,
+                user_referral_code,
+                password
+            });
+            res.status(data.status_code).json(data);
     });
 }

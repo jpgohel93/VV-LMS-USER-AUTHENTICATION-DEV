@@ -212,7 +212,7 @@ const deleteCartItem = async (userInputs) => {
 
 const checkOut = async (userInputs,request) => {
     try{
-        const { user_id, course_id, coupon_code } = userInputs;
+        const { user_id, course_id, coupon_code, device_type } = userInputs;
 
         const getUserData = await UserModel.fatchUserById(user_id);
 
@@ -405,7 +405,8 @@ const checkOut = async (userInputs,request) => {
                                 assign_at: new Date(),
                                 amount: commissionAmount,
                                 user_discount: hemanDiscount,
-                                order_id: orderId
+                                order_id: orderId,
+                                transaction_type: 1
                             })
                         }
                     }
@@ -511,6 +512,7 @@ const checkOut = async (userInputs,request) => {
                     billing_tel: getUserData?.mobile_no || '9512742802',
                     billing_email: getUserData?.email || 'demouser@gmail.com',
                     merchant_param1: user_id,
+                    merchant_param2: device_type ? device_type : 1,
                     integration_type: "iframe_normal",
                     redirect_url: redirectUrl,
                     cancel_url: redirectUrl

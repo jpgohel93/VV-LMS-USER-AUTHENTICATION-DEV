@@ -539,6 +539,29 @@ const deleteUserEarning = async (orderId) => {
     return deleteData;
 }
 
+const getUserEarningHistory = async (userFilter) => {
+
+    let filter = [];
+    if(userFilter.user_id){
+        filter.push({
+            user_id: userFilter.user_id
+        })
+    }
+    if(userFilter.transaction_type){
+        filter.push({
+            transaction_type: userFilter.transaction_type
+        })
+    }
+
+    let getFilterData =  await UserEarningSchema.find( { $and: filter }).skip(userFilter.start).limit(userFilter.limit).sort({ createdAt: -1 }).then((data) => {
+        return data
+    }).catch((err) => {
+        return null
+    });
+
+    return getFilterData;
+}
+
 module.exports = {
     assignUserCourse,
     filterUserCourseData,
@@ -560,5 +583,6 @@ module.exports = {
     getUserBaseCount,
     getUserCourseList,
     userEarning,
-    deleteUserEarning
+    deleteUserEarning,
+    getUserEarningHistory
 }

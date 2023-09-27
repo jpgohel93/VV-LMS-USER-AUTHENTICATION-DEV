@@ -63,8 +63,13 @@ const assignCourse = async (userInputs,request) => {
 
                 let id= createUserCourse?._id ? createUserCourse?._id : null;
 
+                let data = {
+                    module: "course",
+                    reference_id: id
+                }
+
                 if(getUserData?.notification_device_id){
-                    sendPushNotification({notification_device_id:[getUserData?.notification_device_id], message: "Course has been purchased successfully.", template_id: "20a140f6-66bb-4995-94af-0a58632afd31"})
+                    sendPushNotification({notification_device_id:[getUserData?.notification_device_id], message: "Course has been purchased successfully.", template_id: "20a140f6-66bb-4995-94af-0a58632afd31", data})
                 }
 
                 // //add a referral amount to heman
@@ -968,7 +973,12 @@ const purchaseCourse = async (userInputs,request) => {
 
             let id= createUserCourse?._id ? createUserCourse?._id : null;
             if(request?.user?.notification_device_id){
-                await sendPushNotification({notification_device_id:[request.user.notification_device_id], message: "Course has been purchased successfully."})
+                let data = {
+                    module: "course",
+                    reference_id: id
+                }
+
+                await sendPushNotification({notification_device_id:[request.user.notification_device_id], message: "Course has been purchased successfully.", data})
             }
             
             return {
@@ -1795,6 +1805,7 @@ const paymentResponse = async (request,response) => {
         
         let orderId = dataArray.order_id
         let userId = dataArray.merchant_param1
+        let deviceType = dataArray.merchant_param2 ? dataArray.merchant_param2 : 1
         let paymentStatus = dataArray.order_status
         const userData = await UserModel.fatchUserById(userId);
         let invoiceData = await InvoiceModel.findOrderData(orderId)
@@ -1819,7 +1830,11 @@ const paymentResponse = async (request,response) => {
             })
             
             if(userData?.notification_device_id){
-                await sendPushNotification({notification_device_id:[getUserDatanotification_device_id], message: "Course has been purchased successfully."})
+                let data = {
+                    module: "course_payment_success",
+                    reference_id: orderId
+                }
+                await sendPushNotification({notification_device_id:[getUserDatanotification_device_id], message: "Course has been purchased successfully.", data})
             }
             
         }else if(paymentStatus == "Failure"){
@@ -1841,6 +1856,14 @@ const paymentResponse = async (request,response) => {
             CallEventBus("delete_heman_user",{ orderId: orderId },'')
 
             UserCourseModel.deleteUserEarning( orderId )
+
+            if(userData?.notification_device_id){
+                let data = {
+                    module: "course_payment_failure",
+                    reference_id: orderId
+                }
+                await sendPushNotification({notification_device_id:[getUserDatanotification_device_id], message: "Course has been purchased successfully.", data})
+            }
         }
 
         //send a invoice mail
@@ -2058,6 +2081,47 @@ const testSubscription = async (userInputs,request) => {
   
 }
 
+const getUserEarningHistory = async (userInputs,request) => {
+    try{
+        const { user_id, startToken, endToken, transaction_type } = userInputs;
+
+        const perPage = parseInt(endToken) || 10; 
+        let page = Math.max((parseInt(startToken) || 1) - 1, 0); 
+        if (page !== 0) { 
+            page = perPage * page; 
+        }
+
+        //get course data
+        const userEarningHistory = await UserCourseModel.getUserEarningHistory({ user_id,  page, perPage, transaction_type });
+
+        if(userEarningHistory !== null){
+            return {
+                status: true,
+                status_code: constants.SUCCESS_RESPONSE,
+                message: "Data get successfully",
+                data: userEarningHistory
+            }
+        }else{
+            return {
+                status: true,
+                status_code: constants.SUCCESS_RESPONSE,
+                message: "Data not found",
+                data: null
+            };
+        }
+    }catch (error) {
+        // Handle unexpected error
+        return {
+            status: false,
+            status_code: constants.EXCEPTION_ERROR_CODE,
+            message: 'An unexpected error occurred',
+            error: { server_error: 'An unexpected error occurred' },
+            data: null,
+        };
+    }
+  
+}
+
 module.exports = {
     assignCourse,
     getAssignCourseList,
@@ -2076,5 +2140,6 @@ module.exports = {
     getInvoice,
     singleTimePayment,
     paymentResponse,
-    testSubscription
+    testSubscription,
+    getUserEarningHistory
 }

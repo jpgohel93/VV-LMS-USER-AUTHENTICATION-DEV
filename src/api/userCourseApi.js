@@ -310,4 +310,13 @@ module.exports = async (app) => {
 
         res.status(200).json(data);
     });
+
+    app.post('/user/getUserEarningHistory', UserAuth ,async (req,res,next) => {
+        const { startToken, endToken, transaction_type} = req.body;
+        let user_id = req.user !== undefined ? req.user.user_id : null; 
+
+        const data = await userCourseService.getUserEarningHistory({ user_id, startToken, endToken, transaction_type }); 
+
+        res.status(data.status_code).json(data);
+    });
 }

@@ -13,6 +13,7 @@ let checkSubscriptionRoutes = require("./cronjobs/checkSubscription")
 let userActivityRoutes = require("./userActivityApi")
 let feedbackRoutes = require("./feedbackApi")
 let ContactUsApi = require("./ContactUsApi")
+let paymentDetailApi = require("./paymentDetailApi")
 
 module.exports = (app) => {
     userRoutes(app)
@@ -30,4 +31,5 @@ module.exports = (app) => {
     userActivityRoutes(app)
     feedbackRoutes(app)
     ContactUsApi(app)
+    paymentDetailApi(app)
 }

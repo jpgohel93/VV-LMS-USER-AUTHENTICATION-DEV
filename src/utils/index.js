@@ -482,7 +482,7 @@ module.exports.randomString = async (strLength) => {
 module.exports.sendPushNotification = async (requestData) => {
 	const appId = process.env.ONE_SIGNAL_APP_ID;
 	const apiKey = process.env.ONE_SIGNAL_API_KEY;
-	const { notification_device_id, message, template_id } = requestData;
+	const { notification_device_id, message, template_id, data } = requestData;
 	const notificationData = {
 		app_id: appId,
 		contents: { en: message },
@@ -491,6 +491,10 @@ module.exports.sendPushNotification = async (requestData) => {
 
 	if(template_id){
 		notificationData['template_id'] = template_id
+	}
+
+	if(data){
+		notificationData['data'] = data
 	}
 	console.log('notificationData :: ',notificationData);
 	try {

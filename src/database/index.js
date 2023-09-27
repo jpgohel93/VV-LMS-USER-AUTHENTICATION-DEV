@@ -20,4 +20,5 @@ module.exports = {
     FeedbackModel: require("./models/FeedbackModel"),
     ContactUsModel: require("./models/ContactUsModel"),
     PaymentHistoryModel: require("./models/PaymentHistoryModel"),
+    PaymentDetailModel: require("./models/PaymentDetailModel")
 }

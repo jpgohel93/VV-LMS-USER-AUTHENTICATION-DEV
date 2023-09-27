@@ -21,7 +21,7 @@ const PaymentHistorySchema = new Schema({
         default: 0,
         type: Number 
     },
-    amount: Number,
+    amount: Number
 },{ timestamps: true }); 
 
 PaymentHistorySchema.index( { user_id : 1 } )

@@ -951,15 +951,17 @@ const getCouponUserList = async (userFilter) => {
         })
     }
 
-    if(userFilter.list_type && userFilter?.coupon_students?.length > 0 ){
-        if(userFilter.list_type == 1){
+    if(userFilter.list_type ){
+        if(userFilter.list_type == 1 && userFilter?.coupon_students?.length > 0){
             searchFilter.push({
                 _id: { $nin: userFilter.coupon_students }
             });
-        }else if(userFilter.list_type == 2){
+        }else if(userFilter.list_type == 2 && userFilter?.coupon_students?.length > 0){
             searchFilter.push({
                 _id: { $in: userFilter.coupon_students }
             });
+        }else if(userFilter.list_type == 2 && userFilter?.coupon_students?.length == 0){
+            return []
         }
     }
     

@@ -60,8 +60,7 @@ module.exports = async (app) => {
 
     app.post('/cart/checkOut', UserAuth ,async (req,res,next) => {
         const { course_id, coupon_code } = req.body;
-       // let user_id = req.user !== undefined ? req.user.user_id : null;
-        let user_id = "65126ff7d7141f316d951713";
+        let user_id = req.user !== undefined ? req.user.user_id : null;
 
         const data = await cartService.checkOut({ course_id , user_id, coupon_code }, req); 
 

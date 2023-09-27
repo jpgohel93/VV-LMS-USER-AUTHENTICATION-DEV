@@ -800,7 +800,7 @@ const applyCoupon = async (userInputs, request) => {
             if(checkCoupon?.length > 0){
                 return {
                     status: false,
-                    status_code: constants.SUCCESS_RESPONSE,
+                    status_code: constants.ERROR_RESPONSE,
                     message: "Coupon has been already used",
                     error: {
                         coupon_code: "Coupon has been already used"
@@ -818,7 +818,7 @@ const applyCoupon = async (userInputs, request) => {
                 if(!isValidCoupon){
                     return {
                         status: false,
-                        status_code: constants.SUCCESS_RESPONSE,
+                        status_code: constants.ERROR_RESPONSE,
                         message: "Enter valid coupon code",
                         error: {
                             coupon_code: "Enter valid coupon code"
@@ -885,7 +885,7 @@ const applyCoupon = async (userInputs, request) => {
             if(!isValidCoupon){
                 return {
                     status: false,
-                    status_code: constants.SUCCESS_RESPONSE,
+                    status_code: constants.ERROR_RESPONSE,
                     message: "Enter valid coupon code",
                     error: {
                         coupon_code: "Enter valid coupon code"
@@ -895,7 +895,7 @@ const applyCoupon = async (userInputs, request) => {
         }else{
             return {
                 status: false,
-                status_code: constants.SUCCESS_RESPONSE,
+                status_code: constants.ERROR_RESPONSE,
                 message: "Enter valid coupon code",
                 error: {
                     coupon_code: "Enter valid coupon code"

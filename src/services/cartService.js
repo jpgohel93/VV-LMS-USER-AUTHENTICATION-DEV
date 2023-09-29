@@ -225,6 +225,29 @@ const checkOut = async (userInputs,request) => {
             };
         }
 
+        //get course data
+        const getFilterData = await UserCourseModel.filterUserCourseData({ user_id, course_id});
+
+        let isPurchase = false
+        if(getFilterData?.type){
+            if(getFilterData.type == 1){
+                isPurchase = true
+            }else{
+                if(getFilterData.type == 2 && getFilterData.payment_status == 2 && getFilterData.is_cancle_subscription == false){
+                    isPurchase = true
+                }
+            }
+        }
+        if(isPurchase){
+            return {
+                status: false,
+                status_code: constants.EXCEPTION_ERROR_CODE,
+                message: 'Course already purchased',
+                error: { is_purchase: 'Course already purchased' },
+                data: null,
+            };
+        }
+
         let cronLogData = {}
         let cronstartTime = Date.now()
         //create cron log
@@ -674,6 +697,29 @@ const courseCheckOut = async (userInputs, request) => {
     try{
 
         const { user_id, course_id } = userInputs;
+
+        //get course data
+        const getFilterData = await UserCourseModel.filterUserCourseData({ user_id, course_id});
+
+        let isPurchase = false
+        if(getFilterData?.type){
+            if(getFilterData.type == 1){
+                isPurchase = true
+            }else{
+                if(getFilterData.type == 2 && getFilterData.payment_status == 2 && getFilterData.is_cancle_subscription == false){
+                    isPurchase = true
+                }
+            }
+        }
+        if(isPurchase){
+            return {
+                status: false,
+                status_code: constants.EXCEPTION_ERROR_CODE,
+                message: 'Course already purchased',
+                error: { is_purchase: 'Course already purchased' },
+                data: null,
+            };
+        }
 
         const getUserCourseData = await UserCourseModel.getUserCourseList({ user_id: user_id});
         const getUserData = await UserModel.fatchUserById(user_id);

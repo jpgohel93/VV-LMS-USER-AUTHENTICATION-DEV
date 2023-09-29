@@ -61,7 +61,7 @@ module.exports = async (req,res,next) => {
                 /user/userBase
                 /user/userEngagement
             */
-           console.log("apiname :: ", apiname)
+           
             let moduleArray = ['user','personalizedquiz','coursewatchhistory', 'feedback']
             let apiArray = ['bulkImport','checkUserEmail','checkUserMobile','addInstituteStudent','updateInstituteStudent','getStudentList','getallstudent','getAccountData',
                             'addQuiz','getStudentById','countCourseUser','checkUserSubscription','getCourseWatchHistory','getUserAgeData','getGenderData','getLanguageData',

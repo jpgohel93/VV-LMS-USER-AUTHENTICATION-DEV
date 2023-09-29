@@ -4332,7 +4332,7 @@ const userReferral= async (userInputs) => {
 
         let { id, referral_code, user_referral_code } = userInputs;
 
-        const getUserCourseData = await UserCourseModel.getUserCourseList({ user_id: getUserData._id });
+        const getUserCourseData = await UserCourseModel.getUserCourseList({ user_id: id });
         if(getUserCourseData?.length == 0){
             let updateUserData = {}
             if(referral_code){

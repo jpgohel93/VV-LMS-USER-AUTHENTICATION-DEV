@@ -19,7 +19,7 @@ const addPaymentDetails = async (userInputs) => {
             return {
                 status: true,
                 status_code: constants.SUCCESS_RESPONSE,
-                message: "Payment details added succefully",
+                message: "Payment details added successfully",
                 id: paymentData._id
             };
         }else{
@@ -58,7 +58,7 @@ const updatePaymentDetails = async (userInputs) => {
             return {
                 status: true,
                 status_code: constants.SUCCESS_RESPONSE,
-                message: "Payment details updated succefully"
+                message: "Payment details updated successfully"
             };
         }else{
             return {
@@ -142,7 +142,7 @@ const deletePaymentDetail = async (userInputs) => {
             return {
                 status: true,
                 status_code: constants.SUCCESS_RESPONSE,
-                message: "Payment details deleted succefully"
+                message: "Payment details deleted successfully"
             };
         }else{
             return {

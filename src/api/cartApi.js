@@ -62,7 +62,7 @@ module.exports = async (app) => {
         const { course_id, coupon_code, device_type } = req.body;
         let user_id = req.user !== undefined ? req.user.user_id : null;
 
-        const data = await cartService.checkOut({ course_id , user_id, coupon_code, device_type }, req); 
+        const data = await cartService.checkOut({ course_id, user_id, coupon_code, device_type }, req); 
 
         res.status(data.status_code).json(data);
     });

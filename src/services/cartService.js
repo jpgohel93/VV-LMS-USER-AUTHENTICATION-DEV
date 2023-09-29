@@ -449,11 +449,11 @@ const checkOut = async (userInputs,request) => {
                 if(couponData){
                     if(couponData.discount_type == 1){
                         couponAmount = couponData.discount
-                        amount = parseInt(finalAmount) - parseInt(couponAmount)
-                    }else if(hemanData.discount_type == 2){
+                        finalAmount = parseInt(finalAmount) - parseInt(couponAmount)
+                    }else if(couponData.discount_type == 2){
                         let discount = parseInt(finalAmount) * parseFloat(couponData.discount) / 100 
                         couponAmount = discount
-                        amount = parseInt(finalAmount) - parseInt(discount)
+                        finalAmount = parseInt(finalAmount) - parseInt(discount)
                     }
 
                     userCourseData['coupon_code'] = coupon_code

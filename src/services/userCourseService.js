@@ -1858,11 +1858,11 @@ const paymentResponse = async (request,response) => {
             UserCourseModel.deleteUserEarning( orderId )
 
             if(userData?.notification_device_id){
-                let data = {
+                let notificationdata = {
                     module: "course_payment_failure",
                     reference_id: orderId
                 }
-                await sendPushNotification({notification_device_id:[getUserDatanotification_device_id], message: "Course has been purchased successfully.", data})
+                await sendPushNotification({notification_device_id:[userData.notification_device_id], message: "Course has been purchased successfully.", notificationdata})
             }
         }
 
@@ -1882,7 +1882,7 @@ const paymentResponse = async (request,response) => {
                 )
             }
             
-            const pdfName = orserId+".pdf";
+            const pdfName = orderId+".pdf";
 
             await new Promise(async (resolve, reject) => {
                 const invoiceData = {
@@ -1964,6 +1964,11 @@ const paymentResponse = async (request,response) => {
         //     trans_date: '04/08/2023 09:43:05',
         //     bin_countr
         // ]
+    }else{
+        return {
+            status: false,
+            payment_status: "Failure"
+        };
     }
 }
 

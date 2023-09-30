@@ -268,9 +268,9 @@ module.exports = async (app) => {
         const data = await userCourseService.paymentResponse(req, res);
 
         if(data?.payment_status == "Success"){
-            res.redirect(process.env.DEVELOPER_MODE == "development" ? process.env.CCAVENUE_SUCCESS_URL_TESTING : process.env.CCAVENUE_SUCCESS_URL);
+            res.redirect(process.env.DEVELOPER_MODE == "development" ? process.env.CCAVENUE_SUCCESS_URL_TESTING + data?.course_id + "/?p=success" : process.env.CCAVENUE_SUCCESS_URL + data?.course_id + "/?p=success" );
         }else if(data.payment_status == "Failure"){
-            res.redirect(process.env.DEVELOPER_MODE == "development" ? process.env.CCAVENUE_FAILURE_URL_TESTING : process.env.CCAVENUE_FAILURE_URL);
+            res.redirect(process.env.DEVELOPER_MODE == "development" ? process.env.CCAVENUE_FAILURE_URL_TESTING + data?.course_id + "/?p=fail"  : process.env.CCAVENUE_FAILURE_URL + data?.course_id + "/?p=fail" );
         }else{
             res.redirect(process.env.DEVELOPER_MODE == "development" ? process.env.CCAVENUE_FAILURE_URL_TESTING : process.env.CCAVENUE_FAILURE_URL);
         }

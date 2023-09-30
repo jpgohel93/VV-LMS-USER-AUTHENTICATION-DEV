@@ -370,7 +370,7 @@ const getUserCourseLearningData = async (userFilter) => {
         is_deleted: false
     })
 
-    let getFilterData =  await UserCourseSchema.find( { $and: filter }).then((data) => {
+    let getFilterData =  await UserCourseSchema.find( { $and: filter }).sort({ createdAt: -1 }).then((data) => {
         return data
     }).catch((err) => {
         return null

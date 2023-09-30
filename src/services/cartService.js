@@ -266,7 +266,7 @@ const checkOut = async (userInputs,request) => {
 
         const getUserCourseData = await UserCourseModel.getUserCourseList({ user_id: user_id});
 
-        if(courseData){
+        if(courseData){ 
             let userCourseArray = []
 
             let courseAmount = courseData.discount_amount
@@ -297,48 +297,48 @@ const checkOut = async (userInputs,request) => {
                             }
                         
                             // decrease the course amount
-                            let coursePrice = courseAmount
+                            //let coursePrice = courseAmount
 
-                            // calculate the heman commssion
-                            let subHemanAmount = 0
-                            if(parentHemanData?.sub_heman_commission){
-                                if(parentHemanData.sub_heman_commission_type == 1){
-                                    subHemanAmount = parentHemanData.sub_heman_commission
-                                }else if(parentHemanData.sub_heman_commission_type == 2){
-                                    let hemanCommission = parseInt(coursePrice) * parseFloat(parentHemanData.sub_heman_commission) / 100 
-                                    subHemanAmount = hemanCommission
-                                }
-                            }
+                            // // calculate the heman commssion
+                            // let subHemanAmount = 0
+                            // if(parentHemanData?.sub_heman_commission){
+                            //     if(parentHemanData.sub_heman_commission_type == 1){
+                            //         subHemanAmount = parentHemanData.sub_heman_commission
+                            //     }else if(parentHemanData.sub_heman_commission_type == 2){
+                            //         let hemanCommission = parseInt(coursePrice) * parseFloat(parentHemanData.sub_heman_commission) / 100 
+                            //         subHemanAmount = hemanCommission
+                            //     }
+                            // }
 
-                            // calculate the heman commssion
-                            let hemanAmount = 0
-                            if(parentHemanData?.admin_heman_commission){
-                                if(parentHemanData.admin_heman_commission_type == 1){
-                                    hemanAmount = parentHemanData.admin_heman_commission
-                                }else if(parentHemanData.admin_heman_commission_type == 2){
-                                let hemanCommission = parseInt(coursePrice) * parseFloat(parentHemanData.admin_heman_commission) / 100 
-                                hemanAmount = hemanCommission
-                                }
-                            }
+                            // // calculate the heman commssion
+                            // let hemanAmount = 0
+                            // if(parentHemanData?.admin_heman_commission){
+                            //     if(parentHemanData.admin_heman_commission_type == 1){
+                            //         hemanAmount = parentHemanData.admin_heman_commission
+                            //     }else if(parentHemanData.admin_heman_commission_type == 2){
+                            //     let hemanCommission = parseInt(coursePrice) * parseFloat(parentHemanData.admin_heman_commission) / 100 
+                            //     hemanAmount = hemanCommission
+                            //     }
+                            // }
                             
-                            let hemanuser = {
-                                user_id: user_id,
-                                course_id: course_id,
-                                assign_at: new Date(),
-                                course_amount: courseAmount,
-                                course_tax_amount: finalAmount,
-                                code: getUserData.referral_code,
-                                heman_id: hemanData.parent_heman_id,
-                                sub_heman_id: hemanData._id,
-                                heman_amount: hemanAmount,
-                                sub_heman_amount: subHemanAmount,
-                                user_discount: hemanDiscount,
-                                order_id: orderId
-                            } 
-                            subHemanAmount = subHemanAmount  + (hemanData.amount || 0)
-                            hemanAmount = hemanAmount  + (parentHemanData.amount || 0)
+                            // let hemanuser = {
+                            //     user_id: user_id,
+                            //     course_id: course_id,
+                            //     assign_at: new Date(),
+                            //     course_amount: courseAmount,
+                            //     course_tax_amount: finalAmount,
+                            //     code: getUserData.referral_code,
+                            //     heman_id: hemanData.parent_heman_id,
+                            //     sub_heman_id: hemanData._id,
+                            //     heman_amount: hemanAmount,
+                            //     sub_heman_amount: subHemanAmount,
+                            //     user_discount: hemanDiscount,
+                            //     order_id: orderId
+                            // } 
+                            // subHemanAmount = subHemanAmount  + (hemanData.amount || 0)
+                            // hemanAmount = hemanAmount  + (parentHemanData.amount || 0)
 
-                            CallEventBus("add_heman_user",{  heman_id: hemanData.parent_heman_id, sub_heman_id: hemanData._id, user: hemanuser, heman_amount: hemanAmount, sub_heman_amount: subHemanAmount }, request.get("Authorization"))
+                            // CallEventBus("add_heman_user",{  heman_id: hemanData.parent_heman_id, sub_heman_id: hemanData._id, user: hemanuser, heman_amount: hemanAmount, sub_heman_amount: subHemanAmount }, request.get("Authorization"))
                         }else{    
                             // decrease the student discount amount 
                             if(hemanData?.student_discount){
@@ -367,23 +367,23 @@ const checkOut = async (userInputs,request) => {
                                 }
                             }
                             
-                            let hemanuser = {
-                                user_id: user_id,
-                                course_id: course_id,
-                                assign_at: new Date(),
-                                course_amount: courseAmount,
-                                course_tax_amount: finalAmount,
-                                code: getUserData.referral_code,
-                                heman_id: hemanData._id,
-                                sub_heman_id: null,
-                                heman_amount: hemanAmount,
-                                sub_heman_amount: 0,
-                                user_discount: hemanDiscount,
-                                order_id: orderId
-                            } 
-                            hemanAmount = hemanAmount  + (hemanData.amount || 0)
+                            // let hemanuser = {
+                            //     user_id: user_id,
+                            //     course_id: course_id,
+                            //     assign_at: new Date(),
+                            //     course_amount: courseAmount,
+                            //     course_tax_amount: finalAmount,
+                            //     code: getUserData.referral_code,
+                            //     heman_id: hemanData._id,
+                            //     sub_heman_id: null,
+                            //     heman_amount: hemanAmount,
+                            //     sub_heman_amount: 0,
+                            //     user_discount: hemanDiscount,
+                            //     order_id: orderId
+                            // } 
+                            // hemanAmount = hemanAmount  + (hemanData.amount || 0)
 
-                            CallEventBus("add_heman_user",{ heman_id: hemanData._id,sub_heman_id: null, user: hemanuser, heman_amount: hemanAmount, sub_heman_amount: 0 }, request.get("Authorization"))
+                            // CallEventBus("add_heman_user",{ heman_id: hemanData._id,sub_heman_id: null, user: hemanuser, heman_amount: hemanAmount, sub_heman_amount: 0 }, request.get("Authorization"))
                         }
                     }
                 }else if(getUserData?.referral_type == 2){
@@ -400,28 +400,28 @@ const checkOut = async (userInputs,request) => {
                             finalAmount = parseInt(finalAmount) - parseInt(discount)
                         }
 
-                        let commissionAmount = 0
-                        let userAmount = accountSettingData?.referral_discount_amount ? accountSettingData.referral_discount_amount  : 0
-                        if(userAmount){
-                            if(accountSettingData.referral_discount_type == 1){
-                                commissionAmount = userAmount
-                            }else if(accountSettingData.referral_discount_type == 2){
-                                let discount = parseInt(courseAmount) * parseFloat(userAmount) / 100 
-                                commissionAmount = discount
-                            }
+                        // let commissionAmount = 0
+                        // let userAmount = accountSettingData?.referral_discount_amount ? accountSettingData.referral_discount_amount  : 0
+                        // if(userAmount){
+                        //     if(accountSettingData.referral_discount_type == 1){
+                        //         commissionAmount = userAmount
+                        //     }else if(accountSettingData.referral_discount_type == 2){
+                        //         let discount = parseInt(courseAmount) * parseFloat(userAmount) / 100 
+                        //         commissionAmount = discount
+                        //     }
 
-                            await UserCourseModel.userEarning({
-                                code: getUserData.referral_code,
-                                user_id: user_id,
-                                course_id: course_id,
-                                course_amount: courseAmount,
-                                assign_at: new Date(),
-                                amount: commissionAmount,
-                                user_discount: hemanDiscount,
-                                order_id: orderId,
-                                transaction_type: 1
-                            })
-                        }
+                        //     await UserCourseModel.userEarning({
+                        //         code: getUserData.referral_code,
+                        //         user_id: user_id,
+                        //         course_id: course_id,
+                        //         course_amount: courseAmount,
+                        //         assign_at: new Date(),
+                        //         amount: commissionAmount,
+                        //         user_discount: hemanDiscount,
+                        //         order_id: orderId,
+                        //         transaction_type: 1
+                        //     })
+                        // }
                     }
                 }
             }
@@ -501,6 +501,7 @@ const checkOut = async (userInputs,request) => {
                 invoiceData['invoice_type'] = 2
                 invoiceData['module_name'] = "Checkout"
                 invoiceData['order_id'] = orderId
+                invoiceData['course_id'] = course_id
 
                 const createInvoice = await InvoiceModel.createInvoice(invoiceData);
 
@@ -849,7 +850,10 @@ const applyCoupon = async (userInputs, request) => {
             return {
                 status: false,
                 status_code: constants.ERROR_RESPONSE,
-                message: "Invalid coupon code"
+                message: "Invalid coupon code",
+                error: {
+                    coupon_code: "Invalid coupon code"
+                }
             };
         }
         // check all the coupon condition

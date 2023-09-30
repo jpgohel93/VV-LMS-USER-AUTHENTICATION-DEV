@@ -22,7 +22,7 @@ const addNotes = async (userInputs) => {
             return {
                 status: true,
                 status_code: constants.SUCCESS_RESPONSE,
-                message: "Notes add into the course",
+                message: "Notes added into the course",
                 id: createNotes._id,
                 data: createNotes
             };

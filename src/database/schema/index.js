@@ -20,5 +20,6 @@ module.exports = {
     ContactUsSchema: require("./ContactUsSchema"),
     PaymentHistorySchema: require("./PaymentHistorySchema"),
     UserEarningSchema: require("./UserEarningSchema"),
-    PaymentDetailSchema: require("./PaymentDetailSchema")
+    PaymentDetailSchema: require("./PaymentDetailSchema"),
+    CourseViewSchema: require("./CourseViewSchema")
 }

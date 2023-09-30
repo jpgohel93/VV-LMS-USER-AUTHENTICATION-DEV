@@ -525,6 +525,153 @@ const makeCourseAsACompleted = async (userInputs) => {
     }
 }
 
+const addChapterViewHistory = async (userInputs) => {
+    try{
+
+        const { user_id, course_id, chapter_id } = userInputs;
+        let checkCourseWatchHistoryData = await CourseWatchHistoryModel.fatchCourseViewHistoryList(user_id, course_id, chapter_id);
+
+        //create activity
+        let userActivity = await UserActivityModel.createUserActivity({
+            module: "course",
+            user_id: user_id,
+            reference_id: course_id,
+            start_time: new Date()
+        })
+
+
+        if(checkCourseWatchHistoryData == null){
+            const createCourseWatchHistory = await CourseWatchHistoryModel.createCourseViewHistory({ 
+                user_id: user_id,
+                course_id: course_id,
+                chapter_id: chapter_id,
+                last_accessed: new Date()
+            });
+
+            if(createCourseWatchHistory !== false){
+                return {
+                    status: true,
+                    status_code: constants.SUCCESS_RESPONSE,
+                    message: "Course history add successfully",
+                    id: createCourseWatchHistory._id,
+                    activity_id: userActivity._id
+                };
+            }else{
+                return {
+                    status: false,
+                    status_code: constants.DATABASE_ERROR_RESPONSE,
+                    message: "Failed to add the course history",
+                    id: null
+                };
+            }
+        }else{
+            const updateCourseWatchHistoryData = await CourseWatchHistoryModel.updateCourseViewHistory(checkCourseWatchHistoryData._id,{ 
+                last_accessed: new Date()
+            });
+
+            if(updateCourseWatchHistoryData !== false){
+                return {
+                    status: true,
+                    status_code: constants.SUCCESS_RESPONSE,
+                    message: "Course history add successfully",
+                    id: checkCourseWatchHistoryData._id,
+                    activity_id: userActivity._id
+                };
+            }else{
+                return {
+                    status: false,
+                    status_code: constants.DATABASE_ERROR_RESPONSE,
+                    message: "Failed to add the course history",
+                    id: null
+                };
+            }
+        }
+    }catch (error) {
+        // Handle unexpected errors
+        console.error('Error in addCourseWatchHistory:', error);
+        return {
+            status: false,
+            status_code: constants.EXCEPTION_ERROR_CODE,
+            message: 'Failed to add the course history',
+            error: { server_error: 'An unexpected error occurred' },
+            data: null,
+        };
+    }
+}
+
+const addTopicViewHistory = async (userInputs) => {
+    try{
+
+        const { user_id, course_id, chapter_id, topic_id } = userInputs;
+        let checkCourseWatchHistoryData = await CourseWatchHistoryModel.fatchCourseViewHistoryList(user_id, course_id, chapter_id);
+
+        const createCourseWatchHistory = await CourseWatchHistoryModel.addCourseTopicViewHistory(checkCourseWatchHistoryData._id, topic_id);
+
+        if(createCourseWatchHistory !== false){
+            await CourseWatchHistoryModel.updateCourseViewHistory(checkCourseWatchHistoryData._id, {
+                last_access_topic: topic_id
+            });
+            
+            return {
+                status: true,
+                status_code: constants.SUCCESS_RESPONSE,
+                message: "Course history add successfully"
+            };
+        }else{
+            return {
+                status: false,
+                status_code: constants.DATABASE_ERROR_RESPONSE,
+                message: "Failed to add the course history",
+                id: null
+            };
+        }
+    }catch (error) {
+        // Handle unexpected errors
+        console.error('Error in addCourseWatchHistory:', error);
+        return {
+            status: false,
+            status_code: constants.EXCEPTION_ERROR_CODE,
+            message: 'Failed to add the course history',
+            error: { server_error: 'An unexpected error occurred' },
+            data: null,
+        };
+    }
+}
+
+const getTopicViewHistory = async (userInputs) => {
+    try{
+
+        const { user_id, course_id, chapter_id } = userInputs;
+
+        let CourseWatchHistoryData = await CourseWatchHistoryModel.fatchCourseViewHistoryList(user_id, course_id, chapter_id);
+
+        if(CourseWatchHistoryData){
+            return {
+                status: true,
+                status_code: constants.SUCCESS_RESPONSE,
+                message: "Data get successfully",
+                data: CourseWatchHistoryData
+            };
+        }else{
+            return {
+                status: true,
+                status_code: constants.SUCCESS_RESPONSE,
+                message: "Data not found",
+                data: null
+            };
+        }
+    }catch (error) {
+        // Handle unexpected errors
+        return {
+            status: false,
+            status_code: constants.EXCEPTION_ERROR_CODE,
+            message: 'Failed to add the course history',
+            error: { server_error: 'An unexpected error occurred' },
+            data: null,
+        };
+    }
+}
+
 module.exports = {
     addCourseWatchHistory,
     getCourseWatchHistorysData,
@@ -535,5 +682,8 @@ module.exports = {
     addCompletedTopic,
     getSingleCourseWatchHistory,
     makeCourseAsACompleted,
-    getCourseWatchHistoryWithPagination
+    getCourseWatchHistoryWithPagination,
+    addChapterViewHistory,
+    addTopicViewHistory,
+    getTopicViewHistory
 }

@@ -1,4 +1,4 @@
-const { CourseWatchHistorySchema } = require('../schema');
+const { CourseWatchHistorySchema, CourseViewSchema } = require('../schema');
 
 const createCourseWatchHistory = async (insertData) => {
 
@@ -367,6 +367,68 @@ const completedVideoCount = async (startDate, endDate) => {
     return coursewatchhistoryData;
 }
 
+const createCourseViewHistory = async (insertData) => {
+
+    const CourseViewHistory = new CourseViewSchema(insertData)
+
+    const CourseViewHistoryResult = await CourseViewHistory.save().then((data) => {
+        return data
+    }).catch((err) => {
+        return false
+    });
+
+    return CourseViewHistoryResult;
+}
+
+const fatchCourseViewHistoryList = async (user_id, course_id, chapter_id) => {
+    let condition = [ 
+        {
+            user_id: user_id
+        },
+        {
+            course_id: course_id
+        }
+    ]
+
+    if(chapter_id){
+        condition.push({
+            chapter_id: chapter_id
+        })
+    }
+
+    const courseViewData = await CourseViewSchema.findOne({ 
+        $and: condition
+    }).sort({ last_accessed: -1 }).then((data) => {
+        return data
+    }).catch((err) => {
+        return null
+    });
+    return courseViewData;
+}
+
+const addCourseTopicViewHistory = async (id, updateData) => {
+
+    const addCourseWatchHistoryData = await CourseViewSchema.findOneAndUpdate({  _id: id  }, { $push:  { "progress": updateData } }, { new: true }).then((data) => {
+        return data
+    }).catch((err) => {
+        return false
+    });
+
+    return addCourseWatchHistoryData;
+
+}
+
+const updateCourseViewHistory  = async (id, updateData) => {
+
+    const userCourseResult = CourseViewSchema.findOneAndUpdate({  _id: id  }, updateData).then((model) => {
+        return true
+    }).catch((err) => {
+        return false
+    });
+
+   return userCourseResult;
+}
+
 
 module.exports = {
     createCourseWatchHistory,
@@ -386,5 +448,9 @@ module.exports = {
     fetchCourseWatchHistory,
     continueWatchingVideoCount,
     addCompletedTopicHistory,
-    completedVideoCount
+    completedVideoCount,
+    createCourseViewHistory,
+    fatchCourseViewHistoryList,
+    addCourseTopicViewHistory,
+    updateCourseViewHistory
 }

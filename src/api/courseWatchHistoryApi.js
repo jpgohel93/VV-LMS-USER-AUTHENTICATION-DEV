@@ -220,4 +220,64 @@ module.exports = async (app) => {
 
         res.status(data.status_code).json(data);
     });
+
+    app.post('/coursewatchhistory/addChapterViewHistory',UserAuth,await validateFormFields([
+        body('course_id')
+        .notEmpty()
+        .withMessage('Course id is required.')
+        .isMongoId().withMessage("Course id is not valid"),
+
+        body('chapter_id')
+        .notEmpty()
+        .withMessage('Chapter id is required.')
+        .isMongoId().withMessage("Chapter id is not valid")
+    ]),async (req,res,next) => {
+        const { course_id, chapter_id } = req.body;
+
+        let userId = req?.user?.user_id ? req?.user?.user_id : null
+
+        const data = await CourseWatchHistoryService.addChapterViewHistory({ user_id: userId, course_id, chapter_id }); 
+
+        res.status(data.status_code).json(data);
+    });
+
+    app.post('/coursewatchhistory/addTopicViewHistory',UserAuth,await validateFormFields([
+        body('course_id')
+        .notEmpty()
+        .withMessage('Course id is required.')
+        .isMongoId().withMessage("Course id is not valid"),
+
+        body('chapter_id')
+        .notEmpty()
+        .withMessage('Chapter id is required.')
+        .isMongoId().withMessage("Chapter id is not valid"),
+
+        body('topic_id')
+        .notEmpty()
+        .withMessage('Topic id is required.')
+        .isMongoId().withMessage("Topic id is not valid")
+    ]),async (req,res,next) => {
+        const { course_id, chapter_id, topic_id  } = req.body;
+
+        let userId = req?.user?.user_id ? req?.user?.user_id : null
+
+        const data = await CourseWatchHistoryService.addTopicViewHistory({ user_id: userId, course_id, chapter_id, topic_id  }); 
+
+        res.status(data.status_code).json(data);
+    });
+
+    app.post('/coursewatchhistory/getTopicViewHistory',UserAuth,await validateFormFields([
+        body('course_id')
+        .notEmpty()
+        .withMessage('Course id is required.')
+        .isMongoId().withMessage("Course id is not valid")
+    ]),async (req,res,next) => {
+        const { course_id, chapter_id  } = req.body;
+
+        let userId = req?.user?.user_id ? req?.user?.user_id : null
+
+        const data = await CourseWatchHistoryService.getTopicViewHistory({ user_id: userId, course_id, chapter_id  }); 
+
+        res.status(data.status_code).json(data);
+    });
 }

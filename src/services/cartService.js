@@ -384,7 +384,7 @@ const checkOut = async (userInputs,request) => {
                                 course_amount: courseAmount,
                                 course_tax_amount: finalAmount,
                                 code: getUserData.referral_code,
-                                heman_id: hemanData.id,
+                                heman_id: hemanData._id,
                                 sub_heman_id: null,
                                 heman_amount: hemanAmount,
                                 sub_heman_amount: 0,
@@ -474,7 +474,7 @@ const checkOut = async (userInputs,request) => {
                         couponAmount = couponData.discount
                         finalAmount = parseInt(finalAmount) - parseInt(couponAmount)
                     }else if(couponData.discount_type == 2){
-                        let discount = parseInt(finalAmount) * parseFloat(couponData.discount) / 100 
+                        let discount = parseInt(courseAmount) * parseFloat(couponData.discount) / 100 
                         couponAmount = discount
                         finalAmount = parseInt(finalAmount) - parseInt(discount)
                     }
@@ -1026,7 +1026,7 @@ const applyCoupon = async (userInputs, request) => {
                 couponAmount = couponData.discount
                 finalAmount = parseInt(finalAmount) - parseInt(couponAmount)
             }else if(couponData.discount_type == 2){
-                let discount = parseInt(finalAmount) * parseFloat(couponData.discount) / 100 
+                let discount = parseInt(courseAmount) * parseFloat(couponData.discount) / 100 
                 couponAmount = discount
                 finalAmount = parseInt(finalAmount) - parseInt(discount)
             }

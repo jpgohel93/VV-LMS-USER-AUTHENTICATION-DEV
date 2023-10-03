@@ -562,6 +562,78 @@ const getUserEarningHistory = async (userFilter) => {
     return getFilterData;
 }
 
+const getUserWithdrawAmount = async (userInputs) => {
+
+    let thirtyDaysAgo = new Date();
+    if(userInputs?.transaction_type == 1 && userInputs?.with_date == 1){
+        // Calculate the date 30 days ago
+        thirtyDaysAgo = new Date();
+        thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+    }
+   
+
+    const withdrawAmount = await UserEarningSchema.aggregate([
+        {
+            $match: {
+                createdAt: { $lte: thirtyDaysAgo },
+                user_id: userInputs.user_id,
+                transaction_type: userInputs.transaction_type
+            },
+        },
+        {
+            $group: {
+                _id: null,
+                totalAmount: { $sum: '$amount' },
+            },
+        },
+    ]).then((result) => {
+        if (result.length > 0) {
+            return result[0].totalAmount;
+        } else {
+            return 0
+        }
+    })
+    .catch((error) => {
+        return 0
+    });
+
+    return withdrawAmount
+}
+
+const countTransation = async (userInputs) => {
+
+    let filter = [];
+    if(userInputs.user_id){
+        filter.push({
+            user_id: userInputs.user_id
+        })
+    }
+    if(userInputs.transaction_type){
+        filter.push({
+            transaction_type: userInputs.transaction_type
+        })
+    }
+
+    let getFilterData =  await UserEarningSchema.count( { $and: filter }).then((data) => {
+        return data
+    }).catch((err) => {
+        return null
+    });
+
+    return getFilterData;
+}
+
+const updateUserEarning = async (id,updateData) => {
+
+    const UserEarningResult = UserEarningSchema.updateOne({_id: id}, updateData).then((model) => {
+        return true
+    }).catch((err) => {
+        return false
+    });
+
+   return UserEarningResult;
+}
+
 module.exports = {
     assignUserCourse,
     filterUserCourseData,
@@ -584,5 +656,8 @@ module.exports = {
     getUserCourseList,
     userEarning,
     deleteUserEarning,
-    getUserEarningHistory
+    getUserEarningHistory,
+    getUserWithdrawAmount,
+    countTransation,
+    updateUserEarning
 }

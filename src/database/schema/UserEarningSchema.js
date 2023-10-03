@@ -21,7 +21,9 @@ const UserEarningSchema = new Schema({
         default: false
     }, 
     transaction_id: String,
-    transaction_type: Number // 1. credit, 2. debit
+    transaction_type: Number, // 1. credit, 2. debit
+    payment_detail_id: String,
+    reason: String
 },{ timestamps: true });  
 
 module.exports =  mongoose.model('user_earning', UserEarningSchema);

@@ -1791,7 +1791,7 @@ const singleTimePayment = async (userInputs,request) => {
   
 }
 
-const paymentResponse = async (request,response) => { 
+const paymentResponse = async (request) => { 
     var ccavEncResponse='',
 	ccavResponse = '',
 	ccavPOST = '';
@@ -2132,7 +2132,7 @@ const paymentResponse = async (request,response) => {
     }
 }
 
-const testSubscription = async (userInputs,request) => {
+const testSubscription = async (userInputs) => {
     try{
       
         let workingKey = process.env.DEVELOPER_MODE == "development" ? process.env.CCAVENUE_KEY_TESTING : process.env.CCAVENUE_KEY
@@ -2246,7 +2246,7 @@ const testSubscription = async (userInputs,request) => {
   
 }
 
-const getUserEarningHistory = async (userInputs,request) => {
+const getUserEarningHistory = async (userInputs) => {
     try{
         const { user_id, startToken, endToken, transaction_type } = userInputs;
 
@@ -2287,6 +2287,147 @@ const getUserEarningHistory = async (userInputs,request) => {
   
 }
 
+const makeUserEarningPayment = async (userInputs) => {
+    try{
+        const { user_id, payment_detail_id, amount } = userInputs;
+
+        if(amount > 0){
+            let accountSettingData = await CallEventBus("get_account_setting_data",{  }, "")
+            const totalTransation = await UserCourseModel.countTransation({ user_id,transaction_type : 1 });
+            
+            if(totalTransation >= accountSettingData?.referral_after_purchase_of){
+                //get available withdraw amount
+                const totalEarningAmount = await UserCourseModel.getUserWithdrawAmount({ user_id, transaction_type : 1, with_date: 1 });
+                const totalWithdrawAmount = await UserCourseModel.getUserWithdrawAmount({ user_id, transaction_type : 2 });
+
+                let availableWithdrawAmount = totalEarningAmount - totalWithdrawAmount
+                if(availableWithdrawAmount && availableWithdrawAmount >= amount){
+
+                    await UserCourseModel.userEarning({
+                        user_id: user_id,
+                        amount: amount,
+                        transaction_type: 2,
+                        payment_detail_id: payment_detail_id
+                    })
+
+                    return {
+                        status: true,
+                        status_code: constants.SUCCESS_RESPONSE,
+                        message: "Withdraw amount under process.",
+                        availableWithdrawAmount:  availableWithdrawAmount
+                    }
+                }else {
+                    return {
+                        status: false,
+                        status_code: constants.EXCEPTION_ERROR_CODE,
+                        message: `Available withdraw is ${ availableWithdrawAmount }.`,
+                        error: { server_error: `Available withdraw is ${ availableWithdrawAmount }.` },
+                        data: null,
+                    };
+                }
+            }else{
+                return {
+                    status: false,
+                    status_code: constants.EXCEPTION_ERROR_CODE,
+                    message: `Withdraw a amount after ${ accountSettingData?.referral_after_purchase_of }.`,
+                    error: { server_error:  `Withdraw a amount after ${ accountSettingData?.referral_after_purchase_of }.` },
+                    data: null,
+                };
+            }
+        }else{
+            return {
+                status: false,
+                status_code: constants.EXCEPTION_ERROR_CODE,
+                message: 'Enter valid amount',
+                error: { amount: 'Enter valid amount' },
+                data: null,
+            };
+        }
+    }catch (error) {
+        // Handle unexpected error
+        console.log("error ::", error)
+        return {
+            status: false,
+            status_code: constants.EXCEPTION_ERROR_CODE,
+            message: 'An unexpected error occurred',
+            error: { server_error: 'An unexpected error occurred' },
+            data: null,
+        };
+    }
+  
+}
+
+const earningOverview = async (userInputs) => {
+    try{
+        const { user_id} = userInputs;
+
+        const totalEarningAmount = await UserCourseModel.getUserWithdrawAmount({ user_id, transaction_type : 1 });
+        const totalWithdrawAmount = await UserCourseModel.getUserWithdrawAmount({ user_id, transaction_type : 2 });
+        const totalAvailableEarning = await UserCourseModel.getUserWithdrawAmount({ user_id, transaction_type : 1, with_date: 1 });
+
+        let availableWithdrawAmount = totalAvailableEarning - totalWithdrawAmount
+        return {
+            status: true,
+            status_code: constants.SUCCESS_RESPONSE,
+            message: "Data get successfully.",
+            data: {
+                total_earning_amount: totalEarningAmount,
+                total_withdraw_amount: totalWithdrawAmount,
+                available_amount: availableWithdrawAmount
+            }
+        }
+    }catch (error) {
+        // Handle unexpected error
+        console.log("error ::", error)
+        return {
+            status: false,
+            status_code: constants.EXCEPTION_ERROR_CODE,
+            message: 'An unexpected error occurred',
+            error: { server_error: 'An unexpected error occurred' },
+            data: null,
+        };
+    }
+  
+}
+
+const updateTransactionStatus = async (userInputs) => {
+    try{
+        const { transaction_id, payment_transaction_id, reason, transaction_status } = userInputs;
+
+        //get course data
+        const updateUserEarning = await UserCourseModel.updateUserEarning(transaction_id,{ 
+            transaction_id: payment_transaction_id,  
+            reason: reason, 
+            amount_credited: transaction_status
+        });
+
+        if(updateUserEarning !== null){
+            return {
+                status: true,
+                status_code: constants.SUCCESS_RESPONSE,
+                message: "Status updated successfully"
+            }
+        }else{
+            return {
+                status: true,
+                status_code: constants.SUCCESS_RESPONSE,
+                message: "Data not found"
+            };
+        }
+    }catch (error) {
+        // Handle unexpected error
+        console.log("error ::", error)
+        return {
+            status: false,
+            status_code: constants.EXCEPTION_ERROR_CODE,
+            message: 'An unexpected error occurred',
+            error: { server_error: 'An unexpected error occurred' },
+            data: null,
+        };
+    }
+  
+}
+
 module.exports = {
     assignCourse,
     getAssignCourseList,
@@ -2306,5 +2447,8 @@ module.exports = {
     singleTimePayment,
     paymentResponse,
     testSubscription,
-    getUserEarningHistory
+    getUserEarningHistory,
+    makeUserEarningPayment,
+    earningOverview,
+    updateTransactionStatus
 }

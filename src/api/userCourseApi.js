@@ -318,4 +318,29 @@ module.exports = async (app) => {
 
         res.status(data.status_code).json(data);
     });
+
+    app.post('/user/withdrawEarning', UserAuth ,async (req,res,next) => {
+        const { payment_detail_id, amount } = req.body;
+        let user_id = req.user !== undefined ? req.user.user_id : null; 
+
+        const data = await userCourseService.makeUserEarningPayment({ user_id, payment_detail_id, amount }); 
+
+        res.status(data.status_code).json(data);
+    });
+
+    app.get('/user/earningOverview', UserAuth ,async (req,res,next) => {
+        let user_id = req.user !== undefined ? req.user.user_id : null; 
+
+        const data = await userCourseService.earningOverview({ user_id }); 
+
+        res.status(data.status_code).json(data);
+    });
+
+    app.post('/user/updateTransactionStatus', UserAuth ,async (req,res,next) => {
+        const { transaction_id, payment_transaction_id, reason, transaction_status } = req.body;
+
+        const data = await userCourseService.updateTransactionStatus({ transaction_id, payment_transaction_id, reason, transaction_status }); 
+
+        res.status(data.status_code).json(data);
+    });
 }

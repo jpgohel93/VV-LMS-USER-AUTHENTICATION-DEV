@@ -885,9 +885,9 @@ const applyCoupon = async (userInputs, request) => {
                     return {
                         status: false,
                         status_code: constants.ERROR_RESPONSE,
-                        message: "Enter valid coupon code",
+                        message: "Coupon not combinable with referral discount",
                         error: {
-                            coupon_code: "Enter valid coupon code"
+                            coupon_code: "Coupon not combinable with referral discount"
                         }
                     }; 
                 }

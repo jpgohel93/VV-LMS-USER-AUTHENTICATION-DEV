@@ -227,7 +227,7 @@ module.exports = async (app) => {
 
         const { user_id, startToken, endToken, type } = req.body;
     
-        const data = await userCourseService.getPaymentHistory({ user_id, startToken, endToken, type }); 
+        const data = await userCourseService.getPaymentHistory({ user_id, startToken, endToken, type }, req); 
         res.status(data.status_code).json(data);
     });
 

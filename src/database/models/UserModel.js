@@ -463,11 +463,11 @@ const getAllStudent = async (userFilter) => {
     if(userFilter.purchase_course){
         if(userFilter.purchase_course == 1){
             searchFilter.push({
-                purchase_course: { $eq: true }
+                is_purchase_course: { $eq: true }
             });
         }else if(userFilter.purchase_course == 2){
             searchFilter.push({
-                purchase_course: { $eq: false }
+                is_purchase_course: { $eq: false }
             });
         }
     }
@@ -476,10 +476,10 @@ const getAllStudent = async (userFilter) => {
         is_deleted: false
     });
 
-    if(userFilter.endToken){
+    if(userFilter.startToken){
         const studentsData = await UserSchema.find({ 
             $and: searchFilter
-        },{createdAt: 1,country_code: 1,email: 1,first_name: 1,last_name: 1,mobile_no: 1,profile_image :1}).skip(userFilter.startToken).limit(userFilter.endToken).then((data) => {
+        },{createdAt: 1,country_code: 1,email: 1,first_name: 1,last_name: 1,mobile_no: 1,profile_image :1,is_purchase_course: 1}).skip(userFilter.endToken).limit(userFilter.startToken).then((data) => {
             return data
         }).catch((err) => {
             return null
@@ -498,7 +498,7 @@ const getAllStudent = async (userFilter) => {
 
         const studentsData = await UserSchema.find({ 
             $and: searchFilter
-        },{createdAt: 1,country_code: 1,email: 1,first_name: 1,last_name: 1,mobile_no: 1,profile_image :1}).then((data) => {
+        },{createdAt: 1,country_code: 1,email: 1,first_name: 1,last_name: 1,mobile_no: 1,profile_image :1, is_purchase_course: 1}).then((data) => {
             return data
         }).catch((err) => {
             return null

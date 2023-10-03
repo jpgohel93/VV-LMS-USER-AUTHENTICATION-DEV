@@ -51,7 +51,7 @@ const assignCourse = async (userInputs,request) => {
                 expire_date: date
             });
 
-            UserCourseModel.updateUserCourse(user_id,{ 
+            UserModel.updateUser(user_id,{ 
                 is_purchase_course: true
             });
 
@@ -958,7 +958,7 @@ const purchaseCourse = async (userInputs,request) => {
         const createUserCourse = await UserCourseModel.assignUserCourse(courseInsertData);
         cronLogData['create_user_course'] = courseData
 
-        UserCourseModel.updateUserCourse(user_id,{ 
+        UserModel.updateUser(user_id,{ 
             is_purchase_course: true
         });
 
@@ -1994,6 +1994,11 @@ const paymentResponse = async (request,response) => {
                     }
                 }
             }
+
+            UserModel.updateUser(userId,{ 
+                is_purchase_course: true
+            });
+
             
         }else if(paymentStatus == "Failure"){
             //update user course data

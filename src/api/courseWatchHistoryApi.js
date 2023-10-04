@@ -271,7 +271,7 @@ module.exports = async (app) => {
         .notEmpty()
         .withMessage('Course id is required.')
         .isMongoId().withMessage("Course id is not valid")
-    ]),async (req,res,next) => {
+    ]),async (req,res,next) => { 
         const { course_id, chapter_id  } = req.body;
 
         let userId = req?.user?.user_id ? req?.user?.user_id : null

@@ -413,7 +413,7 @@ const addCourseTopicViewHistory = async (id, updateData) => {
     }).catch((err) => {
         return false
     });
-
+ 
     return addCourseWatchHistoryData;
 
 }
@@ -427,6 +427,16 @@ const updateCourseViewHistory  = async (id, updateData) => {
     });
 
    return userCourseResult;
+}
+
+const deleteCompletedTopics = async (id,topic_id) => {
+    const topicData = await CourseViewSchema.findOneAndUpdate({ _id: id }, { $pull: { progress:  topic_id } }).then((model) => {
+        return true
+    }).catch((err) => {
+        return false
+    });
+      
+    return topicData;
 }
 
 
@@ -452,5 +462,6 @@ module.exports = {
     createCourseViewHistory,
     fatchCourseViewHistoryList,
     addCourseTopicViewHistory,
-    updateCourseViewHistory
+    updateCourseViewHistory,
+    deleteCompletedTopics
 }

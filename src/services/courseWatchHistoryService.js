@@ -605,7 +605,10 @@ const addTopicViewHistory = async (userInputs) => {
         const { user_id, course_id, chapter_id, topic_id } = userInputs;
         let checkCourseWatchHistoryData = await CourseWatchHistoryModel.fatchCourseViewHistoryList(user_id, course_id, chapter_id);
 
-        const createCourseWatchHistory = await CourseWatchHistoryModel.addCourseTopicViewHistory(checkCourseWatchHistoryData._id, topic_id);
+        //delete the course topic watch history
+        await CourseWatchHistoryModel.deleteCompletedTopics(checkCourseWatchHistoryData._id,topic_id);
+
+        const createCourseWatchHistory = await CourseWatchHistoryModel.addCourseTopicViewHistory(checkCourseWatchHistoryData._id, topic_id); 
 
         if(createCourseWatchHistory !== false){
             await CourseWatchHistoryModel.updateCourseViewHistory(checkCourseWatchHistoryData._id, {

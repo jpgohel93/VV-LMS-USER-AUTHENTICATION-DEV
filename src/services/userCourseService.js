@@ -1013,7 +1013,7 @@ const purchaseCourse = async (userInputs,request) => {
 
 const mylearning = async (userInputs,request) => {
     try{
-        const { user_id, page_type } = userInputs;
+        const { user_id, page_type } = userInputs; 
 
         //check duplicate user name
         const getUserCourse = await UserCourseModel.getUserCourseLearningData({ user_id,  page_type });
@@ -1033,11 +1033,10 @@ const mylearning = async (userInputs,request) => {
                                 let courseWatchHistory = await CourseWatchHistoryModel.filterCourseWatchHistoryData(user_id, courseElement.course_id)
                                 let courseDefault = await CallCourseQueryEvent("get_course_default_promotional_content",{ course_id: courseElement.course_id  }, request.get("Authorization"))
 
+                                let courseChapterCount = await CallCourseQueryDataEvent("get_chapter_count",{ course_id: courseElement.course_id  }, request.get("Authorization"));
 
                                 let perForCompletedChapter = 0;
                                 if(courseWatchHistory!== null){
-                                    let courseChapterCount = await CallCourseQueryDataEvent("get_chapter_count",{ course_id: courseElement.course_id  }, request.get("Authorization"));
-
                                     if(courseChapterCount.total_chapter > 0 && courseWatchHistory.completed_chapter.length > 0){
                                         perForCompletedChapter = courseWatchHistory.completed_chapter.length * 100 / parseInt(courseChapterCount.total_chapter);
                                     }
@@ -1058,7 +1057,8 @@ const mylearning = async (userInputs,request) => {
                                         payment_method: courseElement.payment_method,
                                         transaction_id: courseElement.transaction_id,
                                         subscription_start_date: courseElement.subscription_start_date,
-                                        subscription_end_date: courseElement.subscription_end_date,
+                                        subscription_end_date: courseElement?.subscription_end_date || null,
+                                        course_chapter_count: courseChapterCount?.total_chapter || 0,
                                         course: {
                                             course_title: course?.course_title ? course.course_title : '',
                                             course_description: course?.short_description ? course.short_description : '',

@@ -431,6 +431,16 @@ const getAllStudent = async (userFilter) => {
 
     let searchFilter = [];
 
+    if(userFilter.startDate && userFilter.endDate){
+        searchFilter.push({
+            createdAt: {
+                $gte: new Date(userFilter.startDate),
+                $lte: new Date(userFilter.endDate),
+            }
+        })
+    }
+
+
     if(userFilter.search){
         searchFilter.push({
             $or: [

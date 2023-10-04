@@ -1108,9 +1108,9 @@ module.exports = async (app) => {
     });
 
     app.post('/user/getallstudent', UserAuth, async (req, res, next) => {
-        const { referral_code, referral_code_array, startToken, endToken, search, purchase_course, count_record } = req.body;
+        const { referral_code, referral_code_array, startToken, endToken, search, purchase_course, count_record,startDate, endDate } = req.body;
         
-        const data = await userService.getAllStudent({ referral_code, referral_code_array, startToken, endToken, search, purchase_course, count_record });
+        const data = await userService.getAllStudent({ referral_code, referral_code_array, startToken, endToken, search, purchase_course, count_record,startDate, endDate });
 
         res.status(data.status_code).json(data);
     });

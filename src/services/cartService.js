@@ -493,15 +493,26 @@ const checkOut = async (userInputs,request) => {
                 let invoiceData = {
                     user_id: user_id, 
                     course_type: 1,
-                    amount: amount
+                    amount: amount,
+                    course_base_price: courseData.price,
+                    discount_amount: courseData.discount_amount,
+                    discount: courseData.discount,
+                    is_tax_inclusive: courseData.is_tax_inclusive,
+                    is_tax_exclusive: courseData.is_tax_exclusive,
+                    tax_percentage: courseData.tax_percentage,
+                    heman_discount_amount: hemanDiscount,
+                    coupon_code: coupon_code,
+                    coupon_amount: couponAmount,
+                    tax_amount: taxAmount,
+                    convince_fee: courseData?.convince_fee || 0,
+                    convince_fee_amount: convinceFeeAmount,
+                    purchase_time: new Date(),
+                    innitial_response: '',
+                    invoice_type: 2,
+                    module_name: "Checkout",
+                    order_id: orderId,
+                    course_id: course_id
                 }
-
-                invoiceData['purchase_time'] = new Date()
-                invoiceData['innitial_response'] = ''
-                invoiceData['invoice_type'] = 2
-                invoiceData['module_name'] = "Checkout"
-                invoiceData['order_id'] = orderId
-                invoiceData['course_id'] = course_id
 
                 const createInvoice = await InvoiceModel.createInvoice(invoiceData);
 
@@ -512,10 +523,6 @@ const checkOut = async (userInputs,request) => {
                 userCourseData['invoice_id'] = invoiceid
                 userCourseData['order_id'] = orderId
                 await UserCourseModel.assignUserCourse(userCourseData);
-
-                // UserCourseModel.updateUserCourse(user_id,{ 
-                //     is_purchase_course: true
-                // });
 
                 let workingKey = process.env.DEVELOPER_MODE == "development" ? process.env.CCAVENUE_KEY_TESTING : process.env.CCAVENUE_KEY
                 let accessCode = process.env.DEVELOPER_MODE == "development" ? process.env.CCAVENUE_ACCESS_CODE_TESTING : process.env.CCAVENUE_ACCESS_CODE

@@ -1517,7 +1517,7 @@ const getPaymentHistory = async (userInputs,request) => {
                         )
                     }
 
-                    await paymentHistory[key].set('course_detail', courseArray ,{strict:false})
+                    await paymentHistory[key].set('course_detail', courseArray.length > 0 ? courseArray[0] : {} ,{strict:false})
                 })
             )
         }
@@ -1575,6 +1575,7 @@ const getInvoice = async (userInputs) => {
             if(userCourseData.length > 0){
                 await Promise.all(
                     userCourseData.map(async (element) => {
+
                         let courseData = await CallCourseQueryEvent("get_course_data_without_auth",{ id: element?.course_id  },'')
                         await courseArray.push({
                             course_title: courseData?.course_title || "",
@@ -1606,12 +1607,24 @@ const getInvoice = async (userInputs) => {
         
             const invoice = {
                 status: paymentStatus, // unpaid, paid, failed, refunded
-                amount: invoiceData.amount,
+                amount: invoiceData?.amount,
+                course_base_price: invoiceData?.course_base_price || 0,
+                discount_amount: invoiceData?.discount_amount || 0,
+                discount: invoiceData?.discount || 0,
+                is_tax_inclusive: invoiceData?.is_tax_inclusive || false,
+                is_tax_exclusive: invoiceData?.is_tax_exclusive || false,
+                tax_percentage: invoiceData?.tax_percentage || 0,
+                heman_discount_amount: invoiceData?.heman_discount_amount || 0,
+                coupon_code: invoiceData?.coupon_code || '',
+                coupon_amount: invoiceData?.coupon_amount || 0,
+                tax_amount: invoiceData?.tax_amount || 0,
+                convince_fee: invoiceData?.convince_fee || 0,
+                convince_fee_amount: invoiceData?.convince_fee_amount || 0,
                 username: `${userData.first_name} ${userData.last_name}`,
-                issue_data: moment(new Date()).format('MMMM.Do.YYYY'),
-                due_date: moment(new Date()).format('MMMM.Do.YYYY'),
-                course: courseArray,
-                invoice_id: invoiceData?.invoice_id ? invoiceData?.invoice_id : ( invoiceData?.order_id ? invoiceData?.order_id : '')
+                issue_data: moment(new Date()).format('MMMM/DD/YYYY'),
+                due_date: moment(new Date()).format('MMMM/DD/YYYY'),
+                course_title: courseArray?.length > 0 ? courseArray[0].course_title : 0,
+                invoice_id: invoiceData?.order_id ? invoiceData?.order_id : ""
             };
             //const pdfBody = await invoiceTemplate(invoice);
 

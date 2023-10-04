@@ -23,7 +23,16 @@ const InvoiceSchema = new Schema({
     },
     payment_response: String,
     payment_date: String,
+    discount_amount: Number,
+    discount: Number,
+    is_tax_exclusive: Boolean,
+    is_tax_inclusive: Boolean,
+    tax_percentage: Number,
+    tax_amount: Number,
     amount: Number,
+    course_base_price: Number,
+    convince_fee: Number,
+    convince_fee_amount: Number,
     invoice_type: Number, // 1. subscribe course, 2. purchase course, 3. recurring payment
     module_name: String, // Checkout, Subscription/Payment, Webhook 
     title: String,
@@ -42,7 +51,13 @@ const InvoiceSchema = new Schema({
     basic_amount: {
         default: 0,
         type: Number 
-    } 
+    },
+    coupon_code: String,
+    coupon_amount: Number,
+    heman_discount_amount: {
+        default: 0,
+        type: Number 
+    },
 },{ timestamps: true }); 
 
 InvoiceSchema.index( { user_id : 1 } )

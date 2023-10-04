@@ -271,10 +271,11 @@ module.exports = async (app) => {
             res.redirect(process.env.DEVELOPER_MODE == "development" ? process.env.CCAVENUE_SUCCESS_URL_TESTING + data?.course_id + "/?p=success" : process.env.CCAVENUE_SUCCESS_URL + data?.course_id + "/?p=success" );
         }else if(data.payment_status == "Failure"){
             res.redirect(process.env.DEVELOPER_MODE == "development" ? process.env.CCAVENUE_FAILURE_URL_TESTING + data?.course_id + "/?p=fail"  : process.env.CCAVENUE_FAILURE_URL + data?.course_id + "/?p=fail" );
+        }else if(data.payment_status == "Aborted"){
+            res.redirect(process.env.DEVELOPER_MODE == "development" ? process.env.CCAVENUE_FAILURE_URL_TESTING + data?.course_id + "/?p=fail"  : process.env.CCAVENUE_FAILURE_URL + data?.course_id + "/?p=fail" );
         }else{
             res.redirect(process.env.DEVELOPER_MODE == "development" ? process.env.CCAVENUE_FAILURE_URL_TESTING : process.env.CCAVENUE_FAILURE_URL);
         }
-        
     });
 
     app.post('/user/addPaymentTransaction', await validateFormFields([

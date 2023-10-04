@@ -539,6 +539,7 @@ const checkOut = async (userInputs,request) => {
                     billing_email: getUserData?.email || 'demouser@gmail.com',
                     merchant_param1: user_id,
                     merchant_param2: device_type ? device_type : 1,
+                    merchant_param3: course_id,
                     integration_type: "iframe_normal",
                     redirect_url: redirectUrl,
                     cancel_url: redirectUrl
@@ -561,7 +562,7 @@ const checkOut = async (userInputs,request) => {
                 return {
                     status: true,
                     status_code: constants.SUCCESS_RESPONSE,
-                    message: "Course purchase successfully",
+                    message: "Please make a payment",
                     order_id: orderId,
                     payment_url: paymentUrl
                 };

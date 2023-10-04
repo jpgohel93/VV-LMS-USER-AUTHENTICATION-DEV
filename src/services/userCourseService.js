@@ -1809,8 +1809,11 @@ const paymentResponse = async (request) => {
             })
         )
 
+        console.log("request?.body?.encResp :: ", dataArray)
+
         let orderId = dataArray.order_id
         let userId = dataArray.merchant_param1
+        let courseId = dataArray.merchant_param3
         let finalAmount = dataArray.mer_amount
         let deviceType = dataArray.merchant_param2 ? dataArray.merchant_param2 : 1
         let paymentStatus = dataArray.order_status
@@ -2076,7 +2079,7 @@ const paymentResponse = async (request) => {
         return {
             status: true,
             payment_status: paymentStatus,
-            course_id: invoiceData?.course_id || 0
+            course_id: invoiceData?.course_id || courseId
         };
        
         //payment reszponse

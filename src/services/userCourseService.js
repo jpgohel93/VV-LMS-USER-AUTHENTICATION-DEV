@@ -1482,7 +1482,7 @@ const cancelCourseSubscription = async (userInputs,request) => {
 
 const getPaymentHistory = async (userInputs,request) => {
     try{
-        const { user_id, startToken, endToken, type } = userInputs;
+        const { user_id, startToken, endToken, type, payment_type } = userInputs;
 
         const perPage = parseInt(endToken) || 10; 
         let page = Math.max((parseInt(startToken) || 1) - 1, 0); 
@@ -1491,7 +1491,7 @@ const getPaymentHistory = async (userInputs,request) => {
         }
 
         //get course data
-        const paymentHistory = await InvoiceModel.getPaymentHistory({ user_id,  page, perPage, type });
+        const paymentHistory = await InvoiceModel.getPaymentHistory({ user_id,  page, perPage, type, payment_type });
 
         if(paymentHistory?.length > 0){
             await Promise.all(
@@ -1517,7 +1517,8 @@ const getPaymentHistory = async (userInputs,request) => {
                         )
                     }
 
-                    await paymentHistory[key].set('course_detail', courseArray.length > 0 ? courseArray[0] : {} ,{strict:false})
+                    await paymentHistory[key].set('course_detail', courseArray?.length > 0 ? courseArray[0] : {} ,{strict:false})
+
                 })
             )
         }

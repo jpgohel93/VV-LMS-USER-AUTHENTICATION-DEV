@@ -216,18 +216,12 @@ module.exports = async (app) => {
         .notEmpty()
         .withMessage('End token is required.')
         .isNumeric()
-        .withMessage('Enter a valid end token value'),
-
-        body('type')
-        .notEmpty()
-        .withMessage('Type is required.')
-        .isNumeric()
-        .withMessage('Select a valid type')
+        .withMessage('Enter a valid end token value')
     ]), async (req,res,next) => {
 
-        const { user_id, startToken, endToken, type } = req.body;
+        const { user_id, startToken, endToken, type, payment_type } = req.body;
     
-        const data = await userCourseService.getPaymentHistory({ user_id, startToken, endToken, type }, req); 
+        const data = await userCourseService.getPaymentHistory({ user_id, startToken, endToken, type, payment_type }, req); 
         res.status(data.status_code).json(data);
     });
 

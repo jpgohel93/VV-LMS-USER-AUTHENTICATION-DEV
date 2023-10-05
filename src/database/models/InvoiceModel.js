@@ -89,6 +89,34 @@ const getPaymentHistory = async (userFilter) => {
         })
     }
 
+    if(userFilter.payment_type){
+        if(userFilter.payment_type == 1){
+            filter.push({
+                payment_status: 2
+            })
+        }else if(userFilter.payment_type == 2){
+            let orCondition = [];
+            orCondition.push({
+                payment_status: 5
+            })
+            orCondition.push({
+                payment_status: 6
+            })
+            orCondition.push({
+                payment_status: 7
+            })
+            orCondition.push({
+                payment_status: 8
+            })
+
+            filter.push({
+                $or: orCondition
+            })
+        }
+        
+    }
+    
+
     if(userFilter.type){
 
         if(userFilter.type == 1){

@@ -922,7 +922,7 @@ const applyCoupon = async (userInputs, request) => {
                         isValidCoupon = true
                     }else{
                         isValidCoupon = false 
-                        errorMessage = "This coupon is for a limited user"
+                        errorMessage = "Sorry, this coupon is only valid for selected users."
                     }
                 }
     

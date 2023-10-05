@@ -1507,7 +1507,7 @@ const getPaymentHistory = async (userInputs,request) => {
                                 let courseDefault = await CallCourseQueryEvent("get_course_default_promotional_content",{ course_id: element?.course_id  }, request.get("Authorization"))
 
                                 await courseArray.push({
-                                    course_id: courseData._id,
+                                    course_id: courseData.course_id,
                                     course_title: courseData?.course_title || "",
                                     amount: element?.price || 0,
                                     thumbnail_image: courseDefault?.web_image || null,

@@ -634,6 +634,31 @@ const updateUserEarning = async (id,updateData) => {
    return UserEarningResult;
 }
 
+const getUserCoursePurchaseList = async (userFilter) => {
+
+    let filter = [];
+    if(userFilter.user_id){
+        filter.push({
+            user_id: userFilter.user_id
+        })
+    }
+
+    filter.push({
+        type: 2
+    })
+    filter.push({
+        payment_status: 2
+    })
+
+    let getFilterData =  await UserCourseSchema.find( { $and: filter }).then((data) => {
+        return data
+    }).catch((err) => {
+        return null
+    });
+
+    return getFilterData;
+}
+
 module.exports = {
     assignUserCourse,
     filterUserCourseData,
@@ -659,5 +684,6 @@ module.exports = {
     getUserEarningHistory,
     getUserWithdrawAmount,
     countTransation,
-    updateUserEarning
+    updateUserEarning,
+    getUserCoursePurchaseList
 }

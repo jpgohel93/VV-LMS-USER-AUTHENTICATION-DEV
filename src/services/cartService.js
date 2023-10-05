@@ -264,10 +264,9 @@ const checkOut = async (userInputs,request) => {
         let courseData = await CallCourseQueryEvent("get_course_data_by_id",{ id: course_id }, request.get("Authorization"))
         cronLogData['course_data'] = courseData
 
-        const getUserCourseData = await UserCourseModel.getUserCourseList({ user_id: user_id});
+        const getUserCourseData = await UserCourseModel.getUserCoursePurchaseList({ user_id: user_id});
 
         if(courseData){ 
-            let userCourseArray = []
 
             let courseAmount = courseData.discount_amount
             let taxAmount = 0
@@ -732,7 +731,7 @@ const courseCheckOut = async (userInputs, request) => {
             };
         }
 
-        const getUserCourseData = await UserCourseModel.getUserCourseList({ user_id: user_id});
+        const getUserCourseData = await UserCourseModel.getUserCoursePurchaseList({ user_id: user_id});
         const getUserData = await UserModel.fatchUserById(user_id);
         
         let course = await CallCourseQueryEvent("get_course_data_by_id",{ id: course_id }, request.get("Authorization"))
@@ -866,7 +865,7 @@ const applyCoupon = async (userInputs, request) => {
         }
         // check all the coupon condition
         const getUserData = await UserModel.fatchUserById(user_id);
-        const getUserCourseData = await UserCourseModel.getUserCourseList({ user_id: user_id});
+        const getUserCourseData = await UserCourseModel.getUserCoursePurchaseList({ user_id: user_id});
         if(coupon_code){
             let isValidCoupon = false
             let checkCoupon = await CallEventBus("get_coupon_used_data",{ coupon_id: couponData._id, user_id: user_id }, request.get("Authorization"))
@@ -901,6 +900,7 @@ const applyCoupon = async (userInputs, request) => {
                 }
             }
             
+            let errorMessage =  "Enter valid coupon code"
             if(couponData){
                 if(couponData?.usage_limit > 0){
                     //count for coupon used Data
@@ -922,6 +922,7 @@ const applyCoupon = async (userInputs, request) => {
                         isValidCoupon = true
                     }else{
                         isValidCoupon = false 
+                        errorMessage = "This coupon is for a limited user"
                     }
                 }
     
@@ -960,9 +961,9 @@ const applyCoupon = async (userInputs, request) => {
                 return {
                     status: false,
                     status_code: constants.ERROR_RESPONSE,
-                    message: "Enter valid coupon code",
+                    message: errorMessage,
                     error: {
-                        coupon_code: "Enter valid coupon code"
+                        coupon_code: errorMessage
                     }
                 }; 
             }

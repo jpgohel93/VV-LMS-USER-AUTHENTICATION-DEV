@@ -1036,10 +1036,12 @@ const mylearning = async (userInputs,request) => {
                                 let courseChapterCount = await CallCourseQueryDataEvent("get_chapter_count",{ course_id: courseElement.course_id  }, request.get("Authorization"));
 
                                 let perForCompletedChapter = 0;
+                                let completedChapterCount = 0;
                                 if(courseWatchHistory!== null){
                                     if(courseChapterCount.total_chapter > 0 && courseWatchHistory.completed_chapter.length > 0){
+                                        completedChapterCount = courseWatchHistory.completed_chapter.length
                                         perForCompletedChapter = courseWatchHistory.completed_chapter.length * 100 / parseInt(courseChapterCount.total_chapter);
-                                    }
+                                    } 
                                 }
             
                                 if(course && ((page_type == 1) || (page_type == 2 && ((courseWatchHistory && courseWatchHistory.is_course_completed == false) || (courseWatchHistory == null))) || (page_type == 3 && courseWatchHistory && courseWatchHistory.is_course_completed == true) )){
@@ -1059,6 +1061,7 @@ const mylearning = async (userInputs,request) => {
                                         subscription_start_date: courseElement.subscription_start_date,
                                         subscription_end_date: courseElement?.subscription_end_date || null,
                                         course_chapter_count: courseChapterCount?.total_chapter || 0,
+                                        completed_chapter_count: completedChapterCount,
                                         course: {
                                             course_title: course?.course_title ? course.course_title : '',
                                             course_description: course?.short_description ? course.short_description : '',

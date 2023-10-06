@@ -1861,12 +1861,18 @@ const paymentResponse = async (request) => {
                 await sendPushNotification({notification_device_id:[userData?.notification_device_id], message: "Course has been purchased successfully.", data})
             }
 
-            const getUserCourseData = await UserCourseModel.getUserCourseList({ user_id: userId});
-            let courseData = await CallCourseQueryEvent("get_course_data_without_auth",{ id: invoiceData.course_id }, "")
+            const getUserCourseData = await UserCourseModel.getUserCoursePurchaseList({ user_id: userId});
+            let courseData = await CallCourseQueryEvent("get_course_data_without_auth",{ id: invoiceData.course_id }, "") 
 
 
             if(userData && (userData?.referral_code || userData?.users_referral_code) && getUserCourseData?.length == 1){
                 let courseAmount = courseData.discount_amount
+
+
+                let discountAmount = invoiceData?.discount_amount || 0
+                let referralDiscount=  invoiceData?.heman_discount_amount || 0
+                // decrease the course amount
+                let coursePrice = (courseAmount - discountAmount) - referralDiscount
               
                 if(userData?.referral_type == 1){
                     let hemanData = await CallEventBus("get_heman_by_code",{ referral_code: userData.referral_code }, '')    
@@ -1875,9 +1881,6 @@ const paymentResponse = async (request) => {
                         if(hemanData.parent_heman_id){
                             let parentHemanData = await CallEventBus("get_heman_by_id",{ id: hemanData.parent_heman_id }, '')
                         
-                            // decrease the course amount
-                            let coursePrice = courseAmount
-
                             // calculate the heman commssion
                             let subHemanAmount = 0
                             if(parentHemanData?.sub_heman_commission){
@@ -1929,9 +1932,6 @@ const paymentResponse = async (request) => {
 
                             CallEventBus("add_heman_user",{  heman_id: hemanData.parent_heman_id, sub_heman_id: hemanData._id, user: hemanuser, heman_amount: hemanAmount, sub_heman_amount: subHemanAmount }, "")
                         }else{    
-                        
-                            // decrease the course amount
-                            let coursePrice = courseAmount
 
                             let hemanDiscount = 0
                             if(hemanData?.student_discount){
@@ -1992,7 +1992,7 @@ const paymentResponse = async (request) => {
                             if(accountSettingData.referral_discount_type == 1){
                                 commissionAmount = userAmount
                             }else if(accountSettingData.referral_discount_type == 2){
-                                let discount = parseInt(courseAmount) * parseFloat(userAmount) / 100 
+                                let discount = parseInt(coursePrice) * parseFloat(userAmount) / 100 
                                 commissionAmount = discount
                             }
 
@@ -2061,15 +2061,28 @@ const paymentResponse = async (request) => {
             const pdfName = orderId+".pdf";
 
             await new Promise(async (resolve, reject) => {
-                const invoiceData = {
-                    status: paymentStatus,
-                    amount:dataArray.amount,
+                const invoice = {
+                    status: paymentStatus, // unpaid, paid, failed, refunded
+                    amount: dataArray.amount,
+                    course_base_price: invoiceData?.course_base_price || 0,
+                    discount_amount: invoiceData?.discount_amount || 0,
+                    discount: invoiceData?.discount || 0,
+                    is_tax_inclusive: invoiceData?.is_tax_inclusive || false,
+                    is_tax_exclusive: invoiceData?.is_tax_exclusive || false,
+                    tax_percentage: invoiceData?.tax_percentage || 0,
+                    heman_discount_amount: invoiceData?.heman_discount_amount || 0,
+                    coupon_code: invoiceData?.coupon_code || '',
+                    coupon_amount: invoiceData?.coupon_amount || 0,
+                    tax_amount: invoiceData?.tax_amount || 0,
+                    convince_fee: invoiceData?.convince_fee || 0,
+                    convince_fee_amount: invoiceData?.convince_fee_amount || 0,
                     username: `${userData.first_name} ${userData.last_name}`,
-                    issue_data: moment(new Date()).format('MMMM.Do.YYYY'),
-                    due_date: moment(new Date()).format('MMMM.Do.YYYY'),
-                    course: courseArray
+                    issue_data: moment(new Date()).format('MMMM/DD/YYYY'),
+                    due_date: moment(new Date()).format('MMMM/DD/YYYY'),
+                    course_title: courseArray?.length > 0 ? courseArray[0].course_title : 0,
+                    invoice_id: invoiceData?.order_id ? invoiceData?.order_id : ""
                 };
-                const pdfBody = await invoiceTemplate(invoiceData);
+                const pdfBody = await invoiceTemplate(invoice);
                 const result = await generatePDF(pdfBody, pdfName);
                 if(result){
                     resolve(true)

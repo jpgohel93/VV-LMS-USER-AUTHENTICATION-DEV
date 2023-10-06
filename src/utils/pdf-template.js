@@ -13,18 +13,18 @@ module.exports.invoiceTemplate = async (data) => {
         shape = await awsSignedUrl(constants.INVOICE_STATUS_UNPAID);
     }
 
-    let courseList = ``
-    if(data?.course?.length > 0){
-        await Promise.all(
-            data.course.map(element => {
-                courseList = courseList +   `<tr>
-                    <td style="font-weight: 500;padding: 10px 0;border-bottom: 1px solid #c9c9c9;text-align: left;">`+element.course_title+`</td>
-                    <td style="font-weight: 600;padding: 10px 0;border-bottom: 1px solid #c9c9c9;text-align: right;">`+element.amount+`</td>
-                </tr>  `;       
-            })
-        )
+    // let courseList = ``
+    // if(data?.course?.length > 0){
+    //     await Promise.all(
+    //         data.course.map(element => {
+    //             courseList = courseList +   `<tr>
+    //                 <td style="font-weight: 500;padding: 10px 0;border-bottom: 1px solid #c9c9c9;text-align: left;">`+element.course_title+`</td>
+    //                 <td style="font-weight: 600;padding: 10px 0;border-bottom: 1px solid #c9c9c9;text-align: right;">`+element.amount+`</td>
+    //             </tr>  `;       
+    //         })
+    //     )
         
-    }
+    // }
 
     return await `<!DOCTYPE html>
     <html lang="en">
@@ -80,20 +80,38 @@ module.exports.invoiceTemplate = async (data) => {
             <div class="section4 container" style="margin: 33px;">
                 <table class="item-list" style="width: 100%;border-collapse: collapse;">
                     <tr>
-                        <th style="padding: 10px 0;border-bottom: 1px solid #c9c9c9;text-align: left;">Description</th>
-                        <th style="padding: 10px 0;border-bottom: 1px solid #c9c9c9;text-align: right;">Charges</th>
-                    </tr>`
-                    + courseList +
-                    
-                `</table>
+                        <th style="padding: 10px 0;border-bottom: 1px solid #c9c9c9;text-align: left;">Course name</th>
+                        <th style="padding: 10px 0;border-bottom: 1px solid #c9c9c9;text-align: right;">Price</th>
+                        <th style="padding: 10px 0;border-bottom: 1px solid #c9c9c9;text-align: right;">Discount</th>
+                        <th style="padding: 10px 0;border-bottom: 1px solid #c9c9c9;text-align: right;">Total</th>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: 500;padding: 10px 0;border-bottom: 1px solid #c9c9c9;text-align: left;">`+data.course_title+`</td>
+                        <td style="font-weight: 600;padding: 10px 0;border-bottom: 1px solid #c9c9c9;text-align: right;">`+data.course_base_price+`</td>
+                        <td style="font-weight: 600;padding: 10px 0;border-bottom: 1px solid #c9c9c9;text-align: right;">`+data.discount+`</td>
+                        <td style="font-weight: 600;padding: 10px 0;border-bottom: 1px solid #c9c9c9;text-align: right;">`+data.discount_amount+`</td>
+                    </tr>    
+                </table>
                 <table class="subtotal-table" style="border-collapse: collapse;margin-left: auto;margin-right: 0;">
                     <tr style="border-bottom: 1px solid #c9c9c9;">
                         <th style="padding: 15px 35px 15px 0;text-align: left;">Sub Total</th>
-                        <td style="font-weight: 600;padding: 15px 0 15px 35px;text-align: right;">`+data.amount+`</td>
+                        <td style="font-weight: 600;padding: 15px 0 15px 35px;text-align: right;">`+data.discount_amount+`</td>
                     </tr>
                     <tr style="border-bottom: 1px solid #c9c9c9;">
-                        <th style="padding: 15px 35px 15px 0;text-align: left;">GST(0%)</th>
-                        <td style="font-weight: 600;padding: 15px 0 15px 35px;text-align: right;">0.00</td>
+                        <th style="padding: 15px 35px 15px 0;text-align: left;">Coupon Amount</th>
+                        <td style="font-weight: 600;padding: 15px 0 15px 35px;text-align: right;">`+data.coupon_amount+`</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #c9c9c9;">
+                        <th style="padding: 15px 35px 15px 0;text-align: left;">Referral Discount</th>
+                        <td style="font-weight: 600;padding: 15px 0 15px 35px;text-align: right;">`+data.heman_discount_amount+`</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #c9c9c9;">
+                        <th style="padding: 15px 35px 15px 0;text-align: left;">GST(`+data.tax_percentage+`%)</th>
+                        <td style="font-weight: 600;padding: 15px 0 15px 35px;text-align: right;">`+data.tax_amount+`</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #c9c9c9;">
+                        <th style="padding: 15px 35px 15px 0;text-align: left;">Convenience Fees(`+data.convince_fee+`%)</th>
+                        <td style="font-weight: 600;padding: 15px 0 15px 35px;text-align: right;">`+data.convince_fee_amount+`</td>
                     </tr>
                     <tr style="border-bottom: 1px solid #c9c9c9;">
                         <th style="padding: 15px 35px 15px 0;text-align: left;">Grand Total</th>

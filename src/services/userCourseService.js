@@ -1823,7 +1823,7 @@ const paymentResponse = async (request) => {
             })
         )
 
-        console.log("request?.body?.encResp :: ", dataArray)
+        //console.log("request?.body?.encResp :: ", dataArray)
 
         let orderId = dataArray.order_id
         let userId = dataArray.merchant_param1
@@ -1869,10 +1869,10 @@ const paymentResponse = async (request) => {
                 let courseAmount = courseData.discount_amount
 
 
-                let discountAmount = invoiceData?.discount_amount || 0
+                let couponAmount = invoiceData?.coupon_amount || 0
                 let referralDiscount=  invoiceData?.heman_discount_amount || 0
                 // decrease the course amount
-                let coursePrice = (courseAmount - discountAmount) - referralDiscount
+                let coursePrice = (courseAmount - couponAmount) - referralDiscount
               
                 if(userData?.referral_type == 1){
                     let hemanData = await CallEventBus("get_heman_by_code",{ referral_code: userData.referral_code }, '')    

@@ -440,7 +440,7 @@ const userSignin = async (userInputs) => {
                     return {
                         status: false,
                         status_code: constants.ERROR_RESPONSE,
-                        message: "Invalid username or password.",
+                        message: "Incorrect login credentials, Please retry.",
                         data: null,
                         token: null
                     };
@@ -449,7 +449,7 @@ const userSignin = async (userInputs) => {
                 return {
                     status: false,
                     status_code: constants.ERROR_RESPONSE,
-                    message: "Your account has been suspended or blocked",
+                    message: "Access Denied, Please Try Again.",
                     data: null,
                     token: null
                 };
@@ -495,7 +495,7 @@ const userSignin = async (userInputs) => {
                     return {
                         status: false,
                         status_code: constants.ERROR_RESPONSE,
-                        message: "Please enter the valid password",
+                        message: "Incorrect login credentials, Please retry.",
                         data: null,
                         token: null
                     };
@@ -504,7 +504,7 @@ const userSignin = async (userInputs) => {
                 return {
                     status: false,
                     status_code: constants.ERROR_RESPONSE,
-                    message: "Your account has been suspended or blocked",
+                    message: "Access Denied, Please Try Again.",
                     data: null,
                     token: null
                 };
@@ -513,7 +513,7 @@ const userSignin = async (userInputs) => {
             return {
                 status: false,
                 status_code: constants.ERROR_RESPONSE,
-                message: "Please enter the valid username",
+                message: "Incorrect login credentials, Please retry.",
                 data: null
             };
         }

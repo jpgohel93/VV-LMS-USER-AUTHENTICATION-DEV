@@ -27,6 +27,7 @@ const fatchContactUsList = async (search, start, limit) => {
     }
 
     const contactUsData = await ContactUsSchema.find(searchFilter)
+        .select('-__v -updatedAt')
         .skip(start)
         .limit(limit)
         .then((data) => {

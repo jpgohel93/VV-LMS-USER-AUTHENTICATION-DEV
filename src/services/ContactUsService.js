@@ -103,7 +103,41 @@ const getContactUsList = async (userInputs) => {
     }
 }
 
+const deleteContactUs = async (userInputs) => {
+    try {
+        const { id } = userInputs
+
+        const deleteContactUs = await ContactUsModel.updateContactUs(id, {
+            is_deleted: true
+        })
+
+        if (deleteContactUs) {
+            return {
+                status: true,
+                status_code: constants.SUCCESS_RESPONSE,
+                message: "contactUs deleted successfully",
+            }
+        } else {
+            return {
+                status: false,
+                status_code: constants.DATABASE_ERROR_RESPONSE,
+                message: "Failed to delete contactUs",
+            }
+        }
+    } catch (error) {
+        console.error("Unexpected error detected :: ", error)
+        return {
+            status: false,
+            status_code: constants.ERROR_RESPONSE,
+            message: "Failed to add feedback data.",
+            error: { server_error: 'An unexpected error occurred' },
+            data: null,
+        };
+    }
+}
+
 module.exports = {
     addContactUs,
     getContactUsList,
+    deleteContactUs
 }

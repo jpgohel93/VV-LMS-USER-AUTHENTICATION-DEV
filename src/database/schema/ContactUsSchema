@@ -8,6 +8,10 @@ const ContactUsSchema = new Schema(
         email: String,
         subject: String,
         your_message: String,
+        is_deleted: {
+            type: Boolean,
+            default: false
+        }
     },
     { timestamps: true }
 )

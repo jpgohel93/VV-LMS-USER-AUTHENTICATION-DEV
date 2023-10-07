@@ -41,4 +41,22 @@ module.exports = async (app) => {
             res.status(data.status_code).json(data)
         }
     )
+
+    app.post(
+        "/contactUs/deleteContactUs",
+        await validateFormFields([
+            body("id")
+                .notEmpty()
+                .withMessage("Id is required")
+                .isMongoId()
+                .withMessage("Id is not valid"),
+        ]),
+        async (req, res, next) => {
+            const { id } = req.body
+
+            const data = await ContactUsService.deleteContactUs({ id })
+
+            res.status(data.status_code).json(data)
+        }
+    )
 }

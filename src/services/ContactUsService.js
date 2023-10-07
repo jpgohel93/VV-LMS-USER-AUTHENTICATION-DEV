@@ -27,7 +27,7 @@ const addContactUs = async (userInputs) => {
         
         return {
             status: true,
-            message: "Thank you for contacting us! Your inquiry has been successfully submitted.",
+            message: "Your message has been received! We'll be in touch shortly.",
             status_code: constants.SUCCESS_RESPONSE,
             data: createContactUs,
         }

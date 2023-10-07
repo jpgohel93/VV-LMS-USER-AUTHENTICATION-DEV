@@ -339,7 +339,7 @@ const userSignin = async (userInputs) => {
             return {
                 status: false,
                 status_code: constants.ERROR_RESPONSE,
-                message: "Sorry! Too many attempts. Your account is blocked for 15 mins",
+                message: "Hold on, too many requests.",
                 data: null,
                 token: null
             };

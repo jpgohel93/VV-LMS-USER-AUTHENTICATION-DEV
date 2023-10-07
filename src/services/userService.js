@@ -1535,7 +1535,7 @@ const addStudent = async (userInputs) => {
                 return {
                     status: true,
                     status_code: constants.SUCCESS_RESPONSE,
-                    message: "User has been created successfully.",
+                    message: "Student has been created successfully.",
                     id: createStudent._id,
                     profile_image: profile_image
                 };
@@ -1543,14 +1543,14 @@ const addStudent = async (userInputs) => {
                 return {
                     status: false,
                     status_code: constants.ERROR_RESPONSE,
-                    message: "Sorry! User signup failed.",
+                    message: "Sorry! Student signup failed.",
                 };
             }   
         }else{
             return {
                 status: false,
                 status_code: constants.CONFLICT_RESPONSE,
-                message: "Sorry! User signup failed.",
+                message: "Sorry! Student signup failed.",
                 id: null,
                 error: errorArray
             };
@@ -1561,7 +1561,7 @@ const addStudent = async (userInputs) => {
         return {
             status: false,
             status_code: constants.EXCEPTION_ERROR_CODE,
-            message: 'Sorry! User signup failed.',
+            message: 'Sorry! Student signup failed.',
             error: { server_error: 'An unexpected error occurred' },
             data: null,
         };

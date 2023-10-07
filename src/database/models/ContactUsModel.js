@@ -17,17 +17,18 @@ const createContactUs = async (insertData) => {
 
 const fatchContactUsList = async (search, start, limit) => {
     let searchFilter = {}
+
     if (search) {
-        searchFilter = {
-            $or: [
-                { first_name: { $regex: ".*" + search + ".*", $options: "i" } },
-                { email: { $regex: ".*" + search + ".*", $options: "i" } },
-            ],
-        }
+        searchFilter.$or = [
+            { first_name: { $regex: ".*" + search + ".*", $options: "i" } },
+            { email: { $regex: ".*" + search + ".*", $options: "i" } },
+        ]
     }
 
+    searchFilter.is_deleted = false
+
     const contactUsData = await ContactUsSchema.find(searchFilter)
-        .select('-__v -updatedAt')
+        .select("-__v -updatedAt")
         .skip(start)
         .limit(limit)
         .then((data) => {
@@ -43,14 +44,15 @@ const fatchContactUsList = async (search, start, limit) => {
 
 const countContactUs = async (search) => {
     let searchFilter = {}
+
     if (search) {
-        searchFilter = {
-            $or: [
-                { first_name: { $regex: ".*" + search + ".*", $options: "i" } },
-                { email: { $regex: ".*" + search + ".*", $options: "i" } },
-            ],
-        }
+        searchFilter.$or = [
+            { first_name: { $regex: ".*" + search + ".*", $options: "i" } },
+            { email: { $regex: ".*" + search + ".*", $options: "i" } },
+        ]
     }
+
+    searchFilter.is_deleted = false
 
     const contactUsData = await ContactUsSchema.count(searchFilter)
         .then((count) => {
@@ -62,8 +64,22 @@ const countContactUs = async (search) => {
     return contactUsData
 }
 
+const updateContactUs = async (id, updateData) => {
+    const contactUsResult = ContactUsSchema.updateOne({ _id: id }, updateData)
+        .then((model) => {
+            return true
+        })
+        .catch((err) => {
+            console.log(err)
+            return false
+        })
+
+    return contactUsResult
+}
+
 module.exports = {
     createContactUs,
     fatchContactUsList,
     countContactUs,
+    updateContactUs,
 }

@@ -15,6 +15,54 @@ const createContactUs = async (insertData) => {
     return contactUsResult
 }
 
+const fatchContactUsList = async (search, start, limit) => {
+    let searchFilter = {}
+    if (search) {
+        searchFilter = {
+            $or: [
+                { first_name: { $regex: ".*" + search + ".*", $options: "i" } },
+                { email: { $regex: ".*" + search + ".*", $options: "i" } },
+            ],
+        }
+    }
+
+    const contactUsData = await ContactUsSchema.find(searchFilter)
+        .skip(start)
+        .limit(limit)
+        .then((data) => {
+            return data
+        })
+        .catch((err) => {
+            console.error(err)
+            return null
+        })
+
+    return contactUsData
+}
+
+const countContactUs = async (search) => {
+    let searchFilter = {}
+    if (search) {
+        searchFilter = {
+            $or: [
+                { first_name: { $regex: ".*" + search + ".*", $options: "i" } },
+                { email: { $regex: ".*" + search + ".*", $options: "i" } },
+            ],
+        }
+    }
+
+    const contactUsData = await ContactUsSchema.count(searchFilter)
+        .then((count) => {
+            return count
+        })
+        .catch((err) => {
+            return null
+        })
+    return contactUsData
+}
+
 module.exports = {
     createContactUs,
+    fatchContactUsList,
+    countContactUs,
 }

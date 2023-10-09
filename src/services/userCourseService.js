@@ -1061,6 +1061,7 @@ const mylearning = async (userInputs,request) => {
                                         subscription_start_date: courseElement.subscription_start_date,
                                         subscription_end_date: courseElement?.subscription_end_date || null,
                                         course_chapter_count: courseChapterCount?.total_chapter || 0,
+                                        course_topic_count: courseChapterCount?.total_topic || 0,
                                         completed_chapter_count: completedChapterCount,
                                         course: {
                                             course_title: course?.course_title ? course.course_title : '',

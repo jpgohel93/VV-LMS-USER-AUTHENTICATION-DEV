@@ -1506,23 +1506,30 @@ const getPaymentHistory = async (userInputs,request) => {
                     let courseArray = []
                     if(userCourseData && userCourseData?.length > 0){
                         await Promise.all(
-                            userCourseData.map(async (element) => {
-                                let courseData = await CallCourseQueryEvent("get_course_data_without_auth",{ id: element?.course_id  },'')
-                                let courseDefault = await CallCourseQueryEvent("get_course_default_promotional_content",{ course_id: element?.course_id  }, request.get("Authorization"))
+                            userCourseData.map(async (courseElement) => {
+                                let courseData = await CallCourseQueryEvent("get_course_data_without_auth",{ id: courseElement?.course_id  },'')
+                                let courseDefault = await CallCourseQueryEvent("get_course_default_promotional_content",{ course_id: courseElement?.course_id  }, request.get("Authorization"))
 
                                 await courseArray.push({
                                     course_id: courseData.course_id,
                                     course_title: courseData?.course_title || "",
-                                    amount: element?.price || 0,
                                     thumbnail_image: courseDefault?.web_image || null,
                                     short_description: courseData?.short_description || null,
                                 })
                             })
                         )
+                        await paymentHistory[key].set('course_detail', courseArray?.length > 0 ? courseArray[0] : {} ,{strict:false})
+                    }else if(element?.course_id){
+                        let courseData = await CallCourseQueryEvent("get_course_data_without_auth",{ id: element?.course_id  },'')
+                        let courseDefault = await CallCourseQueryEvent("get_course_default_promotional_content",{ course_id: element?.course_id  }, request.get("Authorization"))
+
+                        await paymentHistory[key].set('course_detail',{
+                            course_id: courseData.course_id,
+                            course_title: courseData?.course_title || "",
+                            thumbnail_image: courseDefault?.web_image || null,
+                            short_description: courseData?.short_description || null,
+                        } ,{strict:false})
                     }
-
-                    await paymentHistory[key].set('course_detail', courseArray?.length > 0 ? courseArray[0] : {} ,{strict:false})
-
                 })
             )
         }

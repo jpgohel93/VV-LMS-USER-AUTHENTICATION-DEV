@@ -97,6 +97,9 @@ const getPaymentHistory = async (userFilter) => {
         }else if(userFilter.payment_type == 2){
             let orCondition = [];
             orCondition.push({
+                payment_status: 1
+            })
+            orCondition.push({
                 payment_status: 5
             })
             orCondition.push({

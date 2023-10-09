@@ -790,7 +790,7 @@ const importStudents = async (userInputs) => {
                 user_signup_with: 6,
                 user_referral_code: await findUserReferralCode()
             });
-
+            userId = createUser._id
             let subject = "Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!";
             let message = await welcomeWithCredetialsTemplate({ user_name: `${first_name} ${last_name}`, subject: subject, mobile_no: `+${country_code} ${mobile_no}`, password: password});
             let sendwait = await sendMail(email, message, subject, userId, "Import Student");

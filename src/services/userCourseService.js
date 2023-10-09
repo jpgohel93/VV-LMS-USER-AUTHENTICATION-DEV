@@ -1496,6 +1496,7 @@ const getPaymentHistory = async (userInputs,request) => {
 
         //get course data
         const paymentHistory = await InvoiceModel.getPaymentHistory({ user_id,  page, perPage, type, payment_type });
+        const userData = await UserModel.fatchUserById(user_id);
 
         if(paymentHistory?.length > 0){
             await Promise.all(
@@ -1530,6 +1531,8 @@ const getPaymentHistory = async (userInputs,request) => {
                             short_description: courseData?.short_description || null,
                         } ,{strict:false})
                     }
+
+                    await paymentHistory[key].set('username',`${userData.first_name} ${userData.last_name}` ,{strict:false})
                 })
             )
         }

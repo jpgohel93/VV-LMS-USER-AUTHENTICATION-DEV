@@ -606,7 +606,6 @@ const qrCheckOut = async (userInputs,request) => {
 const courseCheckOut = async (userInputs, request) => {
    
     try{
-
         const { user_id, course_id } = userInputs;
 
         //get course data
@@ -713,6 +712,8 @@ const courseCheckOut = async (userInputs, request) => {
             file_path: courseDefault?.web_image ? courseDefault?.web_image : null,
             course_level: course?.course_level ? course?.course_level : null,
             leason_count: course?.leason_count ? course?.leason_count : 0,
+            subject_count: course?.subject_count ? course?.subject_count : 0,
+            topic_count: course?.topic_count ? course?.topic_count : 0,
             total_watch_hours: course?.total_watch_hours ? course?.total_watch_hours : 0,
             average_review: course?.average_review ? course?.average_review : 0,
             price: course?.price ? course?.price : 0,

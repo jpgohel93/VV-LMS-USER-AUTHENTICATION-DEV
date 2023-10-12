@@ -675,6 +675,46 @@ const getTopicViewHistory = async (userInputs) => {
     }
 }
 
+const topicCompleted = async (userInputs) => {
+    try{
+        const { user_id, course_id, chapter_id, topic_id } = userInputs;
+        let checkCourseWatchHistoryData = await CourseWatchHistoryModel.fatchCourseViewHistoryList(user_id, course_id, chapter_id);
+
+        //delete the course topic watch history
+        await CourseWatchHistoryModel.deleteCompletedTopicData(checkCourseWatchHistoryData._id,topic_id);
+
+         //delete the course topic watch history
+         await CourseWatchHistoryModel.deleteCompletedTopics(checkCourseWatchHistoryData._id,topic_id);
+
+        const createCourseWatchHistory = await CourseWatchHistoryModel.addCourseTopicCompleted(checkCourseWatchHistoryData._id, topic_id); 
+
+        if(createCourseWatchHistory !== false){
+            return {
+                status: true,
+                status_code: constants.SUCCESS_RESPONSE,
+                message: "Course history add successfully"
+            };
+        }else{
+            return {
+                status: false,
+                status_code: constants.DATABASE_ERROR_RESPONSE,
+                message: "Failed to add the course history",
+                id: null
+            };
+        }
+    }catch (error) {
+        // Handle unexpected errors
+        console.error('Error in addCourseWatchHistory:', error);
+        return {
+            status: false,
+            status_code: constants.EXCEPTION_ERROR_CODE,
+            message: 'Failed to add the course history',
+            error: { server_error: 'An unexpected error occurred' },
+            data: null,
+        };
+    }
+}
+
 module.exports = {
     addCourseWatchHistory,
     getCourseWatchHistorysData,
@@ -688,5 +728,6 @@ module.exports = {
     getCourseWatchHistoryWithPagination,
     addChapterViewHistory,
     addTopicViewHistory,
-    getTopicViewHistory
+    getTopicViewHistory,
+    topicCompleted
 }

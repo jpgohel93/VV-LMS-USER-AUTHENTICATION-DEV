@@ -439,6 +439,29 @@ const deleteCompletedTopics = async (id,topic_id) => {
     return topicData;
 }
 
+const deleteCompletedTopicData = async (id,topic_id) => {
+    const topicData = await CourseViewSchema.findOneAndUpdate({ _id: id }, { $pull: { completed:  topic_id } }).then((model) => {
+        return true
+    }).catch((err) => {
+        return false
+    });
+      
+    return topicData;
+}
+
+
+const addCourseTopicCompleted = async (id, updateData) => {
+
+    const addCourseWatchHistoryData = await CourseViewSchema.findOneAndUpdate({  _id: id  }, { $push:  { "completed": updateData } }, { new: true }).then((data) => {
+        return data
+    }).catch((err) => {
+        return false
+    });
+ 
+    return addCourseWatchHistoryData;
+
+}
+
 
 module.exports = {
     createCourseWatchHistory,
@@ -463,5 +486,7 @@ module.exports = {
     fatchCourseViewHistoryList,
     addCourseTopicViewHistory,
     updateCourseViewHistory,
-    deleteCompletedTopics
+    deleteCompletedTopics,
+    deleteCompletedTopicData,
+    addCourseTopicCompleted
 }

@@ -12,7 +12,8 @@ const CourseViewSchema = new Schema({
         type: String,
         default: "00:00:00" 
     },
-    progress: [String]
+    progress: [String],
+    completed: [String]
 },{ timestamps: true }); 
 
 CourseViewSchema.index( { user_id : 1 } )

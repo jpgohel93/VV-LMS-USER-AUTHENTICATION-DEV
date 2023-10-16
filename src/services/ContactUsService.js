@@ -5,8 +5,9 @@ const { sendMail } = require("../utils")
 
 const addContactUs = async (userInputs) => {
     try {
-        const { first_name, email, subject, your_message } = userInputs
+        const { user_id, first_name, email, subject, your_message } = userInputs
         const createContactUs = await ContactUsModel.createContactUs({
+            user_id,
             first_name,
             email,
             subject,
@@ -108,7 +109,7 @@ const deleteContactUs = async (userInputs) => {
         const { id } = userInputs
 
         const deleteContactUs = await ContactUsModel.updateContactUs(id, {
-            is_deleted: true
+            is_deleted: true,
         })
 
         if (deleteContactUs) {
@@ -130,14 +131,14 @@ const deleteContactUs = async (userInputs) => {
             status: false,
             status_code: constants.ERROR_RESPONSE,
             message: "Failed to add feedback data.",
-            error: { server_error: 'An unexpected error occurred' },
+            error: { server_error: "An unexpected error occurred" },
             data: null,
-        };
+        }
     }
 }
 
 module.exports = {
     addContactUs,
     getContactUsList,
-    deleteContactUs
+    deleteContactUs,
 }

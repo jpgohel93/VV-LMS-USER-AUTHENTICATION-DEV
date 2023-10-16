@@ -28,6 +28,10 @@ const fatchContactUsList = async (search, start, limit) => {
     searchFilter.is_deleted = false
 
     const contactUsData = await ContactUsSchema.find(searchFilter)
+        .populate({
+            path: "user_id",
+            select: "profile_image",
+        })
         .select("-__v -updatedAt")
         .skip(start)
         .limit(limit)

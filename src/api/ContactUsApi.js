@@ -4,9 +4,10 @@ const { body } = require("express-validator")
 
 module.exports = async (app) => {
     app.post("/contactUs/addContactUs", async (req, res, next) => {
-        const { first_name, email, subject, your_message } = req.body
+        const { user_id, first_name, email, subject, your_message } = req.body
 
         const data = await ContactUsService.addContactUs({
+            user_id,
             first_name,
             email,
             subject,

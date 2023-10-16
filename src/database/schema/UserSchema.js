@@ -23,7 +23,7 @@ const UserSchema = new Schema({
     facebook_login_id: String,
     linkdin_login_id: String,
     note: String,
-    user_signup_with: Number, //1 = Manual , 2 = Google, 3 = Facebook, 4 = linkdin, 5 = web, 6 = institute, 7 = apple 
+    user_signup_with: Number, //1 = Manual , 2 = Google, 3 = Facebook, 4 = linkdin, 5 = web, 6 = institute, 7 = apple , 8. Quick Sidnup
     profile_image: String,
     is_purchase_course: {
         type: Boolean,

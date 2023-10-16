@@ -1530,4 +1530,32 @@ module.exports = async (app) => {
             });
             res.status(data.status_code).json(data);
     });
+
+    app.post('/user/quickSignup', await validateFormFields([
+        body('email')
+        .notEmpty()
+        .withMessage('Email id is required')
+        .matches(/^[a-z0-9][a-z0-9-_\.]+@([a-z]|[a-z0-9]?[a-z0-9-]+[a-z0-9])\.[a-z0-9]{2,10}(?:\.[a-z]{2,10})?$/i)
+        .withMessage('Please enter valid email id')
+    ]), async (req, res, next) => {
+
+        const {
+            email,
+            ip_address,
+            device_type,
+            operating_system,
+            referral_code,
+            user_referral_code
+        } = req.body;
+
+        const data = await userService.quickSignup({
+            email,
+            ip_address,
+            device_type,
+            operating_system,
+            referral_code,
+            user_referral_code
+        });
+        res.status(data.status_code).json(data);
+});
 }

@@ -339,7 +339,7 @@ const userSignin = async (userInputs) => {
             return {
                 status: false,
                 status_code: constants.ERROR_RESPONSE,
-                message: "Hold on, too many requests.",
+                message: "Security Alert: Too Many Login Attempts, Please Try Again After Some Time.",
                 data: null,
                 token: null
             };
@@ -524,6 +524,166 @@ const userSignin = async (userInputs) => {
             status: false,
             status_code: constants.EXCEPTION_ERROR_CODE,
             message: 'Sorry! User signin failed.',
+            error: { server_error: 'An unexpected error occurred' },
+            data: null,
+        };
+    }  
+}
+
+//add user data
+const quickSignup = async (userInputs) => {
+    try{
+        const { email, ip_address, device_type, operating_system, referral_code, user_referral_code } = userInputs;
+
+        let errorArray = []
+
+        let isValidData = true;
+        let studentId =  null;
+
+        // check email id is valid or not
+        const getEmailData = await UserModel.fatchUserfilterData({ email: email });
+        const getInstituteEmailData = await CallAdminEvent("check_institute_email_id",{ email_id: email  }, "");
+
+        if(getInstituteEmailData !== null){
+            return {
+                status: false,
+                status_code: constants.CONFLICT_RESPONSE,
+                message: "Sorry! User signup failed. Email id is used by another user.",
+                id: null,
+                error: errorArray
+            };
+        }
+
+        if(getEmailData !== null){
+            studentId = getEmailData.id
+        }
+        
+        if(isValidData){
+            let studentData = { 
+                email: email,
+                is_deleted: false,
+                status: 1,
+                user_type: 5,
+                user_signup_with: 8,
+                is_tc_verify: true,
+                last_login_type: 1,
+                last_login_time: new Date(),
+                device_type: device_type,
+                operating_system: operating_system 
+            }
+
+            if(ip_address){
+                let locationData = await GetUserLocation(ip_address);
+
+                studentData['country'] = locationData?.country_name || null
+                studentData['state'] = locationData?.region_name || null
+                studentData['city'] = locationData?.city || null
+                studentData['pincode'] = locationData?.zip_code || null
+                studentData['latitude'] = locationData?.latitude || null
+                studentData['longitude'] = locationData?.longitude || null
+            }
+
+            if((referral_code || user_referral_code) && studentId) {
+                const getUserCourseData = await UserCourseModel.getUserCourseList({ user_id: studentId });
+                if(getUserCourseData?.length == 0){
+                    if(referral_code){
+                        studentData['referral_code'] = referral_code
+                        studentData['referral_type'] = 1
+                    }else if(user_referral_code){
+                        studentData['users_referral_code'] = user_referral_code
+                        studentData['referral_type'] = 2
+                    }
+                }
+            }else if (referral_code || user_referral_code) {
+                if(referral_code){
+                    studentData['referral_code'] = referral_code
+                    studentData['referral_type'] = 1
+                }else if(user_referral_code){
+                    studentData['users_referral_code'] = user_referral_code
+                    studentData['referral_type'] = 2
+                }
+            }
+
+            let createStudent = null
+            if(studentId){
+                createStudent = await UserModel.updateUser(studentId,studentData);
+            }else{
+                
+                studentData['user_referral_code'] = await findUserReferralCode()
+
+                createStudent = await UserModel.createUser(studentData);
+                studentId = createStudent._id
+            }
+            
+            if(createStudent){
+
+                let jwtData = {
+                    user_id: studentId,
+                    first_name : "",
+                    last_name : "",
+                    email : email,
+                    country_code : 0,
+                    mobile_no : "",
+                    user_type: 5,
+                    notification_device_id: ""
+                }
+
+                let sendData = {
+                    user_id: studentId,
+                    first_name : "",
+                    last_name : "",
+                    email : email,
+                    country_code : "",
+                    mobile_no : "",
+                    user_type: 5,
+                    user_login_type: 1,
+                    last_login_type: 1
+                }
+
+                //user login history
+                await UserMobileActivityModel.createUserLoginHistory({ 
+                    user_id: studentId,
+                    device_uuid: "",
+                    firebase_token: "",
+                    login_time: new Date()
+                });
+
+                let jwtToken = await GenerateSignature(jwtData);
+                
+                /* let subject = "Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!";
+                let message = await welcomeTemplate({ user_name: `${first_name} ${last_name}`, subject: subject});
+                await sendMail(email, message, subject, studentId, "Add User"); */
+
+                return {
+                    status: true,
+                    status_code: constants.SUCCESS_RESPONSE,
+                    message: "User has been created successfully.",
+                    data: sendData,
+                    token: jwtToken
+                };
+            }else{
+                return {
+                    status: false,
+                    status_code: constants.ERROR_RESPONSE,
+                    message: "Sorry! User signup failed.",
+                };
+            }   
+        }else{
+            return {
+                status: false,
+                status_code: constants.CONFLICT_RESPONSE,
+                message: "Sorry! User signup failed.",
+                id: null,
+                error: errorArray
+            };
+        }
+    }catch (error) {
+        // Handle unexpected errors
+        console.error('Error in addUser:', error);
+        return {
+            status: false,
+            status_code: constants.EXCEPTION_ERROR_CODE,
+            message: 'Sorry! User signup failed.',
             error: { server_error: 'An unexpected error occurred' },
             data: null,
         };
@@ -4488,5 +4648,6 @@ module.exports = {
     changeHemanStatus,
     getStudentById,
     userReferral,
-    getCouponUserList
+    getCouponUserList,
+    quickSignup
 }

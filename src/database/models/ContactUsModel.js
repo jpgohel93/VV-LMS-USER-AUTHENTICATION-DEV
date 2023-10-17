@@ -32,6 +32,7 @@ const fatchContactUsList = async (search, start, limit) => {
             path: "user_id",
             select: "profile_image",
         })
+        .sort({ createdAt: -1 })
         .select("-__v -updatedAt")
         .skip(start)
         .limit(limit)

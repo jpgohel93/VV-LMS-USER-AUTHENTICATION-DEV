@@ -1526,7 +1526,8 @@ module.exports = async (app) => {
                 operating_system,
                 referral_code,
                 user_referral_code,
-                password
+                password,
+                is_funnel_user: true
             });
             res.status(data.status_code).json(data);
     });

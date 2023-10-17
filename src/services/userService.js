@@ -694,7 +694,7 @@ const quickSignup = async (userInputs) => {
 const addUser = async (userInputs) => {
     try{
         const { 
-            first_name, last_name, email, country_code, mobile_no, birth_date, gender, password, is_tc_verify , note, device_uuid, firebase_token, notification_device_id, ip_address, device_type, operating_system, referral_code, user_referral_code
+            first_name, last_name, email, country_code, mobile_no, birth_date, gender, password, is_tc_verify , note, device_uuid, firebase_token, notification_device_id, ip_address, device_type, operating_system, referral_code, user_referral_code, is_funnel_user
         } = userInputs;
 
         let errorArray = {
@@ -758,7 +758,11 @@ const addUser = async (userInputs) => {
                 firebase_token: firebase_token,
                 last_login_time: new Date(),
                 device_type: device_type,
-                operating_system: operating_system 
+                operating_system: operating_system
+            }
+
+            if(is_funnel_user){
+                studentData['is_verify_otp'] = true
             }
 
             if(ip_address){

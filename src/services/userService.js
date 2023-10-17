@@ -1791,7 +1791,10 @@ const updateStudentData= async (userInputs) => {
 
         let { id,first_name, last_name, email, country_code, mobile_no, birth_date, gender, note, institute_id, profile_image } = userInputs;
 
-        let errorArray = []
+        let errorArray = {
+            email: "",
+            mobile_no: ""
+        }
 
         let isValidData = true;
 
@@ -1801,20 +1804,14 @@ const updateStudentData= async (userInputs) => {
 
         if((getEmailData !== null && getEmailData._id.toString() !== id)  || getInstituteEmailData !== null){
             isValidData = false
-            errorArray.push({
-                field_name: "email",
-                message: "Email id is already exists"
-            })
+            errorArray["email"] = "Email id is already exists"
         }
         // check mobile no is valid or not
         const checkMobileDuplication = await UserModel.fatchUserfilterData({ mobile_no: mobile_no });
         const getInstituteMobileData = await CallAdminEvent("check_institute_mobile_no",{ mobile_no: mobile_no }, "");
         if((checkMobileDuplication !== null && checkMobileDuplication._id.toString() !== id) || getInstituteMobileData !== null){
             isValidData = false
-            errorArray.push({
-                field_name: "mobile_no",
-                message: "Mobile number is already exists"
-            })
+            errorArray["mobile_no"] =  "Mobile number is already exists"
         }
         
         if(isValidData){

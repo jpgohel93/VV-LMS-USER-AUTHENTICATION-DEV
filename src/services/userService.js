@@ -697,7 +697,10 @@ const addUser = async (userInputs) => {
             first_name, last_name, email, country_code, mobile_no, birth_date, gender, password, is_tc_verify , note, device_uuid, firebase_token, notification_device_id, ip_address, device_type, operating_system, referral_code, user_referral_code
         } = userInputs;
 
-        let errorArray = []
+        let errorArray = {
+            email: "",
+            mobile_no: ""
+        }
 
         let isValidData = true;
         let isOtpNotValidate = false;
@@ -713,10 +716,7 @@ const addUser = async (userInputs) => {
                 studentId = getEmailData.id
             }else{
                 isValidData = false
-                errorArray.push({
-                    field_name: "email",
-                    message: "Email id is already exists"
-                })
+                errorArray["email"] = "Email id is already exists" 
             }
         }
         // check mobile no is valid or not
@@ -729,10 +729,7 @@ const addUser = async (userInputs) => {
                     studentId = checkMobileDuplication.id
                 }else{
                     isValidData = false
-                    errorArray.push({
-                        field_name: "mobile_no",
-                        message: "Mobile number is already exists"
-                    })
+                    errorArray["mobile_no"] = "Mobile number is already exists" 
                 }  
             }
         }

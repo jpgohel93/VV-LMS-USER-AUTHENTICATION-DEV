@@ -893,7 +893,7 @@ const applyCoupon = async (userInputs, request) => {
             if(getUserData?.referral_type == 1){
                 let hemanData = await CallEventBus("get_heman_by_code",{ referral_code: getUserData.referral_code }, request.get("Authorization"))
 
-                if(hemanData.parent_heman_id){
+                if(hemanData?.parent_heman_id){
                     let parentHemanData = await CallEventBus("get_heman_by_id",{ id: hemanData.parent_heman_id }, request.get("Authorization"))
                     if(parentHemanData?.student_discount){ 
                         let studentDiscount = parentHemanData?.student_discount ? parentHemanData.student_discount  : 0
@@ -940,10 +940,10 @@ const applyCoupon = async (userInputs, request) => {
 
         let couponAmount = 0
         if(couponData){
-            if(couponData.discount_type == 1){
+            if(couponData?.discount_type == 1){
                 couponAmount = couponData.discount
                 finalAmount = parseInt(finalAmount) - parseInt(couponAmount)
-            }else if(couponData.discount_type == 2){
+            }else if(couponData?.discount_type == 2){
                 let discount = parseInt(courseAmount) * parseFloat(couponData.discount) / 100 
                 couponAmount = discount
                 finalAmount = parseInt(finalAmount) - parseInt(discount)
@@ -951,7 +951,7 @@ const applyCoupon = async (userInputs, request) => {
         }
 
         let courseDiscountAmount = finalAmount
-        if(course.is_tax_exclusive){
+        if(course?.is_tax_exclusive){
             taxAmount = parseInt(courseDiscountAmount) * parseFloat(course.tax_percentage) / 100 
             finalAmount = finalAmount + taxAmount
         }

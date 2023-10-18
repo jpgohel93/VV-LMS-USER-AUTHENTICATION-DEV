@@ -1502,7 +1502,7 @@ const changeAccountPassword = async (userInputs) => {
 
             if(validPassword){
 
-                if(userData !== null){
+                if(userData){
                     let userPassword = await GeneratePassword(new_password, userData.password_salt);
 
                     let updatePassword = UserModel.updateUser(userData._id,{ 
@@ -1526,21 +1526,28 @@ const changeAccountPassword = async (userInputs) => {
                     return {
                         status: false,
                         status_code: constants.DATABASE_ERROR_RESPONSE,
-                        message: "Email id is not registered with us"
+                        message: "User is not registered with us"
                     };
                 }
             }else{
                 return {
                     status: false,
                     status_code: constants.ERROR_RESPONSE,
-                    message: "Old password is not valid"
+                    message: "Old password is not valid",
+                    error: {
+                        old_password: "Old password is not valid"
+                    }
                 };
             }
         }else{
             return {
                 status: false,
                 status_code: constants.ERROR_RESPONSE,
-                message: "New password and confirm password are not match"
+                message: "New password and confirm password are not match",
+                error: {
+                    new_password: "New password and confirm password are not match",
+                    confirm_password: "New password and confirm password are not match"
+                }
             };
         }
     }catch (error) {

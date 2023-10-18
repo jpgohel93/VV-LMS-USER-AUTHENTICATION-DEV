@@ -9,9 +9,7 @@ module.exports = async (app) => {
         await validateFormFields([
             body('quiz_title')
             .notEmpty()
-            .withMessage('Quiz title is required')
-            .matches(/^[a-zA-Z0-9\s\-_.]*$/)
-            .withMessage('Enter a valid quiz title'),
+            .withMessage('Quiz title is required'),
 
             body('question_limit')
             .optional().isNumeric()

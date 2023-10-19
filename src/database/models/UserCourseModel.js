@@ -423,7 +423,6 @@ const getUserBySubscriptionId = async (subscription_id) => {
 const getExpiringSoonCourses = async (userFilter) => {
     // Calculate the date expiration days from now
     const expiryDate = moment().add(userFilter.expiration_days, 'days').toDate();
-    console.log('expiryDate :: ',expiryDate);
     // Find records where the expire_by field is after 7 days from now
     
     let getFilterData =  await UserCourseSchema.find({
@@ -438,16 +437,6 @@ const getExpiringSoonCourses = async (userFilter) => {
     }).catch((err) => {
         return null
     });
-
-    /* let getFilterData =  UserCourseSchema.find({ expire_by: { $gte: expiryDate }, is_deleted: false })
-    .then((result) => {
-        // Handle the found records
-        return result;
-    })
-    .catch((error) => {
-        // Handle the error
-        return null;
-    }); */
 
     return getFilterData;
 }

@@ -10,7 +10,6 @@ const addCart = async (userInputs) => {
     try {
         const { user_id, course_id } = userInputs;
         let checkCartData = await CartModel.filterCartData(user_id, course_id);
-        console.log('checkCartData :: ',checkCartData);
     
         if(checkCartData == null){
             const createCart = await CartModel.createCart({ 

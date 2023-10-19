@@ -64,22 +64,7 @@ const filterQuizData = async (user_id, quiz_id) => {
     }).catch((err) => {
         return null
     });
-
-
-    // const quizresultData = await PersonalizedQuizSchema.findOne({ 
-    //     $and: [
-    //         {
-    //             user_id: user_id
-    //         },
-    //         {
-    //             _id: quiz_id
-    //         }
-    //     ]
-    // }).then((data) => {
-    //     return data
-    // }).catch((err) => {
-    //     return null
-    // });
+    
     return quizresultData;
 }
 

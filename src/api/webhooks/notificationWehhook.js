@@ -65,6 +65,6 @@ module.exports = (app) => {
         let subject = "Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!";
         let message = await welcomeTemplate({ user_name: "Testing TJCG", subject: subject});
         let sendwait = await sendMail('jayrank@tjcg.in', message, subject, "safsterwyerty", "Testing");
-        console.log('sendwait :: ',sendwait)
+        //console.log('sendwait :: ',sendwait)
     });
 }

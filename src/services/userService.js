@@ -4057,7 +4057,7 @@ const testNotification = async () => {
     const response = await sendPushNotification(req);
 
     // await sendPushNotification({notification_device_id:[getUserData?.notification_device_id], message: "", template_id: "20a140f6-66bb-4995-94af-0a58632afd31"})
-    console.log('response :: ',response);
+    //console.log('response :: ',response);
 }
 
 //add user data
@@ -4366,7 +4366,7 @@ const sendDailyReportMail = async () => {
 
     }catch (error) {
         // Handle unexpected errors
-        console.log("error :: ", error)
+       // console.log("error :: ", error)
         return {
             status: false,
             status_code: constants.EXCEPTION_ERROR_CODE,

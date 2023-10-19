@@ -504,7 +504,7 @@ module.exports.sendPushNotification = async (requestData) => {
 				Authorization: `Basic ${apiKey}`,
 			}
 		});
-		console.log('Notification has been sent successfully:', response.data);
+		//console.log('Notification has been sent successfully:', response.data);
 		return {
 			status: true,
 			response: response.data,

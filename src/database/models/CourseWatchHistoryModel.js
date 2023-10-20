@@ -462,6 +462,26 @@ const addCourseTopicCompleted = async (id, updateData) => {
 
 }
 
+const fatchCourseViewHistory = async (user_id, course_id) => {
+    let condition = [ 
+        {
+            user_id: user_id
+        },
+        {
+            course_id: course_id
+        }
+    ]
+
+    const courseViewData = await CourseViewSchema.find({ 
+        $and: condition
+    }).then((data) => {
+        return data
+    }).catch((err) => {
+        return null
+    });
+    return courseViewData;
+}
+
 
 module.exports = {
     createCourseWatchHistory,
@@ -488,5 +508,6 @@ module.exports = {
     updateCourseViewHistory,
     deleteCompletedTopics,
     deleteCompletedTopicData,
-    addCourseTopicCompleted
+    addCourseTopicCompleted,
+    fatchCourseViewHistory
 }

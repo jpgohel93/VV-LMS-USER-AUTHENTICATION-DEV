@@ -338,4 +338,15 @@ module.exports = async (app) => {
 
         res.status(data.status_code).json(data);
     });
+
+
+    app.post('/user/checkCoursePurchase', UserAuth ,async (req,res,next) => {
+        const { course_id } = req.body;
+
+        let user_id = req.user !== undefined ? req.user.user_id : null; 
+
+        const data = await userCourseService.checkCoursePurchase({ user_id, course_id  }); 
+
+        res.status(data.status_code).json(data);
+    });
 }

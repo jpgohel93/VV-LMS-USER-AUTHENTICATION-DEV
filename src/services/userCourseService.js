@@ -2308,6 +2308,44 @@ const updateTransactionStatus = async (userInputs) => {
   
 }
 
+const checkCoursePurchase = async (userInputs) => {
+    try{
+        const { user_id, course_id } = userInputs;
+
+       
+        //get course data
+        const getFilterData = await UserCourseModel.filterUserCourseData({ user_id, course_id});
+
+        let isPurchase = false
+        if(getFilterData?.type){
+            if(getFilterData.type == 1){
+                isPurchase = true
+            }else{
+                if(getFilterData.type == 2 && getFilterData.payment_status == 2 && getFilterData.is_cancle_subscription == false){
+                    isPurchase = true
+                }
+            }
+        }
+        return {
+            status: true,
+            status_code: constants.SUCCESS_RESPONSE,
+            message: 'Check course purchased',
+            is_purchase: isPurchase
+        };
+    }catch (error) {
+        // Handle unexpected errors
+        console.error('Error in purchaseCourse:', error);
+        return {
+            status: false,
+            status_code: constants.EXCEPTION_ERROR_CODE,
+            message: 'Failed to purchase course',
+            error: { server_error: 'An unexpected error occurred' },
+            data: null,
+        };
+    }
+  
+}
+
 module.exports = {
     assignCourse,
     getAssignCourseList,
@@ -2330,5 +2368,6 @@ module.exports = {
     getUserEarningHistory,
     makeUserEarningPayment,
     earningOverview,
-    updateTransactionStatus
+    updateTransactionStatus,
+    checkCoursePurchase
 }

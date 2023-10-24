@@ -1873,7 +1873,7 @@ const paymentResponse = async (request) => {
             });
 
             
-        }else if(paymentStatus == "Failure"){
+        }else if(paymentStatus == "Failure" || paymentStatus == "Aborted"){
             //update user course data
             await UserCourseModel.updateUserCourseUsingInvoice(invoiceData._id,{
                 payment_status: 3,

@@ -211,7 +211,7 @@ const deleteCartItem = async (userInputs) => {
 
 const checkOut = async (userInputs,request) => {
     try{
-        const { user_id, course_id, coupon_code, device_type } = userInputs;
+        const { user_id, course_id, coupon_code, device_type, notification_device_id } = userInputs;
 
         const getUserData = await UserModel.fatchUserById(user_id);
 
@@ -446,6 +446,7 @@ const checkOut = async (userInputs,request) => {
                     merchant_param1: user_id,
                     merchant_param2: device_type ? device_type : 1,
                     merchant_param3: course_id,
+                    merchant_param4: notification_device_id,
                     integration_type: "iframe_normal",
                     redirect_url: redirectUrl,
                     cancel_url: redirectUrl

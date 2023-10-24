@@ -69,7 +69,9 @@ const assignCourse = async (userInputs,request) => {
                 }
 
                 if(getUserData?.notification_device_id){
-                    sendPushNotification({notification_device_id:[getUserData?.notification_device_id], message: "Course has been purchased successfully.", template_id: "20a140f6-66bb-4995-94af-0a58632afd31", data})
+                    if(getUserData?.operating_system == "ios" || getUserData?.operating_system == "android" ){
+                        sendPushNotification({notification_device_id:[getUserData?.notification_device_id], message: "Course has been purchased successfully.", template_id: "20a140f6-66bb-4995-94af-0a58632afd31", data, device_type: getUserData?.operating_system})
+                    }
                 }
 
                 return {
@@ -814,7 +816,7 @@ const purchaseCourse = async (userInputs,request) => {
                     reference_id: id
                 }
 
-                await sendPushNotification({notification_device_id:[request.user.notification_device_id], message: "Course has been purchased successfully.", data})
+                await sendPushNotification({notification_device_id:[request.user.notification_device_id], message: "Course has been purchased successfully.", data, device_type: "android"})
             }
             
             return {
@@ -1680,6 +1682,7 @@ const paymentResponse = async (request) => {
         let courseId = dataArray.merchant_param3
         let finalAmount = dataArray.mer_amount
         let deviceType = dataArray.merchant_param2 ? dataArray.merchant_param2 : 1
+        let notificationDeviceId = dataArray?.merchant_param4 || null
         let paymentStatus = dataArray.order_status
         const userData = await UserModel.fatchUserById(userId);
         let invoiceData = await InvoiceModel.findOrderData(orderId)
@@ -1703,12 +1706,15 @@ const paymentResponse = async (request) => {
                 payment_status: 2
             })
             
-            if(userData?.notification_device_id){
+            notificationDeviceId = notificationDeviceId ? notificationDeviceId : userData?.notification_device_id
+            if(notificationDeviceId){
                 let data = {
                     module: "course_payment_success",
                     reference_id: orderId
                 }
-                await sendPushNotification({notification_device_id:[userData?.notification_device_id], message: "Course has been purchased successfully.", data})
+                if(deviceType == 1 || deviceType == 2){
+                    await sendPushNotification({notification_device_id:[notificationDeviceId], message: "Course has been purchased successfully.", data, device_type: deviceType == 1 ? "android" : "ios" })
+                }
             }
 
             const getUserCourseData = await UserCourseModel.getUserCoursePurchaseList({ user_id: userId});
@@ -1882,13 +1888,15 @@ const paymentResponse = async (request) => {
                 payment_date: dataArray.trans_date,
                 payment_status: 3
             })
-
-            if(userData?.notification_device_id){
+            notificationDeviceId = notificationDeviceId ? notificationDeviceId : userData?.notification_device_id
+            if(notificationDeviceId){
                 let notificationdata = {
                     module: "course_payment_failure",
                     reference_id: orderId
                 }
-                await sendPushNotification({notification_device_id:[userData.notification_device_id], message: "Course has been purchased successfully.", notificationdata})
+                if(deviceType == 1 || deviceType == 2){
+                    await sendPushNotification({notification_device_id:[notificationDeviceId], message: "Course has been purchased successfully.", notificationdata, device_type: deviceType == 1 ? "android" : "ios"})
+                }
             }
         }
 

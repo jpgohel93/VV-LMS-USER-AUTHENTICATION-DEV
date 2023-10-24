@@ -480,9 +480,12 @@ module.exports.randomString = async (strLength) => {
 }
 
 module.exports.sendPushNotification = async (requestData) => {
-	const appId = process.env.ONE_SIGNAL_APP_ID;
-	const apiKey = process.env.ONE_SIGNAL_API_KEY;
-	const { notification_device_id, message, template_id, notificationdata } = requestData;
+
+	const { notification_device_id, message, template_id, notificationdata, device_type } = requestData;
+
+	const appId = device_type == "ios" ?  process.env.IOS_ONE_SIGNAL_APP_ID : process.env.ONE_SIGNAL_APP_ID;
+	const apiKey = device_type == "ios" ? process.env.IOS_ONE_SIGNAL_API_KEY : process.env.ONE_SIGNAL_API_KEY;
+
 	const notificationData = {
 		app_id: appId,
 		contents: { en: message },

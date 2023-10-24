@@ -845,7 +845,7 @@ const studentData = async (userFilter) => {
         }
     }
 
-    if(userFilter.start_date && userFilter.end_date){
+    if(userFilter.start_date && userFilter.end_date && userFilter.start_date !== "Invalid date" && userFilter.end_date !== "Invalid date"){
         let startDate = new Date(userFilter.start_date).toISOString();
         let endDate = new Date(userFilter.end_date + " 23:59:59").toISOString();
 
@@ -884,7 +884,8 @@ const studentData = async (userFilter) => {
                 notification_device_id: "$notification_device_id",
                 email: "$email",
                 country_code: "$country_code",
-                mobile_no: "$mobile_no"
+                mobile_no: "$mobile_no",
+                operating_system: "$operating_system"
             }
         })
 
@@ -920,7 +921,8 @@ const studentData = async (userFilter) => {
             notification_device_id: "$notification_device_id",
             email: "$email",
             country_code: "$country_code",
-            mobile_no: "$mobile_no"
+            mobile_no: "$mobile_no",
+            operating_system:"$operating_system"
         }
     })
 

@@ -1708,12 +1708,12 @@ const paymentResponse = async (request) => {
             
             notificationDeviceId = notificationDeviceId ? notificationDeviceId : userData?.notification_device_id
             if(notificationDeviceId){
-                let data = {
+                let notificationdata = {
                     module: "course_payment_success",
                     reference_id: orderId
                 }
                 if(deviceType == 1 || deviceType == 2){
-                    await sendPushNotification({notification_device_id:[notificationDeviceId], message: "Course has been purchased successfully.", data, device_type: deviceType == 1 ? "android" : "ios" })
+                    await sendPushNotification({notification_device_id:[notificationDeviceId], message: "Course has been purchased successfully.", notificationdata, device_type: deviceType == 1 ? "android" : "ios" })
                 }
             }
 

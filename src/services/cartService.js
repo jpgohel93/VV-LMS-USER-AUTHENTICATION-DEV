@@ -244,6 +244,7 @@ const checkOut = async (userInputs,request) => {
                 message: 'Course already purchased',
                 error: { is_purchase: 'Course already purchased' },
                 data: null,
+                is_purchase: true
             };
         }
 
@@ -628,6 +629,7 @@ const courseCheckOut = async (userInputs, request) => {
                 message: 'Course already purchased',
                 error: { is_purchase: 'Course already purchased' },
                 data: null,
+                is_purchase: true
             };
         }
 

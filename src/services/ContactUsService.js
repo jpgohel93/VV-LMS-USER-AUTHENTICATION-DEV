@@ -5,11 +5,21 @@ const { sendMail } = require("../utils")
 
 const addContactUs = async (userInputs) => {
     try {
-        const { user_id, first_name, email, subject, your_message } = userInputs
+        const {
+            user_id,
+            first_name,
+            email,
+            country_code,
+            phone_number,
+            subject,
+            your_message,
+        } = userInputs
         const createContactUs = await ContactUsModel.createContactUs({
             user_id,
             first_name,
             email,
+            country_code,
+            phone_number,
             subject,
             your_message,
         })
@@ -137,8 +147,57 @@ const deleteContactUs = async (userInputs) => {
     }
 }
 
+const updateContactUs = async (userInputs, request) => {
+    try {
+        const {
+            id,
+            user_id,
+            first_name,
+            email,
+            country_code,
+            phone_number,
+            subject,
+            your_message,
+        } = userInputs
+        const updateContactUs = await ContactUsModel.updateContactUs(id, {
+            user_id,
+            first_name,
+            email,
+            country_code,
+            phone_number,
+            subject,
+            your_message,
+        })
+
+        if (updateContactUs) {
+            return {
+                status: true,
+                status_code: constants.SUCCESS_RESPONSE,
+                message: "contactUs has been updated successfully.",
+            }
+        } else {
+            return {
+                status: false,
+                status_code: constants.DATABASE_ERROR_RESPONSE,
+                message: "Failed to update contactUs",
+            }
+        }
+    } catch (error) {
+        // Handle unexpected errors
+        console.error("Error in updateContactUs:", error)
+        return {
+            status: false,
+            status_code: constants.EXCEPTION_ERROR_CODE,
+            message: "Failed to update contactUs",
+            error: { server_error: "An unexpected error occurred" },
+            data: null,
+        }
+    }
+}
+
 module.exports = {
     addContactUs,
     getContactUsList,
     deleteContactUs,
+    updateContactUs,
 }

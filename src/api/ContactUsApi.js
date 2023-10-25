@@ -71,40 +71,5 @@ module.exports = async (app) => {
         }
     )
 
-    app.post(
-        "/contactUs/updateContactUs",
-        await validateFormFields([
-            body("id")
-                .notEmpty()
-                .withMessage("id is required.")
-                .isMongoId()
-                .withMessage("id is not valid"),
-        ]),
-        async (req, res, next) => {
-            const {
-                id,
-                user_id,
-                first_name,
-                email,
-                country_code,
-                phone_number,
-                subject,
-                your_message,
-            } = req.body
-            const data = await ContactUsService.updateContactUs(
-                {
-                    id,
-                    user_id,
-                    first_name,
-                    email,
-                    country_code,
-                    phone_number,
-                    subject,
-                    your_message,
-                },
-                req
-            )
-            res.status(data.status_code).json(data)
-        }
-    )
+
 }

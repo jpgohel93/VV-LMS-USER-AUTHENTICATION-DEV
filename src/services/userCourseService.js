@@ -863,8 +863,22 @@ const mylearning = async (userInputs,request) => {
             if(getUserCourse.length > 0){
                 let promisecourseData = await new Promise(async (resolve, reject) => {
                     let keyCount = 0
+                    let courseDataKey = 0
                     await getUserCourse.map(async (courseElement, courseKey) => {
-                        if(!courseid.includes(courseElement.course_id)){
+                        const getFilterData = await UserCourseModel.filterUserCourseData({ user_id, course_id: courseElement.course_id});
+
+                        let isPurchase = false
+                        if(getFilterData?.type){
+                            if(getFilterData.type == 1){
+                                isPurchase = true
+                            }else{
+                                if(getFilterData.type == 2 && getFilterData.payment_status == 2 && getFilterData.is_cancle_subscription == false){
+                                    isPurchase = true
+                                }
+                            }
+                        }
+                        
+                        if(!courseid.includes(courseElement.course_id) && isPurchase){
                             courseid.push(courseElement.course_id)
                             //await new Promise(async (resolve, reject) => {
                                 let course = await CallCourseQueryEvent("get_course_data_without_auth",{ id: courseElement.course_id  }, request.get("Authorization"))
@@ -883,7 +897,7 @@ const mylearning = async (userInputs,request) => {
                                 }
             
                                 if(course && ((page_type == 1) || (page_type == 2 && ((courseWatchHistory && courseWatchHistory.is_course_completed == false) || (courseWatchHistory == null))) || (page_type == 3 && courseWatchHistory && courseWatchHistory.is_course_completed == true) )){
-                                    courseData[courseKey] = {
+                                    courseData[courseDataKey] = {
                                         _id: courseElement.id,
                                         user_id: courseElement.user_id,
                                         course_id: courseElement.course_id,
@@ -911,7 +925,7 @@ const mylearning = async (userInputs,request) => {
                                         per_completed_chapter: parseInt(perForCompletedChapter),
                                     }
                                     //resolve(true)
-                                    
+                                    courseDataKey = courseDataKey + 1
                                     keyCount = keyCount + 1
                                 }else{
                                 // resolve(false)

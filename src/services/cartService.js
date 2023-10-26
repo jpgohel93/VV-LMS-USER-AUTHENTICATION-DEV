@@ -745,14 +745,14 @@ const courseCheckOut = async (userInputs, request) => {
             price: course?.price ? course?.price : 0,
             currency: course?.currency ? course?.currency : 0,
             discount: course?.discount ? course?.discount : 0,
-            discount_amount: courseAmount,
+            discount_amount: Math.round(courseAmount * 100) / 100,
             convince_fee: course?.convince_fee || 0,
             convince_fee_amount: convinceFeeAmount,
             tax_amount: taxAmount,
             is_tax_exclusive: course?.is_tax_exclusive || false,
             tax_percentage: course?.tax_percentage || 0,
             referral_discount: hemanDiscount,
-            final_amount: finalAmount
+            final_amount:  Math.round(finalAmount * 100) / 100
         }
 
         return {
@@ -1015,7 +1015,7 @@ const applyCoupon = async (userInputs, request) => {
             price: course?.price ? course?.price : 0,
             currency: course?.currency ? course?.currency : 0,
             discount: course?.discount ? course?.discount : 0,
-            discount_amount: courseAmount,
+            discount_amount: Math.round(courseAmount * 100) / 100,
             convince_fee: course?.convince_fee || 0,
             convince_fee_amount: convinceFeeAmount,
             tax_amount: taxAmount,
@@ -1023,7 +1023,7 @@ const applyCoupon = async (userInputs, request) => {
             tax_percentage: course?.tax_percentage || 0,
             referral_discount: hemanDiscount,
             coupon_amount: couponAmount,
-            final_amount: finalAmount,
+            final_amount: Math.round(finalAmount * 100) / 100,
             coupon_title: couponData.title,
             coupon_description: couponData.description,
             coupon_image: couponData.image,

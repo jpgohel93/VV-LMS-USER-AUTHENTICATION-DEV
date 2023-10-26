@@ -269,7 +269,14 @@ const checkOut = async (userInputs,request) => {
         if(courseData){ 
 
             let courseAmount = courseData.discount_amount
+            let convinceFeeAmount = 0
             let taxAmount = 0
+            if(courseData?.is_tax_exclusive){
+                courseAmount = courseData.discount_amount
+            }else{
+                courseAmount = courseData.discount_amount / 1.2
+            }
+
             let finalAmount = courseAmount
             let orderId = await findUniqueID()
           
@@ -372,7 +379,6 @@ const checkOut = async (userInputs,request) => {
             }
 
             let courseDiscountAmount = finalAmount
-            let convinceFeeAmount = 0
             if(courseData?.is_tax_exclusive){
                 taxAmount = parseInt(courseDiscountAmount) * parseFloat(courseData.tax_percentage) / 100 
                 finalAmount = finalAmount + taxAmount
@@ -382,8 +388,11 @@ const checkOut = async (userInputs,request) => {
                     finalAmount = finalAmount + convinceFeeAmount
                 }
             }else{
-                taxAmount =  parseInt(courseDiscountAmount) * 18 / 100 
+                taxAmount = parseInt(courseDiscountAmount) * 18 / 100 
+                finalAmount = finalAmount + taxAmount
+
                 convinceFeeAmount = parseInt(courseDiscountAmount) * 2 / 100 
+                finalAmount = finalAmount + convinceFeeAmount
             }
             
             userCourseData['tax_amount'] = taxAmount
@@ -644,7 +653,13 @@ const courseCheckOut = async (userInputs, request) => {
         let courseDefault = await CallCourseQueryEvent("get_course_default_promotional_content",{ course_id: course_id  }, request.get("Authorization"))
 
         let courseAmount = course.discount_amount
+        let convinceFeeAmount = 0
         let taxAmount = 0
+        if(course?.is_tax_exclusive){
+            courseAmount = course.discount_amount
+        }else{
+            courseAmount = course.discount_amount / 1.2
+        }
         let finalAmount = courseAmount
        
 
@@ -699,7 +714,6 @@ const courseCheckOut = async (userInputs, request) => {
         }
 
         let courseDiscountAmount = finalAmount
-        let convinceFeeAmount = 0
         if(course.is_tax_exclusive){
             taxAmount = parseInt(courseDiscountAmount) * parseFloat(course.tax_percentage) / 100 
             finalAmount = finalAmount + taxAmount
@@ -709,8 +723,11 @@ const courseCheckOut = async (userInputs, request) => {
                 finalAmount = finalAmount + convinceFeeAmount
             }
         }else{
-            taxAmount =  parseInt(courseDiscountAmount) * 18 / 100 
+            taxAmount = parseInt(courseDiscountAmount) * 18 / 100 
+            finalAmount = finalAmount + taxAmount
+
             convinceFeeAmount = parseInt(courseDiscountAmount) * 2 / 100 
+            finalAmount = finalAmount + convinceFeeAmount
         }
 
         let checkOutData = {
@@ -728,7 +745,7 @@ const courseCheckOut = async (userInputs, request) => {
             price: course?.price ? course?.price : 0,
             currency: course?.currency ? course?.currency : 0,
             discount: course?.discount ? course?.discount : 0,
-            discount_amount: course?.discount_amount ? course?.discount_amount : 0,
+            discount_amount: courseAmount,
             convince_fee: course?.convince_fee || 0,
             convince_fee_amount: convinceFeeAmount,
             tax_amount: taxAmount,
@@ -893,10 +910,16 @@ const applyCoupon = async (userInputs, request) => {
         let courseDefault = await CallCourseQueryEvent("get_course_default_promotional_content",{ course_id: course_id  }, request.get("Authorization"))
 
         let courseAmount = course.discount_amount
+        let convinceFeeAmount = 0
         let taxAmount = 0
+        if(course?.is_tax_exclusive){
+            courseAmount = course.discount_amount
+        }else{
+            courseAmount = course.discount_amount / 1.2
+        }
+        
         let finalAmount = courseAmount
-        
-        
+
         let hemanDiscount = 0
         if(getUserData && (getUserData?.referral_code || getUserData?.users_referral_code)  && getUserCourseData && getUserCourseData?.length == 0){
             if(getUserData?.referral_type == 1){
@@ -960,7 +983,7 @@ const applyCoupon = async (userInputs, request) => {
         }
 
         let courseDiscountAmount = finalAmount
-        let convinceFeeAmount = 0
+        
         if(course?.is_tax_exclusive){
             taxAmount = parseInt(courseDiscountAmount) * parseFloat(course.tax_percentage) / 100 
             finalAmount = finalAmount + taxAmount
@@ -970,8 +993,11 @@ const applyCoupon = async (userInputs, request) => {
                 finalAmount = finalAmount + convinceFeeAmount
             }
         }else{
-            taxAmount =  parseInt(courseDiscountAmount) * 18 / 100 
+            taxAmount = parseInt(courseDiscountAmount) * 18 / 100 
+            finalAmount = finalAmount + taxAmount
+
             convinceFeeAmount = parseInt(courseDiscountAmount) * 2 / 100 
+            finalAmount = finalAmount + convinceFeeAmount
         }
 
         let checkOutData = {
@@ -989,7 +1015,7 @@ const applyCoupon = async (userInputs, request) => {
             price: course?.price ? course?.price : 0,
             currency: course?.currency ? course?.currency : 0,
             discount: course?.discount ? course?.discount : 0,
-            discount_amount: course?.discount_amount ? course?.discount_amount : 0,
+            discount_amount: courseAmount,
             convince_fee: course?.convince_fee || 0,
             convince_fee_amount: convinceFeeAmount,
             tax_amount: taxAmount,

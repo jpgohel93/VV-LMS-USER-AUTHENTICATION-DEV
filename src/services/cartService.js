@@ -381,26 +381,26 @@ const checkOut = async (userInputs,request) => {
             let courseDiscountAmount = finalAmount
             if(courseData?.is_tax_exclusive){
                 taxAmount = parseInt(courseDiscountAmount) * parseFloat(courseData.tax_percentage) / 100 
-                finalAmount = finalAmount + taxAmount
+                finalAmount = finalAmount + Math.round(taxAmount)
 
                 if(courseData?.convince_fee){
                     convinceFeeAmount = parseInt(courseDiscountAmount) * parseFloat(courseData.convince_fee) / 100 
-                    finalAmount = finalAmount + convinceFeeAmount
+                    finalAmount = finalAmount + Math.round(convinceFeeAmount)
                 }
             }else{
                 taxAmount = parseInt(courseDiscountAmount) * 18 / 100 
-                finalAmount = finalAmount + taxAmount
+                finalAmount = finalAmount + Math.round(taxAmount)
 
                 convinceFeeAmount = parseInt(courseDiscountAmount) * 2 / 100 
-                finalAmount = finalAmount + convinceFeeAmount
+                finalAmount = finalAmount + Math.round(convinceFeeAmount)
             }
             
             userCourseData['tax_amount'] = taxAmount
             userCourseData['convince_fee'] = courseData?.convince_fee || 0
             userCourseData['convince_fee_amount'] = convinceFeeAmount
 
-            cronLogData['amount'] = finalAmount
-            let amount = finalAmount
+            cronLogData['amount'] = Math.round(finalAmount)
+            let amount = Math.round(finalAmount)
             if(amount > 0){
 
                 let invoiceData = {
@@ -416,9 +416,9 @@ const checkOut = async (userInputs,request) => {
                     heman_discount_amount: hemanDiscount,
                     coupon_code: coupon_code,
                     coupon_amount: couponAmount,
-                    tax_amount: taxAmount,
+                    tax_amount: Math.round(taxAmount),
                     convince_fee: courseData?.convince_fee || 0,
-                    convince_fee_amount: convinceFeeAmount,
+                    convince_fee_amount: Math.round(convinceFeeAmount),
                     purchase_time: new Date(),
                     innitial_response: '',
                     invoice_type: 2,
@@ -447,7 +447,7 @@ const checkOut = async (userInputs,request) => {
                     merchant_id: merchant_id,
                     order_id: orderId,
                     currency: "INR",
-                    amount: Math.round(finalAmount * 100) / 100,
+                    amount: Math.round(finalAmount),
                     language: "EN",
                     billing_name: (getUserData?.first_name ? getUserData?.first_name : '') + " " + (getUserData?.last_name ? getUserData?.last_name : ''),
                     billing_address:  'Santacruz', 
@@ -716,18 +716,18 @@ const courseCheckOut = async (userInputs, request) => {
         let courseDiscountAmount = finalAmount
         if(course.is_tax_exclusive){
             taxAmount = parseInt(courseDiscountAmount) * parseFloat(course.tax_percentage) / 100 
-            finalAmount = finalAmount + taxAmount
+            finalAmount = finalAmount + Math.round(taxAmount)
 
             if(course?.convince_fee){
                 convinceFeeAmount = parseInt(courseDiscountAmount) * parseFloat(course.convince_fee) / 100 
-                finalAmount = finalAmount + convinceFeeAmount
+                finalAmount = finalAmount + Math.round(convinceFeeAmount)
             }
         }else{
             taxAmount = parseInt(courseDiscountAmount) * 18 / 100 
-            finalAmount = finalAmount + taxAmount
+            finalAmount = finalAmount + Math.round(taxAmount)
 
             convinceFeeAmount = parseInt(courseDiscountAmount) * 2 / 100 
-            finalAmount = finalAmount + convinceFeeAmount
+            finalAmount = finalAmount + Math.round(convinceFeeAmount)
         }
 
         let checkOutData = {
@@ -745,14 +745,14 @@ const courseCheckOut = async (userInputs, request) => {
             price: course?.price ? course?.price : 0,
             currency: course?.currency ? course?.currency : 0,
             discount: course?.discount ? course?.discount : 0,
-            discount_amount: Math.round(courseAmount * 100) / 100,
+            discount_amount: Math.round(courseAmount),
             convince_fee: course?.convince_fee || 0,
-            convince_fee_amount: convinceFeeAmount,
-            tax_amount: taxAmount,
+            convince_fee_amount: Math.round(convinceFeeAmount),
+            tax_amount: Math.round(taxAmount),
             is_tax_exclusive: course?.is_tax_exclusive || false,
             tax_percentage: course?.tax_percentage || 0,
             referral_discount: hemanDiscount,
-            final_amount:  Math.round(finalAmount * 100) / 100
+            final_amount:  Math.round(finalAmount)
         }
 
         return {
@@ -986,18 +986,18 @@ const applyCoupon = async (userInputs, request) => {
         
         if(course?.is_tax_exclusive){
             taxAmount = parseInt(courseDiscountAmount) * parseFloat(course.tax_percentage) / 100 
-            finalAmount = finalAmount + taxAmount
+            finalAmount = finalAmount + Math.round(taxAmount)
 
             if(course?.convince_fee){
                 convinceFeeAmount = parseInt(courseDiscountAmount) * parseFloat(course.convince_fee) / 100 
-                finalAmount = finalAmount + convinceFeeAmount
+                finalAmount = finalAmount + Math.round(convinceFeeAmount)
             }
         }else{
             taxAmount = parseInt(courseDiscountAmount) * 18 / 100 
-            finalAmount = finalAmount + taxAmount
+            finalAmount = finalAmount + Math.round(taxAmount)
 
             convinceFeeAmount = parseInt(courseDiscountAmount) * 2 / 100 
-            finalAmount = finalAmount + convinceFeeAmount
+            finalAmount = finalAmount + Math.round(convinceFeeAmount)
         }
 
         let checkOutData = {
@@ -1015,15 +1015,15 @@ const applyCoupon = async (userInputs, request) => {
             price: course?.price ? course?.price : 0,
             currency: course?.currency ? course?.currency : 0,
             discount: course?.discount ? course?.discount : 0,
-            discount_amount: Math.round(courseAmount * 100) / 100,
+            discount_amount: Math.round(courseAmount),
             convince_fee: course?.convince_fee || 0,
-            convince_fee_amount: convinceFeeAmount,
-            tax_amount: taxAmount,
+            convince_fee_amount: Math.round(convinceFeeAmount),
+            tax_amount: Math.round(taxAmount),
             is_tax_exclusive: course?.is_tax_exclusive || false,
             tax_percentage: course?.tax_percentage || 0,
             referral_discount: hemanDiscount,
             coupon_amount: couponAmount,
-            final_amount: Math.round(finalAmount * 100) / 100,
+            final_amount: Math.round(finalAmount),
             coupon_title: couponData.title,
             coupon_description: couponData.description,
             coupon_image: couponData.image,

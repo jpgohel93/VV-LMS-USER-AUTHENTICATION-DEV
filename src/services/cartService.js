@@ -447,7 +447,7 @@ const checkOut = async (userInputs,request) => {
                     merchant_id: merchant_id,
                     order_id: orderId,
                     currency: "INR",
-                    amount: amount,
+                    amount: Math.round(finalAmount * 100) / 100,
                     language: "EN",
                     billing_name: (getUserData?.first_name ? getUserData?.first_name : '') + " " + (getUserData?.last_name ? getUserData?.last_name : ''),
                     billing_address:  'Santacruz', 

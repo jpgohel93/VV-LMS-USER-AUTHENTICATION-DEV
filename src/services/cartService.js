@@ -461,12 +461,9 @@ const checkOut = async (userInputs,request) => {
                     merchant_param2: device_type ? device_type : 1,
                     merchant_param3: course_id,
                     merchant_param4: notification_device_id,
+                    integration_type: "iframe_normal",
                     redirect_url: redirectUrl,
                     cancel_url: redirectUrl
-                }
-
-                if(device_type != 1 && device_type != 2){
-                    paymentData['integration_type'] = "iframe_normal"
                 }
         
                 const stringified = qs.stringify(paymentData);

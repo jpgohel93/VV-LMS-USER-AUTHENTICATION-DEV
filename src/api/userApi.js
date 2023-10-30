@@ -1492,11 +1492,11 @@ module.exports = async (app) => {
             .matches(/^[a-z0-9][a-z0-9-_\.]+@([a-z]|[a-z0-9]?[a-z0-9-]+[a-z0-9])\.[a-z0-9]{2,10}(?:\.[a-z]{2,10})?$/i)
             .withMessage('Please enter valid email id'),
 
-            body('mobile_no')
-            .notEmpty()
-            .withMessage('Mobile no is required')
-            .matches(/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/)
-            .withMessage('Please enter valid mobile no'),
+            // body('mobile_no')
+            // .notEmpty()
+            // .withMessage('Mobile no is required')
+            // .matches(/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/)
+            // .withMessage('Please enter valid mobile no'),
 
             body('operating_system')
             .matches(/^[A-Za-z\s]+$/)

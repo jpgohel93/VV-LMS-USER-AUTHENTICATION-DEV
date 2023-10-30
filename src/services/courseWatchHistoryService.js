@@ -352,8 +352,8 @@ const getCourseWatchHistorysData = async (userInputs, request) => {
             };
         }else{
             return {
-                status: false,
-                status_code: constants.DATABASE_ERROR_RESPONSE,
+                status: true,
+                status_code: constants.SUCCESS_RESPONSE,
                 message: "Data not found",
                 data: null
             };
@@ -410,7 +410,7 @@ const getSingleCourseWatchHistory = async (userInputs) => {
 
         const getCourseWatchHistoryData = await CourseWatchHistoryModel.filterCourseWatchHistoryData(user_id, course_id);
         
-        if(getCourseWatchHistoryData !== null){
+        if(getCourseWatchHistoryData){
             return {
                 status: true,
                 status_code: constants.SUCCESS_RESPONSE,
@@ -419,8 +419,8 @@ const getSingleCourseWatchHistory = async (userInputs) => {
             };
         }else{
             return {
-                status: false,
-                status_code: constants.DATABASE_ERROR_RESPONSE,
+                status: true,
+                status_code: constants.SUCCESS_RESPONSE,
                 message: "Data not found",
                 data: null
             };
@@ -450,7 +450,7 @@ const getCourseWatchHistoryWithPagination = async (userInputs) => {
 
         const getCourseWatchHistoryData = await CourseWatchHistoryModel.fetchCourseWatchHistory(user_id, course_id, page, perPage);
         
-        if(getCourseWatchHistoryData !== null){
+        if(getCourseWatchHistoryData){
             return {
                 status: true,
                 status_code: constants.SUCCESS_RESPONSE,
@@ -459,8 +459,8 @@ const getCourseWatchHistoryWithPagination = async (userInputs) => {
             };
         }else{
             return {
-                status: false,
-                status_code: constants.DATABASE_ERROR_RESPONSE,
+                status: true,
+                status_code: constants.SUCCESS_RESPONSE,
                 message: "Data not found",
                 data: null
             };
@@ -485,7 +485,7 @@ const makeCourseAsACompleted = async (userInputs) => {
 
         let checkCourseWatchHistoryData = await CourseWatchHistoryModel.filterCourseWatchHistoryData(user_id, course_id);
 
-        if(checkCourseWatchHistoryData !== null){
+        if(checkCourseWatchHistoryData){
             const courseMakeAsACompleted = await CourseWatchHistoryModel.updateCourseWatchHistoryData(checkCourseWatchHistoryData._id,{ 
                 is_course_completed: true,
                 course_completion_date: new Date()

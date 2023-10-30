@@ -63,7 +63,7 @@ const getQuizResultsData = async (userInputs, request) => {
 
         const getQuizResultData = await QuizResultModel.fatchQuizResultList(user_id, type);
         
-        if(getQuizResultData !== null){
+        if(getQuizResultData){
             let promiseQuizResultData = null;
             let quizresultKey = 0
             if(getQuizResultData.length > 0){
@@ -135,8 +135,8 @@ const getQuizResultsData = async (userInputs, request) => {
             };
         }else{
             return {
-                status: false,
-                status_code: constants.DATABASE_ERROR_RESPONSE,
+                status: true,
+                status_code: constants.SUCCESS_RESPONSE,
                 message: "Data not found",
                 data: null
             };
@@ -160,7 +160,7 @@ const getQuizResults = async (userInputs, request) => {
 
         const getQuizResultData = await QuizResultModel.filterQuizResultData(id);
         
-        if(getQuizResultData !== null){
+        if(getQuizResultData){
 
             if(getQuizResultData?.type && getQuizResultData?.type == 1){
                 let quiz = await CallCourseQueryEvent("get_quiz_by_id",{ quiz_id: getQuizResultData.quiz_id  }, request.get("Authorization"))
@@ -184,8 +184,8 @@ const getQuizResults = async (userInputs, request) => {
             };
         }else{
             return {
-                status: false,
-                status_code: constants.DATABASE_ERROR_RESPONSE,
+                status: true,
+                status_code: constants.SUCCESS_RESPONSE,
                 message: "Data not found",
                 data: null
             };
@@ -241,7 +241,7 @@ const getReportQuizResult= async (userInputs, request) => {
 
         const getQuizResultData = await QuizResultModel.countPassFailedResult(quiz_id, user_id, type);
         
-        if(getQuizResultData !== null){
+        if(getQuizResultData){
             return {
                 status: true,
                 status_code: constants.SUCCESS_RESPONSE,
@@ -250,8 +250,8 @@ const getReportQuizResult= async (userInputs, request) => {
             };
         }else{
             return {
-                status: false,
-                status_code: constants.DATABASE_ERROR_RESPONSE,
+                status: true,
+                status_code: constants.SUCCESS_RESPONSE,
                 message: "Data not found",
                 data: null
             };

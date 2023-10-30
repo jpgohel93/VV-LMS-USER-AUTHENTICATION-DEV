@@ -84,7 +84,7 @@ const getContactUsList = async (userInputs) => {
         )
         const countContactUs = await ContactUsModel.countContactUs(search)
 
-        if (getContactUsdata !== null) {
+        if (getContactUsdata) {
             return {
                 status: true,
                 status_code: constants.SUCCESS_RESPONSE,

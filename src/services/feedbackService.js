@@ -102,8 +102,8 @@ const getFeedbackData = async (userInputs, request) => {
                 }
             }else{
                 return {
-                    status: false,
-                    status_code: constants.DATABASE_ERROR_RESPONSE,
+                    status: true,
+				    status_code: constants.SUCCESS_RESPONSE,
                     message: "Data not found",
                     data: null
                 };

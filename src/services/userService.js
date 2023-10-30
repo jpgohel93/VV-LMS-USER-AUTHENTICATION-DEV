@@ -2009,8 +2009,8 @@ const getLanguageData = async () => {
             };
         }else{
             return {
-                status: false,
-                status_code: constants.DATABASE_ERROR_RESPONSE,
+                status: true,
+                status_code: constants.SUCCESS_RESPONSE,
                 message: "Data not found",
                 data: {
                     hindi: hindiCount,
@@ -2075,8 +2075,8 @@ const getEnrollmentData = async () => {
             };
         }else{
             return {
-                status: false,
-                status_code: constants.DATABASE_ERROR_RESPONSE,
+                status: true,
+                status_code: constants.SUCCESS_RESPONSE,
                 message: "Data not found",
                 data: monthData
             };
@@ -2137,8 +2137,8 @@ const getMobileUsageInWeekData = async () => {
             };
         }else{
             return {
-                status: false,
-                status_code: constants.DATABASE_ERROR_RESPONSE,
+                status: true,
+                status_code: constants.SUCCESS_RESPONSE,
                 message: "Data not found",
                 data: weekData
             };
@@ -2201,8 +2201,8 @@ const getMobileUsageInDaysData = async () => {
             };
         }else{
             return {
-                status: false,
-                status_code: constants.DATABASE_ERROR_RESPONSE,
+                status: true,
+                status_code: constants.SUCCESS_RESPONSE,
                 message: "Data not found",
                 data: monthArray
             };
@@ -2261,8 +2261,8 @@ const getMobileUsageInMonthData = async () => {
             };
         }else{
             return {
-                status: false,
-                status_code: constants.DATABASE_ERROR_RESPONSE,
+                status: true,
+                status_code: constants.SUCCESS_RESPONSE,
                 message: "Data not found",
                 data: monthArray
             };
@@ -2323,8 +2323,8 @@ const getLoginHistoryInWeekData = async () => {
             };
         }else{
             return {
-                status: false,
-                status_code: constants.DATABASE_ERROR_RESPONSE,
+                status: true,
+                status_code: constants.SUCCESS_RESPONSE,
                 message: "Data not found",
                 data: weekData
             };
@@ -2387,8 +2387,8 @@ const getLoginHistoryInDaysData = async () => {
             };
         }else{
             return {
-                status: false,
-                status_code: constants.DATABASE_ERROR_RESPONSE,
+                status: true,
+                status_code: constants.SUCCESS_RESPONSE,
                 message: "Data not found",
                 data: monthArray
             };
@@ -2447,8 +2447,8 @@ const getLoginHistoryInMonthData = async () => {
             };
         }else{
             return {
-                status: false,
-                status_code: constants.DATABASE_ERROR_RESPONSE,
+                status: true,
+                status_code: constants.SUCCESS_RESPONSE,
                 message: "Data not found",
                 data: monthArray
             };
@@ -2509,8 +2509,8 @@ const getRegistrationHistoryInWeekData = async () => {
             };
         }else{
             return {
-                status: false,
-                status_code: constants.DATABASE_ERROR_RESPONSE,
+                status: true,
+                status_code: constants.SUCCESS_RESPONSE,
                 message: "Data not found",
                 data: weekData
             };
@@ -2573,8 +2573,8 @@ const getRegistrationHistoryInDaysData = async () => {
             };
         }else{
             return {
-                status: false,
-                status_code: constants.DATABASE_ERROR_RESPONSE,
+                status: true,
+                status_code: constants.SUCCESS_RESPONSE,
                 message: "Data not found",
                 data: monthArray
             };
@@ -2633,8 +2633,8 @@ const getRegistrationHistoryInMonthData = async () => {
             };
         }else{
             return {
-                status: false,
-                status_code: constants.DATABASE_ERROR_RESPONSE,
+                status: true,
+                status_code: constants.SUCCESS_RESPONSE,
                 message: "Data not found",
                 data: monthArray
             };
@@ -2695,8 +2695,8 @@ const getCourseEnrollmentDataCourseWise = async (request) => {
             
         }else{
             return {
-                status: false,
-                status_code: constants.DATABASE_ERROR_RESPONSE,
+                status: true,
+                status_code: constants.SUCCESS_RESPONSE,
                 message: "Data not found",
                 data: monthData
             };
@@ -2796,8 +2796,8 @@ const getCourseCompletionRateCourseWise = async (request) => {
             }
         }else{
             return {
-                status: false,
-                status_code: constants.DATABASE_ERROR_RESPONSE,
+                status: true,
+                status_code: constants.SUCCESS_RESPONSE,
                 message: "Data not found",
                 data: monthData
             };
@@ -2858,8 +2858,8 @@ const getRegistrationRateInWeekData = async () => {
             };
         }else{
             return {
-                status: false,
-                status_code: constants.DATABASE_ERROR_RESPONSE,
+                status: true,
+                status_code: constants.SUCCESS_RESPONSE,
                 message: "Data not found",
                 data: weekData
             };
@@ -2922,8 +2922,8 @@ const getRegistrationRateInDaysData = async () => {
             };
         }else{
             return {
-                status: false,
-                status_code: constants.DATABASE_ERROR_RESPONSE,
+                status: true,
+                status_code: constants.SUCCESS_RESPONSE,
                 message: "Data not found",
                 data: monthArray
             };
@@ -2982,8 +2982,8 @@ const getRegistrationRateInMonthData = async () => {
             };
         }else{
             return {
-                status: false,
-                status_code: constants.DATABASE_ERROR_RESPONSE,
+                status: true,
+                status_code: constants.SUCCESS_RESPONSE,
                 message: "Data not found",
                 data: monthArray
             };
@@ -3044,8 +3044,8 @@ const getCourseEnrollmentRateInWeekData = async () => {
             };
         }else{
             return {
-                status: false,
-                status_code: constants.DATABASE_ERROR_RESPONSE,
+                status: true,
+                status_code: constants.SUCCESS_RESPONSE,
                 message: "Data not found",
                 data: weekData
             };
@@ -3108,8 +3108,8 @@ const getCourseEnrollmentRateInDaysData = async () => {
             };
         }else{
             return {
-                status: false,
-                status_code: constants.DATABASE_ERROR_RESPONSE,
+                status: true,
+                status_code: constants.SUCCESS_RESPONSE,
                 message: "Data not found",
                 data: monthArray
             };
@@ -3168,8 +3168,8 @@ const getCourseEnrollmentRateInMonthData = async () => {
             };
         }else{
             return {
-                status: false,
-                status_code: constants.DATABASE_ERROR_RESPONSE,
+                status: true,
+                status_code: constants.SUCCESS_RESPONSE,
                 message: "Data not found",
                 data: monthArray
             };
@@ -3200,8 +3200,8 @@ const getLoginFrequencyData = async () => {
             };
         }else{
             return {
-                status: false,
-                status_code: constants.DATABASE_ERROR_RESPONSE,
+                status: true,
+                status_code: constants.SUCCESS_RESPONSE,
                 message: "Data not found",
                 data: null
             };
@@ -3260,8 +3260,8 @@ const getCourseEnrollmentPercentageInWeekData = async () => {
             };
         }else{
             return {
-                status: false,
-                status_code: constants.DATABASE_ERROR_RESPONSE,
+                status: true,
+                status_code: constants.SUCCESS_RESPONSE,
                 message: "Data not found",
                 data: weekData
             };
@@ -3293,8 +3293,8 @@ const getCourseCompletionRateData = async () => {
             };
         }else{
             return {
-                status: false,
-                status_code: constants.DATABASE_ERROR_RESPONSE,
+                status: true,
+                status_code: constants.SUCCESS_RESPONSE,
                 message: "Data not found",
                 data: null
             };
@@ -3325,8 +3325,8 @@ const getAllStudent = async (userInputs) => {
             };
         }else{
             return {
-                status: false,
-                status_code: constants.DATABASE_ERROR_RESPONSE,
+                status: true,
+                status_code: constants.SUCCESS_RESPONSE,
                 message: "Data not found",
                 data: null
             };
@@ -3607,8 +3607,8 @@ const getAgeData = async (userInputs) => {
             };
         }else{
             return {
-                status: false,
-                status_code: constants.DATABASE_ERROR_RESPONSE,
+                status: true,
+                status_code: constants.SUCCESS_RESPONSE,
                 message: "Data not found",
                 data: {
                     total_user_count: totalUserCount,
@@ -3669,8 +3669,8 @@ const getGenderData = async (userInputs) => {
             };
         }else{
             return {
-                status: false,
-                status_code: constants.DATABASE_ERROR_RESPONSE,
+                status: true,
+                status_code: constants.SUCCESS_RESPONSE,
                 message: "Data not found",
                 data: {
                     male: maleCount,
@@ -3709,8 +3709,8 @@ const getStateWiseLocationDistributionData = async (userInputs) => {
             };
         }else{
             return {
-                status: false,
-                status_code: constants.DATABASE_ERROR_RESPONSE,
+                status: true,
+                status_code: constants.SUCCESS_RESPONSE,
                 message: "Data not found",
                 data: locationDistributionData
             };
@@ -3745,8 +3745,8 @@ const getCityWiseLocationDistributionData = async (userInputs) => {
             };
         }else{
             return {
-                status: false,
-                status_code: constants.DATABASE_ERROR_RESPONSE,
+                status: true,
+                status_code: constants.SUCCESS_RESPONSE,
                 message: "Data not found",
                 data: locationDistributionData
             };
@@ -3804,8 +3804,8 @@ const getSignupDistribution = async (userInputs) => {
             };
         }else{
             return {
-                status: false,
-                status_code: constants.DATABASE_ERROR_RESPONSE,
+                status: true,
+                status_code: constants.SUCCESS_RESPONSE,
                 message: "Data not found",
                 data: responseData
             };
@@ -3872,8 +3872,8 @@ const getOSUsage = async (userInputs) => {
             };
         }else{
             return {
-                status: false,
-                status_code: constants.DATABASE_ERROR_RESPONSE,
+                status: true,
+                status_code: constants.SUCCESS_RESPONSE,
                 message: "Data not found",
                 data: osUsage
             };
@@ -4027,8 +4027,8 @@ const getStudentsByIds = async (studentIds) => {
             };
         }else{
             return {
-                status: false,
-                status_code: constants.DATABASE_ERROR_RESPONSE,
+                status: true,
+                status_code: constants.SUCCESS_RESPONSE,
                 message: "Data not found",
                 data: null,
                 record_count: 0

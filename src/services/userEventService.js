@@ -25,9 +25,9 @@ const getUserEventList = async (userInput, request) => {
                                 await eventUserList.data.map(async(element,key) => {
                                    let studentData = await CallUserEvent("get_student_by_id",{ id: element.user_id }, request.get("Authorization"))
                 
-                                    if(studentData !== null && studentData !== undefined){
+                                    if(studentData){
                 
-                                        let profileImage = studentData.profile_image !== undefined ? studentData.profile_image : '';
+                                        let profileImage = studentData?.profile_image || '';
                 
                                         studentProfileData.push({
                                             profile_image: profileImage,

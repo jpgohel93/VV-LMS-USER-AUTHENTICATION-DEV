@@ -100,7 +100,7 @@ const getQuizData = async (userInputs) => {
 
         const getQuizResultData = await PersonalizedQuizModel.fatchQuizList(user_id);
         
-        if(getQuizResultData !== null){
+        if(getQuizResultData){
             return {
                 status: true,
                 status_code: constants.SUCCESS_RESPONSE,
@@ -109,8 +109,8 @@ const getQuizData = async (userInputs) => {
             };
         }else{
             return {
-                status: false,
-                status_code: constants.DATABASE_ERROR_RESPONSE,
+                status: true,
+                status_code: constants.SUCCESS_RESPONSE,
                 message: "Data not found",
                 data: null
             };
@@ -134,7 +134,7 @@ const getQuiz = async (userInputs) => {
 
         const getQuizResultData = await PersonalizedQuizModel.filterQuizData(user_id, quiz_id);
         
-        if(getQuizResultData !== null){
+        if(getQuizResultData){
             return {
                 status: true,
                 status_code: constants.SUCCESS_RESPONSE,
@@ -143,8 +143,8 @@ const getQuiz = async (userInputs) => {
             };
         }else{
             return {
-                status: false,
-                status_code: constants.DATABASE_ERROR_RESPONSE,
+                status: true,
+                status_code: constants.SUCCESS_RESPONSE,
                 message: "Data not found",
                 data: null
             };
@@ -168,7 +168,7 @@ const getQuizResult = async (userInputs) => {
 
         const getQuizResultData = await PersonalizedQuizModel.getQuizResult(user_id, quiz_id);
         
-        if(getQuizResultData !== null){
+        if(getQuizResultData){
             return {
                 status: true,
                 status_code: constants.SUCCESS_RESPONSE,
@@ -177,8 +177,8 @@ const getQuizResult = async (userInputs) => {
             };
         }else{
             return {
-                status: false,
-                status_code: constants.DATABASE_ERROR_RESPONSE,
+                status: true,
+                status_code: constants.SUCCESS_RESPONSE,
                 message: "Data not found",
                 data: null
             };

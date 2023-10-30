@@ -126,7 +126,7 @@ const getAssignCourseList = async (userInputs,request) => {
         const getUserCourse = await UserCourseModel.getUserCourseData({ user_id,  page, perPage, course_subscription_type });
         const countUserCourse = await UserCourseModel.getUserCourseCount({ user_id, course_subscription_type });
 
-        if(getUserCourse !== null){
+        if(getUserCourse){
             
             let cartData = [];
             if(getUserCourse.length > 0){
@@ -145,14 +145,14 @@ const getAssignCourseList = async (userInputs,request) => {
                                 let courseWatchHistory = await CourseWatchHistoryModel.filterCourseWatchHistoryData(user_id, cartElement.course_id)
                                 
                                 let perForCompletedChapter = 0;
-                                if(courseWatchHistory!== null){
+                                if(courseWatchHistory){
                                     let courseChapterCount = await CallCourseQueryDataEvent("get_chapter_count",{ course_id: cartElement.course_id  }, request.get("Authorization"));
                                     if(courseChapterCount.total_chapter > 0 && courseWatchHistory.completed_chapter.length > 0){
                                         perForCompletedChapter = courseWatchHistory.completed_chapter.length * 100 / parseInt(courseChapterCount.total_chapter);
                                     }
                                 }
             
-                                if(course !== null){
+                                if(course){
                                     await cartData.push({
                                         _id: cartElement.id,
                                         user_id: cartElement.user_id,
@@ -207,8 +207,8 @@ const getAssignCourseList = async (userInputs,request) => {
             }
         }else{
             return {
-                status: false,
-                status_code: constants.DATABASE_ERROR_RESPONSE,
+                status: true,
+                status_code: constants.SUCCESS_RESPONSE,
                 message: "Data not found",
                 data: null
             };
@@ -322,7 +322,7 @@ const getAssignCourseById = async (userInputs,request) => {
 
         const getFilterData = await UserCourseModel.filterUserCourseData({ id });
 
-        if(getFilterData !== null){
+        if(getFilterData){
             return {
                 status: true,
                 status_code: constants.SUCCESS_RESPONSE,
@@ -331,8 +331,8 @@ const getAssignCourseById = async (userInputs,request) => {
             };
         }else{
             return {
-                status: false,
-                status_code: constants.DATABASE_ERROR_RESPONSE,
+                status: true,
+                status_code: constants.SUCCESS_RESPONSE,
                 message: "Data not found",
                 data: null
             };
@@ -356,7 +356,7 @@ const purchaseCourse = async (userInputs,request) => {
 
         const getFilterData = await UserCourseModel.filterUserCourseData({ user_id, course_id});
 
-        if(getFilterData != null){
+        if(getFilterData){
             if(getFilterData.type == 1){
                 // course already assign to user
                 return {
@@ -856,7 +856,7 @@ const mylearning = async (userInputs,request) => {
         //check duplicate user name
         const getUserCourse = await UserCourseModel.getUserCourseLearningData({ user_id,  page_type });
 
-        if(getUserCourse !== null){
+        if(getUserCourse){
             
             let courseData = [];
             let courseid = [];
@@ -889,7 +889,7 @@ const mylearning = async (userInputs,request) => {
 
                                 let perForCompletedChapter = 0;
                                 let completedChapterCount = 0;
-                                if(courseWatchHistory!== null){
+                                if(courseWatchHistory){
                                     if(courseChapterCount.total_chapter > 0 && courseWatchHistory.completed_chapter.length > 0){
                                         completedChapterCount = courseWatchHistory.completed_chapter.length
                                         perForCompletedChapter = courseWatchHistory.completed_chapter.length * 100 / parseInt(courseChapterCount.total_chapter);
@@ -961,8 +961,8 @@ const mylearning = async (userInputs,request) => {
         
         }else{
             return {
-                status: false,
-                status_code: constants.DATABASE_ERROR_RESPONSE,
+                status: true,
+                status_code: constants.SUCCESS_RESPONSE,
                 message: "Data not found",
                 data: null
             };
@@ -1389,7 +1389,7 @@ const getPaymentHistory = async (userInputs,request) => {
             )
         }
       
-        if(paymentHistory !== null){
+        if(paymentHistory){
             return {
                 status: true,
                 status_code: constants.SUCCESS_RESPONSE,
@@ -1398,8 +1398,8 @@ const getPaymentHistory = async (userInputs,request) => {
             }
         }else{
             return {
-                status: false,
-                status_code: constants.DATABASE_ERROR_RESPONSE,
+                status: true,
+                status_code: constants.SUCCESS_RESPONSE,
                 message: "Data not found",
                 data: null
             };
@@ -1527,7 +1527,7 @@ const singleTimePayment = async (userInputs,request) => {
 
         const getFilterData = await UserCourseModel.filterUserCourseData({ user_id, course_id});
 
-        if(getFilterData != null){
+        if(getFilterData){
             if(getFilterData.type == 1){
                 // course already assign to user
                 return {
@@ -2161,7 +2161,7 @@ const getUserEarningHistory = async (userInputs) => {
         //get course data
         const userEarningHistory = await UserCourseModel.getUserEarningHistory({ user_id,  page, perPage, transaction_type });
 
-        if(userEarningHistory !== null){
+        if(userEarningHistory){
             return {
                 status: true,
                 status_code: constants.SUCCESS_RESPONSE,
@@ -2303,7 +2303,7 @@ const updateTransactionStatus = async (userInputs) => {
             amount_credited: transaction_status
         });
 
-        if(updateUserEarning !== null){
+        if(updateUserEarning){
             return {
                 status: true,
                 status_code: constants.SUCCESS_RESPONSE,

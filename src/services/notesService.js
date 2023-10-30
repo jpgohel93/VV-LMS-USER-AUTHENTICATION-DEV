@@ -110,7 +110,7 @@ const getNotesData = async (userInputs, request) => {
                         await new Promise(async (resolve, reject) => {
                             let course = await CallCourseQueryEvent("get_topic_by_id",{ topic_id: notesElement.topic_id  }, request.get("Authorization"))
                            
-                            if(course !== null){
+                            if(course){
                                 notesData[notesKey] = {
                                     _id: notesElement.id,
                                     user_id: notesElement.user_id,
@@ -174,8 +174,8 @@ const getNotesData = async (userInputs, request) => {
             }
         }else{
             return {
-                status: false,
-                status_code: constants.DATABASE_ERROR_RESPONSE,
+                status: true,
+                status_code: constants.SUCCESS_RESPONSE,
                 message: "Data not found",
                 data: null
             };

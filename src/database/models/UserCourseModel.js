@@ -360,7 +360,7 @@ const getCourseEnrollmentPercentageData = async (start_date) => {
 const getUserCourseLearningData = async (userFilter) => {
 
     let filter = [];
-    if(userFilter.user_id !== null && userFilter.user_id !== undefined){
+    if(userFilter?.user_id){
         filter.push({
             user_id: userFilter.user_id
         })

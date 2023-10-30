@@ -103,7 +103,7 @@ const getUserMobileActivitysData = async (userInputs, request) => {
 
         const getUserMobileActivitysData = await UserMobileActivityModel.fatchUserMobileActivityList(user_id);
         
-        if(getUserMobileActivitysData !== null){
+        if(getUserMobileActivitysData){
             return {
                 status: true,
                 status_code: constants.SUCCESS_RESPONSE,
@@ -112,8 +112,8 @@ const getUserMobileActivitysData = async (userInputs, request) => {
             };
         }else{
             return {
-                status: false,
-                status_code: constants.DATABASE_ERROR_RESPONSE,
+                status: true,
+                status_code: constants.SUCCESS_RESPONSE,
                 message: "Data not found",
                 data: null
             };
@@ -176,7 +176,7 @@ const getUserLoginHistoryData = async (userInputs, request) => {
 
         const getUserMobileActivitysData = await UserMobileActivityModel.fatchUserLoginHistoryList(user_id);
         
-        if(getUserMobileActivitysData !== null){
+        if(getUserMobileActivitysData){
             return {
                 status: true,
                 status_code: constants.SUCCESS_RESPONSE,
@@ -185,8 +185,8 @@ const getUserLoginHistoryData = async (userInputs, request) => {
             };
         }else{
             return {
-                status: false,
-                status_code: constants.DATABASE_ERROR_RESPONSE,
+                status: true,
+                status_code: constants.SUCCESS_RESPONSE,
                 message: "Data not found",
                 data: null
             };

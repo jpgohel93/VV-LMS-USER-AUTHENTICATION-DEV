@@ -272,9 +272,9 @@ const checkOut = async (userInputs,request) => {
             let convinceFeeAmount = 0
             let taxAmount = 0
             if(courseData?.is_tax_exclusive){
-                courseAmount = courseData.discount_amount
+                courseAmount = courseAmount
             }else{
-                courseAmount = courseData.discount_amount / 1.2
+                courseAmount = courseAmount / 1.2
             }
 
             let finalAmount = courseAmount
@@ -656,13 +656,12 @@ const courseCheckOut = async (userInputs, request) => {
         let convinceFeeAmount = 0
         let taxAmount = 0
         if(course?.is_tax_exclusive){
-            courseAmount = course.discount_amount
+            courseAmount = courseAmount
         }else{
-            courseAmount = course.discount_amount / 1.2
+            courseAmount = courseAmount / 1.2
         }
         let finalAmount = courseAmount
        
-
         let hemanDiscount = 0
         if(getUserData && (getUserData?.referral_code || getUserData?.users_referral_code)  && getUserCourseData && getUserCourseData?.length == 0){
             if(getUserData?.referral_type == 1){
@@ -913,9 +912,9 @@ const applyCoupon = async (userInputs, request) => {
         let convinceFeeAmount = 0
         let taxAmount = 0
         if(course?.is_tax_exclusive){
-            courseAmount = course.discount_amount
+            courseAmount = courseAmount
         }else{
-            courseAmount = course.discount_amount / 1.2
+            courseAmount = courseAmount / 1.2
         }
         
         let finalAmount = courseAmount

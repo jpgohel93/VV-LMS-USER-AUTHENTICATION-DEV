@@ -482,6 +482,19 @@ const fatchCourseViewHistory = async (user_id, course_id) => {
     return courseViewData;
 }
 
+const removeCourseViewHistoryData = async (user_id, course_id) => {
+
+    await CourseViewSchema.deleteMany({user_id: user_id, course_id: course_id })
+
+    const coursewatchhistoryData = await CourseWatchHistorySchema.deleteOne({user_id: user_id, course_id: course_id }).then((data) => {
+        return data
+    }).catch((err) => {
+        return null
+    });
+    return coursewatchhistoryData;
+}
+
+
 
 module.exports = {
     createCourseWatchHistory,
@@ -509,5 +522,6 @@ module.exports = {
     deleteCompletedTopics,
     deleteCompletedTopicData,
     addCourseTopicCompleted,
-    fatchCourseViewHistory
+    fatchCourseViewHistory,
+    removeCourseViewHistoryData
 }

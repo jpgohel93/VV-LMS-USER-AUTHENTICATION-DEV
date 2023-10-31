@@ -233,9 +233,15 @@ const deleteUserCourse = async (userInputs) => {
 
         const updateUser = await UserCourseModel.updateUserCourse(id,{ 
             is_deleted: true
-        });
-        
+        }); 
+
         if(updateUser){
+            const getFilterData = await UserCourseModel.filterUserCourseData({ id });
+            
+            if(getFilterData){
+                CourseWatchHistoryModel.removeCourseViewHistoryData(getFilterData.user_id,getFilterData.course_id)
+            }
+            
             return {
                 status: true,
                 status_code: constants.SUCCESS_RESPONSE,

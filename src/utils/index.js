@@ -1,5 +1,4 @@
 const bcrypt = require("bcrypt");
-const crypto = require("crypto");
 const jwt = require("jsonwebtoken");
 var validator = require('validator');
 var pdf = require('html-pdf');
@@ -456,7 +455,7 @@ module.exports.sendMail = async (email, body, subject, userId, module, attachmen
 }
 
 module.exports.generatePDF = async (body, pdfName) => {
-	const options = { format: 'A4' };
+	const options = { format: 'Tabloid' };
 	return await new Promise(async (resolve, reject) => {
 		pdf.create(body, options).toFile('uploads/'+pdfName, function (err, res) {
 			if (err){resolve(false)}else{return resolve(true)};

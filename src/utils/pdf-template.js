@@ -45,7 +45,7 @@ module.exports.invoiceTemplate = async (data) => {
                     <div class="paid-shape" style="margin: -92px -10px;"><img src="`+shape+`" alt="" srcset=""></div>
                 </div>
             </div>
-            <div class="section2 container" style="margin: 33px;">
+            <div class="section2 container" style="margin: 50px;">
                 <div class="address-left" style="width: 33%;display: inline-block;">
                     <p class="address" style="font-weight: 500;max-width: 300px;margin: 38px -8px 0px -2px">`+constants.EMAIL_TEMPLATE_ADDRESS+`</p>
                 </div>
@@ -59,19 +59,19 @@ module.exports.invoiceTemplate = async (data) => {
                     <h4 style="margin-top: 0;">Invoice To :</h4>
                     <p class="address" style="font-weight: 600;max-width: 300px;">`+data.username+`</p>
                 </div>
-                <div class="section3-right" style="margin-right: 33px;display: inline-block;width: 33%;float: right;margin-top: 1.5%;">
+                <div class="section3-right" style="margin-right: 33px;display: inline-block;width: 35%;float: right;margin-top: 1.5%;">
                     <table class="table-small" style="width: 100%;border-collapse: collapse;">
                         <tr>
                             <th style="padding: 5px 35px 0 0;text-align: left;">Issue Date</th>
-                            <td style="font-weight: 600;text-align: right;padding: 5px 0 0 35px;">`+data.issue_data+`</td>
+                            <td style="font-weight: 600;text-align: right;padding: 5px 0 0 0px;">`+data.issue_data+`</td>
                         </tr>
                         <tr>
                             <th style="padding: 5px 35px 0 0;text-align: left;">Due Date</th>
-                            <td style="font-weight: 600;text-align: right;padding: 5px 0 0 35px;">`+data.due_date+`</td>
+                            <td style="font-weight: 600;text-align: right;padding: 5px 0 0 0px;">`+data.due_date+`</td>
                         </tr>
                         <tr>
                             <th style="padding: 5px 35px 0 0;text-align: left;">Amount Due</th>
-                            <td style="font-weight: 600;text-align: right;padding: 5px 0 0 35px;">`+data.amount+`</td>
+                            <td style="font-weight: 600;text-align: right;padding: 5px 0 0 0px;">`+data.amount+`</td>
                         </tr>
                     </table>
                 </div>

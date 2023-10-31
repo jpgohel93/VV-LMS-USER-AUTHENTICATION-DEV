@@ -349,4 +349,11 @@ module.exports = async (app) => {
 
         res.status(data.status_code).json(data);
     });
+
+    app.post('/user/sendTestMail' ,async (req,res,next) => {
+
+        const data = await userCourseService.sendTestMail(); 
+
+        res.status(200).json(data);
+    });
 }

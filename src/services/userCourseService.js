@@ -2368,6 +2368,59 @@ const checkCoursePurchase = async (userInputs) => {
   
 }
 
+const sendTestMail = async (request) => { 
+
+            
+        const pdfName = "sdfsdfsfsd.pdf";
+
+        await new Promise(async (resolve, reject) => {
+            const invoice = {
+                status: "paid", 
+                amount: 1000,
+                course_base_price: 100,
+                discount_amount: 10,
+                discount: 10,
+                is_tax_inclusive: false,
+                is_tax_exclusive: false,
+                tax_percentage: 10,
+                heman_discount_amount: 10,
+                coupon_code: '',
+                coupon_amount: 10,
+                tax_amount: 10,
+                convince_fee: 2,
+                convince_fee_amount: 10,
+                username: `fdgdfg dfgd gdf dg`,
+                issue_data: moment(new Date()).format('MMMM/DD/YYYY'),
+                due_date: moment(new Date()).format('MMMM/DD/YYYY'),
+                course_title: "gdfgfdfddfgdff",
+                invoice_id: "dfgdgdfgfdfd"
+            };
+            const pdfBody = await invoiceTemplate(invoice);
+            console.log("pdfBody ::::: ", pdfBody)
+            const result = await generatePDF(pdfBody, pdfName);
+            if(result){
+                resolve(true)
+            }
+        })
+
+        let subject = `Invoice for course payment`;
+
+        let filePath = 'uploads/'+pdfName;
+
+        //send subscription invoice mail
+        let sendwait = await sendMail("tjcloudtest@gmail.com", "", subject, "dfsfd", "Course Payment", true, filePath, pdfName)
+
+        if(sendwait){
+            if (fs.existsSync('uploads/'+pdfName)) {
+                fs.unlinkSync('uploads/'+pdfName);
+            }
+        }
+
+        return {
+            status: true
+        };
+}
+
 module.exports = {
     assignCourse,
     getAssignCourseList,
@@ -2391,5 +2444,6 @@ module.exports = {
     makeUserEarningPayment,
     earningOverview,
     updateTransactionStatus,
-    checkCoursePurchase
+    checkCoursePurchase,
+    sendTestMail
 }

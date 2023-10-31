@@ -27,7 +27,7 @@ const updateFeedback = async (updateData, feedback_id) => {
 const fetchFeedbackData = async (start, limit, course_id) => {
     const feedbackData = await FeedbackSchema.find({ course_id: course_id }).populate({
         path: 'user_id',
-        select: ['first_name','last_name','profile_image']
+        select: ['first_name','last_name','profile_image','email','country_code','mobile_no']
       }).sort({ createdAt: -1 }).skip(start).limit(limit).then((data) => {
         return data
     }).catch((err) => {

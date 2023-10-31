@@ -1,6 +1,5 @@
 const { FeedbackModel } = require("../database");
 const constants = require('../utils/constant');
-const { CallCourseQueryEvent } = require('../utils/call-event-bus');
 
 const saveFeedback = async (userInputs, request) => {
     try{

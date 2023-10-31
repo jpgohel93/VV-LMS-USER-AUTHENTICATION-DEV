@@ -1,5 +1,5 @@
 const { UserModel, UserMobileActivityModel, UserCourseModel, CourseWatchHistoryModel, EmailLogsModel, InvoiceModel } = require("../database");
-const { GeneratePassword, GenerateSalt , CheckPassword, ValidateEmail, ValidateMobileNumber, ValidatePassword, GenerateSignature, sendSingleSms, GetUserLocation, encryptDecryptString, sendPushNotification, millisecToTime } = require('../utils');
+const { GeneratePassword, GenerateSalt , CheckPassword, ValidateEmail, ValidateMobileNumber, ValidatePassword, GenerateSignature, sendSingleSms, GetUserLocation, sendPushNotification, millisecToTime } = require('../utils');
 const constants = require('../utils/constant');
 const moment = require('moment');
 const axios = require('axios');

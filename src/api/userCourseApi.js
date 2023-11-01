@@ -251,7 +251,7 @@ module.exports = async (app) => {
     ]), async (req,res,next) => {
         const {course_id } = req.body;
 
-        let user_id = req.user !== undefined ? req.user.user_id : null;
+        let user_id = req?.user ? req.user.user_id : null;
 
         const data = await userCourseService.singleTimePayment({ user_id, course_id}, req); 
         res.status(data.status_code).json(data);
@@ -283,7 +283,7 @@ module.exports = async (app) => {
             .withMessage('Transactopn id is required'),
     ]), UserAuth ,async (req,res,next) => {
         const { course_id, transaction_id } = req.body;
-        let user_id = req.user !== undefined ? req.user.user_id : null; 
+        let user_id = req?.user ? req.user.user_id : null; 
 
         const data = await paymentHistoryService.addPaymentHistory({ course_id , user_id, transaction_id }, req); 
 
@@ -307,7 +307,7 @@ module.exports = async (app) => {
 
     app.post('/user/getUserEarningHistory', UserAuth ,async (req,res,next) => {
         const { startToken, endToken, transaction_type} = req.body;
-        let user_id = req.user !== undefined ? req.user.user_id : null; 
+        let user_id = req?.user ? req.user.user_id : null; 
 
         const data = await userCourseService.getUserEarningHistory({ user_id, startToken, endToken, transaction_type }); 
 
@@ -316,7 +316,7 @@ module.exports = async (app) => {
 
     app.post('/user/withdrawEarning', UserAuth ,async (req,res,next) => {
         const { payment_detail_id, amount } = req.body;
-        let user_id = req.user !== undefined ? req.user.user_id : null; 
+        let user_id = req?.user ? req.user.user_id : null; 
 
         const data = await userCourseService.makeUserEarningPayment({ user_id, payment_detail_id, amount }); 
 
@@ -324,7 +324,7 @@ module.exports = async (app) => {
     });
 
     app.get('/user/earningOverview', UserAuth ,async (req,res,next) => {
-        let user_id = req.user !== undefined ? req.user.user_id : null; 
+        let user_id = req?.user ? req.user.user_id : null; 
 
         const data = await userCourseService.earningOverview({ user_id }); 
 
@@ -343,7 +343,7 @@ module.exports = async (app) => {
     app.post('/user/checkCoursePurchase', UserAuth ,async (req,res,next) => {
         const { course_id } = req.body;
 
-        let user_id = req.user !== undefined ? req.user.user_id : null; 
+        let user_id = req?.user ? req.user.user_id : null; 
 
         const data = await userCourseService.checkCoursePurchase({ user_id, course_id  }); 
 
@@ -360,7 +360,7 @@ module.exports = async (app) => {
     app.post('/user/payByApplePay', UserAuth ,async (req,res,next) => {
         const { course_id, transaction_id, amount, notification_device_id, referral_discount, coupon_code, coupon_amount,tax_amount, convince_fee_amount, payment_mode  } = req.body;
 
-        let user_id = req.user !== undefined ? req.user.user_id : null; 
+        let user_id = req?.user ? req.user.user_id : null; 
 
         const data = await userCourseService.payByApplePay({ user_id,course_id, transaction_id, amount, notification_device_id, heman_discount: referral_discount, coupon_code, coupon_amount,tax_amount, convince_fee_amount, payment_mode  }, req); 
 

@@ -1169,7 +1169,7 @@ module.exports = async (app) => {
             mobile_no,
             country_code
         } = req.body;
-        let user_id = req.user !== undefined ? req.user.user_id : null;
+        let user_id = req?.user ? req.user.user_id : null;
 
         const data = await userService.checkMobileNo({
             mobile_no,
@@ -1203,7 +1203,7 @@ module.exports = async (app) => {
             country_code
         } = req.body;
 
-        let user_id = req.user !== undefined ? req.user.user_id : null;
+        let user_id = req?.user ? req.user.user_id : null;
         const data = await userService.verifyMobileOtp({
             user_id,
             otp,
@@ -1448,7 +1448,7 @@ module.exports = async (app) => {
             user_referral_code
         } = req.body;
   
-        let user_id = req.user !== undefined ? req.user.user_id : null;
+        let user_id = req?.user ? req.user.user_id : null;
 
         const data = await userService.userReferral({
             id: user_id,

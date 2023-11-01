@@ -544,7 +544,7 @@ const quickSignup = async (userInputs) => {
         const getEmailData = await UserModel.fatchUserfilterData({ email: email });
         const getInstituteEmailData = await CallAdminEvent("check_institute_email_id",{ email_id: email  }, "");
 
-        if(getInstituteEmailData !== null){
+        if(getInstituteEmailData){
             return {
                 status: false,
                 status_code: constants.CONFLICT_RESPONSE,
@@ -554,7 +554,7 @@ const quickSignup = async (userInputs) => {
             };
         }
 
-        if(getEmailData !== null){
+        if(getEmailData){
             studentId = getEmailData.id
         }
         

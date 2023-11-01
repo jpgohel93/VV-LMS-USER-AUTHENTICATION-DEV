@@ -11,7 +11,7 @@ module.exports = async (app) => {
     ]), async (req,res,next) => {
         
         const { module, reference_id } = req.body;
-        let user_id = req.user !== undefined ? req.user.user_id : null;
+        let user_id = req?.user ? req.user.user_id : null;
 
         const data = await userActivityService.addUserActivity({ module, reference_id, user_id: user_id }); 
         res.status(data.status_code).json(data);

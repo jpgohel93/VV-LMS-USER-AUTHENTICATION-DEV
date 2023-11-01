@@ -26,7 +26,7 @@ module.exports = async (app) => {
         ,async (req,res,next) => {
         const { account_holder_name, branch_code, bank_name, ifsc_code, account_number } = req.body;
 
-        let user_id = req.user !== undefined ? req.user.user_id : null;
+        let user_id = req?.user ? req.user.user_id : null;
       
         const data = await paymentDetailService.addPaymentDetails({ user_id,account_holder_name, branch_code, bank_name, ifsc_code, account_number }); 
 
@@ -66,7 +66,7 @@ module.exports = async (app) => {
 
     app.post('/paymentDetail/getPaymentDetailList', UserAuth,  async (req,res,next) => {
 
-        let user_id = req.user !== undefined ? req.user.user_id : null;
+        let user_id = req?.user ? req.user.user_id : null;
         
         const data = await paymentDetailService.getPaymentDetailsList({ user_id }); 
             

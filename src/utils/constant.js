@@ -31,9 +31,9 @@ module.exports = {
     
     EMAIL_TEMPLATE_APP_STORE_URL: "https://www.apple.com/in/app-store/",
     EMAIL_TEMPLATE_PLAY_STORE_URL: "https://play.google.com/store/apps/details?id=com.tjcg.virtualvidhyapith",
-    EMAIL_TEMPLATE_APP_STORE_ICON_URL: process.env.BASE_URL + "email_assets/appstore.png",
-    EMAIL_TEMPLATE_PLAY_STORE_ICON_URL: process.env.BASE_URL + "email_assets/playstore.png",
-    STUDENT_LOGIN_URL: "email_assets/twitter.png",
+    EMAIL_TEMPLATE_APP_STORE_ICON_URL: process.env.BASE_URL + "local/email_assets/appstore.png",
+    EMAIL_TEMPLATE_PLAY_STORE_ICON_URL: process.env.BASE_URL + "local/email_assets/playstore.png",
+    STUDENT_LOGIN_URL: process.env.BASE_URL + "local/email_assets/twitter.png",
 
     INVOICE_STATUS_PAID: process.env.BASE_URL + "local/invoice_assets/paid.png",
     INVOICE_STATUS_FAILED: process.env.BASE_URL + "local/invoice_assets/failed.png",

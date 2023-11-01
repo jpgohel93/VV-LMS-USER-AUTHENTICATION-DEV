@@ -1182,7 +1182,7 @@ const getStudentsData = async (userInputs) => {
         const getStudentsData = await UserModel.fatchStudents(search, page, perPage, institution_id, referral_code);
         const countStudents = await UserModel.countStudents(search,institution_id,'','', referral_code);
         
-        if(getStudentsData.length > 0){
+        if(getStudentsData && getStudentsData?.length > 0){
             if(referral_code){
                 await Promise.all(
                     await getStudentsData.map(async (element, key) => {
@@ -3650,7 +3650,7 @@ const getGenderData = async (userInputs) => {
         let totalCount = 0;
         if(getGenderData !== null){
 
-            if(getGenderData.length > 0){
+            if(getGenderData?.length > 0){
                 if(getGenderData[0]){
                     maleCount = getGenderData[0].male ?  getGenderData[0].male : 0
                     femaleCount = getGenderData[0].female ?  getGenderData[0].female : 0
@@ -4224,7 +4224,7 @@ const sendDailyReportMail = async () => {
         const stateTodayDistribution = await UserModel.getStateWiseLocationDistributionData(startDate, endDate);
         const cityTodayDistribution = await UserModel.getCityWiseLocationDistributionData(startDate, endDate);
         
-        if (stateTodayDistribution.length > 0) {
+        if (stateTodayDistribution?.length > 0) {
             stateTodayDistribution.forEach((element) => {
                 if (element.state !== "Other") {
                     if (!stateData[element.state]) {
@@ -4235,7 +4235,7 @@ const sendDailyReportMail = async () => {
             });
         }
         
-        if (cityTodayDistribution.length > 0) {
+        if (cityTodayDistribution?.length > 0) {
             cityTodayDistribution.forEach((element) => {
                 if (element.city !== "Other") {
                     if (!cityData[element.city]) {
@@ -4249,7 +4249,7 @@ const sendDailyReportMail = async () => {
         const stateLastSevrnDayDistribution = await UserModel.getStateWiseLocationDistributionData(startSevenDate, endSevenDate);
         const cityLastSevrnDayDistribution = await UserModel.getCityWiseLocationDistributionData(startSevenDate, endSevenDate);
         
-        if (stateLastSevrnDayDistribution.length > 0) {
+        if (stateLastSevrnDayDistribution?.length > 0) {
             stateLastSevrnDayDistribution.forEach((element) => {
                 if (element.state !== "Other") {
                     if (!stateData[element.state]) {
@@ -4260,7 +4260,7 @@ const sendDailyReportMail = async () => {
             });
         }
         
-        if (cityLastSevrnDayDistribution.length > 0) {
+        if (cityLastSevrnDayDistribution?.length > 0) {
             cityLastSevrnDayDistribution.forEach((element) => {
                 if (element.city !== "Other") {
                     if (!cityData[element.city]) {
@@ -4276,7 +4276,7 @@ const sendDailyReportMail = async () => {
         const cityOverallDistribution = await UserModel.getCityWiseLocationDistributionData("", "");
 
 
-        if (stateOverallDistribution.length > 0) {
+        if (stateOverallDistribution?.length > 0) {
             stateOverallDistribution.forEach((element) => {
                 if (element.state !== "Other") {
                     if (!stateData[element.state]) {
@@ -4287,7 +4287,7 @@ const sendDailyReportMail = async () => {
             });
         }
         
-        if (cityOverallDistribution.length > 0) {
+        if (cityOverallDistribution?.length > 0) {
             cityOverallDistribution.forEach((element) => {
                 if (element.city !== "Other") {
                     if (!cityData[element.city]) {
@@ -4557,7 +4557,7 @@ const getCouponUserList= async (userInputs) => {
 
         const getStudentsData = await UserModel.getCouponUserList({coupon_students, list_type, perPage, page, search });
     
-        if(getStudentsData.length > 0){
+        if(getStudentsData?.length > 0){
             return {
                 status: true,
                 status_code: constants.SUCCESS_RESPONSE,

@@ -147,7 +147,7 @@ const getAssignCourseList = async (userInputs,request) => {
                                 let perForCompletedChapter = 0;
                                 if(courseWatchHistory){
                                     let courseChapterCount = await CallCourseQueryDataEvent("get_chapter_count",{ course_id: cartElement.course_id  }, request.get("Authorization"));
-                                    if(courseChapterCount.total_chapter > 0 && courseWatchHistory.completed_chapter.length > 0){
+                                    if(courseChapterCount?.total_chapter > 0 && courseWatchHistory?.completed_chapter?.length > 0){
                                         perForCompletedChapter = courseWatchHistory.completed_chapter.length * 100 / parseInt(courseChapterCount.total_chapter);
                                     }
                                 }
@@ -896,7 +896,7 @@ const mylearning = async (userInputs,request) => {
                                 let perForCompletedChapter = 0;
                                 let completedChapterCount = 0;
                                 if(courseWatchHistory){
-                                    if(courseChapterCount.total_chapter > 0 && courseWatchHistory.completed_chapter.length > 0){
+                                    if(courseChapterCount?.total_chapter > 0 && courseWatchHistory?.completed_chapter?.length > 0){
                                         completedChapterCount = courseWatchHistory.completed_chapter.length
                                         perForCompletedChapter = courseWatchHistory.completed_chapter.length * 100 / parseInt(courseChapterCount.total_chapter);
                                     } 

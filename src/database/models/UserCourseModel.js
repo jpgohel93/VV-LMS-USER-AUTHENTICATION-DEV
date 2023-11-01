@@ -576,7 +576,7 @@ const getUserWithdrawAmount = async (userInputs) => {
             },
         },
     ]).then((result) => {
-        if (result.length > 0) {
+        if (result?.length > 0) {
             return result[0].totalAmount;
         } else {
             return 0

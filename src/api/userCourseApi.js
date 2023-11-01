@@ -356,4 +356,14 @@ module.exports = async (app) => {
 
         res.status(200).json(data);
     });
+
+    app.post('/user/payByApplePay', UserAuth ,async (req,res,next) => {
+        const { course_id, transaction_id, amount, notification_device_id, referral_discount, coupon_code, coupon_amount,tax_amount, convince_fee_amount, payment_mode  } = req.body;
+
+        let user_id = req.user !== undefined ? req.user.user_id : null; 
+
+        const data = await userCourseService.payByApplePay({ user_id,course_id, transaction_id, amount, notification_device_id, heman_discount: referral_discount, coupon_code, coupon_amount,tax_amount, convince_fee_amount, payment_mode  }, req); 
+
+        res.status(200).json(data);
+    });
 }

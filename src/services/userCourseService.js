@@ -2425,6 +2425,322 @@ const sendTestMail = async (request) => {
         return {
             status: true
         };
+} 
+
+const payByApplePay = async (userInputs, request) => { 
+
+    const { user_id, course_id, transaction_id, amount, notification_device_id, heman_discount, coupon_code, coupon_amount,tax_amount, convince_fee_amount, payment_mode } = userInputs;
+   
+    let orderId = transaction_id
+    let userId = user_id
+    let courseId = course_id
+    let finalAmount = amount
+    let deviceType = 2
+    let notificationDeviceId = notification_device_id
+    let paymentStatus = "Success"
+    const userData = await UserModel.fatchUserById(userId);
+    let courseData = await CallCourseQueryEvent("get_course_data_by_id",{ id: courseId }, request.get("Authorization"))
+
+    let invoiceData = {
+        user_id: user_id, 
+        course_type: 1,
+        amount: amount,
+        course_base_price: courseData.price,
+        discount_amount: courseData.discount_amount,
+        discount: courseData.discount,
+        is_tax_inclusive: courseData.is_tax_inclusive,
+        is_tax_exclusive: courseData.is_tax_exclusive,
+        tax_percentage: courseData.tax_percentage,
+        heman_discount_amount: heman_discount,
+        coupon_code: coupon_code,
+        coupon_amount: coupon_amount,
+        tax_amount: Math.round(tax_amount),
+        convince_fee: courseData?.convince_fee || 0,
+        convince_fee_amount: Math.round(convince_fee_amount),
+        purchase_time: new Date(),
+        innitial_response: '',
+        invoice_type: 2,
+        module_name: "Checkout",
+        order_id: orderId,
+        course_id: course_id,
+        payment_id: orderId, 
+        payment_method: payment_mode || "applepay",
+        payment_response: orderId,
+        payment_date: new Date(),
+        payment_status: 2
+    }
+
+    const createInvoice = await InvoiceModel.createInvoice(invoiceData);
+
+    let userCourseData = {
+        user_id: user_id, 
+        course_id: courseData.course_id, 
+        type: 2,
+        purchase_date: new Date(),
+        course_subscription_type: courseData.course_subscription_type,
+        price: courseData.price,
+        payment_method: "applepay",
+        amount: finalAmount,
+        discount_amount: courseData.discount_amount,
+        discount: courseData.discount,
+        is_tax_inclusive: courseData.is_tax_inclusive,
+        is_tax_exclusive: courseData.is_tax_exclusive,
+        tax_percentage: courseData.tax_percentage,
+        heman_discount_amount: heman_discount,
+        coupon_code: coupon_code,
+        coupon_amount: coupon_amount,
+        tax_amount:  Math.round(tax_amount),
+        convince_fee: courseData?.convince_fee || 0,
+        convince_fee_amount: Math.round(convince_fee_amount),
+        invoice_id: createInvoice?._id || '',
+        order_id: orderId,
+        payment_status: 2,
+        is_send_mail: true,
+        is_purchase: true
+    }
+
+    if(courseData?.is_limitedtime  && courseData?.is_limitedtime == true){
+        // Create a new date object
+        const date = await getNewDate(courseData?.interval_time, courseData?.interval_count)
+
+        userCourseData['duration'] = courseData?.interval_time ? courseData?.interval_time : null
+        userCourseData['duration_time'] = courseData?.interval_count ? courseData?.interval_count : null
+        userCourseData['expire_date'] = date
+    }
+
+    await UserCourseModel.assignUserCourse(userCourseData);
+
+    
+    notificationDeviceId = notificationDeviceId ? notificationDeviceId : userData?.notification_device_id
+    if(notificationDeviceId){
+        let notificationdata = {
+            module: "course_payment_success",
+            reference_id: orderId
+        }
+        if(deviceType == 1 || deviceType == 2){
+            await sendPushNotification({notification_device_id:[notificationDeviceId], message: "Course has been purchased successfully.", notificationdata, device_type: deviceType == 1 ? "android" : "ios" })
+        }
+    }
+
+    const getUserCourseData = await UserCourseModel.getUserCoursePurchaseList({ user_id: userId});
+
+    if(userData && (userData?.referral_code || userData?.users_referral_code) && getUserCourseData?.length == 1){
+        let courseAmount = courseData.discount_amount
+
+
+        let couponAmount = coupon_amount || 0
+        let referralDiscount= heman_discount || 0
+        // decrease the course amount
+        let coursePrice = (courseAmount - couponAmount) - referralDiscount
+        
+        if(userData?.referral_type == 1){
+            let hemanData = await CallEventBus("get_heman_by_code",{ referral_code: userData.referral_code }, '')    
+        
+            if(hemanData){
+                if(hemanData.parent_heman_id){
+                    let parentHemanData = await CallEventBus("get_heman_by_id",{ id: hemanData.parent_heman_id }, '')
+                
+                    // calculate the heman commssion
+                    let subHemanAmount = 0
+                    if(parentHemanData?.sub_heman_commission){
+                        if(parentHemanData.sub_heman_commission_type == 1){
+                            subHemanAmount = parentHemanData.sub_heman_commission
+                        }else if(parentHemanData.sub_heman_commission_type == 2){
+                            let hemanCommission = parseInt(coursePrice) * parseFloat(parentHemanData.sub_heman_commission) / 100 
+                            subHemanAmount = hemanCommission
+                        }
+                    }
+
+                    // calculate the heman commssion
+                    let hemanAmount = 0
+                    if(parentHemanData?.admin_heman_commission){
+                        if(parentHemanData.admin_heman_commission_type == 1){
+                            hemanAmount = parentHemanData.admin_heman_commission
+                        }else if(parentHemanData.admin_heman_commission_type == 2){
+                        let hemanCommission = parseInt(coursePrice) * parseFloat(parentHemanData.admin_heman_commission) / 100 
+                        hemanAmount = hemanCommission
+                        }
+                    }
+
+                    let hemanDiscount = 0
+                    if(parentHemanData?.student_discount){
+                        let studentDiscount = parentHemanData?.student_discount ? parentHemanData.student_discount  : 0
+                        if(parentHemanData.student_discount_type == 1){
+                            hemanDiscount = studentDiscount
+                        }else if(parentHemanData.student_discount_type == 2){
+                            hemanDiscount = parseInt(courseAmount) * parseFloat(studentDiscount) / 100 
+                        }
+                    }
+                    
+                    let hemanuser = {
+                        user_id: userId,
+                        course_id: invoiceData.course_id,
+                        assign_at: new Date(),
+                        course_amount: courseAmount,
+                        course_tax_amount: finalAmount,
+                        code: userData.referral_code,
+                        heman_id: hemanData.parent_heman_id,
+                        sub_heman_id: hemanData._id,
+                        heman_amount: hemanAmount,
+                        sub_heman_amount: subHemanAmount,
+                        user_discount: hemanDiscount,
+                        order_id: orderId
+                    } 
+                    subHemanAmount = subHemanAmount  + (hemanData.amount || 0)
+                    hemanAmount = hemanAmount  + (parentHemanData.amount || 0)
+
+                    CallEventBus("add_heman_user",{  heman_id: hemanData.parent_heman_id, sub_heman_id: hemanData._id, user: hemanuser, heman_amount: hemanAmount, sub_heman_amount: subHemanAmount }, "")
+                }else{    
+
+                    let hemanDiscount = 0
+                    if(hemanData?.student_discount){
+                        let studentDiscount = hemanData?.student_discount ? hemanData.student_discount  : 0
+                        if(hemanData.student_discount_type == 1){
+                            hemanDiscount = studentDiscount
+                        }else if(hemanData.student_discount_type == 2){
+                            hemanDiscount = parseInt(courseAmount) * parseFloat(studentDiscount) / 100 
+                        }
+                    }
+                
+                    // calculate the heman commssion
+                    let hemanAmount = 0
+                    if(hemanData?.heman_commission){
+                        if(hemanData.heman_commission_type == 1){
+                            hemanAmount = hemanData.heman_commission
+                        }else if(hemanData.heman_commission_type == 2){
+                        let hemanCommission = parseInt(coursePrice) * parseFloat(hemanData.heman_commission) / 100 
+                            hemanAmount = hemanCommission
+                        }
+                    }
+                    
+                    let hemanuser = {
+                        user_id: userId,
+                        course_id: invoiceData.course_id,
+                        assign_at: new Date(),
+                        course_amount: courseAmount,
+                        course_tax_amount: finalAmount,
+                        code: userData.referral_code,
+                        heman_id: hemanData._id,
+                        sub_heman_id: null,
+                        heman_amount: hemanAmount,
+                        sub_heman_amount: 0,
+                        user_discount: hemanDiscount,
+                        order_id: orderId
+                    } 
+                    hemanAmount = hemanAmount  + (hemanData.amount || 0)
+                    CallEventBus("add_heman_user",{ heman_id: hemanData._id,sub_heman_id: null, user: hemanuser, heman_amount: hemanAmount, sub_heman_amount: 0 }, "")
+                }
+            }
+        }else if(userData?.referral_type == 2){
+            let accountSettingData = await CallEventBus("get_account_setting_data",{  }, "")
+
+            if(accountSettingData){
+                let hemanDiscount = 0
+                let studentDiscount = accountSettingData?.student_discount_amount ? accountSettingData.student_discount_amount  : 0
+                if(accountSettingData.student_discount_type == 1){
+                    hemanDiscount = studentDiscount
+                }else if(accountSettingData.student_discount_type == 2){
+                    let discount = parseInt(courseAmount) * parseFloat(studentDiscount) / 100 
+                    hemanDiscount = discount
+                }
+
+
+                let commissionAmount = 0
+                let userAmount = accountSettingData?.referral_discount_amount ? accountSettingData.referral_discount_amount  : 0
+                if(userAmount){
+                    if(accountSettingData.referral_discount_type == 1){
+                        commissionAmount = userAmount
+                    }else if(accountSettingData.referral_discount_type == 2){
+                        let discount = parseInt(coursePrice) * parseFloat(userAmount) / 100 
+                        commissionAmount = discount
+                    }
+
+                    await UserCourseModel.userEarning({
+                        code: userData.referral_code,
+                        user_id: userId,
+                        course_id: invoiceData.course_id,
+                        course_amount: courseAmount,
+                        assign_at: new Date(),
+                        amount: commissionAmount,
+                        user_discount: hemanDiscount,
+                        order_id: orderId,
+                        transaction_type: 1
+                    })
+                }
+            }
+        }
+    }
+
+    UserModel.updateUser(userId,{ 
+        is_purchase_course: true
+    });
+
+    //send a invoice mail
+    if(userCourseData && userData?.email){
+        let courseArray = []
+
+        if(userCourseData.length > 0){
+            await Promise.all(
+                userCourseData.map(async (element) => {
+                    let courseData = await CallCourseQueryEvent("get_course_data_without_auth",{ id: element?.course_id  },'')
+                    await courseArray.push({
+                        course_title: courseData?.course_title || "",
+                        amount: element?.price || 0,
+                    })
+                })
+            )
+        }
+        
+        const pdfName = orderId+".pdf";
+
+        await new Promise(async (resolve, reject) => {
+            const invoice = {
+                status: "paid",
+                amount: finalAmount,
+                course_base_price:  courseData?.price || 0,
+                discount_amount: courseData?.discount_amount|| 0,
+                discount: courseData?.discount || 0,
+                is_tax_inclusive: courseData?.is_tax_inclusive || false,
+                is_tax_exclusive: courseData?.is_tax_exclusive || false,
+                tax_percentage: courseData?.tax_percentage || 0,
+                heman_discount_amount: heman_discount || 0,
+                coupon_code: coupon_code || '',
+                coupon_amount: coupon_amount || 0,
+                tax_amount: tax_amount ? Math.round(tax_amount) : 0,
+                convince_fee: courseData?.convince_fee || 0,
+                convince_fee_amount: convince_fee_amount ? Math.round(convince_fee_amount) : 0,
+                username: `${userData.first_name} ${userData.last_name}`,
+                issue_data: moment(new Date()).format('MMMM/DD/YYYY'),
+                due_date: moment(new Date()).format('MMMM/DD/YYYY'),
+                course_title: courseData?.course_title || "Course",
+                invoice_id: orderId
+            };
+            const pdfBody = await invoiceTemplate(invoice);
+            const result = await generatePDF(pdfBody, pdfName);
+            if(result){
+                resolve(true)
+            }
+        })
+    
+        let email = userData?.email
+        let subject = `Invoice for course payment`;
+    
+        let filePath = 'uploads/'+pdfName;
+
+        //send subscription invoice mail
+        let sendwait = await sendMail(email, "", subject, userId, "Course Payment", true, filePath, pdfName)
+
+        if(sendwait){
+            if (fs.existsSync('uploads/'+pdfName)) {
+                fs.unlinkSync('uploads/'+pdfName);
+            }
+        }
+    }
+    return {
+        status: true,
+        payment_status: paymentStatus,
+        course_id: courseId
+    };
 }
 
 module.exports = {
@@ -2451,5 +2767,6 @@ module.exports = {
     earningOverview,
     updateTransactionStatus,
     checkCoursePurchase,
-    sendTestMail
+    sendTestMail,
+    payByApplePay
 }

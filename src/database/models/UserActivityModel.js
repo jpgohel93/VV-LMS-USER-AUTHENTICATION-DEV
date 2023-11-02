@@ -30,7 +30,10 @@ const dailyLearningInWeek = async (start_date, course_id, user_id) => {
         {
             $match: {
               createdAt: {
-                  $gte: new Date(start_date)
+                  $gte: new Date(start_date),
+              },
+              end_time: {
+                $lte: new Date()
               },
               module: "course",
               reference_id: course_id,
@@ -75,7 +78,10 @@ const timeSpendByModule = async (user_id) => {
   const pipeline = [
       {
           $match: {
-            user_id: user_id
+            user_id: user_id,
+            end_time: {
+              $lte: new Date()
+            }
           }
       },
       {
@@ -114,7 +120,10 @@ const subjectTimeSpend = async (user_id, chapter_id) => {
           $match: {
             module: "subject",
             reference_id: chapter_id,
-            user_id: user_id
+            user_id: user_id,
+            end_time: {
+              $lte: new Date()
+            }
           }
       },
       {

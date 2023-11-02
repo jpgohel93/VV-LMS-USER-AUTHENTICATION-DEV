@@ -3899,9 +3899,8 @@ const userBase = async (userInputs) => {
 
         let nonPremium = await UserCourseModel.getUserBaseCount({ type: 1 , startDate, endDate})
         let premium = await UserCourseModel.getUserBaseCount({ type: 2, startDate, endDate })
-        let totalStudent = await UserModel.countStudents("","",startDate, endDate)
-
-        let notHavingCourse = totalStudent - (nonPremium + premium)
+        let notHavingCourse = await UserModel.countStudents(null,null,null,null,null,true)
+        let totalStudent = nonPremium + premium + notHavingCourse
 
         let nonPremiumPer = nonPremium > 0 ? nonPremium * 100/ totalStudent : 0;
         let premiumPer = premium > 0 ? premium * 100/ totalStudent : 0;

@@ -145,7 +145,7 @@ const fatchStudents = async (search, start, limit, institute_id, referral_code) 
     return studentsData;
 }
 
-const countStudents = async (search,institute_id, startDate, endDate, referral_code) => {
+const countStudents = async (search,institute_id, startDate, endDate, referral_code,is_not_purchase_course = false) => {
     let searchFilter = [];
     if(search){
         searchFilter.push({
@@ -163,6 +163,12 @@ const countStudents = async (search,institute_id, startDate, endDate, referral_c
                     mobile_no: { $regex: '.*' + search + '.*', $options:'i' }
                 }
             ]
+        })
+    }
+
+    if(is_not_purchase_course){
+        searchFilter.push({
+            is_purchase_course: false
         })
     }
 

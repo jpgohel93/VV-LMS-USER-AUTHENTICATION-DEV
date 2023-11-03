@@ -759,6 +759,40 @@ const getTopicViewHistoryList = async (userInputs) => {
     }
 }
 
+const getLastAccessTopicViewHistory = async (userInputs) => {
+    try{
+
+        const { user_id, course_id } = userInputs;
+
+        let CourseWatchHistoryData = await CourseWatchHistoryModel.getLastAccessTopicViewHistory(user_id, course_id);
+
+        if(CourseWatchHistoryData){
+            return {
+                status: true,
+                status_code: constants.SUCCESS_RESPONSE,
+                message: "Data get successfully",
+                data: CourseWatchHistoryData
+            };
+        }else{
+            return {
+                status: true,
+                status_code: constants.SUCCESS_RESPONSE,
+                message: "Data not found",
+                data: null
+            };
+        }
+    }catch (error) {
+        // Handle unexpected errors
+        return {
+            status: false,
+            status_code: constants.EXCEPTION_ERROR_CODE,
+            message: 'Failed to add the course history',
+            error: { server_error: 'An unexpected error occurred' },
+            data: null,
+        };
+    }
+}
+
 module.exports = {
     addCourseWatchHistory,
     getCourseWatchHistorysData,
@@ -774,5 +808,6 @@ module.exports = {
     addTopicViewHistory,
     getTopicViewHistory,
     topicCompleted,
-    getTopicViewHistoryList
+    getTopicViewHistoryList,
+    getLastAccessTopicViewHistory
 }

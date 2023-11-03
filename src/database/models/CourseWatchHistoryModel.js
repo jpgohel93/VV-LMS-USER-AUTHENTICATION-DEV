@@ -406,6 +406,26 @@ const fatchCourseViewHistoryList = async (user_id, course_id, chapter_id) => {
     return courseViewData;
 }
 
+const getLastAccessTopicViewHistory = async (user_id, course_id) => {
+    let condition = [ 
+        {
+            user_id: user_id
+        },
+        {
+            course_id: course_id
+        }
+    ]
+
+    const courseViewData = await CourseViewSchema.findOne({ 
+        $and: condition
+    }).sort({ createdAt: -1 }).then((data) => {
+        return data
+    }).catch((err) => {
+        return null
+    });
+    return courseViewData;
+}
+
 const addCourseTopicViewHistory = async (id, updateData) => {
 
     const addCourseWatchHistoryData = await CourseViewSchema.findOneAndUpdate({  _id: id  }, { $push:  { "progress": updateData } }, { new: true }).then((data) => {
@@ -523,5 +543,6 @@ module.exports = {
     deleteCompletedTopicData,
     addCourseTopicCompleted,
     fatchCourseViewHistory,
-    removeCourseViewHistoryData
+    removeCourseViewHistoryData,
+    getLastAccessTopicViewHistory
 }

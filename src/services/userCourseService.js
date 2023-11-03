@@ -230,14 +230,13 @@ const getAssignCourseList = async (userInputs,request) => {
 const deleteUserCourse = async (userInputs) => {
     try{
         const { id } = userInputs;
+        const getFilterData = await UserCourseModel.filterUserCourseData({ id });
 
         const updateUser = await UserCourseModel.updateUserCourse(id,{ 
             is_deleted: true
         }); 
 
         if(updateUser){
-            const getFilterData = await UserCourseModel.filterUserCourseData({ id });
-            
             if(getFilterData){
                 CourseWatchHistoryModel.removeCourseViewHistoryData(getFilterData.user_id,getFilterData.course_id)
             }
@@ -1149,6 +1148,7 @@ const checkCourseSubscription = async (userInputs,request) => {
             status_code: constants.SUCCESS_RESPONSE,
             message: "User course data",
             data:{
+                user_course: getFilterData,
                 is_assign_course : isPurchase
             }
         };

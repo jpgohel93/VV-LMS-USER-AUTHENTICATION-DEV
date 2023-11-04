@@ -465,7 +465,7 @@ module.exports.generatePDF = async (body, pdfName) => {
 	// })
 
 	try {
-		let pdfResult = await pdf.toPDF(body, options, output)
+		let pdfResult = await pdf.toPDF(body, options, 'uploads/'+pdfName)
 		
 		console.log("pdfResult ::: ", pdfResult)
 		return true

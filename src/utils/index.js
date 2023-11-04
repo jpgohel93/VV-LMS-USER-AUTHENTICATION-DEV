@@ -464,15 +464,26 @@ module.exports.generatePDF = async (body, pdfName) => {
 	// 	});
 	// })
 
-	return await pdf.create(body, options).toFile('uploads/'+pdfName, function (err, res) {
-		if (err){ 
-			console.log("pdf error: ::", err)
-			return false 
-		}else{ 
-			console.log("pdf res: ::", res) 
-			return true 
-		};
-	});
+	try {
+		let pdfResult = await pdfUtil.toPDF(body, options, output)
+		
+		console.log("pdfResult ::: ", pdfResult)
+		return true
+	} catch (error) {
+		console.log("pdfResult error ::: ", error)
+		return false
+	}
+	 
+
+	// return await pdf.create(body, options).toFile('uploads/'+pdfName, function (err, res) {
+	// 	if (err){ 
+	// 		console.log("pdf error: ::", err)
+	// 		return false 
+	// 	}else{ 
+	// 		console.log("pdf res: ::", res) 
+	// 		return true 
+	// 	};
+	// });
 }
 
 //generate random String

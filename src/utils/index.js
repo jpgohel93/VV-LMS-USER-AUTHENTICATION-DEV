@@ -405,9 +405,8 @@ module.exports.sendMail = async (email, body, subject, userId, module, attachmen
 		console.log(err);
 		return false
 	});
-
+	
 	return info; */
-
 	const transporter = nodemailer.createTransport({
 		host: process.env.MAIL_SMTP_HOST, // Your SMTP server hostname
 		port: process.env.MAIL_SMTP_PORT, // Port for SMTP
@@ -417,7 +416,7 @@ module.exports.sendMail = async (email, body, subject, userId, module, attachmen
 			pass: process.env.MAIL_SMTP_PASSWORD // Your email password
 		}
 	});
-
+	console.log('transporter :: ',transporter);
 	// Email details
 	const mailOptions = {
 		from: process.env.MAIL_SMTP_FROM, // Sender email
@@ -434,24 +433,27 @@ module.exports.sendMail = async (email, body, subject, userId, module, attachmen
 			}
 		]
 	}
+	console.log('mailOptions :: ',mailOptions);
 	// console.log('mailOptions:: ',mailOptions);
-	const info = await transporter.sendMail(mailOptions).then((data) => {
-		EmailLogsModel.createEmailLog({
-			user_id: userId,
-			message_id: data.messageId,
-			from: process.env.MAIL_SMTP_FROM, 
-			message: body,
-			to: email,
-			subject,
-			module,
-			response: JSON.stringify(data),
-		});
-		return data
-	}).catch((err) => {
-		console.log(err);
-		return false
-	});
-	return info;
+	try{
+		const info = await transporter.sendMail(mailOptions);
+		if(info){
+			EmailLogsModel.createEmailLog({
+				user_id: userId,
+				message_id: info.messageId,
+				from: process.env.MAIL_SMTP_FROM, 
+				message: body,
+				to: email,
+				subject,
+				module,
+				response: JSON.stringify(info),
+			});
+		}
+		return info;
+	}catch(err){
+		console.log('err :: ',err);
+		return false;
+	}
 }
 
 module.exports.generatePDF = async (body, pdfName) => {

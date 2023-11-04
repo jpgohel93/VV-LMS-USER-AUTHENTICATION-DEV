@@ -465,7 +465,13 @@ module.exports.generatePDF = async (body, pdfName) => {
 	// })
 
 	return await pdf.create(body, options).toFile('uploads/'+pdfName, function (err, res) {
-		if (err){ return false }else{ return true };
+		if (err){ 
+			console.log("pdf error: ::", err)
+			return false 
+		}else{ 
+			console.log("pdf res: ::", res) 
+			return true 
+		};
 	});
 }
 

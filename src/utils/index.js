@@ -457,33 +457,36 @@ module.exports.sendMail = async (email, body, subject, userId, module, attachmen
 }
 
 module.exports.generatePDF = async (body, pdfName) => {
-	const options = { format: 'Tabloid' };
+	const options = { format: 'Tabloid',childProcessOptions: {
+		env: {
+		  OPENSSL_CONF: '/dev/null',
+		},
+	  } };
 	// return await new Promise(async (resolve, reject) => {
 	// 	pdf.create(body, options).toFile('uploads/'+pdfName, function (err, res) {
 	// 		if (err){resolve(false)}else{return resolve(true)};
 	// 	});
 	// })
 
-	try {
-		let pdfResult = await pdf.toPDF(body, options, 'uploads/'+pdfName)
+	// try {
+	// 	let pdfResult = await pdf.toPDF(body, options, 'uploads/'+pdfName)
 		
-		console.log("pdfResult ::: ", pdfResult)
-		return true
-	} catch (error) {
-		console.log("pdfResult error ::: ", error)
-		return false
-	}
-	 
+	// 	console.log("pdfResult ::: ", pdfResult)
+	// 	return true
+	// } catch (error) {
+	// 	console.log("pdfResult error ::: ", error)
+	// 	return false
+	// }
 
-	// return await pdf.create(body, options).toFile('uploads/'+pdfName, function (err, res) {
-	// 	if (err){ 
-	// 		console.log("pdf error: ::", err)
-	// 		return false 
-	// 	}else{ 
-	// 		console.log("pdf res: ::", res) 
-	// 		return true 
-	// 	};
-	// });
+	return await pdf.create(body, options).toFile('uploads/'+pdfName, function (err, res) {
+		if (err){ 
+			console.log("pdf error: ::", err)
+			return false 
+		}else{ 
+			console.log("pdf res: ::", res) 
+			return true 
+		};
+	});
 }
 
 //generate random String

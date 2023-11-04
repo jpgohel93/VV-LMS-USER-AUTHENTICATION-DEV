@@ -458,11 +458,15 @@ module.exports.sendMail = async (email, body, subject, userId, module, attachmen
 
 module.exports.generatePDF = async (body, pdfName) => {
 	const options = { format: 'Tabloid' };
-	return await new Promise(async (resolve, reject) => {
-		pdf.create(body, options).toFile('uploads/'+pdfName, function (err, res) {
-			if (err){resolve(false)}else{return resolve(true)};
-		});
-	})
+	// return await new Promise(async (resolve, reject) => {
+	// 	pdf.create(body, options).toFile('uploads/'+pdfName, function (err, res) {
+	// 		if (err){resolve(false)}else{return resolve(true)};
+	// 	});
+	// })
+
+	return await pdf.create(body, options).toFile('uploads/'+pdfName, function (err, res) {
+		if (err){ return false }else{ return true };
+	});
 }
 
 //generate random String

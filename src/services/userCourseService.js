@@ -2402,7 +2402,7 @@ const sendTestMail = async (request) => {
         };
         const pdfBody = await invoiceTemplate(invoice);
         // console.log("pdfBody ::::: ", pdfBody)
-        generatePDF(pdfBody, pdfName);
+        await generatePDF(pdfBody, pdfName);
            
         let filePath = 'uploads/'+pdfName;
         //let filePath = 'uploads/0IwQo4vdnD1MXsl.pdf';

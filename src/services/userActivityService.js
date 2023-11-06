@@ -48,7 +48,7 @@ const updateUserActivity= async (userInputs) => {
         const { activity_id, end_time } = userInputs;
 
         const updateUserActivity= await UserActivityModel.updateUserActivity(activity_id, { 
-            end_time: end_time ? new Date(end_time) : new Date()
+            end_time: new Date()
         });
 
         if(updateUserActivity!== false){

@@ -365,24 +365,21 @@ module.exports = (app) => {
                         if(userData?.email){
                             let courseData = await CallCourseQueryEvent("get_course_data_without_auth",{ id: userCourseData?.course_id  },' ')
                             const pdfName = invoice_id+".pdf";
-                            await new Promise(async (resolve, reject) => {
-                                const invoiceData = {
-                                    status: 'paid',
-                                    amount: amount,
-                                    username: `${userData.first_name} ${userData.last_name}`,
-                                    issue_data: moment(new Date()).format('MMMM.Do.YYYY'),
-                                    due_date: moment(new Date()).format('MMMM.Do.YYYY'),
-                                    course:[{
-                                        course_title: courseData?.course_title || "",
-                                        amount: amount
-                                    }]
-                                };
-                                const pdfBody = await invoiceTemplate(invoiceData);
-                                const result = await generatePDF(pdfBody, pdfName);
-                                if(result){
-                                    resolve(true)
-                                }
-                            })
+        
+                            const invoiceData = {
+                                status: 'paid',
+                                amount: amount,
+                                username: `${userData.first_name} ${userData.last_name}`,
+                                issue_data: moment(new Date()).format('MMMM.Do.YYYY'),
+                                due_date: moment(new Date()).format('MMMM.Do.YYYY'),
+                                course:[{
+                                    course_title: courseData?.course_title || "",
+                                    amount: amount
+                                }]
+                            };
+                            const pdfBody = await invoiceTemplate(invoiceData);
+                            await generatePDF(pdfBody, pdfName);
+                               
 
                             let link = ''
                             if(process.env.DEVELOPER_MODE == "development"){
@@ -545,25 +542,21 @@ module.exports = (app) => {
                         if(userData?.email){
                             let courseData = await CallCourseQueryEvent("get_course_data_without_auth",{ id: userCourseData?.course_id  },' ')
                             const pdfName = invoice_id+".pdf";
-                            await new Promise(async (resolve, reject) => {
-                                const invoiceData = {
-                                    status: 'failed',
-                                    amount: amount,
-                                    username: `${userData.first_name} ${userData.last_name}`,
-                                    issue_data: moment(new Date()).format('MMMM.Do.YYYY'),
-                                    due_date: moment(new Date()).format('MMMM.Do.YYYY'),
-                                    course:[{
-                                        course_title: courseData?.course_title || "",
-                                        amount: amount
-                                    }]
-                                };
-                                const pdfBody = await invoiceTemplate(invoiceData);
-                                const result = await generatePDF(pdfBody, pdfName);
-                                if(result){
-                                    resolve(true)
-                                }
-                            })
-                        
+
+                            const invoiceData = {
+                                status: 'failed',
+                                amount: amount,
+                                username: `${userData.first_name} ${userData.last_name}`,
+                                issue_data: moment(new Date()).format('MMMM.Do.YYYY'),
+                                due_date: moment(new Date()).format('MMMM.Do.YYYY'),
+                                course:[{
+                                    course_title: courseData?.course_title || "",
+                                    amount: amount
+                                }]
+                            };
+                            const pdfBody = await invoiceTemplate(invoiceData);
+                            await generatePDF(pdfBody, pdfName);
+                               
                             let email = userData?.email
                             let courseName = courseData && courseData?.course_title ? courseData?.course_title : '' 
                             let username = (userData?.first_name ? userData?.first_name : '') + " " + (userData?.last_name ? userData?.last_name : '')

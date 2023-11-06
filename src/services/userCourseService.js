@@ -1073,21 +1073,16 @@ const coursePaymentResponse = async (userInputs) => {
                 
                 const pdfName = order_id+".pdf";
 
-                await new Promise(async (resolve, reject) => {
-                    const invoiceData = {
-                        status: paymentStatus,
-                        amount:subScriptionData.amount,
-                        username: `${userData.first_name} ${userData.last_name}`,
-                        issue_data: moment(new Date()).format('MMMM.Do.YYYY'),
-                        due_date: moment(new Date()).format('MMMM.Do.YYYY'),
-                        course: courseArray
-                    };
-                    const pdfBody = await invoiceTemplate(invoiceData);
-                    const result = await generatePDF(pdfBody, pdfName);
-                    if(result){
-                        resolve(true)
-                    }
-                })
+                const invoiceData = {
+                    status: paymentStatus,
+                    amount:subScriptionData.amount,
+                    username: `${userData.first_name} ${userData.last_name}`,
+                    issue_data: moment(new Date()).format('MMMM.Do.YYYY'),
+                    due_date: moment(new Date()).format('MMMM.Do.YYYY'),
+                    course: courseArray
+                };
+                const pdfBody = await invoiceTemplate(invoiceData);
+                await generatePDF(pdfBody, pdfName);
             
                 let email = userData?.email
                 let subject = `Invoice for course payment`;
@@ -1938,34 +1933,29 @@ const paymentResponse = async (request) => {
             
             const pdfName = orderId+".pdf";
 
-            await new Promise(async (resolve, reject) => {
-                const invoice = {
-                    status: paymentStatus, // unpaid, paid, failed, refunded
-                    amount: dataArray.amount,
-                    course_base_price: invoiceData?.course_base_price || 0,
-                    discount_amount: invoiceData?.discount_amount || 0,
-                    discount: invoiceData?.discount || 0,
-                    is_tax_inclusive: invoiceData?.is_tax_inclusive || false,
-                    is_tax_exclusive: invoiceData?.is_tax_exclusive || false,
-                    tax_percentage: invoiceData?.tax_percentage || 0,
-                    heman_discount_amount: invoiceData?.heman_discount_amount || 0,
-                    coupon_code: invoiceData?.coupon_code || '',
-                    coupon_amount: invoiceData?.coupon_amount || 0,
-                    tax_amount: invoiceData?.tax_amount || 0,
-                    convince_fee: invoiceData?.convince_fee || 0,
-                    convince_fee_amount: invoiceData?.convince_fee_amount || 0,
-                    username: `${userData.first_name} ${userData.last_name}`,
-                    issue_data: moment(new Date()).format('MMMM/DD/YYYY'),
-                    due_date: moment(new Date()).format('MMMM/DD/YYYY'),
-                    course_title: courseArray?.length > 0 ? courseArray[0].course_title : 0,
-                    invoice_id: invoiceData?.order_id ? invoiceData?.order_id : ""
-                };
-                const pdfBody = await invoiceTemplate(invoice);
-                const result = await generatePDF(pdfBody, pdfName);
-                if(result){
-                    resolve(true)
-                }
-            })
+            const invoice = {
+                status: paymentStatus, // unpaid, paid, failed, refunded
+                amount: dataArray.amount,
+                course_base_price: invoiceData?.course_base_price || 0,
+                discount_amount: invoiceData?.discount_amount || 0,
+                discount: invoiceData?.discount || 0,
+                is_tax_inclusive: invoiceData?.is_tax_inclusive || false,
+                is_tax_exclusive: invoiceData?.is_tax_exclusive || false,
+                tax_percentage: invoiceData?.tax_percentage || 0,
+                heman_discount_amount: invoiceData?.heman_discount_amount || 0,
+                coupon_code: invoiceData?.coupon_code || '',
+                coupon_amount: invoiceData?.coupon_amount || 0,
+                tax_amount: invoiceData?.tax_amount || 0,
+                convince_fee: invoiceData?.convince_fee || 0,
+                convince_fee_amount: invoiceData?.convince_fee_amount || 0,
+                username: `${userData.first_name} ${userData.last_name}`,
+                issue_data: moment(new Date()).format('MMMM/DD/YYYY'),
+                due_date: moment(new Date()).format('MMMM/DD/YYYY'),
+                course_title: courseArray?.length > 0 ? courseArray[0].course_title : 0,
+                invoice_id: invoiceData?.order_id ? invoiceData?.order_id : ""
+            };
+            const pdfBody = await invoiceTemplate(invoice);
+            await generatePDF(pdfBody, pdfName);
         
             let email = userData?.email
             let subject = `Invoice for course payment`;
@@ -2690,34 +2680,29 @@ const payByApplePay = async (userInputs, request) => {
         
         const pdfName = orderId+".pdf";
 
-        await new Promise(async (resolve, reject) => {
-            const invoice = {
-                status: "paid",
-                amount: finalAmount,
-                course_base_price:  courseData?.price || 0,
-                discount_amount: courseData?.discount_amount|| 0,
-                discount: courseData?.discount || 0,
-                is_tax_inclusive: courseData?.is_tax_inclusive || false,
-                is_tax_exclusive: courseData?.is_tax_exclusive || false,
-                tax_percentage: courseData?.tax_percentage || 0,
-                heman_discount_amount: heman_discount || 0,
-                coupon_code: coupon_code || '',
-                coupon_amount: coupon_amount || 0,
-                tax_amount: tax_amount ? Math.round(tax_amount) : 0,
-                convince_fee: courseData?.convince_fee || 0,
-                convince_fee_amount: convince_fee_amount ? Math.round(convince_fee_amount) : 0,
-                username: `${userData.first_name} ${userData.last_name}`,
-                issue_data: moment(new Date()).format('MMMM/DD/YYYY'),
-                due_date: moment(new Date()).format('MMMM/DD/YYYY'),
-                course_title: courseData?.course_title || "Course",
-                invoice_id: orderId
-            };
-            const pdfBody = await invoiceTemplate(invoice);
-            const result = await generatePDF(pdfBody, pdfName);
-            if(result){
-                resolve(true)
-            }
-        })
+        const invoice = {
+            status: "paid",
+            amount: finalAmount,
+            course_base_price:  courseData?.price || 0,
+            discount_amount: courseData?.discount_amount|| 0,
+            discount: courseData?.discount || 0,
+            is_tax_inclusive: courseData?.is_tax_inclusive || false,
+            is_tax_exclusive: courseData?.is_tax_exclusive || false,
+            tax_percentage: courseData?.tax_percentage || 0,
+            heman_discount_amount: heman_discount || 0,
+            coupon_code: coupon_code || '',
+            coupon_amount: coupon_amount || 0,
+            tax_amount: tax_amount ? Math.round(tax_amount) : 0,
+            convince_fee: courseData?.convince_fee || 0,
+            convince_fee_amount: convince_fee_amount ? Math.round(convince_fee_amount) : 0,
+            username: `${userData.first_name} ${userData.last_name}`,
+            issue_data: moment(new Date()).format('MMMM/DD/YYYY'),
+            due_date: moment(new Date()).format('MMMM/DD/YYYY'),
+            course_title: courseData?.course_title || "Course",
+            invoice_id: orderId
+        };
+        const pdfBody = await invoiceTemplate(invoice);
+        await generatePDF(pdfBody, pdfName);
     
         let email = userData?.email
         let subject = `Invoice for course payment`;

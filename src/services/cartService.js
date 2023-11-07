@@ -466,7 +466,7 @@ const checkOut = async (userInputs,request) => {
                     cancel_url: redirectUrl
                     // redirect_url: "",
                     // cancel_url: ""
-                }
+                } 
 
                 // if(device_type !== 1 && device_type !== 2){
                 //     paymentData['integration_type'] =   "iframe_normal"

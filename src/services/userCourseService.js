@@ -1722,7 +1722,7 @@ const paymentResponse = async (request) => {
             })
             
             notificationDeviceId = notificationDeviceId ? notificationDeviceId : userData?.notification_device_id
-            if(notificationDeviceId){
+            if(notificationDeviceId && userData?.is_get_notification){
                 let notificationdata = {
                     module: "course_payment_success",
                     reference_id: orderId
@@ -1959,16 +1959,16 @@ const paymentResponse = async (request) => {
                 payment_date: dataArray.trans_date,
                 payment_status: 3
             })
-            notificationDeviceId = notificationDeviceId ? notificationDeviceId : userData?.notification_device_id
-            if(notificationDeviceId){
-                let notificationdata = {
-                    module: "course_payment_failure",
-                    reference_id: orderId
-                }
-                if(deviceType == 1 || deviceType == 2){
-                    await sendPushNotification({notification_device_id:[notificationDeviceId], message: "Failed to purchase the course.", notificationdata, device_type: deviceType == 1 ? "android" : "ios"})
-                }
-            }
+            // notificationDeviceId = notificationDeviceId ? notificationDeviceId : userData?.notification_device_id
+            // if(notificationDeviceId && userData?.is_get_notification){
+            //     let notificationdata = {
+            //         module: "course_payment_failure",
+            //         reference_id: orderId
+            //     }
+            //     if(deviceType == 1 || deviceType == 2){
+            //         await sendPushNotification({notification_device_id:[notificationDeviceId], message: "Failed to purchase the course.", notificationdata, device_type: deviceType == 1 ? "android" : "ios"})
+            //     }
+            // }
         }
 
         return {

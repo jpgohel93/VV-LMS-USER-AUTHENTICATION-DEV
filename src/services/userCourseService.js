@@ -1701,281 +1701,289 @@ const paymentResponse = async (request) => {
         let paymentStatus = dataArray.order_status
         const userData = await UserModel.fatchUserById(userId);
         let invoiceData = await InvoiceModel.findOrderData(orderId)
-        let userCourseData =  await UserCourseModel.getUserCourse({ invoice_id: invoiceData._id })
 
-        if(paymentStatus == "Success"){
+        if(invoiceData){
+            let userCourseData =  await UserCourseModel.getUserCourse({ invoice_id: invoiceData._id })
 
-            //update user course data
-            await UserCourseModel.updateUserCourseUsingInvoice(invoiceData._id,{
-                payment_status: 2,
-                is_send_mail: true,
-                is_purchase: true
-            })
+            if(paymentStatus == "Success"){
 
-          
-            await InvoiceModel.updateInvoice(invoiceData._id, {  
-                payment_id: dataArray.tracking_id, 
-                payment_method: dataArray.payment_mode,
-                payment_response: ccavResponse,
-                payment_date: dataArray.trans_date,
-                payment_status: 2
-            })
+                //update user course data
+                await UserCourseModel.updateUserCourseUsingInvoice(invoiceData._id,{
+                    payment_status: 2,
+                    is_send_mail: true,
+                    is_purchase: true
+                })
+
             
-            notificationDeviceId = notificationDeviceId ? notificationDeviceId : userData?.notification_device_id
-            if(notificationDeviceId && userData?.is_get_notification){
-                let notificationdata = {
-                    module: "course_payment_success",
-                    reference_id: orderId
+                await InvoiceModel.updateInvoice(invoiceData._id, {  
+                    payment_id: dataArray.tracking_id, 
+                    payment_method: dataArray.payment_mode,
+                    payment_response: ccavResponse,
+                    payment_date: dataArray.trans_date,
+                    payment_status: 2
+                })
+                
+                notificationDeviceId = notificationDeviceId ? notificationDeviceId : userData?.notification_device_id
+                if(notificationDeviceId && userData?.is_get_notification){
+                    let notificationdata = {
+                        module: "course_payment_success",
+                        reference_id: orderId
+                    }
+                    if(deviceType == 1 || deviceType == 2){
+                        await sendPushNotification({notification_device_id:[notificationDeviceId], message: "Course has been purchased successfully.", notificationdata, device_type: deviceType == 1 ? "android" : "ios" })
+                    }
                 }
-                if(deviceType == 1 || deviceType == 2){
-                    await sendPushNotification({notification_device_id:[notificationDeviceId], message: "Course has been purchased successfully.", notificationdata, device_type: deviceType == 1 ? "android" : "ios" })
-                }
-            }
 
-            const getUserCourseData = await UserCourseModel.getUserCoursePurchaseList({ user_id: userId});
-            let courseData = await CallCourseQueryEvent("get_course_data_without_auth",{ id: invoiceData.course_id }, "") 
+                const getUserCourseData = await UserCourseModel.getUserCoursePurchaseList({ user_id: userId});
+                let courseData = await CallCourseQueryEvent("get_course_data_without_auth",{ id: invoiceData.course_id }, "") 
 
 
-            if(userData && (userData?.referral_code || userData?.users_referral_code) && getUserCourseData?.length == 1){
-                let courseAmount = courseData.discount_amount
+                if(userData && (userData?.referral_code || userData?.users_referral_code) && getUserCourseData?.length == 1){
+                    let courseAmount = courseData.discount_amount
 
 
-                let couponAmount = invoiceData?.coupon_amount || 0
-                let referralDiscount=  invoiceData?.heman_discount_amount || 0
-                // decrease the course amount
-                let coursePrice = (courseAmount - couponAmount) - referralDiscount
-              
-                if(userData?.referral_type == 1){
-                    let hemanData = await CallEventBus("get_heman_by_code",{ referral_code: userData.referral_code }, '')    
-               
-                    if(hemanData){
-                        if(hemanData.parent_heman_id){
-                            let parentHemanData = await CallEventBus("get_heman_by_id",{ id: hemanData.parent_heman_id }, '')
-                        
-                            // calculate the heman commssion
-                            let subHemanAmount = 0
-                            if(parentHemanData?.sub_heman_commission){
-                                if(parentHemanData.sub_heman_commission_type == 1){
-                                    subHemanAmount = parentHemanData.sub_heman_commission
-                                }else if(parentHemanData.sub_heman_commission_type == 2){
-                                    let hemanCommission = parseInt(coursePrice) * parseFloat(parentHemanData.sub_heman_commission) / 100 
-                                    subHemanAmount = hemanCommission
-                                }
-                            }
-
-                            // calculate the heman commssion
-                            let hemanAmount = 0
-                            if(parentHemanData?.admin_heman_commission){
-                                if(parentHemanData.admin_heman_commission_type == 1){
-                                    hemanAmount = parentHemanData.admin_heman_commission
-                                }else if(parentHemanData.admin_heman_commission_type == 2){
-                                let hemanCommission = parseInt(coursePrice) * parseFloat(parentHemanData.admin_heman_commission) / 100 
-                                hemanAmount = hemanCommission
-                                }
-                            }
-
-                            let hemanDiscount = 0
-                            if(parentHemanData?.student_discount){
-                                let studentDiscount = parentHemanData?.student_discount ? parentHemanData.student_discount  : 0
-                                if(parentHemanData.student_discount_type == 1){
-                                    hemanDiscount = studentDiscount
-                                }else if(parentHemanData.student_discount_type == 2){
-                                    hemanDiscount = parseInt(courseAmount) * parseFloat(studentDiscount) / 100 
-                                }
-                            }
+                    let couponAmount = invoiceData?.coupon_amount || 0
+                    let referralDiscount=  invoiceData?.heman_discount_amount || 0
+                    // decrease the course amount
+                    let coursePrice = (courseAmount - couponAmount) - referralDiscount
+                
+                    if(userData?.referral_type == 1){
+                        let hemanData = await CallEventBus("get_heman_by_code",{ referral_code: userData.referral_code }, '')    
+                
+                        if(hemanData){
+                            if(hemanData.parent_heman_id){
+                                let parentHemanData = await CallEventBus("get_heman_by_id",{ id: hemanData.parent_heman_id }, '')
                             
-                            let hemanuser = {
-                                user_id: userId,
-                                course_id: invoiceData.course_id,
-                                assign_at: new Date(),
-                                course_amount: courseAmount,
-                                course_tax_amount: finalAmount,
-                                code: userData.referral_code,
-                                heman_id: hemanData.parent_heman_id,
-                                sub_heman_id: hemanData._id,
-                                heman_amount: hemanAmount,
-                                sub_heman_amount: subHemanAmount,
-                                user_discount: hemanDiscount,
-                                order_id: orderId
-                            } 
-                            subHemanAmount = subHemanAmount  + (hemanData.amount || 0)
-                            hemanAmount = hemanAmount  + (parentHemanData.amount || 0)
-
-                            CallEventBus("add_heman_user",{  heman_id: hemanData.parent_heman_id, sub_heman_id: hemanData._id, user: hemanuser, heman_amount: hemanAmount, sub_heman_amount: subHemanAmount }, "")
-                        }else{    
-
-                            let hemanDiscount = 0
-                            if(hemanData?.student_discount){
-                                let studentDiscount = hemanData?.student_discount ? hemanData.student_discount  : 0
-                                if(hemanData.student_discount_type == 1){
-                                    hemanDiscount = studentDiscount
-                                }else if(hemanData.student_discount_type == 2){
-                                    hemanDiscount = parseInt(courseAmount) * parseFloat(studentDiscount) / 100 
+                                // calculate the heman commssion
+                                let subHemanAmount = 0
+                                if(parentHemanData?.sub_heman_commission){
+                                    if(parentHemanData.sub_heman_commission_type == 1){
+                                        subHemanAmount = parentHemanData.sub_heman_commission
+                                    }else if(parentHemanData.sub_heman_commission_type == 2){
+                                        let hemanCommission = parseInt(coursePrice) * parseFloat(parentHemanData.sub_heman_commission) / 100 
+                                        subHemanAmount = hemanCommission
+                                    }
                                 }
-                            }
-                        
-                            // calculate the heman commssion
-                            let hemanAmount = 0
-                            if(hemanData?.heman_commission){
-                                if(hemanData.heman_commission_type == 1){
-                                    hemanAmount = hemanData.heman_commission
-                                }else if(hemanData.heman_commission_type == 2){
-                                let hemanCommission = parseInt(coursePrice) * parseFloat(hemanData.heman_commission) / 100 
+
+                                // calculate the heman commssion
+                                let hemanAmount = 0
+                                if(parentHemanData?.admin_heman_commission){
+                                    if(parentHemanData.admin_heman_commission_type == 1){
+                                        hemanAmount = parentHemanData.admin_heman_commission
+                                    }else if(parentHemanData.admin_heman_commission_type == 2){
+                                    let hemanCommission = parseInt(coursePrice) * parseFloat(parentHemanData.admin_heman_commission) / 100 
                                     hemanAmount = hemanCommission
+                                    }
                                 }
-                            }
+
+                                let hemanDiscount = 0
+                                if(parentHemanData?.student_discount){
+                                    let studentDiscount = parentHemanData?.student_discount ? parentHemanData.student_discount  : 0
+                                    if(parentHemanData.student_discount_type == 1){
+                                        hemanDiscount = studentDiscount
+                                    }else if(parentHemanData.student_discount_type == 2){
+                                        hemanDiscount = parseInt(courseAmount) * parseFloat(studentDiscount) / 100 
+                                    }
+                                }
+                                
+                                let hemanuser = {
+                                    user_id: userId,
+                                    course_id: invoiceData.course_id,
+                                    assign_at: new Date(),
+                                    course_amount: courseAmount,
+                                    course_tax_amount: finalAmount,
+                                    code: userData.referral_code,
+                                    heman_id: hemanData.parent_heman_id,
+                                    sub_heman_id: hemanData._id,
+                                    heman_amount: hemanAmount,
+                                    sub_heman_amount: subHemanAmount,
+                                    user_discount: hemanDiscount,
+                                    order_id: orderId
+                                } 
+                                subHemanAmount = subHemanAmount  + (hemanData.amount || 0)
+                                hemanAmount = hemanAmount  + (parentHemanData.amount || 0)
+
+                                CallEventBus("add_heman_user",{  heman_id: hemanData.parent_heman_id, sub_heman_id: hemanData._id, user: hemanuser, heman_amount: hemanAmount, sub_heman_amount: subHemanAmount }, "")
+                            }else{    
+
+                                let hemanDiscount = 0
+                                if(hemanData?.student_discount){
+                                    let studentDiscount = hemanData?.student_discount ? hemanData.student_discount  : 0
+                                    if(hemanData.student_discount_type == 1){
+                                        hemanDiscount = studentDiscount
+                                    }else if(hemanData.student_discount_type == 2){
+                                        hemanDiscount = parseInt(courseAmount) * parseFloat(studentDiscount) / 100 
+                                    }
+                                }
                             
-                            let hemanuser = {
-                                user_id: userId,
-                                course_id: invoiceData.course_id,
-                                assign_at: new Date(),
-                                course_amount: courseAmount,
-                                course_tax_amount: finalAmount,
-                                code: userData.referral_code,
-                                heman_id: hemanData._id,
-                                sub_heman_id: null,
-                                heman_amount: hemanAmount,
-                                sub_heman_amount: 0,
-                                user_discount: hemanDiscount,
-                                order_id: orderId
-                            } 
-                            hemanAmount = hemanAmount  + (hemanData.amount || 0)
-                            CallEventBus("add_heman_user",{ heman_id: hemanData._id,sub_heman_id: null, user: hemanuser, heman_amount: hemanAmount, sub_heman_amount: 0 }, "")
+                                // calculate the heman commssion
+                                let hemanAmount = 0
+                                if(hemanData?.heman_commission){
+                                    if(hemanData.heman_commission_type == 1){
+                                        hemanAmount = hemanData.heman_commission
+                                    }else if(hemanData.heman_commission_type == 2){
+                                    let hemanCommission = parseInt(coursePrice) * parseFloat(hemanData.heman_commission) / 100 
+                                        hemanAmount = hemanCommission
+                                    }
+                                }
+                                
+                                let hemanuser = {
+                                    user_id: userId,
+                                    course_id: invoiceData.course_id,
+                                    assign_at: new Date(),
+                                    course_amount: courseAmount,
+                                    course_tax_amount: finalAmount,
+                                    code: userData.referral_code,
+                                    heman_id: hemanData._id,
+                                    sub_heman_id: null,
+                                    heman_amount: hemanAmount,
+                                    sub_heman_amount: 0,
+                                    user_discount: hemanDiscount,
+                                    order_id: orderId
+                                } 
+                                hemanAmount = hemanAmount  + (hemanData.amount || 0)
+                                CallEventBus("add_heman_user",{ heman_id: hemanData._id,sub_heman_id: null, user: hemanuser, heman_amount: hemanAmount, sub_heman_amount: 0 }, "")
+                            }
                         }
-                    }
-                }else if(userData?.referral_type == 2){
-                    let accountSettingData = await CallEventBus("get_account_setting_data",{  }, "")
-    
-                    if(accountSettingData){
-                        let hemanDiscount = 0
-                        let studentDiscount = accountSettingData?.student_discount_amount ? accountSettingData.student_discount_amount  : 0
-                        if(accountSettingData.student_discount_type == 1){
-                            hemanDiscount = studentDiscount
-                        }else if(accountSettingData.student_discount_type == 2){
-                            let discount = parseInt(courseAmount) * parseFloat(studentDiscount) / 100 
-                            hemanDiscount = discount
-                        }
-
-
-                        let commissionAmount = 0
-                        let userAmount = accountSettingData?.referral_discount_amount ? accountSettingData.referral_discount_amount  : 0
-                        if(userAmount){
-                            if(accountSettingData.referral_discount_type == 1){
-                                commissionAmount = userAmount
-                            }else if(accountSettingData.referral_discount_type == 2){
-                                let discount = parseInt(coursePrice) * parseFloat(userAmount) / 100 
-                                commissionAmount = discount
+                    }else if(userData?.referral_type == 2){
+                        let accountSettingData = await CallEventBus("get_account_setting_data",{  }, "")
+        
+                        if(accountSettingData){
+                            let hemanDiscount = 0
+                            let studentDiscount = accountSettingData?.student_discount_amount ? accountSettingData.student_discount_amount  : 0
+                            if(accountSettingData.student_discount_type == 1){
+                                hemanDiscount = studentDiscount
+                            }else if(accountSettingData.student_discount_type == 2){
+                                let discount = parseInt(courseAmount) * parseFloat(studentDiscount) / 100 
+                                hemanDiscount = discount
                             }
 
-                            await UserCourseModel.userEarning({
-                                code: userData.referral_code,
-                                user_id: userId,
-                                course_id: invoiceData.course_id,
-                                course_amount: courseAmount,
-                                assign_at: new Date(),
-                                amount: commissionAmount,
-                                user_discount: hemanDiscount,
-                                order_id: orderId,
-                                transaction_type: 1
-                            })
+
+                            let commissionAmount = 0
+                            let userAmount = accountSettingData?.referral_discount_amount ? accountSettingData.referral_discount_amount  : 0
+                            if(userAmount){
+                                if(accountSettingData.referral_discount_type == 1){
+                                    commissionAmount = userAmount
+                                }else if(accountSettingData.referral_discount_type == 2){
+                                    let discount = parseInt(coursePrice) * parseFloat(userAmount) / 100 
+                                    commissionAmount = discount
+                                }
+
+                                await UserCourseModel.userEarning({
+                                    code: userData.referral_code,
+                                    user_id: userId,
+                                    course_id: invoiceData.course_id,
+                                    course_amount: courseAmount,
+                                    assign_at: new Date(),
+                                    amount: commissionAmount,
+                                    user_discount: hemanDiscount,
+                                    order_id: orderId,
+                                    transaction_type: 1
+                                })
+                            }
                         }
                     }
                 }
-            }
 
-            UserModel.updateUser(userId,{ 
-                is_purchase_course: true
-            });
+                UserModel.updateUser(userId,{ 
+                    is_purchase_course: true
+                });
 
-             //send a invoice mail
-            if(userCourseData && userData?.email){
-                let courseArray = []
+                //send a invoice mail
+                if(userCourseData && userData?.email){
+                    let courseArray = []
 
-                if(userCourseData.length > 0){
-                    await Promise.all(
-                        userCourseData.map(async (element) => {
-                            let courseData = await CallCourseQueryEvent("get_course_data_without_auth",{ id: element?.course_id  },'')
-                            await courseArray.push({
-                                course_title: courseData?.course_title || "",
-                                amount: element?.price || 0,
+                    if(userCourseData.length > 0){
+                        await Promise.all(
+                            userCourseData.map(async (element) => {
+                                let courseData = await CallCourseQueryEvent("get_course_data_without_auth",{ id: element?.course_id  },'')
+                                await courseArray.push({
+                                    course_title: courseData?.course_title || "",
+                                    amount: element?.price || 0,
+                                })
                             })
-                        })
-                    )
+                        )
+                    }
+                    
+                    const pdfName = orderId+".pdf";
+
+                    const invoice = {
+                        status: paymentStatus, // unpaid, paid, failed, refunded
+                        amount: dataArray.amount,
+                        course_base_price: invoiceData?.course_base_price || 0,
+                        discount_amount: invoiceData?.discount_amount || 0,
+                        discount: invoiceData?.discount || 0,
+                        is_tax_inclusive: invoiceData?.is_tax_inclusive || false,
+                        is_tax_exclusive: invoiceData?.is_tax_exclusive || false,
+                        tax_percentage: invoiceData?.tax_percentage || 0,
+                        heman_discount_amount: invoiceData?.heman_discount_amount || 0,
+                        coupon_code: invoiceData?.coupon_code || '',
+                        coupon_amount: invoiceData?.coupon_amount || 0,
+                        tax_amount: invoiceData?.tax_amount || 0,
+                        convince_fee: invoiceData?.convince_fee || 0,
+                        convince_fee_amount: invoiceData?.convince_fee_amount || 0,
+                        username: `${userData.first_name} ${userData.last_name}`,
+                        issue_data: moment(new Date()).format('MMMM/DD/YYYY'),
+                        due_date: moment(new Date()).format('MMMM/DD/YYYY'),
+                        course_title: courseArray?.length > 0 ? courseArray[0].course_title : 0,
+                        invoice_id: invoiceData?.order_id ? invoiceData?.order_id : ""
+                    };
+                    const pdfBody = await invoiceTemplate(invoice);
+                    await generatePDF(pdfBody, pdfName);
+                
+                    let email = userData?.email
+                    let subject = `Invoice for course payment`;
+                
+                    let filePath = 'uploads/'+pdfName;
+
+                    //send subscription invoice mail
+                    let sendwait = await sendMail(email, pdfBody, subject, userId, "Course Payment", true, filePath, pdfName)
+
+                    // if(sendwait){
+                    //     if (fs.existsSync('uploads/'+pdfName)) {
+                    //         fs.unlinkSync('uploads/'+pdfName);
+                    //     }
+                    // }
                 }
                 
-                const pdfName = orderId+".pdf";
+            }else if(paymentStatus == "Failure" || paymentStatus == "Aborted"){
+                //update user course data
+                await UserCourseModel.updateUserCourseUsingInvoice(invoiceData._id,{
+                    payment_status: 3,
+                    is_send_mail: false,
+                    is_purchase: false
+                })
 
-                const invoice = {
-                    status: paymentStatus, // unpaid, paid, failed, refunded
-                    amount: dataArray.amount,
-                    course_base_price: invoiceData?.course_base_price || 0,
-                    discount_amount: invoiceData?.discount_amount || 0,
-                    discount: invoiceData?.discount || 0,
-                    is_tax_inclusive: invoiceData?.is_tax_inclusive || false,
-                    is_tax_exclusive: invoiceData?.is_tax_exclusive || false,
-                    tax_percentage: invoiceData?.tax_percentage || 0,
-                    heman_discount_amount: invoiceData?.heman_discount_amount || 0,
-                    coupon_code: invoiceData?.coupon_code || '',
-                    coupon_amount: invoiceData?.coupon_amount || 0,
-                    tax_amount: invoiceData?.tax_amount || 0,
-                    convince_fee: invoiceData?.convince_fee || 0,
-                    convince_fee_amount: invoiceData?.convince_fee_amount || 0,
-                    username: `${userData.first_name} ${userData.last_name}`,
-                    issue_data: moment(new Date()).format('MMMM/DD/YYYY'),
-                    due_date: moment(new Date()).format('MMMM/DD/YYYY'),
-                    course_title: courseArray?.length > 0 ? courseArray[0].course_title : 0,
-                    invoice_id: invoiceData?.order_id ? invoiceData?.order_id : ""
-                };
-                const pdfBody = await invoiceTemplate(invoice);
-                await generatePDF(pdfBody, pdfName);
-            
-                let email = userData?.email
-                let subject = `Invoice for course payment`;
-            
-                let filePath = 'uploads/'+pdfName;
-
-                //send subscription invoice mail
-                let sendwait = await sendMail(email, pdfBody, subject, userId, "Course Payment", true, filePath, pdfName)
-
-                // if(sendwait){
-                //     if (fs.existsSync('uploads/'+pdfName)) {
-                //         fs.unlinkSync('uploads/'+pdfName);
+                await InvoiceModel.updateInvoice(invoiceData._id, {  
+                    payment_id: dataArray.tracking_id, 
+                    payment_method: dataArray.payment_mode,
+                    payment_response: ccavResponse,
+                    payment_date: dataArray.trans_date,
+                    payment_status: 3
+                })
+                // notificationDeviceId = notificationDeviceId ? notificationDeviceId : userData?.notification_device_id
+                // if(notificationDeviceId && userData?.is_get_notification){
+                //     let notificationdata = {
+                //         module: "course_payment_failure",
+                //         reference_id: orderId
+                //     }
+                //     if(deviceType == 1 || deviceType == 2){
+                //         await sendPushNotification({notification_device_id:[notificationDeviceId], message: "Failed to purchase the course.", notificationdata, device_type: deviceType == 1 ? "android" : "ios"})
                 //     }
                 // }
             }
-            
-        }else if(paymentStatus == "Failure" || paymentStatus == "Aborted"){
-            //update user course data
-            await UserCourseModel.updateUserCourseUsingInvoice(invoiceData._id,{
-                payment_status: 3,
-                is_send_mail: false,
-                is_purchase: false
-            })
 
-            await InvoiceModel.updateInvoice(invoiceData._id, {  
-                payment_id: dataArray.tracking_id, 
-                payment_method: dataArray.payment_mode,
-                payment_response: ccavResponse,
-                payment_date: dataArray.trans_date,
-                payment_status: 3
-            })
-            // notificationDeviceId = notificationDeviceId ? notificationDeviceId : userData?.notification_device_id
-            // if(notificationDeviceId && userData?.is_get_notification){
-            //     let notificationdata = {
-            //         module: "course_payment_failure",
-            //         reference_id: orderId
-            //     }
-            //     if(deviceType == 1 || deviceType == 2){
-            //         await sendPushNotification({notification_device_id:[notificationDeviceId], message: "Failed to purchase the course.", notificationdata, device_type: deviceType == 1 ? "android" : "ios"})
-            //     }
-            // }
+            return {
+                status: true,
+                payment_status: paymentStatus,
+                course_id: invoiceData?.course_id || courseId
+            };
+        }else{
+            return {
+                status: false,
+                payment_status: "Failure"
+            };
         }
-
-        return {
-            status: true,
-            payment_status: paymentStatus,
-            course_id: invoiceData?.course_id || courseId
-        };
        
         //payment reszponse
         // dataArray :::  [

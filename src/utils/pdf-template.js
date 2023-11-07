@@ -1,16 +1,15 @@
 const constants = require('./constant');
-const { awsSignedUrl } = require('./aws');
 
 module.exports.invoiceTemplate = async (data) => {
     let shape;
     if(data.status == 'paid' || data.status == 'Success'){
-        shape = await awsSignedUrl(constants.INVOICE_STATUS_PAID);
+        shape = constants.INVOICE_STATUS_PAID;
     }else if(data.status == 'failed' || data.status == "Failure"){
-        shape = await awsSignedUrl(constants.INVOICE_STATUS_FAILED);
+        shape = constants.INVOICE_STATUS_FAILED;
     }else if(data.status == 'refunded'){
-        shape = await awsSignedUrl(constants.INVOICE_STATUS_REFUNDED);
+        shape = constants.INVOICE_STATUS_REFUNDED;
     }else if(data.status == 'unpaid'){
-        shape = await awsSignedUrl(constants.INVOICE_STATUS_UNPAID);
+        shape = constants.INVOICE_STATUS_UNPAID;
     }
 
     // let courseList = ``
@@ -25,6 +24,7 @@ module.exports.invoiceTemplate = async (data) => {
     //     )
         
     // }
+    
 
     return await `<!DOCTYPE html>
     <html lang="en">
@@ -39,25 +39,22 @@ module.exports.invoiceTemplate = async (data) => {
     <body style="margin: 0;padding: 0;font-family: Montserrat;">
         <div class="containerposition">
             <div class="logo-background" style="width: 100%;height: 100%;z-index: -9999;"></div>
-            <div class="section1 container" style="margin: 1.5%;">
-                <div class="logo"><img src="`+ await awsSignedUrl(constants.EMAIL_TEMPLATE_LOGO_URL) + `" alt="" srcset=""></div>
-                <div class="svg" style="text-align: right;">
-                    <div class="paid-shape" style="margin: -92px -10px;"><img src="`+shape+`" alt="" srcset=""></div>
-                </div>
+            <div class="section1 container" style="margin: 1.5%;display: flex;">
+                <div class="logo"><img  style="width: 20%;height: 80%;" src="`+ constants.EMAIL_TEMPLATE_LOGO_URL+ `" alt="" srcset=""></div>
             </div>
-            <div class="section2 container" style="margin: 50px;">
+            <div class="section2 container">
                 <div class="address-left" style="width: 33%;display: inline-block;">
-                    <p class="address" style="font-weight: 500;max-width: 300px;margin: 38px -8px 0px -2px">`+constants.EMAIL_TEMPLATE_ADDRESS+`</p>
+                    <p class="address" style="font-weight: 500;max-width: 300px;">`+constants.EMAIL_TEMPLATE_ADDRESS+`</p>
                 </div>
                 <div class="address-right" style="text-align: right;display: inline-block;width: 33%;float: right;margin-top: 30px;">
                     <h1 style="margin: 0;">Invoice</h1>
-                    <h2 style="margin: 0;">#102394
+                    <h2 style="margin: 0;">#`+data.invoice_id+`
                 </h2></div>
             </div>
             <div class="section3" style="margin-top: 30px;margin-bottom: 30px;">
-                <div class="section3-left" style="background-color: #6b63ff42;padding-left: 33px;padding-top: 10px;display: inline-block;width: 33%;">
+                <div class="section3-left" style="background-color: #6b63ff42;padding-left: 33px;padding-top: 10px;display: inline-block;width: 33%; ">
                     <h4 style="margin-top: 0;">Invoice To :</h4>
-                    <p class="address" style="font-weight: 600;max-width: 300px;">`+data.username+`</p>
+                    <p class="address" style="font-weight: 600;max-width: 300px;">`+ data.username+`</p>
                 </div>
                 <div class="section3-right" style="margin-right: 33px;display: inline-block;width: 35%;float: right;margin-top: 1.5%;">
                     <table class="table-small" style="width: 100%;border-collapse: collapse;">

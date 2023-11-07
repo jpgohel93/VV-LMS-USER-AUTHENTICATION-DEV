@@ -1092,11 +1092,11 @@ const coursePaymentResponse = async (userInputs) => {
                 //send subscription invoice mail
                 let sendwait = await sendMail(email, "", subject, subScriptionData.user_id, "Course Payment", true, filePath, pdfName)
 
-                if(sendwait){
-                    if (fs.existsSync('uploads/'+pdfName)) {
-                        fs.unlinkSync('uploads/'+pdfName);
-                    }
-                }
+                // if(sendwait){
+                //     if (fs.existsSync('uploads/'+pdfName)) {
+                //         fs.unlinkSync('uploads/'+pdfName);
+                //     }
+                // }
             }
         }
         
@@ -1937,11 +1937,11 @@ const paymentResponse = async (request) => {
                 //send subscription invoice mail
                 let sendwait = await sendMail(email, pdfBody, subject, userId, "Course Payment", true, filePath, pdfName)
 
-                if(sendwait){
-                    if (fs.existsSync('uploads/'+pdfName)) {
-                        fs.unlinkSync('uploads/'+pdfName);
-                    }
-                }
+                // if(sendwait){
+                //     if (fs.existsSync('uploads/'+pdfName)) {
+                //         fs.unlinkSync('uploads/'+pdfName);
+                //     }
+                // }
             }
             
         }else if(paymentStatus == "Failure" || paymentStatus == "Aborted"){
@@ -2391,23 +2391,13 @@ const sendTestMail = async (request) => {
             invoice_id: "dfgdgdfgfdfd"
         };
         const pdfBody = await invoiceTemplate(invoice);
-        // console.log("pdfBody ::::: ", pdfBody)
         await generatePDF(pdfBody, pdfName);
-           
         let filePath = 'uploads/'+pdfName;
-        //let filePath = 'uploads/0IwQo4vdnD1MXsl.pdf';
 
         let subject = `Invoice for course payment`;
 
-
         //send subscription invoice mail
-        let sendwait = await sendMail("tjcloudtest@gmail.com", "<h1>Hello World!!</h1>", subject, "1", "Course Payment", true, filePath, pdfName)
-
-        if(sendwait){
-            if (fs.existsSync('uploads/'+pdfName)) {
-                fs.unlinkSync('uploads/'+pdfName);
-            }
-        }
+        await sendMail("tjcloudtest@gmail.com", pdfBody, subject, "1", "Course Payment", true, filePath, pdfName)
 
         return {
             status: true
@@ -2712,11 +2702,11 @@ const payByApplePay = async (userInputs, request) => {
         //send subscription invoice mail
         let sendwait = await sendMail(email, "", subject, userId, "Course Payment", true, filePath, pdfName)
 
-        if(sendwait){
-            if (fs.existsSync('uploads/'+pdfName)) {
-                fs.unlinkSync('uploads/'+pdfName);
-            }
-        }
+        // if(sendwait){
+        //     if (fs.existsSync('uploads/'+pdfName)) {
+        //         fs.unlinkSync('uploads/'+pdfName);
+        //     }
+        // }
     }
     return {
         status: true,

@@ -413,11 +413,11 @@ module.exports = (app) => {
 
                             //send subscription invoice mail
                             let sendwait = await sendMail(email, message, subject, userCourseData.user_id, "Webhook(subscription.charged)", true, filePath, pdfName)
-                            if(sendwait){
-                                if (fs.existsSync('uploads/'+pdfName)) {
-                                    fs.unlinkSync('uploads/'+pdfName);
-                                }
-                            }
+                            // if(sendwait){
+                            //     if (fs.existsSync('uploads/'+pdfName)) {
+                            //         fs.unlinkSync('uploads/'+pdfName);
+                            //     }
+                            // }
 
                         }
                     }
@@ -567,11 +567,11 @@ module.exports = (app) => {
                             //send subscription invoice mail
                             let sendwait = await sendMail(email, "", subject, userCourseData.user_id, "Webhook(subscription.pending)", true, filePath, pdfName)
 
-                            if(sendwait){
-                                if (fs.existsSync('uploads/'+pdfName)) {
-                                    fs.unlinkSync('uploads/'+pdfName);
-                                }
-                            }
+                            // if(sendwait){
+                            //     if (fs.existsSync('uploads/'+pdfName)) {
+                            //         fs.unlinkSync('uploads/'+pdfName);
+                            //     }
+                            // }
                         }
                     }
                 }

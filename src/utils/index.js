@@ -5,7 +5,7 @@ var pdf = require('html-pdf');
 const axios = require("axios");
 const nodemailer = require("nodemailer");
 const { SmsLogModel, ApiCallsModel, ConjobLogModel, EmailLogsModel, InvoiceModel, UserModel} = require('../database');
-var AWS = require('aws-sdk');
+const fs = require('fs');
 var ip2location = require('ip-to-location');
 
 //Utility functions
@@ -416,7 +416,7 @@ module.exports.sendMail = async (email, body, subject, userId, module, attachmen
 			pass: process.env.MAIL_SMTP_PASSWORD // Your email password
 		}
 	});
-	console.log('transporter :: ',transporter);
+	//console.log('transporter :: ',transporter);
 	// Email details
 	const mailOptions = {
 		from: process.env.MAIL_SMTP_FROM, // Sender email
@@ -433,23 +433,33 @@ module.exports.sendMail = async (email, body, subject, userId, module, attachmen
 			}
 		]
 	}
-	console.log('mailOptions :: ',mailOptions);
+	//console.log('mailOptions :: ',mailOptions);
 	// console.log('mailOptions:: ',mailOptions);
 	try{
-		const info = await transporter.sendMail(mailOptions);
-		if(info){
-			EmailLogsModel.createEmailLog({
-				user_id: userId,
-				message_id: info.messageId,
-				from: process.env.MAIL_SMTP_FROM, 
-				message: body,
-				to: email,
-				subject,
-				module,
-				response: JSON.stringify(info),
-			});
-		}
-		return info;
+		transporter.sendMail(mailOptions).then( (info) => {
+			if(info){
+				EmailLogsModel.createEmailLog({
+					user_id: userId,
+					message_id: info.messageId,
+					from: process.env.MAIL_SMTP_FROM, 
+					message: body,
+					to: email,
+					subject,
+					module,
+					response: JSON.stringify(info),
+				});
+			}
+
+			if(attachments){
+				if (fs.existsSync(attachment_file)) {
+					fs.unlinkSync(attachment_file);
+				}
+			}
+
+			return true
+		});
+
+		return true
 	}catch(err){
 		console.log('err :: ',err);
 		return false;
@@ -457,21 +467,24 @@ module.exports.sendMail = async (email, body, subject, userId, module, attachmen
 }
 
 module.exports.generatePDF = async (body, pdfName) => {
-	const options = { format: 'Tabloid',childProcessOptions: {
+	//Tabloid
+	const options = { format: 'Tabloid',childProcessOptions: { 
 		env: {
 		  OPENSSL_CONF: '/dev/null',
 		},
 	  } };
 
-	return await pdf.create(body, options).toFile('uploads/'+pdfName, function (err, res) {
-		if (err){ 
-			//console.log("pdf error: ::", err)
-			return false 
-		}else{ 
-			//console.log("pdf res: ::", res) 
-			return true 
-		};
-	});
+	return await new Promise(async (resolve, reject) => {
+		await pdf.create(body, options).toFile('uploads/'+pdfName, function (err, res) {
+			if (err){ 
+				console.log("pdf error: ::", err)
+				resolve(false)
+			}else{ 
+				//console.log("pdf res: ::", res) 
+				resolve(true)
+			};
+		});
+	})
 }
 
 //generate random String

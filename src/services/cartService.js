@@ -468,9 +468,13 @@ const checkOut = async (userInputs,request) => {
                     // cancel_url: ""
                 } 
 
-                if(device_type == 1 && device_type == 2){
-                    paymentData['integration_type'] =   "iframe_normal"
+                if(process.env.DEVELOPER_MODE != "development"){
+                    paymentData['integration_type'] = "iframe_normal"
                 }
+
+                // if(device_type == 1 && device_type == 2){
+                //     paymentData['integration_type'] =   "iframe_normal"
+                // }
                 //console.log("device_type :: ", paymentData)
         
                 const stringified = qs.stringify(paymentData);

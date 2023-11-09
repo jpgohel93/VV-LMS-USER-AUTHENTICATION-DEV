@@ -176,30 +176,40 @@ module.exports.forgotPasswordTemplate = async (data) => {
 
 };
 
+
 module.exports.coursePurchaseTemplate = async (data) => {
     const header = await this.templateHeader(data);
     const footer = await this.templateFooter(data);
     return await `${header}
     <div style="padding:0 20px">
-        <p style="font-style: normal; font-size: 2.2rem;line-height: 2.4rem; padding: 0.5rem; font-weight: 600;">🎓 Welcome Aboard `+data.course_title+`!</p>
+        <p style="font-style: normal; font-size: 2.2rem;line-height: 2.4rem; padding: 0.5rem; font-weight: 600;">We’re super excited to help your business reach new heights</p>
     </div>
     <div style="padding:0 20px">
-        <p style="font-weight:400;font-size:15px">Hey `+data.user_name+`,</p>
+        <p style="font-weight:400;font-size:15px"> Your account for `+data.user_name+` created successfully!</p>
     </div>
     <div style="padding:0 20px">
-        <p style="font-weight:400;font-size:15px">Bravo on enrolling in `+data.course_title+`! We're thrilled to have you with us on this exciting learning journey. 🎓</p>
+        <p style="font-weight:400;font-size:15px">What's next?</p>
     </div>
     <div style="padding:0 20px">
-        <p style="font-weight:400;font-size:15px">Log in to your account now and let's get started:</p>
+        <p style="font-weight:400;font-size:15px">To get started, log in to the Virtual Afsar Platform.</p>
+    </div>
+    <div style="padding:0 20px">
+        <p style="font-weight:400;font-size:15px">We've set up a product tour to walk you through our platform so you can get the most out of it.</p>
     </div>
     <div style="padding:0 20px; display: flex; justify-content: center;">
         <a href="`+process.env.LOGIN_LINK_LIVE+`"
             style="display:block;width:13.125rem;height:3.5rem;text-decoration:none;text-transform:uppercase;display:flex;justify-content:center;align-items:center;background-color:#6c63ff;border-radius:2rem">
-            <div style="font-style:normal;font-weight:600;font-size:16px;color:#fff;margin:auto;text-align:center;position:absolute;line-height:24px">Login</div>
+            <div style="font-style:normal;font-weight:600;font-size:16px;color:#fff;margin:auto;text-align:center;position:absolute;line-height:24px">Go To Course</div>
         </a>
     </div>
     <div style="padding:0 20px">
-        <p style="font-weight:400;font-size:15px">Here's to new beginnings!</p>
+        <p style="font-weight:400;font-size:15px">Have questions?</p>
+    </div>
+    <div style="padding:0 20px">
+        <p style="font-weight:400;font-size:15px">Please contact our support staff or reply to this email if you need any help with getting started.</p>
+    </div>
+    <div style="padding:0 20px">
+        <p style="font-weight:400;font-size:15px">We’re always here to help!</p>
     </div>
     ${footer}`;
 };

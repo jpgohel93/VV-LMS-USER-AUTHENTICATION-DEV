@@ -1893,10 +1893,12 @@ const paymentResponse = async (request) => {
                 if(userCourseData && userData?.email){
                     let courseArray = []
 
+                    let courseTitle = ''
                     if(userCourseData.length > 0){
                         await Promise.all(
                             userCourseData.map(async (element) => {
                                 let courseData = await CallCourseQueryEvent("get_course_data_without_auth",{ id: element?.course_id  },'')
+                                courseTitle = courseData?.course_title || ""
                                 await courseArray.push({
                                     course_title: courseData?.course_title || "",
                                     amount: element?.price || 0,
@@ -1932,18 +1934,14 @@ const paymentResponse = async (request) => {
                     await generatePDF(pdfBody, pdfName);
                 
                     let email = userData?.email
-                    let subject = `Invoice for course payment`;
+                    let subject = `Course purchase successfully`;
                 
                     let filePath = 'uploads/'+pdfName;
 
-                    //send subscription invoice mail
-                    let sendwait = await sendMail(email, pdfBody, subject, userId, "Course Payment", true, filePath, pdfName)
+                    let message = await coursePurchaseTemplate({ user_name:  `${userData.first_name} ${userData.last_name}`, subject: subject, course_title: courseTitle });
 
-                    // if(sendwait){
-                    //     if (fs.existsSync('uploads/'+pdfName)) {
-                    //         fs.unlinkSync('uploads/'+pdfName);
-                    //     }
-                    // }
+                    //send subscription invoice mail
+                    let sendwait = await sendMail(email, message, subject, userId, "Course Payment", true, filePath, pdfName)
                 }
                 
             }else if(paymentStatus == "Failure" || paymentStatus == "Aborted"){

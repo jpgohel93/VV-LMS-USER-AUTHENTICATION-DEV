@@ -124,11 +124,12 @@ const getAssignCourseList = async (userInputs,request) => {
 
         //get course data
         const getUserCourse = await UserCourseModel.getUserCourseData({ user_id,  page, perPage, course_subscription_type });
-        const countUserCourse = await UserCourseModel.getUserCourseCount({ user_id, course_subscription_type });
+        //const countUserCourse = await UserCourseModel.getUserCourseCount({ user_id, course_subscription_type });
 
         if(getUserCourse){
             
             let cartData = [];
+            let courseCount = 0;
             if(getUserCourse.length > 0){
             
                 let promiseCartData = await new Promise(async (resolve, reject) => {
@@ -171,6 +172,8 @@ const getAssignCourseList = async (userInputs,request) => {
                                         course_title: course ? course.course_title : '',
                                         per_completed_chapter: parseInt(perForCompletedChapter),
                                     })
+
+                                    courseCount = courseCount + 1
                                     resolve(true)
                                     keyCount = keyCount + 1
                                 }else{
@@ -189,7 +192,7 @@ const getAssignCourseList = async (userInputs,request) => {
                                 status_code: constants.SUCCESS_RESPONSE,
                                 message: "Data get successfully",
                                 data: cartData,
-                                record_count: countUserCourse
+                                record_count: courseCount
                             })
                         }
                     });
@@ -202,7 +205,7 @@ const getAssignCourseList = async (userInputs,request) => {
                     status_code: constants.SUCCESS_RESPONSE,
                     message: "Data get successfully",
                     data: cartData,
-                    record_count: countUserCourse
+                    record_count: courseCount
                 }
             }
         }else{

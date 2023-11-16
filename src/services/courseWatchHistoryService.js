@@ -605,21 +605,30 @@ const addTopicViewHistory = async (userInputs) => {
         const { user_id, course_id, chapter_id, topic_id } = userInputs;
         let checkCourseWatchHistoryData = await CourseWatchHistoryModel.fatchCourseViewHistoryList(user_id, course_id, chapter_id);
 
-        //delete the course topic watch history
-        await CourseWatchHistoryModel.deleteCompletedTopics(checkCourseWatchHistoryData._id,topic_id);
+        if(checkCourseWatchHistoryData){
+            //delete the course topic watch history
+            await CourseWatchHistoryModel.deleteCompletedTopics(checkCourseWatchHistoryData._id,topic_id);
 
-        const createCourseWatchHistory = await CourseWatchHistoryModel.addCourseTopicViewHistory(checkCourseWatchHistoryData._id, topic_id); 
+            const createCourseWatchHistory = await CourseWatchHistoryModel.addCourseTopicViewHistory(checkCourseWatchHistoryData._id, topic_id); 
 
-        if(createCourseWatchHistory !== false){
-            await CourseWatchHistoryModel.updateCourseViewHistory(checkCourseWatchHistoryData._id, {
-                last_access_topic: topic_id
-            });
-            
-            return {
-                status: true,
-                status_code: constants.SUCCESS_RESPONSE,
-                message: "Course history add successfully"
-            };
+            if(createCourseWatchHistory !== false){
+                await CourseWatchHistoryModel.updateCourseViewHistory(checkCourseWatchHistoryData._id, {
+                    last_access_topic: topic_id
+                });
+                
+                return {
+                    status: true,
+                    status_code: constants.SUCCESS_RESPONSE,
+                    message: "Course history add successfully"
+                };
+            }else{
+                return {
+                    status: false,
+                    status_code: constants.DATABASE_ERROR_RESPONSE,
+                    message: "Failed to add the course history",
+                    id: null
+                };
+            }
         }else{
             return {
                 status: false,

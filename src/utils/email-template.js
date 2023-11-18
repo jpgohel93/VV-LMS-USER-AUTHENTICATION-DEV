@@ -28,7 +28,7 @@ module.exports.templateHeader = async (data) => {
     <body>
         <div class="email-vv">
             <div style="padding:10px;@importurl('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');font-family:Montserrat,sans-serif">
-                <div style="background:#fff;padding:20px 10px;width:fit-content;height:fit-content;margin:20px;border-radius:10px">
+                <div style="background:#fff;padding:20px 10px;width:fit-content;height:fit-content;margin:20px;border-radius:10px;width: 9rem; height: 6rem;">
                     <img src="`+constants.EMAIL_TEMPLATE_LOGO_URL+ `" alt="" width="70px" height="50px">
                 </div>`
 }
@@ -40,30 +40,33 @@ module.exports.templateFooter = async (data) => {
     </div>
         <hr style="width:90%; margin:auto; border-color:#636363;">
         <div style="padding:8px 20px 0 25px">
-            <div style="margin-top:0.6rem; background-color: #fff !important;width: 80%;border-radius: 8px;">
-                <div style="margin-top: 0.6rem;">
+            <div style="margin-top:0.6rem; background-color: #fff !important;width: 100%;border-radius: 8px; display: flex;">
+                <div style="margin-top: 0.6rem; width: 50%;">
                     <img src="`+constants.EMAIL_TEMPLATE_LOGO_URL+ `" alt="" style="width: 130px"">
                 </div>
-                <div style="display:flex; align-items:center;margin-top: 0.6rem;">
-                    <a href="mailto:`+constants.EMAIL_TEMPLATE_MAIL_ID+`" style="margin-bottom: 0;">`+constants.EMAIL_TEMPLATE_MAIL_ID+`</a>
-                    <br/>
-                    <a href="tel:`+constants.EMAIL_TEMPLATE_MOBILE_NO+`">`+constants.EMAIL_TEMPLATE_MOBILE_NO+`</a>
-                    <a href="`+ constants.EMAIL_TEMPLATE_FACEBOOK_LINK + `">
-                        <img src="`+ constants.EMAIL_TEMPLATE_FACEBOOK_URL + `" width="38%">
-                    </a>
-                    <a href="`+ constants.EMAIL_TEMPLATE_INSTAGRAM_LINK + `">
-                        <img style="margin:0 1rem" src="`+ constants.EMAIL_TEMPLATE_INSTAGRAM_URL + `" width="38%">
-                    </a>
-                    <a href="`+ constants.EMAIL_TEMPLATE_YOUTUBE_LINK + `">
-                        <img style="margin:0 1rem" src="`+ constants.EMAIL_TEMPLATE_TWITTER_URL + `" width="38%">
-                    </a>
-                    <a href="`+ constants.EMAIL_TEMPLATE_TWITTER_LINK + `">
-                        <img style="margin:0 1rem" src="`+ constants.EMAIL_TEMPLATE_TWITTER_URL + `" width="38%">
-                    </a>
-                    <a href="`+ constants.EMAIL_TEMPLATE_LINKEDIN_LINK + `">
-                        <img style="margin:0 1rem" src="`+ constants.EMAIL_TEMPLATE_LINKEDIN_URL + `" width="38%">
-                    </a>
-                    
+                <div style="display: flex; flex-direction: column; justify-content: flex-start; width: 50%;">
+                <div style="display: flex; align-items: center;">
+                <a href="`+ constants.EMAIL_TEMPLATE_FACEBOOK_LINK + `">
+                    <img src="`+ constants.EMAIL_TEMPLATE_FACEBOOK_URL + `">
+                </a>
+                <a href="`+ constants.EMAIL_TEMPLATE_INSTAGRAM_LINK + `">
+                    <img style="margin:0 1rem" src="`+ constants.EMAIL_TEMPLATE_INSTAGRAM_URL + `">
+                </a>
+                <a href="`+ constants.EMAIL_TEMPLATE_YOUTUBE_LINK + `">
+                    <img style="margin:0 1rem" src="`+ constants.EMAIL_TEMPLATE_YOUTUBE_URL + `">
+                </a>
+                <a href="`+ constants.EMAIL_TEMPLATE_TWITTER_LINK + `">
+                    <img style="margin:0 1rem" src="`+ constants.EMAIL_TEMPLATE_TWITTER_URL + `">
+                </a>
+                <a href="`+ constants.EMAIL_TEMPLATE_LINKEDIN_LINK + `">
+                    <img style="margin:0 1rem" src="`+ constants.EMAIL_TEMPLATE_LINKEDIN_URL + `">
+                </a>
+                </div>
+                    <div>
+                        <a href="mailto:`+constants.EMAIL_TEMPLATE_MAIL_ID+`" style="margin-bottom: 0;">`+constants.EMAIL_TEMPLATE_MAIL_ID+`</a>
+                        <br/>
+                        <a href="tel:`+constants.EMAIL_TEMPLATE_MOBILE_NO+`">`+constants.EMAIL_TEMPLATE_MOBILE_NO+`</a>
+                    </div>
                 </div>
             </div>
             <div style="display: flex;width: 70%;justify-content: flex-start; margin-top: 0.8rem;">

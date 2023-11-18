@@ -50,7 +50,7 @@ module.exports.templateFooter = async (data) => {
             <div style="margin-top:0.6rem; background-color: #fff !important;width: 100%;border-radius: 8px; display: flex;">
                 <div style="margin: auto; padding-right: 10px; border-right: solid 1px #012ab2;padding-left:10px;">
                     <img src="` +
-    constants.EMAIL_TEMPLATE_LOGO_URL +
+    constants.EMAIL_TEMPLATE_VV_FOOTER_LOGO_URL +
     `" alt="" style="width: 6rem; height: 3rem;">
                 </div>
                 <div style="margin: auto; padding-top:10px; padding-bottom:10px;padding-left:10px;">

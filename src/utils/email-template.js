@@ -48,12 +48,12 @@ module.exports.templateFooter = async (data) => {
         <hr style="width:90%; margin:auto; border-color:#636363;">
         <div style="padding:8px 15px 0 15px;">
             <div style="margin-top:0.6rem; background-color: #fff !important;width: 100%;border-radius: 8px; display: flex;">
-                <div style="margin: auto; padding-right: 10px; border-right: solid 1px #012ab2;padding-left:10px;">
+                <div style="margin-top: 10px; margin-bottom: 10px; padding-right: 10px; border-right: solid 1px #012ab2;padding-left:10px;">
                     <img src="` +
     constants.EMAIL_TEMPLATE_VV_FOOTER_LOGO_URL +
-    `" alt="" style="width: 4rem; height: auto; margin-top: 10px; margin-bottom: 10px;">
+    `" alt="" style="width: 4rem; height: auto;">
                 </div>
-                <div style="margin: auto; padding-top:10px; padding-bottom:10px;padding-left:10px;">
+                <div style="padding-top:10px; padding-bottom:10px;padding-left:20px;">
                 <div style="display: flex; align-items: center;">
                 <a href="` +
     constants.EMAIL_TEMPLATE_FACEBOOK_LINK +

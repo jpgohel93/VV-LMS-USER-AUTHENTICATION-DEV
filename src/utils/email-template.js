@@ -28,8 +28,8 @@ module.exports.templateHeader = async (data) => {
     <body>
         <div class="email-vv">
             <div style="padding:10px;@importurl('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');font-family:Montserrat,sans-serif">
-                <div style="background:#fff;padding:20px 10px;width:fit-content;height:fit-content;margin:20px;border-radius:10px;width: 9rem; height: 6rem;">
-                    <img src="`+constants.EMAIL_TEMPLATE_LOGO_URL+ `" alt="" width="70px" height="50px">
+                <div style="background:#fff;padding:20px 10px;width:fit-content;height:fit-content;margin:20px;border-radius:10px;width: 9rem; height: 5rem;">
+                    <img src="`+constants.EMAIL_TEMPLATE_LOGO_URL+ `" alt="" width="100%" height="auto">
                 </div>`
 }
 
@@ -44,7 +44,7 @@ module.exports.templateFooter = async (data) => {
                 <div style="margin: 0.6rem 0 0.6rem 0.3rem; padding-right: 30px; border-right: solid 1px #012ab2">
                     <img src="`+constants.EMAIL_TEMPLATE_LOGO_URL+ `" alt="" style="width: 9rem; height: 6rem;">
                 </div>
-                <div style="display: flex; flex-direction: column; justify-content: center; padding-left: 20px;">
+                <div style="padding-left: 20px; margin: auto;">
                 <div style="display: flex; align-items: center;">
                 <a href="`+ constants.EMAIL_TEMPLATE_FACEBOOK_LINK + `">
                     <img src="`+ constants.EMAIL_TEMPLATE_FACEBOOK_URL + `">

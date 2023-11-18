@@ -41,25 +41,25 @@ module.exports.templateFooter = async (data) => {
         <hr style="width:90%; margin:auto; border-color:#636363;">
         <div style="padding:8px 20px 0 25px">
             <div style="margin-top:0.6rem; background-color: #fff !important;width: 100%;border-radius: 8px; display: flex;">
-                <div style="margin-top: 0.6rem; width: 50%;">
-                    <img src="`+constants.EMAIL_TEMPLATE_LOGO_URL+ `" alt="" style="width: 130px"">
+                <div style="margin: 0.6rem 0 0.6rem 0.3rem; padding-right: 30px; border-right: solid 1px #012ab2">
+                    <img src="`+constants.EMAIL_TEMPLATE_LOGO_URL+ `" alt="" style="width: 9rem; height: 6rem;">
                 </div>
-                <div style="display: flex; flex-direction: column; justify-content: flex-start; width: 50%;">
+                <div style="display: flex; flex-direction: column; justify-content: center; padding-left: 20px;">
                 <div style="display: flex; align-items: center;">
                 <a href="`+ constants.EMAIL_TEMPLATE_FACEBOOK_LINK + `">
                     <img src="`+ constants.EMAIL_TEMPLATE_FACEBOOK_URL + `">
                 </a>
                 <a href="`+ constants.EMAIL_TEMPLATE_INSTAGRAM_LINK + `">
-                    <img style="margin:0 1rem" src="`+ constants.EMAIL_TEMPLATE_INSTAGRAM_URL + `">
+                    <img style="margin:0 0.3rem" src="`+ constants.EMAIL_TEMPLATE_INSTAGRAM_URL + `">
                 </a>
                 <a href="`+ constants.EMAIL_TEMPLATE_YOUTUBE_LINK + `">
-                    <img style="margin:0 1rem" src="`+ constants.EMAIL_TEMPLATE_YOUTUBE_URL + `">
+                    <img style="margin:0 0.3rem" src="`+ constants.EMAIL_TEMPLATE_YOUTUBE_URL + `">
                 </a>
                 <a href="`+ constants.EMAIL_TEMPLATE_TWITTER_LINK + `">
-                    <img style="margin:0 1rem" src="`+ constants.EMAIL_TEMPLATE_TWITTER_URL + `">
+                    <img style="margin:0 0.3rem" src="`+ constants.EMAIL_TEMPLATE_TWITTER_URL + `">
                 </a>
                 <a href="`+ constants.EMAIL_TEMPLATE_LINKEDIN_LINK + `">
-                    <img style="margin:0 1rem" src="`+ constants.EMAIL_TEMPLATE_LINKEDIN_URL + `">
+                    <img style="margin:0 0.3rem" src="`+ constants.EMAIL_TEMPLATE_LINKEDIN_URL + `">
                 </a>
                 </div>
                     <div>

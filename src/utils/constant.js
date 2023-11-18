@@ -22,9 +22,9 @@ module.exports = {
     EMAIL_TEMPLATE_TWITTER_LINK: "https://twitter.com/virtualafsar",
     
     EMAIL_TEMPLATE_LOCK_URL: process.env.BASE_URL + "VV-LMS-SERVICE-COURSE-QUERY/getcontent/local/email_assets/lock.png",
-    EMAIL_TEMPLATE_LOGO_URL: process.env.BASE_URL + "VV-LMS-SERVICE-COURSE-QUERY/getcontent/local/email_assets/logo.png",
-    EMAIL_TEMPLATE_VV_LOGO_URL: process.env.BASE_URL + "VV-LMS-SERVICE-COURSE-QUERY/getcontent/local/email_assets/logo.png",
-    EMAIL_TEMPLATE_VV_LOGO_BLACK_URL: process.env.BASE_URL + "VV-LMS-SERVICE-COURSE-QUERY/getcontent/local/email_assets/logo.png",
+    EMAIL_TEMPLATE_LOGO_URL: process.env.BASE_URL + "VV-LMS-SERVICE-COURSE-QUERY/getcontent/local/email_assets/vv_logo.png",
+    EMAIL_TEMPLATE_VV_LOGO_URL: process.env.BASE_URL + "VV-LMS-SERVICE-COURSE-QUERY/getcontent/local/email_assets/vv_logo.png",
+    EMAIL_TEMPLATE_VV_LOGO_BLACK_URL: process.env.BASE_URL + "VV-LMS-SERVICE-COURSE-QUERY/getcontent/local/email_assets/vv_logo.png",
     EMAIL_TEMPLATE_PAID_URL: process.env.BASE_URL + "VV-LMS-SERVICE-COURSE-QUERY/getcontent/local/email_assets/paid_svg.png",
     EMAIL_TEMPLATE_UNPAID_URL: process.env.BASE_URL + "VV-LMS-SERVICE-COURSE-QUERY/getcontent/local/email_assets/unpaid_svg.png",
     EMAIL_UNSUBSCRIBE_URL: process.env.IMAGE_URL + "/api/client/unsubscribe",

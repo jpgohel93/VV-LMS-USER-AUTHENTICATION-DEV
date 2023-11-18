@@ -15,11 +15,13 @@ module.exports = {
     EMAIL_TEMPLATE_INSTAGRAM_URL: process.env.BASE_URL + "VV-LMS-SERVICE-COURSE-QUERY/getcontent/local/email_assets/instagram.png",
     EMAIL_TEMPLATE_LINKEDIN_URL: process.env.BASE_URL + "VV-LMS-SERVICE-COURSE-QUERY/getcontent/local/email_assets/linkedin.png",
     EMAIL_TEMPLATE_TWITTER_URL: process.env.BASE_URL + "VV-LMS-SERVICE-COURSE-QUERY/getcontent/local/email_assets/twitter.png",
+    EMAIL_TEMPLATE_YOUTUBE_URL: process.env.BASE_URL + "VV-LMS-SERVICE-COURSE-QUERY/getcontent/local/email_assets/youtube.png",
     
     EMAIL_TEMPLATE_FACEBOOK_LINK: "https://www.facebook.com/profile.php?id=100095410212980&mibextid=ZbWKwL",
     EMAIL_TEMPLATE_INSTAGRAM_LINK: "https://instagram.com/virtualafsar?igshid=MzRlODBiNWFlZA==",
     EMAIL_TEMPLATE_LINKEDIN_LINK: "https://www.linkedin.com",
     EMAIL_TEMPLATE_TWITTER_LINK: "https://twitter.com/virtualafsar",
+    EMAIL_TEMPLATE_YOUTUBE_LINK: "https://www.youtube.com/@VirtualAfsar",
     
     EMAIL_TEMPLATE_LOCK_URL: process.env.BASE_URL + "VV-LMS-SERVICE-COURSE-QUERY/getcontent/local/email_assets/lock.png",
     EMAIL_TEMPLATE_LOGO_URL: process.env.BASE_URL + "VV-LMS-SERVICE-COURSE-QUERY/getcontent/local/email_assets/vv_logo.png",

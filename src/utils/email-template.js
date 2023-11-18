@@ -60,19 +60,19 @@ module.exports.templateFooter = async (data) => {
     `">
                     <img src="` +
     constants.EMAIL_TEMPLATE_FACEBOOK_URL +
-    `" style="height:25px; width: 25px;">
+    `" style="height: auto; width: 30px;">
                 </a>
                 <a href="` +
     constants.EMAIL_TEMPLATE_INSTAGRAM_LINK +
     `">
-                    <img style="margin:0 0.2rem; height: auto; width: 100%;" src="` +
+                    <img style="margin:0 0.2rem; height: auto; width: 30px;" src="` +
     constants.EMAIL_TEMPLATE_INSTAGRAM_URL +
     `">
                 </a>
                 <a href="` +
     constants.EMAIL_TEMPLATE_YOUTUBE_LINK +
     `">
-                    <img style="margin:0 0.2rem; height: auto; width: 100%;" src="` +
+                    <img style="margin:0 0.2rem; height: auto; width: 30px;" src="` +
     constants.EMAIL_TEMPLATE_YOUTUBE_URL +
     `">
                 </a>
@@ -86,7 +86,7 @@ module.exports.templateFooter = async (data) => {
                 <a href="` +
     constants.EMAIL_TEMPLATE_LINKEDIN_LINK +
     `">
-                    <img style="margin:0 0.2rem; height: auto; width: 100%;" src="` +
+                    <img style="margin:0 0.2rem; height: auto; width: 30px;" src="` +
     constants.EMAIL_TEMPLATE_LINKEDIN_URL +
     `">
                 </a>

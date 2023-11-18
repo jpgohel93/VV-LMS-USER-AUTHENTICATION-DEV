@@ -65,28 +65,28 @@ module.exports.templateFooter = async (data) => {
                 <a href="` +
     constants.EMAIL_TEMPLATE_INSTAGRAM_LINK +
     `">
-                    <img style="margin:0 0.2rem; height:25px; width: 25px;" src="` +
+                    <img style="margin:0 0.2rem; height: auto; width: 100%;" src="` +
     constants.EMAIL_TEMPLATE_INSTAGRAM_URL +
     `">
                 </a>
                 <a href="` +
     constants.EMAIL_TEMPLATE_YOUTUBE_LINK +
     `">
-                    <img style="margin:0 0.2rem; height:25px; width: 25px;" src="` +
+                    <img style="margin:0 0.2rem; height: auto; width: 100%;" src="` +
     constants.EMAIL_TEMPLATE_YOUTUBE_URL +
     `">
                 </a>
                 <a href="` +
     constants.EMAIL_TEMPLATE_TWITTER_LINK +
     `">
-                    <img style="margin:0 0.2rem; height:25px; width: 25px;" src="` +
+                    <img style="margin:0 0.2rem; height: auto; width: 100%;" src="` +
     constants.EMAIL_TEMPLATE_TWITTER_URL +
     `">
                 </a>
                 <a href="` +
     constants.EMAIL_TEMPLATE_LINKEDIN_LINK +
     `">
-                    <img style="margin:0 0.2rem; height:25px; width: 25px;" src="` +
+                    <img style="margin:0 0.2rem; height: auto; width: 100%;" src="` +
     constants.EMAIL_TEMPLATE_LINKEDIN_URL +
     `">
                 </a>

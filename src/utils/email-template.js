@@ -53,7 +53,7 @@ module.exports.templateFooter = async (data) => {
     constants.EMAIL_TEMPLATE_LOGO_URL +
     `" alt="" style="width: 6rem; height: 3rem;">
                 </div>
-                <div style="margin: auto; padding-top:10px; padding-bottom:10px;">
+                <div style="margin: auto; padding-top:10px; padding-bottom:10px;padding-left:10px;">
                 <div style="display: flex; align-items: center;">
                 <a href="` +
     constants.EMAIL_TEMPLATE_FACEBOOK_LINK +
@@ -65,30 +65,30 @@ module.exports.templateFooter = async (data) => {
                 <a href="` +
     constants.EMAIL_TEMPLATE_INSTAGRAM_LINK +
     `">
-                    <img style="margin:0 0.3rem; height:25px; width: 25px;" src="` +
+                    <img style="margin:0 0.2rem; height:25px; width: 25px;" src="` +
     constants.EMAIL_TEMPLATE_INSTAGRAM_URL +
     `">
                 </a>
                 <a href="` +
     constants.EMAIL_TEMPLATE_YOUTUBE_LINK +
     `">
-                    <img style="margin:0 0.3rem" src="` +
+                    <img style="margin:0 0.2rem; height:25px; width: 25px;" src="` +
     constants.EMAIL_TEMPLATE_YOUTUBE_URL +
-    `" style="height:25px; width: 25px;">
+    `">
                 </a>
                 <a href="` +
     constants.EMAIL_TEMPLATE_TWITTER_LINK +
     `">
-                    <img style="margin:0 0.3rem" src="` +
+                    <img style="margin:0 0.2rem; height:25px; width: 25px;" src="` +
     constants.EMAIL_TEMPLATE_TWITTER_URL +
-    `" style="height:25px; width: 25px;">
+    `">
                 </a>
                 <a href="` +
     constants.EMAIL_TEMPLATE_LINKEDIN_LINK +
     `">
-                    <img style="margin:0 0.3rem" src="` +
+                    <img style="margin:0 0.2rem; height:25px; width: 25px;" src="` +
     constants.EMAIL_TEMPLATE_LINKEDIN_URL +
-    `" style="height:25px; width: 25px;">
+    `">
                 </a>
                 </div>
                     <div>

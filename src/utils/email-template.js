@@ -60,33 +60,33 @@ module.exports.templateFooter = async (data) => {
     `">
                     <img src="` +
     constants.EMAIL_TEMPLATE_FACEBOOK_URL +
-    `" style="height: 30px; width: 30px;">
+    `" style="height: 25px; width: 25px;">
                 </a>
                 <a href="` +
     constants.EMAIL_TEMPLATE_INSTAGRAM_LINK +
     `">
-                    <img style="margin:0 0.2rem; height: 30px; width: 30px;" src="` +
+                    <img style="margin:0 0.2rem; height: 25px; width: 25px;" src="` +
     constants.EMAIL_TEMPLATE_INSTAGRAM_URL +
     `">
                 </a>
                 <a href="` +
     constants.EMAIL_TEMPLATE_YOUTUBE_LINK +
     `">
-                    <img style="margin:0 0.2rem; height: 30px; width: 30px;" src="` +
+                    <img style="margin:0 0.2rem; height: 25px; width: 25px;" src="` +
     constants.EMAIL_TEMPLATE_YOUTUBE_URL +
     `">
                 </a>
                 <a href="` +
     constants.EMAIL_TEMPLATE_TWITTER_LINK +
     `">
-                    <img style="margin:0 0.2rem; height: 30px; width: 100%;" src="` +
+                    <img style="margin:0 0.2rem; height: 25px; width: 25px;" src="` +
     constants.EMAIL_TEMPLATE_TWITTER_URL +
     `">
                 </a>
                 <a href="` +
     constants.EMAIL_TEMPLATE_LINKEDIN_LINK +
     `">
-                    <img style="margin:0 0.2rem; height: 30px; width: 30px;" src="` +
+                    <img style="margin:0 0.2rem; height: 25px; width: 25px;" src="` +
     constants.EMAIL_TEMPLATE_LINKEDIN_URL +
     `">
                 </a>
@@ -271,7 +271,7 @@ module.exports.coursePurchaseTemplate = async (data) => {
     </div>
     <div style="padding:0 20px; display: flex; justify-content: center;">
         <a href="` +
-    process.env.LOGIN_LINK_LIVE +
+    process.env.EMAIL_TEMPLATE_PLAY_STORE_URL +
     `"
             style="display:block;width:13.125rem;height:3.5rem;text-decoration:none;text-transform:uppercase;display:flex;justify-content:center;align-items:center;background-color:#0076cb;border-radius:2rem">
             <div style="font-style:normal;font-weight:600;font-size:16px;color:#fff;margin:auto;text-align:center;position:absolute;line-height:24px">Go To Course</div>

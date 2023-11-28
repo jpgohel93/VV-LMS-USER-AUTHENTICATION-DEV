@@ -42,9 +42,6 @@ module.exports.templateHeader = async (data) => {
 module.exports.templateFooter = async (data) => {
   return (
     `
-    <div style="padding:0 20px">
-        <p style="font-weight:400;font-size:1.2rem">Your Virtual Afsar Crew</p>
-    </div>
         <hr style="width:90%; margin:auto; border-color:#636363;">
         <div style="padding:8px 15px 0 15px;">
             <div style="margin-top:0.6rem; background-color: #fff !important;width: 100%;border-radius: 8px; display: flex;">
@@ -164,7 +161,6 @@ module.exports.welcomeTemplate = async (data) => {
     <div style="padding:0 20px">
         <p style="font-weight:400;font-size:1.2rem">Additionally, stay connected with us on social media to receive updates, tips, and exclusive content:</p>
     </div>
-    ${footer}
     <div style="padding:0 20px">
         <p style="font-weight:400;font-size:1.2rem">Once again, welcome aboard, and let's commence this enriching academic expedition together!</p>
     </div>
@@ -172,6 +168,7 @@ module.exports.welcomeTemplate = async (data) => {
         <p style="font-weight:400;font-size:15px">Best regards,</p>
         <p style="font-weight:400;font-size:15px">Virtual Afsar Team</p>
     </div>
+    ${footer}
     `
   );
 };
@@ -212,7 +209,7 @@ module.exports.welcomeWithCredetialsTemplate = async (data) => {
     <div style="padding:0 20px">
         <p style="font-weight:400;font-size:1.2rem">Additionally, stay connected with us on our social media channels for updates, tips, and more:</p>
     </div>
-    ${footer}
+   
     <div style="padding:0 20px">
         <p style="font-weight:400;font-size:1.2rem">For further information and updates, please visit our website: ` + constants.EMAIL_BASE_URL + `</p>
     </div>
@@ -226,6 +223,8 @@ module.exports.welcomeWithCredetialsTemplate = async (data) => {
         <p style="font-weight:400;font-size:15px">Best regards,</p>
         <p style="font-weight:400;font-size:15px">Virtual Afsar Team</p>
     </div>
+
+    ${footer}
     `
   );
 };
@@ -302,7 +301,7 @@ module.exports.courseAssignedTemplate = async (data) => {
     <div style="padding:0 20px">
         <p style="font-weight:400;font-size:15px">Additionally, stay connected with us on our social media channels for updates, tips, and more:</p>
     </div>
-    ${footer}
+   
     <div style="padding:0 20px">
         <p style="font-weight:400;font-size:15px">For further information and updates, please visit our website: ` + constants.EMAIL_BASE_URL + `</p>
     </div>
@@ -313,6 +312,8 @@ module.exports.courseAssignedTemplate = async (data) => {
         <p style="font-weight:400;font-size:15px">Best regards,</p>
         <p style="font-weight:400;font-size:15px">Virtual Afsar Team</p>
     </div>
+
+    ${footer}
     `
   );
 };
@@ -363,7 +364,7 @@ module.exports.coursePurchaseTemplate = async (data) => {
     <div style="padding:0 20px">
         <p style="font-weight:400;font-size:15px">Additionally, stay connected with us on our social media channels for updates, tips, and more:</p>
     </div>
-    ${footer}
+    
     <div style="padding:0 20px">
         <p style="font-weight:400;font-size:15px">For further information and updates, please visit our website: ` + constants.EMAIL_BASE_URL + `</p>
     </div>
@@ -377,6 +378,8 @@ module.exports.coursePurchaseTemplate = async (data) => {
         <p style="font-weight:400;font-size:15px">Best regards,</p>
         <p style="font-weight:400;font-size:15px">Virtual Afsar Team</p>
     </div>
+
+    ${footer}
     `
   );
 };
@@ -557,11 +560,13 @@ module.exports.contactUsInquirySubmission = async (data) => {
     <div style="padding:0 20px">
         <p style="font-weight:400;font-size:1.2rem">Feel free to address this inquiry promptly and provide the necessary assistance or information required.</p>
     </div>
-    ${footer}
+    
     <div style="padding:0 20px">
         <p style="font-weight:400;font-size:15px">Best regards,</p>
         <p style="font-weight:400;font-size:15px">Virtual Afsar Team</p>
     </div>
+
+    ${footer}
     `
   );
 };

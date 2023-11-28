@@ -281,7 +281,7 @@ module.exports.courseAssignedTemplate = async (data) => {
   return (
     (await `${header}
     <div style="padding:0 20px">
-        <p style="font-weight:400;font-size:15px"> Dear `) +
+        <p style="font-weight:400;font-size:15px;color: white;"> Dear `) +
     data.user_name +
     `</p>
     </div>
@@ -290,7 +290,7 @@ module.exports.courseAssignedTemplate = async (data) => {
         </p>
     </div>
     <div style="padding:0 20px">
-        <p style="font-weight:400;font-size:15px:color: white;">Here's a breakdown of what's in store for you:</p>
+        <p style="font-weight:400;font-size:15px;color: white;">Here's a breakdown of what's in store for you:</p>
     </div>
     <div style="padding:0 20px">
         <p style="font-weight:400;font-size:15px;color: white;"><b>Course Purchase Confirmation:</b> Your enrollment in the College UPSC - Level 1 course is confirmed! This course is designed to equip you comprehensively for your UPSC exams.</p>

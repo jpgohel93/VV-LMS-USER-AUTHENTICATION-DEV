@@ -42,7 +42,7 @@ module.exports.templateHeader = async (data) => {
 module.exports.templateFooter = async (data) => {
   return (
     `
-        <hr style="width:90%; margin:auto; border-color:#636363;">
+        <hr style="width:90%; margin:auto; border-color: white;">
         <div style="padding:8px 15px 0 15px;">
             <div style="margin-top:0.6rem; background-color: #fff !important;width: 100%;border-radius: 8px; display: flex;">
                 <div style="margin-top: 10px; margin-bottom: 10px; padding-right: 10px; border-right: solid 1px #012ab2;padding-left:10px;">
@@ -254,7 +254,7 @@ module.exports.forgotPasswordTemplate = async (data) => {
         <a href="` +
     data.link +
     `"
-            style="display:block;width:13.125rem;height:3.5rem;text-decoration:none;text-transform:uppercase;display:flex;justify-content:center;align-items:center;background-color:#6c63ff;border-radius:2rem;margin-bottom:0.8rem;margin-bottom: 2rem;margin-top: 1.5rem">
+            style="display:block;width:13.125rem;height:3.5rem;text-decoration:none;text-transform:uppercase;display:flex;justify-content:center;align-items:center;background-color:#0076cb;border-radius:2rem;margin-bottom:0.8rem;margin-bottom: 2rem;margin-top: 1.5rem">
             <div style="font-style:normal;font-weight:600;font-size:16px;color:#fff;margin:auto;text-align:center;position:absolute;line-height:24px">Reset Password</div>
         </a>
     </div>
@@ -265,7 +265,7 @@ module.exports.forgotPasswordTemplate = async (data) => {
         <p style="font-weight:400;font-size:1.2rem;color: white;">Stay safe,</p>
     </div>
     <div style="padding:0 20px">
-        <p style="font-weight:400;font-size:1.2rem:color: white;">Virtual Afsar Team</p>
+        <p style="font-weight:400;font-size:1.2rem;color: white;">Virtual Afsar Team</p>
     </div>
     ${footer}`
   );
@@ -345,7 +345,7 @@ module.exports.coursePurchaseTemplate = async (data) => {
   return (
     (await `${header}
     <div style="padding:0 20px">
-        <p style="font-weight:400;font-size:15px;color: white;"> Dear [Student's Name],
+        <p style="font-weight:400;font-size:15px;color: white;"> Dear,
         `) +
     data.user_name +
     `</p>

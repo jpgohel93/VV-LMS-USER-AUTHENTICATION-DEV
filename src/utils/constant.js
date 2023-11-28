@@ -19,7 +19,7 @@ module.exports = {
     
     EMAIL_TEMPLATE_FACEBOOK_LINK: "https://www.facebook.com/profile.php?id=100095410212980&mibextid=ZbWKwL",
     EMAIL_TEMPLATE_INSTAGRAM_LINK: "https://instagram.com/virtualafsar?igshid=MzRlODBiNWFlZA==",
-    EMAIL_TEMPLATE_LINKEDIN_LINK: "https://www.linkedin.com",
+    EMAIL_TEMPLATE_LINKEDIN_LINK: "https://www.linkedin.com/in/virtual-afsar-b74a00287/",
     EMAIL_TEMPLATE_TWITTER_LINK: "https://twitter.com/virtualafsar",
     EMAIL_TEMPLATE_YOUTUBE_LINK: "https://www.youtube.com/@VirtualAfsar",
     

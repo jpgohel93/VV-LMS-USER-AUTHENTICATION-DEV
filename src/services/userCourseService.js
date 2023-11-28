@@ -58,7 +58,7 @@ const assignCourse = async (userInputs,request) => {
             if(createUserCourse !== false){
                 const getUserData = await UserModel.fatchUserById(user_id);
                 let subject = `Course Assiged - ${courseData.course_title}`;
-                let message = await coursePurchaseTemplate({ user_name: `${getUserData?.first_name} ${getUserData?.last_name}`, subject: subject, course_title: courseData.course_title});
+                let message = await coursePurchaseTemplate({ user_name: `${getUserData?.first_name} ${getUserData?.last_name}`, subject: subject, course_title: courseData.course_title,course_id : course_id});
                 let sendwait = sendMail(getUserData?.email, message, subject, user_id, "Course Assign")
 
                 let id= createUserCourse?._id ? createUserCourse?._id : null;
@@ -1941,7 +1941,7 @@ const paymentResponse = async (request) => {
                 
                     let filePath = 'uploads/'+pdfName;
 
-                    let message = await coursePurchaseTemplate({ user_name:  `${userData.first_name} ${userData.last_name}`, subject: subject, course_title: courseTitle });
+                    let message = await coursePurchaseTemplate({ user_name:  `${userData.first_name} ${userData.last_name}`, subject: subject, course_title: courseTitle, course_id : courseId });
 
                     //send subscription invoice mail
                     let sendwait = await sendMail(email, message, subject, userId, "Course Payment", true, filePath, pdfName)

@@ -250,6 +250,7 @@ module.exports.forgotPasswordTemplate = async (data) => {
 module.exports.coursePurchaseTemplate = async (data) => {
   const header = await this.templateHeader(data);
   const footer = await this.templateFooter(data);
+  const courseUrl = data?.course_id ? constants.EMAIL_COURSE_URL + data.course_id : process.env.BASE_URL
   return (
     (await `${header}
     <div style="padding:0 20px">
@@ -271,7 +272,7 @@ module.exports.coursePurchaseTemplate = async (data) => {
     </div>
     <div style="padding:0 20px; display: flex; justify-content: center;">
         <a href="` +
-    process.env.EMAIL_TEMPLATE_PLAY_STORE_URL +
+        courseUrl  +
     `"
             style="display:block;width:13.125rem;height:3.5rem;text-decoration:none;text-transform:uppercase;display:flex;justify-content:center;align-items:center;background-color:#0076cb;border-radius:2rem">
             <div style="font-style:normal;font-weight:600;font-size:16px;color:#fff;margin:auto;text-align:center;position:absolute;line-height:24px">Go To Course</div>

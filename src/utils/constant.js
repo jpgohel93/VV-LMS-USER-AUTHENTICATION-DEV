@@ -31,7 +31,8 @@ module.exports = {
     EMAIL_TEMPLATE_PAID_URL: process.env.BASE_URL + "VV-LMS-SERVICE-COURSE-QUERY/getcontent/local/email_assets/paid_svg.png",
     EMAIL_TEMPLATE_UNPAID_URL: process.env.BASE_URL + "VV-LMS-SERVICE-COURSE-QUERY/getcontent/local/email_assets/unpaid_svg.png",
     EMAIL_UNSUBSCRIBE_URL: process.env.IMAGE_URL + "/api/client/unsubscribe",
-    
+    EMAIL_COURSE_URL: process.env.BASE_URL + "coursePage/",
+
     EMAIL_TEMPLATE_APP_STORE_URL: "https://www.apple.com/in/app-store/",
     EMAIL_TEMPLATE_PLAY_STORE_URL: "https://play.google.com/store/apps/details?id=com.tjcg.virtualvidhyapith",
     EMAIL_TEMPLATE_APP_STORE_ICON_URL: process.env.BASE_URL + "VV-LMS-SERVICE-COURSE-QUERY/getcontent/local/email_assets/appstore.png",

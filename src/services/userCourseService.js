@@ -2,7 +2,7 @@ const { UserCourseModel, CourseWatchHistoryModel, UserModel, InvoiceModel, CartM
 const constants = require('../utils/constant');
 const { createSubscription , cancelSubscription } = require('../utils/paymentManagement');
 const { CallCourseQueryEvent,CallCourseQueryDataEvent, CallCourseEvents, CallEventBus } = require('../utils/call-event-bus');
-const { coursePurchaseTemplate, subscriptionCancelTemplate } = require('../utils/email-template');
+const { coursePurchaseTemplate, subscriptionCancelTemplate, courseAssignedTemplate } = require('../utils/email-template');
 const { createCronLogs, updateCronLogs, createApiCallLog, getNewDate, sendMail, generatePDF, sendPushNotification, findUniqueID } = require('../utils');
 const { encrypt, decrypt } = require('../utils/ccavenue');
 const moment = require('moment');
@@ -58,7 +58,7 @@ const assignCourse = async (userInputs,request) => {
             if(createUserCourse !== false){
                 const getUserData = await UserModel.fatchUserById(user_id);
                 let subject = `Course Assiged - ${courseData.course_title}`;
-                let message = await coursePurchaseTemplate({ user_name: `${getUserData?.first_name} ${getUserData?.last_name}`, subject: subject, course_title: courseData.course_title,course_id : course_id});
+                let message = await courseAssignedTemplate({ user_name: `${getUserData?.first_name} ${getUserData?.last_name}`, subject: subject, course_title: courseData.course_title,course_id : course_id});
                 let sendwait = sendMail(getUserData?.email, message, subject, user_id, "Course Assign")
 
                 let id= createUserCourse?._id ? createUserCourse?._id : null;

@@ -338,17 +338,17 @@ module.exports.coursePurchaseTemplate = async (data) => {
         <p style="font-weight:400;font-size:15px">Congratulations on your recent purchase of the College UPSC - Level 1 course on Virtual Afsar! We're thrilled to embark on this educational journey with you.</p>
     </div>
     <div style="padding:0 20px">
-        <p style="font-weight:400;font-size:15px">Your account under the username "${Username}" has been successfully created, granting you access to a world of learning opportunities to excel in your UPSC preparations.</p>
+        <p style="font-weight:400;font-size:15px">Your account under the username "${ data.user_name }" has been successfully created, granting you access to a world of learning opportunities to excel in your UPSC preparations.</p>
     </div>
     <div style="padding:0 20px">
         <p style="font-weight:400;font-size:15px">To commence your learning experience, kindly log in to the Virtual Afsar Platform using the button below:</p>
     </div>
     <div style="padding:0 20px; display: flex; justify-content: center;">
         <a href="` +
-    LOGINURL +
+        courseUrl +
     `"
             style="display:block;width:13.125rem;height:3.5rem;text-decoration:none;text-transform:uppercase;display:flex;justify-content:center;align-items:center;background-color:#0076cb;border-radius:2rem">
-            <div style="font-style:normal;font-weight:600;font-size:16px;color:#fff;margin:auto;text-align:center;position:absolute;line-height:24px">Login</div>
+            <div style="font-style:normal;font-weight:600;font-size:16px;color:#fff;margin:auto;text-align:center;position:absolute;line-height:24px"> Go To Course</div>
         </a>
     </div>
     <div style="padding:0 20px">

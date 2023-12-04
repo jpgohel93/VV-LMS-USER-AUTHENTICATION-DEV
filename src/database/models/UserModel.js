@@ -929,7 +929,8 @@ const studentData = async (userFilter) => {
             email: "$email",
             country_code: "$country_code",
             mobile_no: "$mobile_no",
-            operating_system:"$operating_system"
+            operating_system:"$operating_system",
+            is_get_notification: "$is_get_notification"
         }
     })
 

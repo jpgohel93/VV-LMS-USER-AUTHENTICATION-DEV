@@ -1389,6 +1389,7 @@ const getPaymentHistory = async (userInputs,request) => {
                     }
 
                     await paymentHistory[key].set('username',`${userData.first_name} ${userData.last_name}` ,{strict:false})
+                    await paymentHistory[key].set('mobile_no',`${userData.country_code} ${userData.mobile_no}` ,{strict:false})
                 })
             )
         }

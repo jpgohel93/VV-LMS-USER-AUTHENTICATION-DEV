@@ -4,6 +4,14 @@ const Schema = mongoose.Schema;
 
 const InvoiceSchema = new Schema({
     user_id: String,
+    invoice_no: {
+        default: "00001",
+        type: String
+    },
+    invoice_year: {
+        default: "2023-24",
+        type: String
+    },
     reference_id: String,
     invoice_id: String,
     payment_id: String,

@@ -1,7 +1,7 @@
 const { CartModel, UserCourseModel, UserModel, InvoiceModel } = require("../database");
 const constants = require('../utils/constant');
 const { CallCourseQueryEvent, CallEventBus } = require('../utils/call-event-bus');
-const { createCronLogs, updateCronLogs, getNewDate, findUniqueID } = require('../utils');
+const { createCronLogs, updateCronLogs, getNewDate, findUniqueID, generateInvoiceNumber,invoiceYear } = require('../utils');
 const { encrypt } = require('../utils/ccavenue');
 const qs = require('querystring');
 const moment = require('moment');
@@ -403,7 +403,13 @@ const checkOut = async (userInputs,request) => {
             let amount = Math.round(finalAmount)
             if(amount > 0){
 
+                let invoicYear = await invoiceYear()
+                const invoiceCount = await InvoiceModel.invoiceCount(invoicYear);
+                let invoiceNumber = await generateInvoiceNumber(invoiceCount);
+
                 let invoiceData = {
+                    invoice_no: invoiceNumber,
+                    invoice_year: invoicYear,
                     user_id: user_id, 
                     course_type: 1,
                     amount: amount,

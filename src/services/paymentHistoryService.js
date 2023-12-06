@@ -1,6 +1,7 @@
 const { PaymentHistoryModel, UserCourseModel, InvoiceModel, UserModel } = require("../database");
 const constants = require('../utils/constant');
 const { CallCourseQueryEvent, CallEventBus } = require('../utils/call-event-bus');
+const { generateInvoiceNumber,invoiceYear } = require('../utils');
 
 const addPaymentHistory = async (userInputs, request) => {
     try{
@@ -41,8 +42,13 @@ const addPaymentHistory = async (userInputs, request) => {
                 }
             }
             
+            let invoicYear = await invoiceYear()
+            const invoiceCount = await InvoiceModel.invoiceCount(invoicYear);
+            let invoiceNumber = await generateInvoiceNumber(invoiceCount);
 
             let createInvoiceData = {
+                invoice_no: invoiceNumber,
+                invoice_year: invoicYear,
                 user_id: user_id, 
                 course_id: course_id,
                 reference_id: null,

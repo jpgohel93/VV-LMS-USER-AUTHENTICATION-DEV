@@ -215,7 +215,7 @@ module.exports.welcomeWithCredetialsTemplate = async (data) => {
     </div>
    
     <div style="padding:0 20px">
-        <p style="font-weight:400;font-size:1.2rem;color: white;">For further information and updates, please visit our website: ` +
+        <p style="font-weight:400;font-size:1.2rem;color: #FE8B00;">For further information and updates, please visit our website: ` +
     constants.EMAIL_BASE_URL +
     `</p>
     </div>
@@ -316,7 +316,7 @@ module.exports.courseAssignedTemplate = async (data) => {
     </div>
    
     <div style="padding:0 20px">
-        <p style="font-weight:400;font-size:15px;color: white;">For further information and updates, please visit our website: ` +
+        <p style="font-weight:400;font-size:15px;color: #FE8B00;">For further information and updates, please visit our website: ` +
     constants.EMAIL_BASE_URL +
     `</p>
     </div>
@@ -381,7 +381,7 @@ module.exports.coursePurchaseTemplate = async (data) => {
     </div>
     
     <div style="padding:0 20px">
-        <p style="font-weight:400;font-size:15px;color: white;">For further information and updates, please visit our website: ` +
+        <p style="font-weight:400;font-size:15px;color: #FE8B00;">For further information and updates, please visit our website: ` +
     constants.EMAIL_BASE_URL +
     `</p>
     </div>

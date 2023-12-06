@@ -3,7 +3,7 @@ const constants = require('../utils/constant');
 const { createSubscription , cancelSubscription } = require('../utils/paymentManagement');
 const { CallCourseQueryEvent,CallCourseQueryDataEvent, CallCourseEvents, CallEventBus } = require('../utils/call-event-bus');
 const { coursePurchaseTemplate, subscriptionCancelTemplate, courseAssignedTemplate } = require('../utils/email-template');
-const { createCronLogs, updateCronLogs, createApiCallLog, getNewDate, sendMail, generatePDF, sendPushNotification, findUniqueID } = require('../utils');
+const { createCronLogs, updateCronLogs, createApiCallLog, getNewDate, sendMail, generatePDF, sendPushNotification, findUniqueID, generateInvoiceNumber,invoiceYear } = require('../utils');
 const { encrypt, decrypt } = require('../utils/ccavenue');
 const moment = require('moment');
 const fs = require('fs');
@@ -784,6 +784,14 @@ const purchaseCourse = async (userInputs,request) => {
                 invoiceData['purchase_time'] = new Date()
                 invoiceData['invoice_type'] = 2
                 invoiceData['module_name'] = "Subscription/Payment";
+
+                let invoicYear = await invoiceYear()
+                const invoiceCount = await InvoiceModel.invoiceCount(invoicYear);
+                let invoiceNumber = await generateInvoiceNumber(invoiceCount);
+
+                invoiceData['invoice_no'] = invoiceNumber;
+                invoiceData['invoice_year'] = invoicYear;
+
                 const createInvoice = await InvoiceModel.createInvoice(invoiceData);
         
                 cronLogData['create_invoice'] = createInvoice
@@ -2428,7 +2436,13 @@ const payByApplePay = async (userInputs, request) => {
     const userData = await UserModel.fatchUserById(userId);
     let courseData = await CallCourseQueryEvent("get_course_data_by_id",{ id: courseId }, request.get("Authorization"))
 
+    let invoicYear = await invoiceYear()
+    const invoiceCount = await InvoiceModel.invoiceCount(invoicYear);
+    let invoiceNumber = await generateInvoiceNumber(invoiceCount);
+
     let invoiceData = {
+        invoice_no: invoiceNumber,
+        invoice_year: invoicYear,
         user_id: user_id, 
         course_type: 1,
         amount: amount,

@@ -2,7 +2,7 @@ const { UserCourseModel, InvoiceModel, PaymentWebhookModel, UserModel, PaymentLo
 const { CallCourseQueryEvent } = require('../../utils/call-event-bus');
 const { courseSubscription, renewedCourseSubscription, subscriptionCancelTemplate } = require('../../utils/email-template');
 const { invoiceTemplate } = require('../../utils/pdf-template');
-const { sendMail, generatePDF, getNewDate, sendMailWithAttachment } = require('../../utils');
+const { sendMail, generatePDF, getNewDate, generateInvoiceNumber, invoiceYear  } = require('../../utils');
 const moment = require('moment');
 const path = require('path');
 const fs = require('fs');
@@ -308,7 +308,13 @@ module.exports = (app) => {
                         logData['invoice_id'] = invoice_id
                         logData['order_id'] = paymentData?.order_id
 
+                        let invoicYear = await invoiceYear()
+                        const invoiceCount = await InvoiceModel.invoiceCount(invoicYear);
+                        let invoiceNumber = await generateInvoiceNumber(invoiceCount);
+
                         let createInvoiceData = {
+                            invoice_no: invoiceNumber,
+                            invoice_year: invoicYear,
                             user_id: userId, 
                             course_id: courseId,
                             reference_id: userCourseData._id,
@@ -517,9 +523,15 @@ module.exports = (app) => {
                         logData['subscription_id'] = subscriptionId
                         logData['user_id'] = userCourseData.user_id
                         logData['user_course_data'] = JSON.stringify(userCourseData)
+
+                        let invoicYear = await invoiceYear()
+                        const invoiceCount = await InvoiceModel.invoiceCount(invoicYear);
+                        let invoiceNumber = await generateInvoiceNumber(invoiceCount);
     
     
                         let createInvoiceData = {
+                            invoice_no: invoiceNumber,
+                            invoice_year: invoicYear,
                             user_id: userId, 
                             course_id: courseId,
                             reference_id: userCourseData._id,

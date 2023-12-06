@@ -209,6 +209,17 @@ const revenueData = async (startDate, endDate) => {
    return data;
 }
 
+const invoiceCount = async (year) => {
+
+    const invoiceCount =  await InvoiceSchema.count({invoice_year: year}).then((data) => {
+        return data
+    }).catch((err) => {
+        return 0
+    });
+
+   return invoiceCount;
+}
+
 
 module.exports = {
     createInvoice,
@@ -219,5 +230,6 @@ module.exports = {
     getPaymentHistory,
     findOrderById,
     findByIdData,
-    revenueData
+    revenueData,
+    invoiceCount
 }

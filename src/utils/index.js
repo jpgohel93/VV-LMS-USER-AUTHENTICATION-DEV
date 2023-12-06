@@ -635,3 +635,16 @@ module.exports.findUserReferralCode = async () => {
   
 	return uniqueId;
 }
+
+module.exports.invoiceYear = async () => {
+	const currentYear = new Date().getFullYear();
+	const lastTwoYearDigits = parseInt(currentYear.toString().slice(-2)) + 1;
+
+	return `${currentYear}-${lastTwoYearDigits}`
+}
+
+module.exports.generateInvoiceNumber = async (invoiceCounter) => {
+	const invoiceNumber = String(invoiceCounter+1).padStart(5, '0');
+
+	return invoiceNumber
+}

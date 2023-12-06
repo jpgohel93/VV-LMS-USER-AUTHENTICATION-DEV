@@ -215,9 +215,9 @@ module.exports.welcomeWithCredetialsTemplate = async (data) => {
     </div>
    
     <div style="padding:0 20px">
-        <p style="font-weight:400;font-size:1.2rem;color: white;">For further information and updates, please visit our website: <span style="color: #FE8B00"> ` +
-        constants.EMAIL_BASE_URL +
-        ` </span></p>
+        <p style="font-weight:400;font-size:1.2rem;color: white;">For further information and updates, please visit our website:
+          <a href="` + constants.EMAIL_BASE_URL + `" style="color: #fe8b00 !important;"> ` + constants.EMAIL_BASE_URL + `</a>
+        </p>
     </div>
     <div style="padding:0 20px">
         <p style="font-weight:400;font-size:1.2rem;color: white;">Should you need any assistance or have inquiries, don't hesitate to reach out. Our dedicated team is here to ensure your learning journey with us is smooth and fulfilling.</p>
@@ -316,9 +316,7 @@ module.exports.courseAssignedTemplate = async (data) => {
     </div>
    
     <div style="padding:0 20px">
-        <p style="font-weight:400;font-size:15px;color: white;">For further information and updates, please visit our website: <span style="color: #FE8B00"> ` +
-    constants.EMAIL_BASE_URL +
-    ` </span></p>
+        <p style="font-weight:400;font-size:15px;color: white;">For further information and updates, please visit our website: <a href="` + constants.EMAIL_BASE_URL + `" style="color: #fe8b00 !important;"> ` + constants.EMAIL_BASE_URL + `</a></p>
     </div>
     <div style="padding:0 20px">
         <p style="font-weight:400;font-size:15px;color: white;">We're dedicated to supporting you at every step of your learning journey. Let's work together towards your success!</p>
@@ -381,9 +379,7 @@ module.exports.coursePurchaseTemplate = async (data) => {
     </div>
     
     <div style="padding:0 20px">
-        <p style="font-weight:400;font-size:15px;color: white;">For further information and updates, please visit our website: <span style="color: #FE8B00"> ` +
-        constants.EMAIL_BASE_URL +
-        ` </span></p>
+        <p style="font-weight:400;font-size:15px;color: white;">For further information and updates, please visit our website: <a href="` + constants.EMAIL_BASE_URL + `" style="color: #fe8b00 !important;"> ` + constants.EMAIL_BASE_URL + `</a> </p>
     </div>
     <div style="padding:0 20px">
         <p style="font-weight:400;font-size:15px;color: white;">Thank you for choosing Virtual Afsar as your partner in achieving your UPSC goals. We're committed to providing you with the guidance and resources needed for success.</p>

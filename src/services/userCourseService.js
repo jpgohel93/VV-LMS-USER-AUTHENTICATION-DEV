@@ -909,7 +909,10 @@ const mylearning = async (userInputs,request) => {
                                     if(courseChapterCount?.total_chapter > 0 && courseWatchHistory?.completed_chapter?.length > 0){
                                         completedChapterCount = courseWatchHistory.completed_chapter.length
                                         perForCompletedChapter = courseWatchHistory.completed_chapter.length * 100 / parseInt(courseChapterCount.total_chapter);
-                                    } 
+                                    } else if(courseChapterCount?.total_chapter > 0 && courseWatchHistory?.progress?.length > 0){
+                                        completedChapterCount = courseWatchHistory.progress.length
+                                        perForCompletedChapter = courseWatchHistory.progress.length * 100 / parseInt(courseChapterCount.total_chapter);
+                                    }
                                 }
             
                                 if(course && ((page_type == 1) || (page_type == 2 && ((courseWatchHistory && courseWatchHistory.is_course_completed == false) || (courseWatchHistory == null))) || (page_type == 3 && courseWatchHistory && courseWatchHistory.is_course_completed == true) )){

@@ -56,7 +56,7 @@ const filterQuizData = async (user_id, quiz_id) => {
                 time_limit: 1,
                 question_limit: 1,
                 tags: 1,
-                questions: "$questions.questions"
+                questions: 1
             }
         }
     ]).then((data) => {

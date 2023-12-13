@@ -90,7 +90,7 @@ const getPaymentHistory = async (userFilter) => {
     }
 
     filter.push({
-        $ne: null
+        payment_date : {$ne: null}
     })
 
     if(userFilter.payment_type){

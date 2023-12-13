@@ -89,6 +89,10 @@ const getPaymentHistory = async (userFilter) => {
         })
     }
 
+    filter.push({
+        $ne: null
+    })
+
     if(userFilter.payment_type){
         if(userFilter.payment_type == 1){
             filter.push({
@@ -118,7 +122,6 @@ const getPaymentHistory = async (userFilter) => {
         }
         
     }
-    
 
     if(userFilter.type){
 

@@ -767,7 +767,11 @@ const purchaseCourse = async (userInputs,request) => {
                     billing_country: getUserData?.country || 'India',
                     billing_tel: getUserData?.mobile_no || '9512742802',
                     billing_email: getUserData?.email || 'demouser@gmail.com',
-                    merchant_param1: user_id,
+                    merchant_param1: "Course Payment",
+                    merchant_param2:  1,
+                    merchant_param3: course_id,
+                    merchant_param4: getUserData?.notification_device_id ? getUserData.notification_device_id : "",
+                    merchant_param5: user_id,
                     integration_type: "iframe_normal",
                     redirect_url: redirectUrl,
                     cancel_url: redirectUrl
@@ -1636,8 +1640,11 @@ const singleTimePayment = async (userInputs,request) => {
                 billing_country: getUserData?.country || 'India',
                 billing_tel: getUserData?.mobile_no || '9512742802',
                 billing_email: getUserData?.email || 'demouser@gmail.com',
-                merchant_param1: course_id,
-                merchant_param2: user_id,
+                merchant_param1: "Course Payment",
+                merchant_param2:  1,
+                merchant_param3: course_id,
+                merchant_param4: getUserData?.notification_device_id ? getUserData.notification_device_id : "",
+                merchant_param5: user_id,
                 integration_type: "iframe_normal",
                 redirect_url: redirectUrl,
                 cancel_url: redirectUrl
@@ -1708,7 +1715,7 @@ const paymentResponse = async (request) => {
         //console.log("request?.body?.encResp :: ", dataArray)
 
         let orderId = dataArray.order_id
-        let userId = dataArray.merchant_param1
+        let userId = dataArray.merchant_param5
         let courseId = dataArray.merchant_param3
         let finalAmount = dataArray.mer_amount
         let deviceType = dataArray.merchant_param2 ? dataArray.merchant_param2 : 1

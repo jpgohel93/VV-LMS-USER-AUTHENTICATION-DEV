@@ -463,10 +463,11 @@ const checkOut = async (userInputs,request) => {
                     billing_country: getUserData?.country || 'India',
                     billing_tel: getUserData?.mobile_no || '9104291082',
                     billing_email: getUserData?.email || 'demouser@gmail.com',
-                    merchant_param1: user_id,
+                    merchant_param1: "Course Payment",
                     merchant_param2: device_type ? device_type : 1,
                     merchant_param3: course_id,
                     merchant_param4: notification_device_id,
+                    merchant_param5: user_id,
                     //integration_type: "iframe_normal",
                     redirect_url: redirectUrl,
                     cancel_url: redirectUrl

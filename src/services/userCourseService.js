@@ -910,12 +910,12 @@ const mylearning = async (userInputs,request) => {
                                 let perForCompletedChapter = 0;
                                 let completedChapterCount = 0;
                                 if(courseWatchHistory){
-                                    if(courseChapterCount?.total_chapter > 0 && courseWatchHistory?.completed_chapter?.length > 0){
+                                    if(courseChapterCount?.total_topic > 0 && courseWatchHistory?.completed_chapter?.length > 0){
                                         completedChapterCount = courseWatchHistory.completed_chapter.length
-                                        perForCompletedChapter = courseWatchHistory.completed_chapter.length * 100 / parseInt(courseChapterCount.total_chapter);
-                                    } else if(courseChapterCount?.total_chapter > 0 && courseWatchHistory?.progress?.length > 0){
+                                        perForCompletedChapter = courseWatchHistory.completed_chapter.length * 100 / parseInt(courseChapterCount.total_topic);
+                                    } else if(courseChapterCount?.total_topic > 0 && courseWatchHistory?.progress?.length > 0){
                                         completedChapterCount = courseWatchHistory.progress.length
-                                        perForCompletedChapter = courseWatchHistory.progress.length * 100 / parseInt(courseChapterCount.total_chapter);
+                                        perForCompletedChapter = courseWatchHistory.progress.length * 100 / parseInt(courseChapterCount.total_topic);
                                     }
                                 }
             

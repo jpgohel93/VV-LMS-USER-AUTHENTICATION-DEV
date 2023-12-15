@@ -847,9 +847,9 @@ const addUser = async (userInputs) => {
 
                 let jwtToken = await GenerateSignature(jwtData);
                 
-                /* let subject = "Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!";
+                let subject = "Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!";
                 let message = await welcomeTemplate({ user_name: `${first_name} ${last_name}`, subject: subject});
-                await sendMail(email, message, subject, studentId, "Add User"); */
+                await sendMail(email, message, subject, studentId, "Add User"); 
 
                 return {
                     status: true,

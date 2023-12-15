@@ -644,7 +644,8 @@ module.exports.invoiceYear = async () => {
 }
 
 module.exports.generateInvoiceNumber = async (invoiceCounter) => {
-	const invoiceNumber = String(invoiceCounter+1).padStart(5, '0');
+	let invoiceNumber = String(invoiceCounter+1).padStart(4, '0');
 
+	invoiceNumber = "1" + invoiceNumber
 	return invoiceNumber
 }

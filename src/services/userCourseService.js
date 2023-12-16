@@ -1095,6 +1095,7 @@ const coursePaymentResponse = async (userInputs) => {
                     status: paymentStatus,
                     amount:subScriptionData.amount,
                     username: `${userData.first_name} ${userData.last_name}`,
+                    mobile_no: `${userData.first_name} ${userData.last_name}`,
                     issue_data: moment(new Date()).format('MMMM.Do.YYYY'),
                     due_date: moment(new Date()).format('MMMM.Do.YYYY'),
                     course: courseArray
@@ -1509,10 +1510,11 @@ const getInvoice = async (userInputs) => {
                 convince_fee: invoiceData?.convince_fee || 0,
                 convince_fee_amount: invoiceData?.convince_fee_amount || 0,
                 username: `${userData.first_name} ${userData.last_name}`,
+                mobile_no: userData?.mobile_no ? `${userData.country_code} ${userData.mobile_no}` : "",
                 issue_data: moment(new Date()).format('MMMM/DD/YYYY'),
                 due_date: moment(new Date()).format('MMMM/DD/YYYY'),
                 course_title: courseArray?.length > 0 ? courseArray[0].course_title : 0,
-                invoice_id: invoiceData?.order_id ? invoiceData?.order_id : ""
+                invoice_id: invoiceData?.invoice_no ? invoiceData?.invoice_no + "/" + invoiceData?.invoice_year : invoiceData?.order_id,
             };
             //const pdfBody = await invoiceTemplate(invoice);
 
@@ -1951,7 +1953,7 @@ const paymentResponse = async (request) => {
                         issue_data: moment(new Date()).format('MMMM/DD/YYYY'),
                         due_date: moment(new Date()).format('MMMM/DD/YYYY'),
                         course_title: courseArray?.length > 0 ? courseArray[0].course_title : 0,
-                        invoice_id: invoiceData?.order_id ? invoiceData?.order_id : ""
+                        invoice_id: invoiceData?.invoice_no ? invoiceData?.invoice_no + "/" + invoiceData?.invoice_year : invoiceData?.order_id,
                     };
                     const pdfBody = await invoiceTemplate(invoice);
                     await generatePDF(pdfBody, pdfName);
@@ -2417,7 +2419,8 @@ const sendTestMail = async (request) => {
             issue_data: moment(new Date()).format('MMMM/DD/YYYY'),
             due_date: moment(new Date()).format('MMMM/DD/YYYY'),
             course_title: "gdfgfdfddfgdff",
-            invoice_id: "dfgdgdfgfdfd"
+            invoice_id: "dfgdgdfgfdfd",
+            mobile_no: "+91 0909890989"
         };
         const pdfBody = await invoiceTemplate(invoice);
         await generatePDF(pdfBody, pdfName);
@@ -2721,11 +2724,13 @@ const payByApplePay = async (userInputs, request) => {
             convince_fee: courseData?.convince_fee || 0,
             convince_fee_amount: convince_fee_amount ? Math.round(convince_fee_amount) : 0,
             username: `${userData.first_name} ${userData.last_name}`,
+            mobile_no: userData?.mobile_no ? `${userData.country_code} ${userData.mobile_no}` : "",
             issue_data: moment(new Date()).format('MMMM/DD/YYYY'),
             due_date: moment(new Date()).format('MMMM/DD/YYYY'),
             course_title: courseData?.course_title || "Course",
-            invoice_id: orderId
+            invoice_id: invoiceNumber + "/" + invoicYear
         };
+
         const pdfBody = await invoiceTemplate(invoice);
         await generatePDF(pdfBody, pdfName);
     

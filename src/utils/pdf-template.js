@@ -25,6 +25,370 @@ module.exports.invoiceTemplate = async (data) => {
         
     // }
     
+//     return await `
+//     <div  style=' padding: 0.625rem; width: 26.5625rem; margin: 0;  position: relative;  overflow: hidden; ' >
+//         <div style='  width: 100%; position: relative;  padding: 0.5rem 0; border: 0.0625rem solid #000;  borderBottom: 0;  height: 5.5rem;  backgroundColor: #fff; ' >
+//         <img src='${constants.EMAIL_TEMPLATE_LOGO_URL}' style='width: 100%; height: auto;' />
+//         </div>
+//     <div style='  border: 0.0625rem solid #000;borderCollapse: collapse;width: 100%;backgroundColor: #fff; '>
+//       <div style=' verticalAlign: baseline; '>
+//         <div>
+//           <div style=' textAlign: center; position: relative; '>
+//             <p style=' color: #2E295D; fontSize: 0.625rem; fontWeight: 600; margin: 0 '>INVOICE</p>
+//             <div style=' position: absolute; top: 20%; right: 0; marginRight: 0.3125rem '>
+//               <p style=' color: #000; fontSize: 6px; fontWeight: 600; margin: 0 '>ORIGINAL FOR RECIPIENT</p>
+//             </div>
+//           </div>
+//         </div>
+//         <div style=' display: flex; borderTop: 0.0625rem solid #000 '>
+//           <div style=' flex: 1; borderRight: 0.0625rem solid #000 '>
+//             <div style='  borderBottom: 0.0625rem solid #000; textAlign: center; flex: 1;' >
+//               <p style=' color: #000; fontWeight: bold; margin: 0; fontSize: 0.5rem '>Customer Detail</p>
+//             </div>
+//             <div style=' display: flex; marginLeft: 0.3125rem;'>
+//               <div style=' textAlign: left; width: 50%;'>
+//                 <p style=' color: #000; fontWeight: bold; margin: 0; fontSize: 0.5rem;'>Customer Name:</p>
+//               </div>
+//               <div style=' textAlign: left;'>
+//                 <p style=' color: #000; margin: 0; fontSize: 0.5rem;'>${data.username || 'N/A' }</p>
+//               </div>
+//             </div>
+//             <div style=' display: flex; marginLeft: 0.3125rem;'>
+//               <div style=' textAlign: left; width: 50%;'>
+//                 <p style=' color: #000; fontWeight: bold; margin: 0; fontSize: 0.5rem;'>Phone:</p>
+//               </div>
+//               <div style=' textAlign: left; width: 50%;'>
+//                 <p style=' color: #000; margin: 0; fontSize: 0.5rem;'>${`${ data?.mobile_no ? `+${data?.mobile_no}` : 'N/A' }`}</p>
+//               </div>
+//             </div>
+//           </div>
+//           <div style=' flex: 1;'>
+//             <div style=' display: flex;'>
+//               <div style=' textAlign: left; width: 38%; marginLeft: 0.3125rem;'>
+//                 <p style=' color: #000; fontWeight: bold; margin: 0; fontSize: 0.5reml;'>Invoice No:</p>
+//               </div>
+//               <div style=' textAlign: left;'>
+//                 <p style=' color: #000; margin: 0; fontSize: 0.5rem;'>
+//                   ${ data?.invoice_id }
+//                 </p>
+//               </div>
+//             </div>
+//             <div style=' display: flex;'>
+//               <div style=' textAlign: left; width: 38%; marginLeft: 0.3125rem;'>
+//                 <p style=' color: #000; fontWeight: bold; margin: 0; fontSize: 0.5rem;'>Invoice Date:</p>
+//               </div>
+//               <div style=' textAlign: left;'>
+//                 <p style=' color: #000; margin: 0; fontSize: 0.5rem;'>{issueDate}</p>
+//               </div>
+//             </div>
+//             <div style=' padding: 20px 0;'></div>
+//           </div>
+//         </div>
+//       </div>
+//     </div>
+//     <div
+//       style=' border: 0.0625rem solid #000; borderCollapse: collapse; width: 100%; borderTop: none; backgroundColor: #fff; ' >
+//       <div style=' verticalAlign: baseline;'>
+//         <div style=' display: flex;'>
+//           <div
+//             style=' borderRight: 0.0625rem solid #000; borderTop: none; textAlign: center; padding: 0.3125rem 0.625rem; flex: 0.3; ' >
+//             <p style='color: #000; fontWeight: bold; margin: 0; fontSize: 0.5rem;'>HSN</p>
+//           </div>
+//           <div
+//             style=' borderRight: 0.0625rem solid #000; textAlign: center; padding: 0.3125rem 0.625rem; borderBottom: none; flex: 1; ' >
+//             <p style=' color:#000; fontWeight: bold; margin: 0; fontSize: 0.5rem;' >Course Name</p>
+//           </div>
+//           <div
+//             style='
+//               borderRight: 0.0625rem solid #000;
+//               textAlign: center;
+//               padding: 0.3125rem 0.625rem;
+//               borderBottom: none;
+//               flex: 1;
+//             '
+//           >
+//             <p style=' color: #000; fontWeight: bold; margin: 0; fontSize: 0.5rem;'>Perticulers</p>
+//           </div>
+//           <div
+//             style='
+//               textAlign: center;
+//               padding: 0.3125rem 0.5625rem 0.3125rem 0.625rem;
+//               borderRight: none;
+//               flex: 0.5;
+//             '
+//           >
+//             <p style=' color: #000; fontWeight: bold; margin: 0; fontSize: 0.5rem;'>Total</p>
+//           </div>
+//         </div>
+//         <div style='display: flex;'>
+//           <div
+//             style='
+//               border: 0.0625rem solid #000;                
+//               borderCollapse: collapse;
+//               borderLeft: none;
+//               flex: 0.5;
+//               padding: 0 0.75rem 0.3125rem 0.625rem;
+//             '
+//           >
+//             <p style=' color: #000; fontWeight: bold; margin: 0; fontSize: 0.5rem;'>999294</p>
+//           </div>
+//           <div
+//             style='
+//               border: 0.0625rem solid #000;
+//               borderCollapse: collapse;
+//               borderLeft: none;
+//               flex: 1 1 18.7%;
+//             '
+//           >
+//             <p style=' color: #000; fontWeight: bold; margin: 0; fontSize: 0.5rem; paddingLeft: 0.625rem;'>
+//               ${data?.course_title ?? 'N/A'}
+//             </p>
+//           </div>
+//           <div
+//             style='
+//               border: 0.0625rem solid #000;
+//               borderCollapse: collapse;
+//               borderLeft: none;
+//               paddingLeft: 0.875rem;
+//               width: 8rem;
+//               flex: 2;
+//             '
+//           >
+//             <div style=' width: 7.5rem;'>
+//               <p style=' color: #000; fontWeight: bold; margin: 0; fontSize: 0.5rem;'>Price</p>
+//             </div>
+//             <div style=' width: 7.5rem;'>
+//               <p style=' color: #000; fontWeight: bold; margin: 0;fontSize: 0.5rem;'>
+//                 Discount ${`(${data?.discount ?? 0}%)`}
+//               </p>
+//             </div>
+//             <div style=' width: 7.5rem;'>
+//               <p style='color: #000; fontWeight: bold; margin: 0; fontSize: 0.5rem;'>Sub Total</p>
+//             </div>
+//             ${data?.coupon_amount ? `<div style=' width: 7.5rem;'>
+//             <p style=' color: #000; fontWeight: bold; margin: 0; fontSize: 0.5rem;'>Coupon Amount</p>
+//           </div>` : ''}
+//           ${data?.heman_discount_amount ? ` <div style=' width: 7.5rem;'>
+//             <p style=' color: #000; fontWeight: bold;  margin: 0; fontSize: 0.5rem;'>
+//                 Referral Discount
+//             </p>
+//             </div>` : ''}
+
+//             <div style=' width: 7.5rem;'>
+//               <p style=' color: #000; fontWeight: bold;  margin: 0; fontSize: 0.5rem;'>
+//                 GST${`(${data?.tax_percentage ?? 0}%)`}
+//               </p>
+//             </div>
+//             <div style=' width: 7.5rem;'>
+//               <p style=' color: #000; fontWeight: bold; margin: 0; fontSize: 0.5rem; '>
+//                 Convenience Fees${`(${data?.convince_fee ?? 0}%)`}
+//               </p>
+//             </div>
+//             <div style=' width: 7.5rem;'>
+//               <p style=' color: #000; fontWeight: bold; margin: 0; fontSize:0.5rem;'>Grand Total</p>
+//             </div>
+//             <div style=' height: 100px;'></div>
+//           </div>
+//           <div
+//             style='
+//               border: 0.0625rem solid #000;
+//               borderCollapse: collapse;
+//               borderLeft: none;
+//               borderRight: none;
+//               padding: 0 0 0 1rem;
+//               textAlign: center;
+//               flex: 1;
+//             '
+//           >
+//             <div>
+//               <p style='color: #000; fontWeight:bold; margin: 0; fontSize: 8px; width: max-content;'>${`${
+//                 data?.course_base_price ?? 0
+//               }/-`}</p>
+//             </div>
+//             <div>
+//               <p style='color: #000; fontWeight: bold; margin: 0; fontSize: 8px; width: max-content;'>
+//                 ${data?.discount_amount  ?? 0 }/-
+//               </p>
+//             </div>
+//             <div>
+//               <p style=' color:#000; fontWeight:bold; margin: 0; fontSize:8px; width:max-content;'>${`${
+//                 data?.discount_amount ?? 0
+//               }/-`}</p>
+//             </div>
+
+//             ${data?.coupon_amount ? ` <div>
+//             <p
+//               style=' color: #000; fontWeight: bold; margin:0; fontSize:8px; width: max-content; '
+//             >${`- ${data?.coupon_amount ?? 0}/-`}</p>
+//           </div>` : ''}
+//           ${data?.heman_discount_amount ? `  <div>
+//             <p style='color: #000; fontWeight: bold; margin: 0; fontSize: 8px; width: max-content;'>
+//                 ${`- ${data?.heman_discount_amount ?? 0}/-`}
+//             </p>
+//             </div>` : ''}
+//             <div>
+//               <p style=' color: #000; fontWeight:bold; margin:0; fontSize:8px; width:max-content;'>${`${
+//                 data?.tax_amount ?? 0
+//               }/-`}</p>
+//             </div>
+//             <div>
+//               <p style=' color:#000; fontWeight:bold; margin: 0; fontSize: 8px; width:max-content;'>${`${
+//                 data?.convince_fee_amount ?? 0
+//               }/-`}</p>
+//             </div>
+//             <div>
+//               <p style=' color:#000; fontWeight:bold; margin: 0; fontSize: 8px; width: max-content;'>${`${
+//                 data?.amount ?? 0
+//               }/-`}</p>
+//             </div>
+//           </div>
+//         </div>
+//         <div style=' display:flex;'>
+//           <div style=' textAlign:center; flex: 4; '>
+//             <p style=' color: #000; fontWeight:bold; margin: 0; fontSize: 0.5rem;'>Total in words</p>
+//           </div>
+//         </div>
+//         <div style=' display: flex;'>
+//           <div
+//             style='
+//               border: 0.0625rem solid #000;
+//               borderCollapse: collapse;
+//               textAlign: center;
+//               borderLeft: none;
+//               borderRight: none;
+//               flex: 4;
+//               padding: 0.3125rem 0;
+//             '
+//           >
+//             <NumberToWords number=${data?.amount} />
+//           </div>
+//         </div>
+//         <div style=' display: flex;'>
+//           <div style=' textAlign: center; flex: 2;'>
+//             <p
+//               style='
+//                 color: #000;
+//                 fontWeight: bold;
+//                 margin: 0;
+//                 fontSize: 0.5rem;
+//                 borderBottom: 0.0625rem solid #000;
+//               '
+//             >
+//               Bank Details
+//             </p>
+//           </div>
+//           <div style='borderLeft: 0.0625rem solid #000; textAlign:center; flex:2;'>
+//             <p
+//               style='
+//                 color: #000;
+//                 fontWeight: bold;
+//                 margin: 0;
+//                 fontSize: 0.5rem;
+//                 borderBottom: 0.0625rem solid #000;
+//               '
+//             >
+//               Terms and Conditions
+//             </p>
+//           </div>
+//         </div>
+//         <div style=' display: flex;'>
+//           <div style=' flex:2; borderRight:0.0625rem solid #000; padding:0.3125rem 0;'>
+//             <div style=' display: flex; justifyContent: flex-start; paddingLeft: 0.875rem;'>
+//               <div style=' textAlign: left; width: 50%; marginRight: 0.875rem;'>
+//                 <p style=' color: #000; fontWeight:bold; margin: 0; fontSize: 0.5rem;'>Bank Name</p>
+//               </div>
+//               <div style=' textAlign: left; width: fit-content;'>
+//                 <p style=' color:#000; margin: 0; fontSize:0.5rem;'>ICICI Bank</p>
+//               </div>
+//             </div>
+//             <div style=' display: flex; justifyContent: flex-start; paddingLeft:0.875rem;'>
+//               <div style=' textAlign: left; width: 50%; marginRight: 0.875rem;'>
+//                 <p style=' color: #000; fontWeight:bold; margin: 0; fontSize:0.5rem;'>Branch Name</p>
+//               </div>
+//               <div style=' textAlign: left; width: fit-content;'>
+//                 <p style=' color:#000; margin: 0; fontSize:0.5rem;'>Kalawad Road</p>
+//               </div>
+//             </div>
+//             <div style=' display: flex; justifyContent: flex-start; paddingLeft: 0.875rem;'>
+//               <div style=' textAlign: left; width: 50%; marginRight: 0.875rem;'>
+//                 <p style=' color: #000; fontWeight: bold; margin: 0; fontSize: 0.5rem;'>
+//                   Bank Account Number
+//                 </p>
+//               </div>
+//               <div style=' textAlign: left; width:fit-content;'>
+//                 <p style=' color: #000; margin: 0; fontSize: 0.5rem;'>624805017419</p>
+//               </div>
+//             </div>
+//             <div style=' display: flex; justifyContent:flex-start; paddingLeft: 0.875rem;'>
+//               <div style=' textAlign: left; width:50%; marginRight: 0.875rem;'>
+//                 <p style=' color:#000; fontWeight:bold; margin: 0; fontSize:0.5rem;'>Bank Branch IFSC</p>
+//               </div>
+//               <div style='textAlign:left; width:fit-content;'>
+//                 <p style=' color: #000; margin: 0; fontSize: 0.5rem;'>ICIC0006248</p>
+//               </div>
+//             </div>
+//           </div>
+//           <div
+//             style='
+//               textAlign: center;
+//               verticalAlign: middle;
+//               flex: 2;
+//               display: flex;
+//               justifyContent: center;
+//               alignItems: center;
+//             '
+//           >
+//             <p style=' color: #000; margin: 0; fontSize:0.5rem;'>1. Subject to Rajkot Jurisdiction.</p>
+//           </div>
+//         </div>
+//       </div>
+//     </div>
+//     <div
+//       style='
+//         border: 0.0625rem solid #000;
+//         borderCollapse: collapse;
+//         width: 100%;
+//         borderTop: none;
+//         backgroundColor: #fff;
+//       '
+//     >
+//       <div style=' verticalAlign: middle; borderTop:none;'>
+//         <div style=' borderTop: none; display: flex;'>
+//           <div
+//             style='
+//               borderRight: 0.0625rem solid #000;
+//               textAlign: center;
+//               borderTop: none;
+//               flex: 2;
+//               display: flex;
+//               justifyContent:center;
+//               alignItems: center;
+//             '
+//           >
+//             <p style=' color: #000; margin: 0; fontSize: 0.5rem;'>
+//               <p style=' color: #000; margin: 0; fontSize:0.375rem;'>
+//                 Certified that the particulars given above are true and correct
+//               </p>
+//               <p style=' color: #000; margin: 0; fontSize: 0.4375rem;'>For Virtual Afsar</p>
+//             </p>
+//           </div>
+//           <div style=' textAlign:center; width:13.3125rem; borderTop:none; flex:2;'>
+//             <img
+//               src='/Pictures/InvoiceFooter.png'
+//               alt=''
+//               style=' width: 60%; height: auto; padding:0.3125rem 0;'
+//             />
+//             <div
+//               style=' borderTop: 0.0625rem solid #000; textAlign: center; flex: 2; padding:0.1875rem 0;'
+//             >
+//               <p style=' color:#000; margin: 0; fontSize: 0.5rem;'>Authorised Signatory</p>
+//             </div>
+//           </div>
+//         </div>
+//       </div>
+//     </div>
+//   </div> 
+//     `
 
     return await `<!DOCTYPE html>
     <html lang="en">

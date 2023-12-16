@@ -154,6 +154,19 @@ const loginWithSocialAccount = async (userInputs) => {
                 user_login_type: user_signup_with,
             }
 
+            const getFilterData = await UserCourseModel.filterUserCourseData({ user_id: getUserData._id });
+
+            let isPurchase = false
+            if(getFilterData?.type){
+                if(getFilterData.type == 1){
+                    isPurchase = true
+                }else{
+                    if(getFilterData.type == 2 && getFilterData.payment_status == 2 && getFilterData.is_cancle_subscription == false){
+                        isPurchase = true
+                    }
+                }
+            }
+
             let sendData = {
                 user_id: getUserData._id,
                 first_name : getUserData.first_name,
@@ -165,6 +178,7 @@ const loginWithSocialAccount = async (userInputs) => {
                 user_login_type: getUserData.user_signup_with,
                 last_login_type: user_signup_with,
                 profile_image : getUserData?.profile_image || null,
+                is_purchase: isPurchase
             }
 
             let jwtToken = await GenerateSignature(jwtData);
@@ -281,7 +295,8 @@ const loginWithSocialAccount = async (userInputs) => {
                     country_code : country_code,
                     mobile_no : mobile_no,
                     last_login_type: user_signup_with,
-                    profile_image : null
+                    profile_image : null,
+                    is_purchase: false
                 }
 
                 let jwtToken = await GenerateSignature(jwtData);
@@ -292,6 +307,12 @@ const loginWithSocialAccount = async (userInputs) => {
                     firebase_token: firebase_token,
                     login_time: new Date()
                 });
+
+                if(email){
+                    let subject = "Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!";
+                    let message = await welcomeTemplate({ user_name: `${first_name} ${last_name}`, subject: subject});
+                    sendMail(email, message, subject, createStudent._id, "Add User");
+                }
 
                 return {
                     status: true,
@@ -405,6 +426,20 @@ const userSignin = async (userInputs) => {
                         notification_device_id: notification_device_id
                     }
 
+                     //get course data
+                    const getFilterData = await UserCourseModel.filterUserCourseData({ user_id: getUserData.id });
+
+                    let isPurchase = false
+                    if(getFilterData?.type){
+                        if(getFilterData.type == 1){
+                            isPurchase = true
+                        }else{
+                            if(getFilterData.type == 2 && getFilterData.payment_status == 2 && getFilterData.is_cancle_subscription == false){
+                                isPurchase = true
+                            }
+                        }
+                    }
+
                     let sendData = {
                         user_id: getUserData.id,
                         first_name : getUserData.first_name,
@@ -415,7 +450,8 @@ const userSignin = async (userInputs) => {
                         mobile_no : getUserData.mobile_no,
                         user_type: getUserData.user_type,
                         user_login_type: getUserData.user_signup_with,
-                        last_login_type: 1
+                        last_login_type: 1,
+                        is_purchase: isPurchase
                     }
 
                     let jwtToken = await GenerateSignature(jwtData);
@@ -637,7 +673,8 @@ const quickSignup = async (userInputs) => {
                     mobile_no : "",
                     user_type: 5,
                     user_login_type: 1,
-                    last_login_type: 1
+                    last_login_type: 1,
+                    is_purchase: false
                 }
 
                 //user login history
@@ -650,9 +687,9 @@ const quickSignup = async (userInputs) => {
 
                 let jwtToken = await GenerateSignature(jwtData);
                 
-                /* let subject = "Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!";
+                let subject = "Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!";
                 let message = await welcomeTemplate({ user_name: `${first_name} ${last_name}`, subject: subject});
-                await sendMail(email, message, subject, studentId, "Add User"); */
+                await sendMail(email, message, subject, studentId, "Add User");
 
                 return {
                     status: true,

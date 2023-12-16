@@ -44,4 +44,7 @@ module.exports = {
     INVOICE_STATUS_FAILED: process.env.BASE_URL + "VV-LMS-SERVICE-COURSE-QUERY/getcontent/local/invoice_assets/failed.png",
     INVOICE_STATUS_REFUNDED: process.env.BASE_URL + "VV-LMS-SERVICE-COURSE-QUERY/getcontent/local/invoice_assets/refunded.png",
     INVOICE_STATUS_UNPAID: process.env.BASE_URL + "VV-LMS-SERVICE-COURSE-QUERY/getcontent/local/invoice_assets/unpaid.png",
+    INVOICE_STATUS_UNPAID: process.env.BASE_URL + "VV-LMS-SERVICE-COURSE-QUERY/getcontent/local/invoice_assets/unpaid.png",
+    INVOICE_HEADER_IMAGE: process.env.BASE_URL + "VV-LMS-SERVICE-COURSE-QUERY/getcontent/local/invoice_assets/HeaderInvoice.png",
+    INVOICE_FOOTER_IMAGE: process.env.BASE_URL + "VV-LMS-SERVICE-COURSE-QUERY/getcontent/local/invoice_assets/InvoiceFooter.png",
 };

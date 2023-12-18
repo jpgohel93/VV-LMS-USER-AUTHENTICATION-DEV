@@ -83,7 +83,8 @@ const dailyLearning= async (userInputs) => {
         
         const { course_id, user_id } = userInputs;
 
-        let start_date = new Date(moment(new Date()).subtract(7, "days")).toISOString();
+        //let start_date = new Date(moment(new Date()).subtract(7, "days")).toISOString();
+        let start_date = new Date(moment().startOf('isoWeek')).toISOString();
         const updateUserActivity= await UserActivityModel.dailyLearningInWeek(start_date, course_id, user_id);
 
         if(updateUserActivity!== false){

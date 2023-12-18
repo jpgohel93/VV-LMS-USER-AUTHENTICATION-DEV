@@ -748,7 +748,7 @@ const addUser = async (userInputs) => {
         const getInstituteEmailData = await CallAdminEvent("check_institute_email_id",{ email_id: email  }, "");
 
         if(getEmailData !== null || getInstituteEmailData !== null){
-            if(getEmailData !== null && !getEmailData.is_verify_otp){
+            if(getEmailData){
                 isOtpNotValidate = true
                 studentId = getEmailData.id
             }else{
@@ -757,11 +757,11 @@ const addUser = async (userInputs) => {
             }
         }
         // check mobile no is valid or not
-        if (mobile_no) {
+        if (mobile_no && !studentId) {
             const checkMobileDuplication = await UserModel.fatchUserfilterData({ mobile_no: mobile_no });
             const getInstituteMobileData = await CallAdminEvent("check_institute_mobile_no",{ mobile_no: mobile_no }, "");
             if(checkMobileDuplication !== null || getInstituteMobileData !== null){
-                if(checkMobileDuplication !== null && !checkMobileDuplication.is_verify_otp){
+                if(checkMobileDuplication){
                     isOtpNotValidate = true
                     studentId = checkMobileDuplication.id
                 }else{
@@ -795,12 +795,13 @@ const addUser = async (userInputs) => {
                 firebase_token: firebase_token,
                 last_login_time: new Date(),
                 device_type: device_type,
-                operating_system: operating_system
+                operating_system: operating_system,
+                is_verify_otp: true
             }
 
-            if(is_funnel_user){
-                studentData['is_verify_otp'] = true
-            }
+            // if(is_funnel_user){
+            //     studentData['is_verify_otp'] = true
+            // }
 
             if(ip_address){
                 let locationData = await GetUserLocation(ip_address);

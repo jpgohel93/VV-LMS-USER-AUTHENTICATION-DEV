@@ -468,7 +468,7 @@ module.exports.sendMail = async (email, body, subject, userId, module, attachmen
 
 module.exports.generatePDF = async (body, pdfName) => {
 	//Tabloid
-	const options = { format: 'Tabloid',childProcessOptions: { 
+	const options = { format: 'A4',childProcessOptions: { 
 		env: {
 		  OPENSSL_CONF: '/dev/null',
 		},

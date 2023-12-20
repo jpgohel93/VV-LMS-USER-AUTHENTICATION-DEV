@@ -1366,7 +1366,7 @@ const getPaymentHistory = async (userInputs,request) => {
             page = perPage * page; 
         }
 
-        let paymentType = payment_type ? payment_type : 2
+        let paymentType = payment_type ? payment_type : 1
 
         //get course data
         const paymentHistory = await InvoiceModel.getPaymentHistory({ user_id,  page, perPage, type, payment_type: paymentType });

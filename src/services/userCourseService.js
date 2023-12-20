@@ -1366,8 +1366,10 @@ const getPaymentHistory = async (userInputs,request) => {
             page = perPage * page; 
         }
 
+        let paymentType = payment_type ? payment_type : 2
+
         //get course data
-        const paymentHistory = await InvoiceModel.getPaymentHistory({ user_id,  page, perPage, type, payment_type });
+        const paymentHistory = await InvoiceModel.getPaymentHistory({ user_id,  page, perPage, type, payment_type: paymentType });
         const userData = await UserModel.fatchUserById(user_id);
 
         if(paymentHistory?.length > 0){

@@ -602,8 +602,42 @@ const addChapterViewHistory = async (userInputs) => {
 const addTopicViewHistory = async (userInputs) => {
     try{
 
-        const { user_id, course_id, chapter_id, topic_id } = userInputs;
+        const { user_id, course_id, chapter_id, topic_id, week_no } = userInputs;
         let checkCourseWatchHistoryData = await CourseWatchHistoryModel.fatchCourseViewHistoryList(user_id, course_id, chapter_id);
+
+        console.log("checkCourseWatchHistoryData :: ", checkCourseWatchHistoryData)
+        if(week_no){
+            let fetchWeekHistory = await CourseWatchHistoryModel.fetchCourseWeeklyHistory(user_id, course_id, chapter_id);
+
+            if(fetchWeekHistory){
+                if(fetchWeekHistory.completed_topic_at.includes(topic_id)){
+                   
+                    CourseWatchHistoryModel.updateCourseWeeklyHistory(fetchWeekHistory._id,{
+                       
+                        last_accessed: new Date(),
+                        last_accessed_topic: topic_id,
+                    })
+                }else{
+                    let topics = fetchWeekHistory.completed_topic_at
+                    topics.push(topic_id)
+
+                    CourseWatchHistoryModel.updateCourseWeeklyHistory(fetchWeekHistory._id,{
+                        last_accessed: new Date(),
+                        last_accessed_topic: topic_id,
+                        completed_topic_at: topics
+                    })
+                }
+            }else{
+                CourseWatchHistoryModel.createCourseWeeklyHistory({
+                    user_id: user_id,
+                    course_id: course_id,
+                    last_accessed: new Date(),
+                    last_accessed_topic: topic_id,
+                    week_no: week_no,
+                    completed_topic_at: [topic_id],
+                })
+            }
+        }
 
         if(checkCourseWatchHistoryData){
             //delete the course topic watch history
@@ -653,7 +687,7 @@ const addTopicViewHistory = async (userInputs) => {
 const getTopicViewHistory = async (userInputs) => {
     try{
 
-        const { user_id, course_id, chapter_id } = userInputs;
+        const { user_id, course_id, chapter_id, week } = userInputs;
 
         let CourseWatchHistoryData = await CourseWatchHistoryModel.fatchCourseViewHistoryList(user_id, course_id, chapter_id);
 

@@ -21,5 +21,6 @@ module.exports = {
     PaymentHistorySchema: require("./PaymentHistorySchema"),
     UserEarningSchema: require("./UserEarningSchema"),
     PaymentDetailSchema: require("./PaymentDetailSchema"),
-    CourseViewSchema: require("./CourseViewSchema")
+    CourseViewSchema: require("./CourseViewSchema"),
+    CourseWeeklyHistorySchema: require("./CourseWeeklyHistorySchema")
 }

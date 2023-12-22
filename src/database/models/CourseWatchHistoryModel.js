@@ -1,4 +1,4 @@
-const { CourseWatchHistorySchema, CourseViewSchema } = require('../schema');
+const { CourseWatchHistorySchema, CourseViewSchema, CourseWeeklyHistorySchema } = require('../schema');
 
 const createCourseWatchHistory = async (insertData) => {
 
@@ -514,7 +514,59 @@ const removeCourseViewHistoryData = async (user_id, course_id) => {
     return coursewatchhistoryData;
 }
 
+const createCourseWeeklyHistory= async (insertData) => {
 
+    const CourseWatchHistory = new CourseWeeklyHistorySchema(insertData)
+
+    const CourseWatchHistoryResult = await CourseWatchHistory.save().then((data) => {
+        return data
+    }).catch((err) => {
+        return false
+    });
+
+    return CourseWatchHistoryResult;
+}
+
+const updateCourseWeeklyHistory  = async (id,updateData) => {
+
+    const userCourseResult = CourseWeeklyHistorySchema.findOneAndUpdate({_id: id}, updateData).then((model) => {
+        return true
+    }).catch((err) => {
+        return false
+    });
+
+   return userCourseResult;
+}
+
+const fetchCourseWeeklyHistory= async (data) => {
+
+
+    let condition = {}
+
+    if(data.user_id){
+        condition["user_id"] =  data.user_id
+    }
+
+    if(data.course_id){
+        condition["course_id"] =  data.course_id
+    }
+
+    if(data.week_no){
+        condition["week_no"] =  data.week_no
+    }
+    if(data.topic_id){
+        condition["completed_topic_at"] =  data.topic_id
+    }
+
+    const checkCompletedTopic = await CourseWeeklyHistorySchema.findOne(condition).then((data) => {
+        return data
+    }).catch((err) => {
+
+        return false
+    });
+
+    return checkCompletedTopic;
+}
 
 module.exports = {
     createCourseWatchHistory,
@@ -544,5 +596,8 @@ module.exports = {
     addCourseTopicCompleted,
     fatchCourseViewHistory,
     removeCourseViewHistoryData,
-    getLastAccessTopicViewHistory
+    getLastAccessTopicViewHistory,
+    createCourseWeeklyHistory,
+    fetchCourseWeeklyHistory,
+    updateCourseWeeklyHistory
 }

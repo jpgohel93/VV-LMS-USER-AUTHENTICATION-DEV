@@ -690,13 +690,15 @@ const getTopicViewHistory = async (userInputs) => {
         const { user_id, course_id, chapter_id, week } = userInputs;
 
         let CourseWatchHistoryData = await CourseWatchHistoryModel.fatchCourseViewHistoryList(user_id, course_id, chapter_id);
+        let courseWeeklyHistory = await CourseWatchHistoryModel.fetchCourseWeeklyHistory({user_id, course_id, week_no: week});
 
         if(CourseWatchHistoryData){
             return {
                 status: true,
                 status_code: constants.SUCCESS_RESPONSE,
                 message: "Data get successfully",
-                data: CourseWatchHistoryData
+                data: CourseWatchHistoryData,
+                course_weekly: courseWeeklyHistory
             };
         }else{
             return {
@@ -836,6 +838,40 @@ const getLastAccessTopicViewHistory = async (userInputs) => {
     }
 }
 
+const getTopicWeekHistory = async (userInputs) => {
+    try{
+
+        const { user_id, course_id, week } = userInputs;
+
+        let courseWeeklyHistory = await CourseWatchHistoryModel.fetchCourseWeeklyHistory({user_id, course_id, week_no: week});
+
+        if(courseWeeklyHistory){
+            return {
+                status: true,
+                status_code: constants.SUCCESS_RESPONSE,
+                message: "Data get successfully",
+                data: courseWeeklyHistory
+            };
+        }else{
+            return {
+                status: true,
+                status_code: constants.SUCCESS_RESPONSE,
+                message: "Data not found",
+                data: null
+            };
+        }
+    }catch (error) {
+        // Handle unexpected errors
+        return {
+            status: false,
+            status_code: constants.EXCEPTION_ERROR_CODE,
+            message: 'Failed to add the course history',
+            error: { server_error: 'An unexpected error occurred' },
+            data: null,
+        };
+    }
+}
+
 module.exports = {
     addCourseWatchHistory,
     getCourseWatchHistorysData,
@@ -852,5 +888,6 @@ module.exports = {
     getTopicViewHistory,
     topicCompleted,
     getTopicViewHistoryList,
-    getLastAccessTopicViewHistory
+    getLastAccessTopicViewHistory,
+    getTopicWeekHistory
 }

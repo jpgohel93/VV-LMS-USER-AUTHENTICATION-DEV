@@ -47,4 +47,12 @@ module.exports = {
     INVOICE_STATUS_UNPAID: process.env.BASE_URL + "VV-LMS-SERVICE-COURSE-QUERY/getcontent/local/invoice_assets/unpaid.png",
     INVOICE_HEADER_IMAGE: process.env.BASE_URL + "VV-LMS-SERVICE-COURSE-QUERY/getcontent/local/invoice_assets/HeaderInvoice.png",
     INVOICE_FOOTER_IMAGE: process.env.BASE_URL + "VV-LMS-SERVICE-COURSE-QUERY/getcontent/local/invoice_assets/InvoiceFooter.png",
+
+    INVOICE_LOCATION_IMAGE: process.env.BASE_URL + "VV-LMS-SERVICE-COURSE-QUERY/getcontent/local/invoice_assets/location.png",
+    INVOICE_MAIL_IMAGE: process.env.BASE_URL + "VV-LMS-SERVICE-COURSE-QUERY/getcontent/local/invoice_assets/mail.png",
+    INVOICE_PHONE_IMAGE: process.env.BASE_URL + "VV-LMS-SERVICE-COURSE-QUERY/getcontent/local/invoice_assets/phone.png",
+    INVOICE_RUPEE_IMAGE: process.env.BASE_URL + "VV-LMS-SERVICE-COURSE-QUERY/getcontent/local/invoice_assets/rupee.png",
+    INVOICE_VALOGO_IMAGE: process.env.BASE_URL + "VV-LMS-SERVICE-COURSE-QUERY/getcontent/local/invoice_assets/VAlogo.png",
+    INVOICE_VICON_IMAGE: process.env.BASE_URL + "VV-LMS-SERVICE-COURSE-QUERY/getcontent/local/invoice_assets/VIcon.png",
+    INVOICE_WEB_IMAGE: process.env.BASE_URL + "VV-LMS-SERVICE-COURSE-QUERY/getcontent/local/invoice_assets/web.png",
 };

@@ -485,6 +485,18 @@ module.exports.generatePDF = async (body, pdfName) => {
 			};
 		});
 	})
+	
+	// setTimeout(async () => {
+    //     const doc = new jsPDF({ orientation: 'portrait', unit: 'px', format: 'a4' })
+
+    //     const pfWidth = doc.internal.pageSize.getWidth()
+    //       doc.html(body, {
+    //         width: pfWidth,
+    //         windowWidth: 445,
+    //         margin: [40, 0, 0, 0],
+    //       })
+	// 	await doc.save('uploads/'+pdfName)
+    //   }, 1000)
 }
 
 //generate random String

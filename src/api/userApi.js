@@ -1395,12 +1395,6 @@ module.exports = async (app) => {
         res.json(data);
     });
 
-    app.post('/user/sendDailyReportMail', async (req, res, next) => {
-        const data = await userService.sendDailyReportMail();
-
-        res.json(data);
-    });
-
     app.get('/user/cityDropdown', UserAuth, async (req, res, next) => {
         const data = await userService.cityDropdown();
 
@@ -1558,5 +1552,23 @@ module.exports = async (app) => {
             user_referral_code
         });
         res.status(data.status_code).json(data);
-});
+    });
+
+    app.post('/user/sendDailyReportMail', async (req, res, next) => {
+        const data = await userService.sendDailyReportMail(); 
+
+        res.json(data);
+    });
+
+    app.post('/user/sendWeeklyReportMail', async (req, res, next) => {
+        const data = await userService.sendWeeklyReportMail(); 
+
+        res.json(data);
+    });
+
+    app.post('/user/sendMonthlyReportMail', async (req, res, next) => {
+        const data = await userService.sendMonthlyReportMail(); 
+
+        res.json(data);
+    });
 }

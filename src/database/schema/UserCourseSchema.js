@@ -67,6 +67,10 @@ const UserCourseSchema = new Schema({
     order_id: String,
     coupon_code: String,
     coupon_amount: String,
+    last_access_week: {
+        default: 0,
+        type: Number
+    },
 },{ timestamps: true });
 
 UserCourseSchema.index( { user_id : 1 } )

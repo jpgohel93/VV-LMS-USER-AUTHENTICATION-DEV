@@ -1,4 +1,4 @@
-const { CourseWatchHistoryModel, UserActivityModel } = require("../database");
+const { CourseWatchHistoryModel, UserActivityModel , UserCourseModel } = require("../database");
 const constants = require('../utils/constant');
 const { CallCourseQueryEvent, CallCourseQueryDataEvent } = require('../utils/call-event-bus');
 
@@ -605,7 +605,14 @@ const addTopicViewHistory = async (userInputs) => {
         const { user_id, course_id, chapter_id, topic_id, week_no } = userInputs;
         let checkCourseWatchHistoryData = await CourseWatchHistoryModel.fatchCourseViewHistoryList(user_id, course_id, chapter_id);
 
-        console.log("checkCourseWatchHistoryData :: ", checkCourseWatchHistoryData)
+        const getFilterData = await UserCourseModel.filterUserCourseData({ user_id, course_id})
+
+        if(getFilterData && getFilterData?.last_access_week !== week_no){
+            UserCourseModel.updateUserCourse(getFilterData._id,{
+                last_access_week: week_no
+            })
+        }
+
         if(week_no){
             let fetchWeekHistory = await CourseWatchHistoryModel.fetchCourseWeeklyHistory(user_id, course_id, chapter_id);
 
@@ -613,7 +620,6 @@ const addTopicViewHistory = async (userInputs) => {
                 if(fetchWeekHistory.completed_topic_at.includes(topic_id)){
                    
                     CourseWatchHistoryModel.updateCourseWeeklyHistory(fetchWeekHistory._id,{
-                       
                         last_accessed: new Date(),
                         last_accessed_topic: topic_id,
                     })

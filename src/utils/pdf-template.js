@@ -1079,584 +1079,824 @@ module.exports.invoiceTemplate = async (data) => {
 
         return await `
         <html>
-        <body>
-          <div style="padding: 0.625rem; width: 28rem; margin: 0; position: relative">
+          <head>
+            <link rel="preconnect" href="https://fonts.googleapis.com" />
+            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+            <link
+              href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Montserrat:wght@500&family=Noto+Sans+Gurmukhi:wght@100;200;300;400;500;600;700;800;900&family=Poppins&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Rubik:wght@400;500;600;700&display=swap"
+              rel="stylesheet"
+            />
+
+            <style>
+              p {
+                font-family: "Noto Sans Gurmukhi", sans-serif;
+              }
+            </style>
+          </head>
+          <body>
             <div
               style="
-                height: 21rem;
-                background-color: #0e5f9f;
-                padding-top: 1rem;
-                padding-bottom: 1rem;
-                padding-right: 1rem;
-                width: 8rem;
-                position: absolute;
-                top: 4rem;
-                display: flex;
-                flex-direction: column;
-                justify-content: space-between;
-                align-items: center;
-              "
-            >
-              <div style="width: 100%">
-                <div style="text-align: right">
-                  <p
-                    style="
-                      font-size: 10;
-                      font-weight: bold;
-                      color: #c3e7f5;
-                      margin: 0;
-                    "
-                  >
-                    INVOICE NO:
-                  </p>
-                  <p style="font-size: 10; font-weight: 400; color: #fff; margin: 0">
-                    ${data.invoice_id}
-                  </p>
-                </div>
-                <div style="text-align: right; margin-top: 1rem">
-                  <p
-                    style="font-size: 8; font-weight: bold; color: #c3e7f5; margin: 0"
-                  >
-                    INVOICE DATE:
-                  </p>
-                  <p style="font-size: 8; font-weight: 400; color: #fff; margin: 0">
-                    ${data.issue_data}
-                  </p>
-                </div>
-                <div style="text-align: right; margin-top: 1rem">
-                  <p
-                    style="font-size: 8; font-weight: bold; color: #c3e7f5; margin: 0"
-                  >
-                    ISSUED TO:
-                  </p>
-                  <p style="font-size: 9; font-weight: bold; color: #fff; margin: 0">
-                    ${ data?.username || "N/A" }
-                  </p>
-                  <p style="font-size: 8; font-weight: bold; color: #fff; margin: 0">
-                    ${ data?.mobile_no || "N/A" }
-                  </p>
-                </div>
-              </div>
-              <div
-                style="
-                  background-color: #c3e7f5;
-                  border-radius: 50%;
-                  width: 4rem;
-                  height: 4rem;
-                  margin-top: auto;
-                  margin-bottom: 2rem;
-                  margin-left: 1rem;
-                  padding: 0.8rem;
-                  display: flex;
-                  justify-content: center;
-                  align-items: center;
-                "
-              >
-                <img src="${ constants.INVOICE_VICON_IMAGE }" style="width: 3rem; height: 4rem" />
-              </div>
-            </div>
-            <div
-              style="
-                padding-top: 1rem;
-                width: 25rem;
-                margin-left: 45px;
-                background-color: #c3e7f5;
+                padding: 0.625rem;
+                width: 37.3rem;
+                margin: 0;
+                position: relative;
+                margin-left: -18px;
+                margin-top: 50px;
+                margin-bottom: 50px;
               "
             >
               <div
                 style="
+                  height: 32rem;
+                  background-color: #0e5f9f;
+                  padding-top: 1rem;
+                  padding-bottom: 1rem;
+                  padding-right: 1rem;
+                  width: 10rem;
+                  position: absolute;
+                  top: 4rem;
                   display: flex;
+                  flex-direction: column;
+                  justify-content: space-between;
                   align-items: center;
-                  justify-content: space-between;
-                  padding: 0 2rem;
+                  margin-top: 25px;
                 "
               >
-                <div style="margin-bottom: auto">
-                  <p
-                    style="
-                      font-size: 1.3rem;
-                      font-weight: 900;
-                      color: #123e6f;
-                      letter-spacing: 2;
-                      margin: 0;
-                    "
-                  >
-                    I N V O I C E
-                  </p>
-                </div>
-      
-                <div>
-                  <img src="${ constants.INVOICE_VALOGO_IMAGE }" style="width: 7rem; height: 4rem" />
-                </div>
-              </div>
-              <div
-                style="
-                  display: flex;
-                  justify-content: space-between;
-                  padding: 0 0.5rem;
-                  padding-left: 7rem;
-                  margin-bottom: 1rem;
-                "
-              >
-                <div style="width: 50%; display: flex; align-items: flex-start">
-                  <div
-                    style="
-                      background-color: #123e6f;
-                      border-radius: 50%;
-                      width: 6px;
-                      display: flex;
-                      justify-content: center;
-                      align-items: center;
-                      padding: 2px;
-                      margin-right: 0.3rem;
-                    "
-                  >
-                    <img src="${ constants.INVOICE_LOCATION_IMAGE }" style="width: 6px; height: 6px" />
-                  </div>
-      
-                  <p
-                    style="
-                      color: #123e6f;
-                      font-weight: 400;
-                      margin: 0;
-                      font-size: 0.5rem;
-                      text-align: left;
-                    "
-                  >
-                  ${ constants.EMAIL_TEMPLATE_ADDRESS }
-                  </p>
-                </div>
-      
-                <div style="width: 50%">
-                  <div style="display: flex; align-items: flex-start">
-                    <div
-                      style="
-                        background-color: #123e6f;
-                        border-radius: 50%;
-                        width: 6px;
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
-                        padding: 2px;
-                        margin-right: 0.3rem;
-                      "
-                    >
-                      <img src="${ constants.INVOICE_PHONE_IMAGE }" style="width: 6px; height: 6px" />
-                    </div>
-      
+                <div style="width: 100%">
+                  <div style="text-align: right">
                     <p
                       style="
-                        color: #123e6f;
-                        font-weight: 400;
+                        font-size: 12px;
+                        font-weight: 900;
+                        color: #c3e7f5;
                         margin: 0;
-                        font-size: 0.5rem;
-                        text-align: left;
                       "
                     >
-                      Tel : ${ constants.EMAIL_TEMPLATE_MOBILE_NO }
+                      INVOICE NO:
+                    </p>
+                    <p
+                      style="
+                        font-size: 12px;
+                        font-weight: 400;
+                        color: #fff;
+                        margin: 0;
+                        padding-top: 2px;
+                      "
+                    >
+                      ${data.invoice_id}
                     </p>
                   </div>
-      
-                  <div
-                    style="display: flex; align-items: flex-start; margin: 0.2rem 0"
-                  >
-                    <div
+                  <div style="text-align: right; margin-top: 1rem">
+                    <p
                       style="
-                        background-color: #123e6f;
-                        border-radius: 50%;
-                        width: 6px;
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
-                        padding: 2px;
-                        margin-right: 0.3rem;
-                      "
-                    >
-                      <img src="${ constants.INVOICE_WEB_IMAGE }" style="width: 6px; height: 6px" />
-                    </div>
-      
-                    <a
-                      style="
-                        color: #123e6f;
-                        font-weight: 400;
+                        font-size: 12px;
+                        font-weight: bold;
+                        color: #c3e7f5;
                         margin: 0;
-                        font-size: 0.5rem;
-                        text-align: left;
-                        text-decoration: none;
                       "
-                      href="https://virtualafsar.com"
                     >
-                      Web : https://virtualafsar.com
-                    </a>
+                      INVOICE DATE:
+                    </p>
+                    <p
+                      style="
+                        font-size: 12px;
+                        font-weight: 400;
+                        color: #fff;
+                        margin: 0;
+                        padding-top: 2px;
+                      "
+                    >
+                      ${data.issue_data}
+                    </p>
                   </div>
-      
-                  <div style="display: flex; align-items: flex-start">
-                    <div
+                  <div style="text-align: right; margin-top: 1rem">
+                    <p
                       style="
-                        background-color: #123e6f;
-                        border-radius: 50%;
-                        width: 6px;
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
-                        padding: 2px;
-                        margin-right: 0.3rem;
-                      "
-                    >
-                      <img src="${ constants.INVOICE_MAIL_IMAGE }" style="width: 6px; height: 6px" />
-                    </div>
-      
-                    <a
-                      style="
-                        color: #123e6f;
-                        font-weight: 400;
+                        font-size: 12px;
+                        font-weight: bold;
+                        color: #c3e7f5;
                         margin: 0;
-                        font-size: 0.5rem;
-                        text-align: left;
-                        text-decoration: none;
                       "
-                      href="mailto:${ constants.EMAIL_TEMPLATE_MAIL_ID }"
                     >
-                      Email : ${ constants.EMAIL_TEMPLATE_MAIL_ID }
-                    </a>
+                      ISSUED TO:
+                    </p>
+                    <p
+                      style="
+                        font-size: 12px;
+                        font-weight: bold;
+                        color: #fff;
+                        margin: 0;
+                        padding-top: 4px;
+                      "
+                    >
+                      ${ data?.username || "N/A" }
+                    </p>
+                    <p
+                      style="
+                        font-size: 11px;
+                        font-weight: 400;
+                        color: #fff;
+                        margin: 0;
+                        padding-top: 5px;
+                      "
+                    >
+                      ${ data?.mobile_no || "N/A" }
+                    </p>
                   </div>
                 </div>
+                <div
+                  style="
+                    background-color: #c3e7f5;
+                    border-radius: 50%;
+                    width: 5rem;
+                    height: 5rem;
+                    margin-top: 13rem;
+                    margin-bottom: 2rem;
+                    margin-left: 2rem;
+                    margin-right: auto;
+                    padding: 0.8rem;
+                    text-align: center;
+                  "
+                >
+                  <img
+                    src="${ constants.INVOICE_VICON_IMAGE }"
+                    style="width: 4rem; height: 5rem"
+                  />
+                </div>
               </div>
-              <div style="width: 18.8rem; margin-left: auto">
-                <table style="width: 100%; border-collapse: collapse">
-                  <tbody>
-                    <tr style="width: 100%">
-                      <td
-                        style="
-                          border-right: 0.0625rem solid #0e5f9f;
-                          border-top: 0.0625rem solid #0e5f9f;
-                          text-align: center;
-                          padding: 0.3125rem 0.625rem;
-                          border-bottom: none;
-                          flex: 1;
-                        "
-                      >
-                        <p
-                          style="
-                            color: #123e6f;
-                            font-weight: bold;
-                            margin: 0;
-                            font-size: 0.5rem;
-                          "
-                        >
-                          COURSE NAME
-                        </p>
-                      </td>
-      
-                      <td
-                        style="
-                          border-right: 0.0625rem solid #0e5f9f;
-                          border-top: 0.0625rem solid #0e5f9f;
-                          text-align: center;
-                          padding: 0.3125rem 0.625rem;
-                          border-bottom: none;
-                          flex: 1;
-                        "
-                      >
-                        <p
-                          style="
-                            color: #123e6f;
-                            font-weight: bold;
-                            margin: 0;
-                            font-size: 0.5rem;
-                          "
-                        >
-                          PARTICULARS
-                        </p>
-                      </td>
-      
-                      <td
-                        style="
-                          text-align: center;
-                          padding: 0.3125rem 0.5625rem 0.3125rem 0.625rem;
-                          border-right: none;
-                          border-top: 0.0625rem solid #0e5f9f;
-                          flex: 0.5;
-                        "
-                      >
-                        <p
-                          style="
-                            color: #123e6f;
-                            font-weight: bold;
-                            margin: 0;
-                            font-size: 0.5rem;
-                          "
-                        >
-                          AMOUNT
-                        </p>
-                      </td>
-                    </tr>
-      
-                    <tr style="width: 100%">
-                      <td
-                        style="
-                          border: 0.0625rem solid #0e5f9f;
-                          padding: 0.3125rem 0.625rem;
-                          border-left: none;
-                          vertical-align: top;
-                          border-bottom: none;
-                        "
-                      >
-                        <p
-                          style="
-                            color: #123e6f;
-                            font-weight: 400;
-                            margin: 0;
-                            font-size: 0.5rem;
-                            padding-top: 2;
-                            text-align: center;
-                          "
-                        >
-                        ${ data?.course_title || "N/A" }
-                        </p>
-                      </td>
-      
-                      <td
-                        style="
-                          border: 0.0625rem solid #0e5f9f;
-                          width: 7rem;
-                          border-left: none;
-                          padding: 0.3125rem 0.625rem;
-                          vertical-align: top;
-                          border-bottom: none;
-                        "
-                      >
-                        <div style="width: 6.5rem">
-                          <p
-                            style="
-                              color: #123e6f;
-                              font-weight: bold;
-                              margin: 0;
-                              font-size: 0.5rem;
-                              padding-top: 2;
-                            "
-                          >
-                            Price
-                          </p>
-                        </div>
-      
-                        <div style="width: 6.5rem">
-                          <p
-                            style="
-                              color: #123e6f;
-                              font-weight: bold;
-                              margin: 0;
-                              font-size: 0.5rem;
-                              padding-top: 2;
-                            "
-                          >
-                            Discount (${ data?.discount || 0 }%)
-                          </p>
-                        </div>
-      
-                        <div style="width: 6.5rem">
-                          <p
-                            style="
-                              color: #123e6f;
-                              font-weight: bold;
-                              margin: 0;
-                              font-size: 0.5rem;
-                              padding-top: 2;
-                            "
-                          >
-                            Sub Total
-                          </p>
-                        </div>
-      
-                        <div style="width: 6.5rem">
-                          <p
-                            style="
-                              color: #123e6f;
-                              font-weight: bold;
-                              margin: 0;
-                              font-size: 0.5rem;
-                              padding-top: 2;
-                            "
-                          >
-                            Coupon Amount
-                          </p>
-                        </div>
-      
-                        <div style="width: 6.5rem">
-                          <p
-                            style="
-                              color: #123e6f;
-                              font-weight: bold;
-                              margin: 0;
-                              font-size: 0.5rem;
-                              padding-top: 2;
-                            "
-                          >
-                            Referral Discount
-                          </p>
-                        </div>
-      
-                        <div style="width: 6.5rem">
-                          <p
-                            style="
-                              color: #123e6f;
-                              font-weight: bold;
-                              margin: 0;
-                              font-size: 0.5rem;
-                              padding-top: 2;
-                            "
-                          >
-                            GST (${ data?.tax_percentage || 0 }%)
-                          </p>
-                        </div>
-      
-                        <div style="width: 6.5rem">
-                          <p
-                            style="
-                              color: #123e6f;
-                              font-weight: bold;
-                              margin: 0;
-                              font-size: 0.5rem;
-                              padding-top: 2;
-                            "
-                          >
-                            Convenience Fees (${ data?.convince_fee || 0 }%)
-                          </p>
-                        </div>
-                      </td>
-      
-                      <td
-                        style="
-                          border: 0.0625rem solid #0e5f9f;
-                          border-bottom: none;
-                          padding: 0.3125rem 0.625rem;
-                          text-align: center;
-                          border-left: none;
-                          border-right: none;
-                          vertical-align: top;
-                        "
-                      >
-                        <div>
-                          <p
-                            style="
-                              color: #123e6f;
-                              font-weight: 400;
-                              margin: 0 auto;
-                              font-size: 8;
-                              width: max-content;
-                              padding-top: 2;
-                            "
-                          >
-                          ${ data?.course_base_price || 0 }/-
-                          </p>
-                        </div>
-      
-                        <div>
-                          <p
-                            style="
-                              color: #123e6f;
-                              font-weight: 400;
-                              margin: 0 auto;
-                              font-size: 8;
-                              width: max-content;
-                              padding-top: 2;
-                            "
-                          >
-                          ${ data?.discount_amount || 0 }/-
-                          </p>
-                        </div>
-      
-                        <div>
-                          <p
-                            style="
-                              color: #123e6f;
-                              font-weight: 400;
-                              margin: 0 auto;
-                              font-size: 8;
-                              width: max-content;
-                              padding-top: 2;
-                            "
-                          >
-                          ${ data?.discount_amount || 0 }/-
-                          </p>
-                        </div>
-      
-                        <div>
-                          <p
-                            style="
-                              color: #123e6f;
-                              font-weight: 400;
-                              margin: 0 auto;
-                              font-size: 8;
-                              width: max-content;
-                              padding-top: 2;
-                            "
-                          >
-                          ${ data?.coupon_amount || 0 }/-
-                          </p>
-                        </div>
-      
-                        <div>
-                          <p
-                            style="
-                              color: #123e6f;
-                              font-weight: 400;
-                              margin: 0 auto;
-                              font-size: 8;
-                              width: max-content;
-                              padding-top: 2;
-                            "
-                          >
-                          ${ data?.heman_discount_amount || 0 }/-
-                          </p>
-                        </div>
-      
-                        <div>
-                          <p
-                            style="
-                              color: #123e6f;
-                              font-weight: 400;
-                              margin: 0 auto;
-                              font-size: 8;
-                              width: max-content;
-                              padding-top: 2;
-                            "
-                          >
-                          ${ data?.tax_amount || 0 }/-
-                          </p>
-                        </div>
-      
-                        <div>
-                          <p
-                            style="
-                              color: #123e6f;
-                              font-weight: 400;
-                              margin: 0 auto;
-                              font-size: 8;
-                              width: max-content;
-                              padding-top: 2;
-                            "
-                          >
-                          ${ data?.convince_fee_amount || 0 }/-
-                          </p>
-                        </div>
-      
-                        <div style="height: 40px"></div>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+              <div
+                style="
+                  padding-top: 1rem;
+                  width: 31rem;
+                  margin-left: 100px;
+                  background-color: #c3e7f5;
+                "
+              >
                 <div
                   style="
                     display: flex;
                     align-items: center;
                     justify-content: space-between;
-                    border-top: 0.0625rem solid #0e5f9f;
-                    border-bottom: 0.0625rem solid #0e5f9f;
-                    margin-left: 0.5rem;
-                    margin-right: 0.5rem;
-                    padding-top: 0.2rem;
-                    padding-bottom: 0.2rem;
+                    padding: 0 2rem;
+                  "
+                >
+                  <table style="width: 100%">
+                    <tbody style="width: 100%">
+                      <tr>
+                        <td style="vertical-align: top">
+                          <p
+                            style="
+                              font-size: 1.8rem;
+                              font-weight: 900;
+                              color: #123e6f;
+                              letter-spacing: 2;
+                              margin: 0;
+                            "
+                          >
+                            I N V O I C E
+                          </p>
+                        </td>
+                        <td style="text-align: end">
+                          <img
+                            src="${ constants.INVOICE_VALOGO_IMAGE }"
+                            style="width: 9.5rem; height: 5.5rem"
+                          />
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <div style="width: 26.2rem; margin-left: auto; overflow: hidden">
+                  <table style="width: 100%; margin-bottom: 1rem">
+                    <tbody style="width: 100%">
+                      <tr>
+                        <td style="vertical-align: top; padding: 0; width: 50%">
+                          <table style="width: 100%">
+                            <tbody style="width: 100%">
+                              <tr>
+                                <td style="vertical-align: top">
+                                  <img
+                                    src="${ constants.INVOICE_LOCATION_IMAGE }"
+                                    style="
+                                      width: 6px;
+                                      height: 6px;
+                                      background-color: #123e6f;
+                                      border-radius: 50%;
+                                      padding: 2px;
+                                    "
+                                  />
+                                </td>
+                                <td>
+                                  <p
+                                    style="
+                                      color: #123e6f;
+                                      font-weight: 400;
+                                      margin: 0;
+                                      font-size: 9px;
+                                      text-align: left;
+                                    "
+                                  >
+                                    ${ constants.EMAIL_TEMPLATE_ADDRESS }
+                                  </p>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </td>
+                        <td style="padding: 0; width: 50%">
+                          <p
+                            style="
+                              color: #123e6f;
+                              font-weight: 400;
+                              margin: 0;
+                              font-size: 9px;
+                              text-align: left;
+                            "
+                          >
+                            <span style="vertical-align: middle">
+                              <img
+                                src="${ constants.INVOICE_PHONE_IMAGE }"
+                                style="
+                                  width: 6px;
+                                  height: 6px;
+                                  background-color: #123e6f;
+                                  border-radius: 50%;
+                                  padding: 2px;
+                                  margin-right: 0.3rem;
+                                "
+                              />
+                            </span>
+                            Tel : ${ constants.EMAIL_TEMPLATE_MOBILE_NO }
+                          </p>
+                          <p style="margin: 5px 0">
+                            <a
+                              style="
+                                color: #123e6f;
+                                font-weight: 400;
+                                margin: 0;
+                                font-size: 9px;
+                                text-align: left;
+                                text-decoration: none;
+                              "
+                              href="https://virtualafsar.com"
+                            >
+                              <span>
+                                <img
+                                  src="${ constants.INVOICE_WEB_IMAGE }"
+                                  style="
+                                    width: 6px;
+                                    height: 6px;
+                                    background-color: #123e6f;
+                                    border-radius: 50%;
+                                    padding: 2px;
+                                    margin-right: 0.3rem;
+                                  "
+                                />
+                              </span>
+                              Web : https://virtualafsar.com
+                            </a>
+                          </p>
+                          <p style="margin: 0">
+                            <a
+                              style="
+                                color: #123e6f;
+                                font-weight: 400;
+                                margin: 0;
+                                font-size: 9px;
+                                text-align: left;
+                                text-decoration: none;
+                              "
+                              href="mailto:${ constants.EMAIL_TEMPLATE_MAIL_ID }"
+                            >
+                              <span>
+                                <img
+                                  src="${ constants.INVOICE_MAIL_IMAGE }"
+                                  style="
+                                    width: 6px;
+                                    height: 6px;
+                                    background-color: #123e6f;
+                                    border-radius: 50%;
+                                    padding: 2px;
+                                    margin-right: 0.3rem;
+                                  "
+                                />
+                              </span>
+                              Email : ${ constants.EMAIL_TEMPLATE_MAIL_ID }
+                            </a>
+                          </p>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <table style="width: 100%; border-collapse: collapse">
+                    <tbody>
+                      <tr style="width: 100%">
+                        <td
+                          style="
+                            border-right: 0.0625rem solid #0e5f9f;
+                            border-top: 0.0625rem solid #0e5f9f;
+                            text-align: center;
+                            padding: 0.3125rem 0.625rem;
+                            border-bottom: none;
+                            flex: 1;
+                          "
+                        >
+                          <p
+                            style="
+                              color: #123e6f;
+                              font-weight: 900;
+                              margin: 0;
+                              font-size: 11px;
+                            "
+                          >
+                            COURSE NAME
+                          </p>
+                        </td>
+
+                        <td
+                          style="
+                            border-right: 0.0625rem solid #0e5f9f;
+                            border-top: 0.0625rem solid #0e5f9f;
+                            text-align: center;
+                            padding: 0.3125rem 0.625rem;
+                            border-bottom: none;
+                            flex: 1;
+                          "
+                        >
+                          <p
+                            style="
+                              color: #123e6f;
+                              font-weight: 900;
+                              margin: 0;
+                              font-size: 11px;
+                            "
+                          >
+                            PARTICULARS
+                          </p>
+                        </td>
+
+                        <td
+                          style="
+                            text-align: center;
+                            padding: 0.3125rem 0.5625rem 0.3125rem 0.625rem;
+                            border-right: none;
+                            border-top: 0.0625rem solid #0e5f9f;
+                            flex: 0.5;
+                          "
+                        >
+                          <p
+                            style="
+                              color: #123e6f;
+                              font-weight: 900;
+                              margin: 0;
+                              font-size: 11px;
+                            "
+                          >
+                            AMOUNT
+                          </p>
+                        </td>
+                      </tr>
+
+                      <tr style="width: 100%">
+                        <td
+                          style="
+                            border: 0.0625rem solid #0e5f9f;
+                            padding: 0.3125rem 0.625rem;
+                            border-left: none;
+                            vertical-align: top;
+                            border-bottom: none;
+                          "
+                        >
+                          <p
+                            style="
+                              color: #123e6f;
+                              font-weight: 400;
+                              margin: 0;
+                              font-size: 11px;
+                              padding-top: 2;
+                              text-align: center;
+                            "
+                          >
+                            ${ data?.course_title || "N/A" }
+                          </p>
+                        </td>
+
+                        <td
+                          style="
+                            border: 0.0625rem solid #0e5f9f;
+                            width: 7rem;
+                            border-left: none;
+                            padding: 0.3125rem 0.625rem;
+                            vertical-align: top;
+                            border-bottom: none;
+                          "
+                        >
+                          <div style="width: 6.5rem">
+                            <p
+                              style="
+                                color: #123e6f;
+                                font-weight: 800;
+                                margin: 0;
+                                font-size: 11px;
+                                padding-top: 4px;
+                              "
+                            >
+                              Price
+                            </p>
+                          </div>
+
+                          <div style="width: 6.5rem">
+                            <p
+                              style="
+                                color: #123e6f;
+                                font-weight: 800;
+                                margin: 0;
+                                font-size: 11px;
+                                padding-top: 4px;
+                              "
+                            >
+                              Discount (${ data?.discount || 0 }%)
+                            </p>
+                          </div>
+
+                          <div style="width: 6.5rem">
+                            <p
+                              style="
+                                color: #123e6f;
+                                font-weight: 800;
+                                margin: 0;
+                                font-size: 11px;
+                                padding-top: 4px;
+                              "
+                            >
+                              Sub Total
+                            </p>
+                          </div>
+
+                          <div style="width: 6.5rem">
+                            <p
+                              style="
+                                color: #123e6f;
+                                font-weight: 800;
+                                margin: 0;
+                                font-size: 11px;
+                                padding-top: 4px;
+                              "
+                            >
+                              Coupon Amount
+                            </p>
+                          </div>
+
+                          <div style="width: 6.5rem">
+                            <p
+                              style="
+                                color: #123e6f;
+                                font-weight: 800;
+                                margin: 0;
+                                font-size: 11px;
+                                padding-top: 4px;
+                              "
+                            >
+                              Referral Discount
+                            </p>
+                          </div>
+
+                          <div style="width: 6.5rem">
+                            <p
+                              style="
+                                color: #123e6f;
+                                font-weight: 800;
+                                margin: 0;
+                                font-size: 11px;
+                                padding-top: 4px;
+                              "
+                            >
+                              GST (${ data?.tax_percentage || 0 }%)
+                            </p>
+                          </div>
+
+                          <div style="width: 6.5rem">
+                            <p
+                              style="
+                                color: #123e6f;
+                                font-weight: 800;
+                                margin: 0;
+                                font-size: 11px;
+                                padding-top: 4px;
+                              "
+                            >
+                              Convenience Fees (${ data?.convince_fee || 0 }%)
+                            </p>
+                          </div>
+                        </td>
+
+                        <td
+                          style="
+                            border: 0.0625rem solid #0e5f9f;
+                            border-bottom: none;
+                            padding: 0.3125rem 0.625rem;
+                            text-align: center;
+                            border-left: none;
+                            border-right: none;
+                            vertical-align: top;
+                          "
+                        >
+                          <div>
+                            <p
+                              style="
+                                color: #123e6f;
+                                font-weight: 400;
+                                margin: 0 auto;
+                                font-size: 11px;
+                                width: max-content;
+                                padding-top: 4px;
+                              "
+                            >
+                              ${ data?.course_base_price || 0 }/-
+                            </p>
+                          </div>
+
+                          <div>
+                            <p
+                              style="
+                                color: #123e6f;
+                                font-weight: 400;
+                                margin: 0 auto;
+                                font-size: 11px;
+                                width: max-content;
+                                padding-top: 4px;
+                              "
+                            >
+                              ${ data?.discount_amount || 0 }/-
+                            </p>
+                          </div>
+
+                          <div>
+                            <p
+                              style="
+                                color: #123e6f;
+                                font-weight: 400;
+                                margin: 0 auto;
+                                font-size: 11px;
+                                width: max-content;
+                                padding-top: 4px;
+                              "
+                            >
+                              ${ data?.discount_amount || 0 }/-
+                            </p>
+                          </div>
+
+                          <div>
+                            <p
+                              style="
+                                color: #123e6f;
+                                font-weight: 400;
+                                margin: 0 auto;
+                                font-size: 11px;
+                                width: max-content;
+                                padding-top: 4px;
+                              "
+                            >
+                              ${ data?.coupon_amount || 0 }/-
+                            </p>
+                          </div>
+
+                          <div>
+                            <p
+                              style="
+                                color: #123e6f;
+                                font-weight: 400;
+                                margin: 0 auto;
+                                font-size: 11px;
+                                width: max-content;
+                                padding-top: 4px;
+                              "
+                            >
+                              ${ data?.heman_discount_amount || 0 }/-
+                            </p>
+                          </div>
+
+                          <div>
+                            <p
+                              style="
+                                color: #123e6f;
+                                font-weight: 400;
+                                margin: 0 auto;
+                                font-size: 11px;
+                                width: max-content;
+                                padding-top: 4px;
+                              "
+                            >
+                              ${ data?.tax_amount || 0 }/-
+                            </p>
+                          </div>
+
+                          <div>
+                            <p
+                              style="
+                                color: #123e6f;
+                                font-weight: 400;
+                                margin: 0 auto;
+                                font-size: 11px;
+                                width: max-content;
+                                padding-top: 4px;
+                              "
+                            >
+                              ${ data?.convince_fee_amount || 0 }/-
+                            </p>
+                          </div>
+
+                          <div style="height: 120px"></div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <table
+                    style="
+                      width: 97%;
+                      border-top: 0.0625rem solid #0e5f9f;
+                      border-bottom: 0.0625rem solid #0e5f9f;
+                      margin-left: 5px;
+                    "
+                  >
+                    <tbody style="width: 100%">
+                      <tr>
+                        <td style="vertical-align: middle">
+                          <p
+                            style="
+                              color: #123e6f;
+                              font-weight: bold;
+                              margin: 0;
+                              font-size: 14px;
+                            "
+                          >
+                            GRAND TOTAL
+                          </p>
+                        </td>
+                        <td style="vertical-align: middle">
+                          <p
+                            style="
+                              color: #123e6f;
+                              font-weight: bold;
+                              margin: 0;
+                              font-size: 14px;
+                              text-align: end;
+                            "
+                          >
+                            <span style="vertical-align: text-top">
+                              <img
+                                src="`+ constants.INVOICE_RUPEE_IMAGE + `"
+                                style="width: 14px; height: 14px"
+                              />
+                            </span>
+                            ${ data?.amount || 0 }/-
+                          </p>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div style="margin-top: 1rem; padding-left: 1rem">
+                    <table style="width: 100%">
+                      <tbody style="width: 100%">
+                        <tr>
+                          <td style="width: 100px; padding: 0">
+                            <p
+                              style="
+                                color: #123e6f;
+                                font-weight: bold;
+                                margin: 0;
+                                font-size: 11px;
+                              "
+                            >
+                              Bank Name
+                            </p>
+                          </td>
+                          <td style="width: 100px; padding: 0">
+                            <p style="color: #123e6f; margin: 0; font-size: 11px">
+                              ICICI Bank
+                            </p>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td style="width: 100px; padding: 0">
+                            <p
+                              style="
+                                color: #123e6f;
+                                font-weight: bold;
+                                margin: 0;
+                                font-size: 11px;
+                                padding-top: 2px;
+                              "
+                            >
+                              Branch Name
+                            </p>
+                          </td>
+                          <td style="width: 100px; padding: 0">
+                            <p
+                              style="
+                                color: #123e6f;
+                                margin: 0;
+                                font-size: 11px;
+                                padding-top: 2px;
+                              "
+                            >
+                              Kalawad Road
+                            </p>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td style="width: 100px; padding: 0">
+                            <p
+                              style="
+                                color: #123e6f;
+                                font-weight: bold;
+                                margin: 0;
+                                font-size: 11px;
+                                padding-top: 2px;
+                              "
+                            >
+                              Bank Account Number
+                            </p>
+                          </td>
+                          <td style="width: 100px; padding: 0">
+                            <p
+                              style="
+                                color: #123e6f;
+                                margin: 0;
+                                font-size: 11px;
+                                padding-top: 2px;
+                              "
+                            >
+                              624805017419
+                            </p>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td style="width: 100px; padding: 0">
+                            <p
+                              style="
+                                color: #123e6f;
+                                font-weight: bold;
+                                margin: 0;
+                                font-size: 11px;
+                                padding-top: 2px;
+                              "
+                            >
+                              Bank Branch IFSC
+                            </p>
+                          </td>
+                          <td style="width: 100px; padding: 0">
+                            <p
+                              style="
+                                color: #123e6f;
+                                margin: 0;
+                                font-size: 11px;
+                                padding-top: 2px;
+                              "
+                            >
+                              ICIC0006248
+                            </p>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td style="width: 100px; padding: 0">
+                            <p
+                              style="
+                                color: #123e6f;
+                                font-weight: bold;
+                                margin: 0;
+                                font-size: 11px;
+                                padding-top: 2px;
+                              "
+                            >
+                              HSN Number
+                            </p>
+                          </td>
+                          <td style="width: 100px; padding: 0">
+                            <p
+                              style="
+                                color: #123e6f;
+                                margin: 0;
+                                font-size: 11px;
+                                padding-top: 2px;
+                              "
+                            >
+                              9 9 9 2 9 4
+                            </p>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <div
+                  style="
+                    padding-top: 1rem;
+                    padding-bottom: 0.5rem;
+                    width: 100%;
+                    text-align: center;
+                    margin-top: 5rem;
                   "
                 >
                   <p
@@ -1664,192 +1904,16 @@ module.exports.invoiceTemplate = async (data) => {
                       color: #123e6f;
                       font-weight: bold;
                       margin: 0;
-                      font-size: 10px;
-                      width: max-content;
+                      font-size: 11px;
                     "
                   >
-                    GRAND TOTAL
+                    THANK YOU FOR SUBSCRIBING TO OUR COURSE
                   </p>
-                  <div style="display: flex; align-items: center">
-                    <img src="`+ constants.INVOICE_RUPEE_IMAGE + `" style="width: 10px; height: 10px" />
-                    <p
-                      style="
-                        color: #123e6f;
-                        font-weight: bold;
-                        margin: 0;
-                        font-size: 10px;
-                        width: max-content;
-                      "
-                    >
-                    ${ data?.amount || 0 }/-
-                    </p>
-                  </div>
                 </div>
-                <div style="margin-top: 1rem; padding-left: 1rem">
-                  <div style="display: flex; justify-content: flex-start">
-                    <div style="text-align: left; width: 35%; margin-right: 0.875rem">
-                      <p
-                        style="
-                          color: #123e6f;
-                          font-weight: bold;
-                          margin: 0;
-                          font-size: 0.5rem;
-                          padding-top: 2;
-                        "
-                      >
-                        Bank Name
-                      </p>
-                    </div>
-      
-                    <div style="text-align: left; width: fit-content">
-                      <p
-                        style="
-                          color: #123e6f;
-                          margin: 0;
-                          font-size: 0.5rem;
-                          padding-top: 2;
-                        "
-                      >
-                        ICICI Bank
-                      </p>
-                    </div>
-                  </div>
-      
-                  <div style="display: flex; justify-content: flex-start">
-                    <div style="text-align: left; width: 35%; margin-right: 0.875rem">
-                      <p
-                        style="
-                          color: #123e6f;
-                          font-weight: bold;
-                          margin: 0;
-                          font-size: 0.5rem;
-                          padding-top: 2;
-                        "
-                      >
-                        Branch Name
-                      </p>
-                    </div>
-      
-                    <div style="text-align: left; width: fit-content">
-                      <p
-                        style="
-                          color: #123e6f;
-                          margin: 0;
-                          font-size: 0.5rem;
-                          padding-top: 2;
-                        "
-                      >
-                        Kalawad Road
-                      </p>
-                    </div>
-                  </div>
-      
-                  <div style="display: flex; justify-content: flex-start">
-                    <div style="text-align: left; width: 35%; margin-right: 0.875rem">
-                      <p
-                        style="
-                          color: #123e6f;
-                          font-weight: bold;
-                          margin: 0;
-                          font-size: 0.5rem;
-                          padding-top: 2;
-                        "
-                      >
-                        Bank Account Number
-                      </p>
-                    </div>
-      
-                    <div style="text-align: left; width: fit-content">
-                      <p
-                        style="
-                          color: #123e6f;
-                          margin: 0;
-                          font-size: 0.5rem;
-                          padding-top: 2;
-                        "
-                      >
-                        624805017419
-                      </p>
-                    </div>
-                  </div>
-      
-                  <div style="display: flex; justify-content: flex-start">
-                    <div style="text-align: left; width: 35%; margin-right: 0.875rem">
-                      <p
-                        style="
-                          color: #123e6f;
-                          font-weight: bold;
-                          margin: 0;
-                          font-size: 0.5rem;
-                          padding-top: 2;
-                        "
-                      >
-                        Bank Branch IFSC
-                      </p>
-                    </div>
-      
-                    <div style="text-align: left; width: fit-content">
-                      <p
-                        style="
-                          color: #123e6f;
-                          margin: 0;
-                          font-size: 0.5rem;
-                          padding-top: 2;
-                        "
-                      >
-                        ICIC0006248
-                      </p>
-                    </div>
-                  </div>
-      
-                  <div style="display: flex; justify-content: flex-start">
-                    <div style="text-align: left; width: 35%; margin-right: 0.875rem">
-                      <p
-                        style="
-                          color: #123e6f;
-                          font-weight: bold;
-                          margin: 0;
-                          font-size: 0.5rem;
-                          padding-top: 2;
-                        "
-                      >
-                        HSN Number
-                      </p>
-                    </div>
-      
-                    <div style="text-align: left; width: fit-content">
-                      <p
-                        style="
-                          color: #123e6f;
-                          margin: 0;
-                          font-size: 0.5rem;
-                          padding-top: 2;
-                        "
-                      >
-                        9 9 9 2 9 4
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div
-                style="
-                  padding-top: 1rem;
-                  padding-bottom: 0.5rem;
-                  width: 100%;
-                  text-align: center;
-                  margin-top: 5rem;
-                "
-              >
-                <p style="color: #123e6f; font-weight: bold; margin: 0; font-size: 8">
-                  THANK YOU FOR SUBSCRIBING TO OUR COURSE
-                </p>
               </div>
             </div>
-          </div>
-        </body>
-      </html>
-      
+          </body>
+        </html>
         `;
 
 };

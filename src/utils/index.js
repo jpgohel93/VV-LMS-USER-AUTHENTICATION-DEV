@@ -122,7 +122,7 @@ module.exports.sendSingleSms = async (country_code, mobile_no, message, template
 
 	if (mobile_no && country_code && message) {
 
-		let mobileno = country_code + mobile_no
+		let mobileno = country_code + mobile_no 
 
 
 		let url = `http://bulksms.saakshisoftware.in/api/mt/SendSMS?user=${process.env.SMS_USER_NAME}&password=${process.env.SMS_PASSWORD}&senderid=${process.env.SMS_SENDERID}&channel=trans&DCS=0&flashsms=0&number=${mobileno}&text=${message}&route=04&DLTTemplateId=${template_id}&PEID=${process.env.SMS_PEID}`

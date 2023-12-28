@@ -2397,8 +2397,15 @@ const checkCoursePurchase = async (userInputs) => {
   
 }
 
+const { sendSingleSms } = require('../utils');
+
 const sendTestMail = async (request) => { 
 
+        // let message = " Welcome to Virtual Afsar... \n nbsp ऐसे ही सरकारी अधिकारी की Car की Booking नहीं होती, यह मिलती है UPSC जैसी Exam Clear करने पर।"
+        // sendSingleSms(91 ,"9512742802", message, process.env.SMS_OTP_TEMPLATEID, user_id,1)
+        // return {
+        //     status: true
+        // };
             
         const pdfName = "sdfsdfsfsd.pdf";
 

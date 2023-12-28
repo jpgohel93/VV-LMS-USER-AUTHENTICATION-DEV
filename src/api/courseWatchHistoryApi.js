@@ -282,11 +282,11 @@ module.exports = async (app) => {
         .withMessage('Topic id is required.')
         .isMongoId().withMessage("Topic id is not valid")
     ]),async (req,res,next) => {
-        const { course_id, chapter_id, topic_id  } = req.body;
+        const { course_id, chapter_id, topic_id, week_no  } = req.body;
 
         let userId = req?.user?.user_id ? req?.user?.user_id : null
 
-        const data = await CourseWatchHistoryService.topicCompleted({ user_id: userId, course_id, chapter_id, topic_id  }); 
+        const data = await CourseWatchHistoryService.topicCompleted({ user_id: userId, course_id, chapter_id, topic_id , week_no }); 
 
         res.status(data.status_code).json(data);
     });

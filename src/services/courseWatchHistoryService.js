@@ -614,23 +614,23 @@ const addTopicViewHistory = async (userInputs) => {
         }
 
         if(week_no){
-            let fetchWeekHistory = await CourseWatchHistoryModel.fetchCourseWeeklyHistory({user_id, course_id, chapter_id});
+            let fetchWeekHistory = await CourseWatchHistoryModel.fetchCourseWeeklyHistory({user_id, course_id, week_no});
 
             if(fetchWeekHistory){
-                if(fetchWeekHistory.completed_topic_at.includes(topic_id)){
+                if(fetchWeekHistory.progress_topic.includes(topic_id)){
                    
                     CourseWatchHistoryModel.updateCourseWeeklyHistory(fetchWeekHistory._id,{
                         last_accessed: new Date(),
                         last_accessed_topic: topic_id,
                     })
                 }else{
-                    let topics = fetchWeekHistory.completed_topic_at
+                    let topics = fetchWeekHistory.progress_topic
                     topics.push(topic_id)
 
                     CourseWatchHistoryModel.updateCourseWeeklyHistory(fetchWeekHistory._id,{
                         last_accessed: new Date(),
                         last_accessed_topic: topic_id,
-                        completed_topic_at: topics
+                        progress_topic: topics
                     })
                 }
             }else{
@@ -640,7 +640,7 @@ const addTopicViewHistory = async (userInputs) => {
                     last_accessed: new Date(),
                     last_accessed_topic: topic_id,
                     week_no: week_no,
-                    completed_topic_at: [topic_id],
+                    progress_topic: [topic_id],
                 })
             }
         }
@@ -728,8 +728,24 @@ const getTopicViewHistory = async (userInputs) => {
 
 const topicCompleted = async (userInputs) => {
     try{
-        const { user_id, course_id, chapter_id, topic_id } = userInputs;
+        const { user_id, course_id, chapter_id, topic_id, week_no } = userInputs;
         let checkCourseWatchHistoryData = await CourseWatchHistoryModel.fatchCourseViewHistoryList(user_id, course_id, chapter_id);
+
+
+        if(week_no){
+            let fetchWeekHistory = await CourseWatchHistoryModel.fetchCourseWeeklyHistory({user_id, course_id, week_no});
+
+            if(fetchWeekHistory){
+                if(!fetchWeekHistory.completed_topic_at.includes(topic_id)){
+                    let topics = fetchWeekHistory.completed_topic_at
+                    topics.push(topic_id)
+
+                    CourseWatchHistoryModel.updateCourseWeeklyHistory(fetchWeekHistory._id,{
+                        completed_topic_at: topics
+                    })
+                }
+            }
+        }
 
         if(checkCourseWatchHistoryData){
             //delete the course topic watch history

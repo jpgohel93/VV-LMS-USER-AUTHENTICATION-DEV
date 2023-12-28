@@ -8,6 +8,7 @@ const CourseWeeklyHistorySchema = new Schema({
     last_accessed: Date,
     last_accessed_topic: String,
     week_no: Number,
+    progress_topic: [String],
     completed_topic_at: [String],
 },{ timestamps: true }); 
 

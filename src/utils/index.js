@@ -472,7 +472,12 @@ module.exports.generatePDF = async (body, pdfName) => {
 		env: {
 		  OPENSSL_CONF: '/dev/null',
 		},
-	  } };
+	  },border: {
+		top: '0in',
+		right: '0in',
+		bottom: '0in',
+		left: '0in',
+	} };
 
 	return await new Promise(async (resolve, reject) => {
 		await pdf.create(body, options).toFile('uploads/'+pdfName, function (err, res) {

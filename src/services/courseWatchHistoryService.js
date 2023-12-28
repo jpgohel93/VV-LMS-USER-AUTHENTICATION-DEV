@@ -614,7 +614,7 @@ const addTopicViewHistory = async (userInputs) => {
         }
 
         if(week_no){
-            let fetchWeekHistory = await CourseWatchHistoryModel.fetchCourseWeeklyHistory(user_id, course_id, chapter_id);
+            let fetchWeekHistory = await CourseWatchHistoryModel.fetchCourseWeeklyHistory({user_id, course_id, chapter_id});
 
             if(fetchWeekHistory){
                 if(fetchWeekHistory.completed_topic_at.includes(topic_id)){

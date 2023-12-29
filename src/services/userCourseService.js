@@ -2,7 +2,7 @@ const { UserCourseModel, CourseWatchHistoryModel, UserModel, InvoiceModel, CartM
 const constants = require('../utils/constant');
 const { createSubscription , cancelSubscription } = require('../utils/paymentManagement');
 const { CallCourseQueryEvent,CallCourseQueryDataEvent, CallCourseEvents, CallEventBus } = require('../utils/call-event-bus');
-const { coursePurchaseTemplate, subscriptionCancelTemplate, courseAssignedTemplate } = require('../utils/email-template');
+const { coursePurchaseTemplate, subscriptionCancelTemplate, courseAssignedTemplate, welcomeTemplate, welcomeWithCredetialsTemplate, sendLoginCredencialTemplate } = require('../utils/email-template');
 const { createCronLogs, updateCronLogs, createApiCallLog, getNewDate, sendMail, generatePDF, sendPushNotification, findUniqueID, generateInvoiceNumber,invoiceYear } = require('../utils');
 const { encrypt, decrypt } = require('../utils/ccavenue');
 const moment = require('moment');
@@ -2397,16 +2397,24 @@ const checkCoursePurchase = async (userInputs) => {
   
 }
 
-const { sendSingleSms } = require('../utils');
-
 const sendTestMail = async (request) => { 
+
+        // let subject1 = `welcome Template`;
+        // await sendMail("tjcloudtest@gmail.com", await welcomeTemplate(), subject1, "1", "welcome Template", false, "", "")
+        // let subject2 = `course Purchase`;
+        // await sendMail("tjcloudtest@gmail.com", await coursePurchaseTemplate(), subject2, "1", "course Purchase Template", false, "", "")
+        // let subject3 = `welcome With Credetials `;
+        // await sendMail("tjcloudtest@gmail.com", await welcomeWithCredetialsTemplate(), subject3, "1", "welcome With Credetials Template", false, "", "")
+        // let subject4 = `Not Use`;
+        // await sendMail("tjcloudtest@gmail.com", await sendLoginCredencialTemplate(), subject4, "1", "Not Use", false, "", "")
 
         // let message = " Welcome to Virtual Afsar... \n nbsp ऐसे ही सरकारी अधिकारी की Car की Booking नहीं होती, यह मिलती है UPSC जैसी Exam Clear करने पर।"
         // sendSingleSms(91 ,"9512742802", message, process.env.SMS_OTP_TEMPLATEID, user_id,1)
         // return {
         //     status: true
         // };
-            
+
+
         const pdfName = "sdfsdfsfsd.pdf";
 
         const invoice = {

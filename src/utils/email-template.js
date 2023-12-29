@@ -136,102 +136,467 @@ module.exports.templateFooter = async (data) => {
 };
 
 module.exports.welcomeTemplate = async (data) => {
-  const header = await this.templateHeader(data);
-  const footer = await this.templateFooter(data);
-  return (
-    (await `${header}
-    <div style="padding:0 20px">
-        <p style="font-weight:400;font-size:1.2rem">Dear `) +
-    data.user_name +
-    `,</p>
-    </div>
-    <div style="padding:0 20px">
-        <p style="font-weight:400;font-size:1.2rem;color: white;">Greetings and a warm welcome to the College UPSC Course- Campus se Collector on the Virtual Afsar App!</p>
-    </div>
-    <div style="padding:0 20px">
-        <p style="font-weight:400;font-size:1.2rem;color: white;">We are thrilled to have you embark on this transformative journey with us. This online course is meticulously crafted to equip you with the essential tools, strategies, and knowledge necessary to excel in your UPSC preparations while navigating the challenges of college life.</p>
-    </div>
-    <div style="padding:0 20px">
-        <p style="font-weight:400;font-size:1.2rem;color: white;">Throughout this course, you'll benefit from engaging lectures, comprehensive study materials, interactive quizzes, and personalized guidance from our experienced educators. Our goal is not just to impart information but to foster a deep understanding of the UPSC examination pattern and its nuances, empowering you to approach it with confidence and competence.</p>
-    </div>
-    <div style="padding:0 20px">
-        <p style="font-weight:400;font-size:1.2rem;color: white;">In this dynamic learning environment, we encourage active participation, questions, and discussions to ensure a fulfilling learning experience. Your dedication and commitment combined with our resources will undoubtedly pave the way for success in your UPSC journey.</p>
-    </div>
-    <div style="padding:0 20px">
-        <p style="font-weight:400;font-size:1.2rem;color: white;">Feel free to explore the course modules and make the most of the myriad resources available to you on the Virtual Afsar App.</p>
-    </div>
-    <div style="padding:0 20px">
-        <p style="font-weight:400;font-size:1.2rem;color: white;">Additionally, stay connected with us on social media to receive updates, tips, and exclusive content:</p>
-    </div>
-    <div style="padding:0 20px">
-        <p style="font-weight:400;font-size:1.2rem;color: white;">Once again, welcome aboard, and let's commence this enriching academic expedition together!</p>
-    </div>
-    <div style="padding:0 20px">
-        <p style="font-weight:400;font-size:15px;color: white;">Best regards,</p>
-        <p style="font-weight:400;font-size:15px;color: white;">Virtual Afsar Team</p>
-    </div>
-    ${footer}
-    `
-  );
+  // const header = await this.templateHeader(data);
+  // const footer = await this.templateFooter(data);
+  // return (
+  //   (await `${header}
+  //   <div style="padding:0 20px">
+  //       <p style="font-weight:400;font-size:1.2rem">Dear `) +
+  //   data.user_name +
+  //   `,</p>
+  //   </div>
+  //   <div style="padding:0 20px">
+  //       <p style="font-weight:400;font-size:1.2rem;color: white;">Greetings and a warm welcome to the College UPSC Course- Campus se Collector on the Virtual Afsar App!</p>
+  //   </div>
+  //   <div style="padding:0 20px">
+  //       <p style="font-weight:400;font-size:1.2rem;color: white;">We are thrilled to have you embark on this transformative journey with us. This online course is meticulously crafted to equip you with the essential tools, strategies, and knowledge necessary to excel in your UPSC preparations while navigating the challenges of college life.</p>
+  //   </div>
+  //   <div style="padding:0 20px">
+  //       <p style="font-weight:400;font-size:1.2rem;color: white;">Throughout this course, you'll benefit from engaging lectures, comprehensive study materials, interactive quizzes, and personalized guidance from our experienced educators. Our goal is not just to impart information but to foster a deep understanding of the UPSC examination pattern and its nuances, empowering you to approach it with confidence and competence.</p>
+  //   </div>
+  //   <div style="padding:0 20px">
+  //       <p style="font-weight:400;font-size:1.2rem;color: white;">In this dynamic learning environment, we encourage active participation, questions, and discussions to ensure a fulfilling learning experience. Your dedication and commitment combined with our resources will undoubtedly pave the way for success in your UPSC journey.</p>
+  //   </div>
+  //   <div style="padding:0 20px">
+  //       <p style="font-weight:400;font-size:1.2rem;color: white;">Feel free to explore the course modules and make the most of the myriad resources available to you on the Virtual Afsar App.</p>
+  //   </div>
+  //   <div style="padding:0 20px">
+  //       <p style="font-weight:400;font-size:1.2rem;color: white;">Additionally, stay connected with us on social media to receive updates, tips, and exclusive content:</p>
+  //   </div>
+  //   <div style="padding:0 20px">
+  //       <p style="font-weight:400;font-size:1.2rem;color: white;">Once again, welcome aboard, and let's commence this enriching academic expedition together!</p>
+  //   </div>
+  //   <div style="padding:0 20px">
+  //       <p style="font-weight:400;font-size:15px;color: white;">Best regards,</p>
+  //       <p style="font-weight:400;font-size:15px;color: white;">Virtual Afsar Team</p>
+  //   </div>
+  //   ${footer}
+  //   `
+  // );
+
+  return await `
+  <!doctype html>
+      <html lang="en">
+
+      <head>
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+          <title>Simple Transactional Email</title>
+      </head>
+
+      <body
+          style="-webkit-font-smoothing: antialiased; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; margin: 0; padding: 0;">
+          <table role="presentation" border="0" cellpadding="0" cellspacing="0"
+              style="border-collapse: separate; background-color: #FFF; width: 100%;">
+              <tr>
+                  <!-- Extra TD -->
+                  <td style="font-size: 16px; vertical-align: top;" valign="top">&nbsp;
+                  </td>
+
+                  <!-- Main TD -->
+                  <td style="font-size: 16px; vertical-align: top; max-width: 600px; padding: 0; width: 600px; margin: 0 auto;"
+                      width="600" valign="top">
+                      <div style="box-sizing: border-box; display: block; margin: 0 auto; max-width: 600px; padding: 0;">
+
+                          <!-- START CENTERED WHITE CONTAINER -->
+                          <span
+                              style="color: transparent; display: none; height: 0; max-height: 0; max-width: 0; opacity: 0; overflow: hidden; visibility: hidden; width: 0;">This
+                              is preheader text. Some clients will show this text as a preview.</span>
+                          <table role="presentation" border="0" cellpadding="0" cellspacing="0"
+                              style="border-collapse: separate; background: #ffffff; width: 100%;" width="100%">
+
+                              <!-- START MAIN CONTENT AREA -->
+                              <tr>
+                                  <td style="font-size: 16px; vertical-align: top; box-sizing: border-box;" valign="top">
+                                      <table role="presentation" border="0" cellpadding="0" cellspacing="0"
+                                          style="border-collapse: separate; box-sizing: border-box; width: 100%; min-width: 100%;"
+                                          width="100%">
+                                          <tbody>
+                                              <tr>
+                                                  <td align="center" style="padding: 20px; padding-bottom: 30px;"
+                                                      valign="center">
+                                                    <a href="${ constants.EMAIL_BASE_URL }" target="_blank" style="text-decoration: none;">
+                                                      <img src="${ constants.EMAIL_TEMPLATE_LOGOGIF_URL }" />
+                                                  </a>
+                                                  </td>
+                                              </tr>
+                                              <tr>
+                                                  <td valign="center">
+                                                      <img src="${ constants.EMAIL_TEMPLATE_HERO3_URL }" height="500" width="100%" />
+                                                  </td>
+                                              </tr>
+                                              <tr>
+                                                  <td style="text-align: center;">
+                                                      <div
+                                                          style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
+                                                          <div style="display: flex;flex-direction: row;">
+                                                              <p
+                                                                  style="font-family: sans-serif; font-size: 30px; margin: 0 8px 8px 0; font-weight: bold; color: rgb(255, 164, 79);">
+                                                                  Welcome to</p>
+                                                              <span
+                                                                  style="font-family: sans-serif;font-size: 30px; margin: 0 0 8px 0;color: rgb(42, 42, 150);">Virtual
+                                                                  Afsar...</span>
+                                                          </div>
+                                                          <p
+                                                              style="font-size: 20px; text-align: center;font-family: sans-serif; font-weight: normal; color: rgb(50, 75, 118);">
+                                                              ऐसे ही सरकारी अधिकारी की Car की Booking नही होती, यह मिलती है
+                                                              UPSC जैसी Exam Clear करने पर। सपनों की उड़ान, जैसे पंख फैलाने का
+                                                              आया हैं सुनहरा अवसर, आपके सपनों को साकार करने हम लाये है Virtual
+                                                              Afsar.</p>
+                                                      </div>
+                      </div>
+                  </td>
+              </tr>
+
+              <tr>
+                  <td valign="center">
+                      <img src="${ constants.EMAIL_TEMPLATE_BOYMOBILE_URL }" height="690" width="100%" style="margin-bottom: -4px;" />
+                  </td>
+              </tr>
+              <!-- START FOOTER -->
+              <tr style="background-color:#032b4e;">
+                  <td style="padding: 20px 35px;">
+                      <table role="presentation" border="0" cellpadding="0" cellspacing="0"
+                          style="box-sizing: border-box; width: 100%; min-width: 100%;" width="100%">
+                          <tbody>
+                              <tr>
+                                  <tr>
+                                      <td style="vertical-align:baseline">
+                                          <p>
+                                              <a href="${ constants.EMAIL_TEMPLATE_APP_STORE_URL }"
+                                                  style="cursor:pointer;text-decoration: none;" target="_blank">
+                                                  <img src="${ constants.EMAIL_TEMPLATE_APP_STORE_ICON_URL }"
+                                                      height="55px" />
+                                              </a>
+                                          </p>
+                                          <p>
+                                              <a href="${ constants.EMAIL_TEMPLATE_PLAY_STORE_URL }"
+                                                  style="cursor:pointer; text-decoration: none;" target="_blank">
+                                                  <img src="${ constants.EMAIL_TEMPLATE_PLAY_STORE_ICON_URL }" height="55px"
+                                                      style="cursor:pointer;" />
+                                              </a>
+                                          </p>
+                                      </td>
+                                      <td style="text-align: right;">
+                                          <a href="mailto:${ constants.EMAIL_TEMPLATE_MAIL_ID }" target="_blank"
+                                              style="margin-bottom: -8px; margin-top: 0 ; text-decoration: none;">
+                                              <span style="vertical-align: super;
+                                                  font-family: Arial, Helvetica, sans-serif;
+                                                  font-size: 17px;
+                                                  font-weight: 600;
+                                                  color: #FFF;
+                                                  cursor:pointer;
+                                                  ">${ constants.EMAIL_TEMPLATE_MAIL_ID }</span>
+                                              <img src="${ constants.EMAIL_TEMPLATE_MAIL_URL }" height="25px"
+                                                  style="cursor:pointer;" />
+                                          </a>
+                                          <p>
+                                              <a href="tel:${ constants.EMAIL_TEMPLATE_MOBILE_NO }"
+                                                  style="text-decoration: none;">
+                                                  <span style="vertical-align: super;
+                                              font-family: Arial, Helvetica, sans-serif;
+                                              font-size: 17px;
+                                              font-weight: 600;
+                                              color: #FFF;
+                                              cursor: pointer;">${ constants.EMAIL_TEMPLATE_MOBILE_NO }</span>
+                                                  <img src="${ constants.EMAIL_TEMPLATE_PHONE_URL }" height="25px"
+                                                      style="cursor:pointer;" />
+                                              </a>
+                                          </p>
+                                          <a href="${ constants.EMAIL_BASE_URL }" target="_blank" style="text-decoration: none;">
+                                              <img src="${ constants.EMAIL_TEMPLATE_WEB_URL }" height="25px"
+                                                  style="margin: 0 5px; cursor: pointer" /></a>
+                                          <a
+                                              href="${ constants.EMAIL_TEMPLATE_FACEBOOK_LINK }" target="_blank" style="text-decoration: none;">
+                                              <img src=" ${ constants.EMAIL_TEMPLATE_FB_URL }" height="25px"
+                                                  style="margin: 0 5px; cursor: pointer" />
+                                          </a>
+                                          <a
+                                              href="${ constants.EMAIL_TEMPLATE_TWITTER_LINK }" target="_blank" style="text-decoration: none;">
+                                              <img src="${ constants.EMAIL_TEMPLATE_TWITTER_URL }" height="25px"
+                                                  style="margin: 0 5px; cursor: pointer" />
+                                          </a>
+                                          <a
+                                              href="${ constants.EMAIL_TEMPLATE_INSTAGRAM_LINK }" target="_blank" style="text-decoration: none;">
+                                              <img src="${ constants.EMAIL_TEMPLATE_INSTA_URL }" height="25px"
+                                                  style="margin: 0 5px; cursor: pointer" />
+                                          </a>
+                                          <a href="${ constants.EMAIL_TEMPLATE_YOUTUBE_LINK }" target="_blank" style="text-decoration: none;">
+                                              <img src="${ constants.EMAIL_TEMPLATE_YT_URL }" height="25px"
+                                                  style="margin: 0 5px; cursor: pointer" />
+                                          </a>
+                                          <a
+                                              href="${ constants.EMAIL_TEMPLATE_LINKEDIN_LINK }" target="_blank" style="text-decoration: none;">
+                                              <img src="${ constants.EMAIL_TEMPLATE_IN_URL }" height="25px"
+                                                  style="cursor: pointer" />
+                                          </a>
+                                      </td>
+                                  </tr>
+                              </tr>
+                          </tbody>
+                      </table>
+                  </td>
+              </tr>
+              <!-- END FOOTER -->
+              </td>
+              </tr>
+              </tbody>
+          </table>
+          </td>
+          </tr>
+
+          <!-- END MAIN CONTENT AREA -->
+          </table>
+          <!-- END CENTERED WHITE CONTAINER -->
+          </div>
+          </td>
+
+          <!-- Extra TD -->
+          <td style="font-size: 16px; vertical-align: top;" valign="top">&nbsp;
+          </td>
+          </tr>
+          </table>
+      </body>
+
+      </html>
+  `;
 };
 
 module.exports.welcomeWithCredetialsTemplate = async (data) => {
-  const header = await this.templateHeader(data);
-  const footer = await this.templateFooter(data);
-  return (
-    (await `${header}
-    <div style="padding:0 20px">
-        <p style="font-weight:400;font-size:1.2rem;color: white;">Dear `) +
-    data.user_name +
-    `,</p>
-    </div>
-    <div style="padding:0 20px">
-        <p style="font-weight:400;font-size:1.2rem;color: white;">Welcome aboard to College UPSC - Level 1 at Virtual Afsar! 🚀</p>
-    </div>
-    <div style="padding:0 20px">
-        <p style="font-weight:400;font-size:1.2rem;color: white;">Congratulations on subscribing to our course College UPSC! We are thrilled to have you with us on this enriching educational journey that promises to ignite your learning potential.</p>
-    </div>
-    <div style="padding:0 20px">
-        <p style="font-weight:400;font-size:1.2rem;color: white;">Your quest for knowledge begins now, and we're excited to provide you access to our dynamic learning platform tailored specifically for your academic growth.</p>
-    </div>
-    <div style="padding:0 20px">
-        <p style="font-weight:400;font-size:1.2rem;color: white;">Below are your login credentials:</p>
-    </div>
-    <div style="padding: 0 20px">
-        <p style="font-weight: 600; font-size: 20px;color: white;">
-            <b>Username: </b>` +
-    data.mobile_no +
-    `<br>
-            <b>Password: </b>` +
-    data.password +
-    `
-        </p>
-    </div>
-    <div style="padding:0 20px">
-        <p style="font-weight:400;font-size:1.2rem;color: white;">With these credentials, you can now unlock the gateway to a wealth of courses and resources meticulously curated to enhance your learning experience. Our aim is to support you in every step of your educational aspirations and empower you to reach new heights of academic excellence.</p>
-    </div>
-    <div style="padding:0 20px">
-        <p style="font-weight:400;font-size:1.2rem;color: white;">Additionally, stay connected with us on our social media channels for updates, tips, and more:</p>
-    </div>
+  // const header = await this.templateHeader(data);
+  // const footer = await this.templateFooter(data);
+  // return (
+  //   (await `${header}
+  //   <div style="padding:0 20px">
+  //       <p style="font-weight:400;font-size:1.2rem;color: white;">Dear `) +
+  //   data.user_name +
+  //   `,</p>
+  //   </div>
+  //   <div style="padding:0 20px">
+  //       <p style="font-weight:400;font-size:1.2rem;color: white;">Welcome aboard to College UPSC - Level 1 at Virtual Afsar! 🚀</p>
+  //   </div>
+  //   <div style="padding:0 20px">
+  //       <p style="font-weight:400;font-size:1.2rem;color: white;">Congratulations on subscribing to our course College UPSC! We are thrilled to have you with us on this enriching educational journey that promises to ignite your learning potential.</p>
+  //   </div>
+  //   <div style="padding:0 20px">
+  //       <p style="font-weight:400;font-size:1.2rem;color: white;">Your quest for knowledge begins now, and we're excited to provide you access to our dynamic learning platform tailored specifically for your academic growth.</p>
+  //   </div>
+  //   <div style="padding:0 20px">
+  //       <p style="font-weight:400;font-size:1.2rem;color: white;">Below are your login credentials:</p>
+  //   </div>
+  //   <div style="padding: 0 20px">
+  //       <p style="font-weight: 600; font-size: 20px;color: white;">
+  //           <b>Username: </b>` +
+  //   data.mobile_no +
+  //   `<br>
+  //           <b>Password: </b>` +
+  //   data.password +
+  //   `
+  //       </p>
+  //   </div>
+  //   <div style="padding:0 20px">
+  //       <p style="font-weight:400;font-size:1.2rem;color: white;">With these credentials, you can now unlock the gateway to a wealth of courses and resources meticulously curated to enhance your learning experience. Our aim is to support you in every step of your educational aspirations and empower you to reach new heights of academic excellence.</p>
+  //   </div>
+  //   <div style="padding:0 20px">
+  //       <p style="font-weight:400;font-size:1.2rem;color: white;">Additionally, stay connected with us on our social media channels for updates, tips, and more:</p>
+  //   </div>
    
-    <div style="padding:0 20px">
-        <p style="font-weight:400;font-size:1.2rem;color: white;">For further information and updates, please visit our website:
-          <a href="` + constants.EMAIL_BASE_URL + `" style="color: #fe8b00 !important;"> ` + constants.EMAIL_BASE_URL + `</a>
-        </p>
-    </div>
-    <div style="padding:0 20px">
-        <p style="font-weight:400;font-size:1.2rem;color: white;">Should you need any assistance or have inquiries, don't hesitate to reach out. Our dedicated team is here to ensure your learning journey with us is smooth and fulfilling.</p>
-    </div>
-    <div style="padding:0 20px">
-        <p style="font-weight:400;font-size:1.2rem;color: white;">Once again, welcome to College UPSC - Level 1 at Virtual Afsar! Your path to success awaits, and we're privileged to be a part of it.</p>
-    </div>
-    <div style="padding:0 20px">
-        <p style="font-weight:400;font-size:15px;color: white;">Best regards,</p>
-        <p style="font-weight:400;font-size:15px;color: white;">Virtual Afsar Team</p>
-    </div>
-    ${footer}
-    `
-  );
+  //   <div style="padding:0 20px">
+  //       <p style="font-weight:400;font-size:1.2rem;color: white;">For further information and updates, please visit our website:
+  //         <a href="` + constants.EMAIL_BASE_URL + `" style="color: #fe8b00 !important;"> ` + constants.EMAIL_BASE_URL + `</a>
+  //       </p>
+  //   </div>
+  //   <div style="padding:0 20px">
+  //       <p style="font-weight:400;font-size:1.2rem;color: white;">Should you need any assistance or have inquiries, don't hesitate to reach out. Our dedicated team is here to ensure your learning journey with us is smooth and fulfilling.</p>
+  //   </div>
+  //   <div style="padding:0 20px">
+  //       <p style="font-weight:400;font-size:1.2rem;color: white;">Once again, welcome to College UPSC - Level 1 at Virtual Afsar! Your path to success awaits, and we're privileged to be a part of it.</p>
+  //   </div>
+  //   <div style="padding:0 20px">
+  //       <p style="font-weight:400;font-size:15px;color: white;">Best regards,</p>
+  //       <p style="font-weight:400;font-size:15px;color: white;">Virtual Afsar Team</p>
+  //   </div>
+  //   ${footer}
+  //   `
+  // );
+
+    return await `
+    <!doctype html>
+      <html lang="en">
+
+      <head>
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+          <title>Simple Transactional Email</title>
+      </head>
+
+      <body
+          style="-webkit-font-smoothing: antialiased; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; margin: 0; padding: 0;">
+          <table role="presentation" border="0" cellpadding="0" cellspacing="0"
+              style="border-collapse: separate; background-color: #FFF; width: 100%;"
+              width="100%" bgcolor="#f4f5f6">
+              <tr>
+                  <!-- Extra TD -->
+                  <td style="font-size: 16px; vertical-align: top;" valign="top">&nbsp;
+                  </td>
+
+                  <!-- Main TD -->
+                  <td style="font-size: 16px; vertical-align: top; max-width: 600px; padding: 0; width: 600px; margin: 0 auto;"
+                      width="600" valign="top">
+                      <div style="box-sizing: border-box; display: block; margin: 0 auto; max-width: 600px; padding: 0;">
+
+                          <!-- START CENTERED WHITE CONTAINER -->
+                          <span
+                              style="color: transparent; display: none; height: 0; max-height: 0; max-width: 0; opacity: 0; overflow: hidden; visibility: hidden; width: 0;">This
+                              is preheader text. Some clients will show this text as a preview.</span>
+                          <table role="presentation" border="0" cellpadding="0" cellspacing="0"
+                              style="border-collapse: separate; background: #ffffff; width: 100%;"
+                              width="100%">
+
+                              <!-- START MAIN CONTENT AREA -->
+                              <tr>
+                                  <td style="font-size: 16px; vertical-align: top; box-sizing: border-box;" valign="top">
+                                      <table role="presentation" border="0" cellpadding="0" cellspacing="0"
+                                          style="border-collapse: separate; box-sizing: border-box; width: 100%; min-width: 100%;"
+                                          width="100%">
+                                          <tbody>
+                                              <tr>
+                                                  <td style="padding: 20px; padding-bottom: 30px; text-align: center;">
+                                                      <a href=" ${ constants.EMAIL_BASE_URL }" target="_blank" style="text-decoration: none;">
+                                                          <img src="${ constants.EMAIL_TEMPLATE_VALOGO_URL }" height="95" />
+                                                      </a>
+                                                  </td>
+                                              </tr>
+                                              <tr>
+                                                  <td style="text-align: center;">
+                                                      <img src="${ constants.EMAIL_TEMPLATE_HERO4_URL }" height="430" width="100%" />
+                                                  </td>
+                                              </tr>
+                                              <tr>
+                                                  <td style="padding: 40px 0; text-align: center;">
+                                                      <button style="
+                                                          background-color: #032b4e;
+                                                          color: #fff;
+                                                          font-size: 22px;
+                                                          cursor: pointer;
+                                                          font-weight: bold;
+                                                          padding: 2px;
+                                                          border: solid 3px  #032b4e;
+                                                          border-radius: 0.9rem;
+                                                          background-clip: content-box; 
+                                                          font-family: sans-serif;
+                                                          height: 50px;
+                                                          width: 200px;">
+                                                          Reset Password
+                                                      </button>
+                                                  </td>
+                                              </tr>
+                                              <!-- START FOOTER -->
+                                              <tr style="background-color:#fbaa2d;">
+                                                  <td style="padding: 20px 35px;">
+                                                      <table role="presentation" border="0" cellpadding="0" cellspacing="0"
+                                                          style="box-sizing: border-box; width: 100%; min-width: 100%;"
+                                                          width="100%">
+                                                          <tbody>
+                                                              <tr>
+                                                                  <td style="vertical-align:baseline">
+                                                                      <p>
+                                                                          <a href="${ constants.EMAIL_TEMPLATE_APP_STORE_URL }"
+                                                                              style="cursor:pointer;text-decoration: none;" target="_blank">
+                                                                              <img src="${ constants.EMAIL_TEMPLATE_APP_STORE_ICON_URL }"
+                                                                                  height="55px" />
+                                                                          </a>
+                                                                      </p>
+                                                                      <p>
+                                                                          <a href="${ constants.EMAIL_TEMPLATE_PLAY_STORE_URL }"
+                                                                              style="cursor:pointer; text-decoration: none;" target="_blank">
+                                                                              <img src="${ constants.EMAIL_TEMPLATE_PLAY_STORE_ICON_URL }" height="55px"
+                                                                                  style="cursor:pointer;" />
+                                                                          </a>
+                                                                      </p>
+                                                                  </td>
+                                                                  <td style="text-align: right;">
+                                                                      <a href="mailto:${ constants.EMAIL_TEMPLATE_MAIL_ID }" target="_blank"
+                                                                          style="margin-bottom: -8px; margin-top: 0 ; text-decoration: none;">
+                                                                          <span style="vertical-align: super;
+                                                                              font-family: Arial, Helvetica, sans-serif;
+                                                                              font-size: 17px;
+                                                                              font-weight: 600;
+                                                                              color: #FFF;
+                                                                              cursor:pointer;
+                                                                              ">${ constants.EMAIL_TEMPLATE_MAIL_ID }</span>
+                                                                          <img src="${ constants.EMAIL_TEMPLATE_YMAIL_URL }" height="25px"
+                                                                              style="cursor:pointer;" />
+                                                                      </a>
+                                                                      <p>
+                                                                          <a href="tel:${ constants.EMAIL_TEMPLATE_MOBILE_NO }"
+                                                                              style="text-decoration: none;">
+                                                                              <span style="vertical-align: super;
+                                                                          font-family: Arial, Helvetica, sans-serif;
+                                                                          font-size: 17px;
+                                                                          font-weight: 600;
+                                                                          color: #FFF;
+                                                                          cursor: pointer;">${ constants.EMAIL_TEMPLATE_MOBILE_NO }</span>
+                                                                              <img src="${ constants.EMAIL_TEMPLATE_YPHONE_URL }" height="25px"
+                                                                                  style="cursor:pointer;" />
+                                                                          </a>
+                                                                      </p>
+                                                                      <a href="${ constants.EMAIL_BASE_URL }" target="_blank" style="text-decoration: none;">
+                                                                          <img src="${ constants.EMAIL_TEMPLATE_YWEB_URL }" height="25px"
+                                                                              style="margin: 0 5px; cursor: pointer" /></a>
+                                                                      <a
+                                                                          href="${ constants.EMAIL_TEMPLATE_FACEBOOK_LINK }" target="_blank" style="text-decoration: none;">
+                                                                          <img src=" ${ constants.EMAIL_TEMPLATE_YFB_URL }" height="25px"
+                                                                              style="margin: 0 5px; cursor: pointer" />
+                                                                      </a>
+                                                                      <a
+                                                                          href="${ constants.EMAIL_TEMPLATE_TWITTER_LINK }" target="_blank" style="text-decoration: none;">
+                                                                          <img src="${ constants.EMAIL_TEMPLATE_YTWITTER_URL }" height="25px"
+                                                                              style="margin: 0 5px; cursor: pointer" />
+                                                                      </a>
+                                                                      <a
+                                                                          href="${ constants.EMAIL_TEMPLATE_INSTAGRAM_LINK }" target="_blank" style="text-decoration: none;">
+                                                                          <img src="${ constants.EMAIL_TEMPLATE_YINSTA_URL }" height="25px"
+                                                                              style="margin: 0 5px; cursor: pointer" />
+                                                                      </a>
+                                                                      <a href="${ constants.EMAIL_TEMPLATE_YOUTUBE_LINK }" target="_blank" style="text-decoration: none;">
+                                                                          <img src="${ constants.EMAIL_TEMPLATE_YYT_URL }" height="25px"
+                                                                              style="margin: 0 5px; cursor: pointer" />
+                                                                      </a>
+                                                                      <a
+                                                                          href="${ constants.EMAIL_TEMPLATE_LINKEDIN_LINK }" target="_blank" style="text-decoration: none;">
+                                                                          <img src="${ constants.EMAIL_TEMPLATE_YIN_URL }" height="25px"
+                                                                              style="cursor: pointer" />
+                                                                      </a>
+                                                                  </td>
+                                                              </tr>
+                                                          </tbody>
+                                                      </table>
+                                                  </td>
+                                              </tr>
+                                              <!-- END FOOTER -->
+                                  </td>
+                              </tr>
+                              </tbody>
+                          </table>
+                  </td>
+              </tr>
+
+              <!-- END MAIN CONTENT AREA -->
+          </table>
+          <!-- END CENTERED WHITE CONTAINER -->
+          </div>
+          </td>
+
+          <!-- Extra TD -->
+          <td style="font-size: 16px; vertical-align: top;" valign="top">&nbsp;
+          </td>
+          </tr>
+          </table>
+      </body>
+
+      </html>
+    `;
 };
 
 module.exports.forgotPasswordTemplate = async (data) => {
@@ -335,258 +700,948 @@ module.exports.courseAssignedTemplate = async (data) => {
 
 // ---- COURSE PURCHASED TEMPLATE (START) ----
 module.exports.coursePurchaseTemplate = async (data) => {
-  const header = await this.templateHeader(data);
-  const footer = await this.templateFooter(data);
-  const courseUrl = data?.course_id
-    ? constants.EMAIL_COURSE_URL + data.course_id
-    : process.env.BASE_URL;
-  return (
-    (await `${header}
-    <div style="padding:0 20px">
-        <p style="font-weight:400;font-size:15px;color: white;"> Dear,
-        `) +
-    data.user_name +
-    `</p>
-    </div>
-    <div style="padding:0 20px">
-        <p style="font-weight:400;font-size:15px;color: white;">Congratulations on your recent purchase of the College UPSC - Level 1 course on Virtual Afsar! We're thrilled to embark on this educational journey with you.</p>
-    </div>
-    <div style="padding:0 20px">
-        <p style="font-weight:400;font-size:15px;color: white;">Your account under the username "${data.user_name}" has been successfully created, granting you access to a world of learning opportunities to excel in your UPSC preparations.</p>
-    </div>
-    <div style="padding:0 20px">
-        <p style="font-weight:400;font-size:15px;color: white;">To commence your learning experience, kindly log in to the Virtual Afsar Platform using the button below:</p>
-    </div>
-    <div style="padding:0 20px; display: flex; justify-content: center;">
-        <a href="` +
-    courseUrl +
-    `"
-            style="display:block;width:13.125rem;height:3.5rem;text-decoration:none;text-transform:uppercase;display:flex;justify-content:center;align-items:center;background-color:#0076cb;border-radius:2rem">
-            <div style="font-style:normal;font-weight:600;font-size:16px;color:#fff;margin:auto;text-align:center;position:absolute;line-height:24px"> Go To Course</div>
-        </a>
-    </div>
-    <div style="padding:0 20px">
-        <p style="font-weight:400;font-size:15px;color: white;">We've meticulously designed a comprehensive product tour explicitly tailored to introduce you to our platform's features. This tour aims to ensure you leverage our resources to their fullest potential.</p>
-    </div>
-    <div style="padding:0 20px">
-        <p style="font-weight:400;font-size:15px;color: white;">Should you have any questions or need assistance while getting started, our dedicated support team is available to assist you. Feel free to reach out by replying to this email or contacting our support staff directly.</p>
-    </div>
-    <div style="padding:0 20px">
-        <p style="font-weight:400;font-size:15px;color: white;">Stay connected with us! Follow our social media channels for additional study tips, updates, and engaging content:</p>
-    </div>
-    <div style="padding:0 20px">
-        <p style="font-weight:400;font-size:15px;color: white;">Additionally, stay connected with us on our social media channels for updates, tips, and more:</p>
-    </div>
+//   const header = await this.templateHeader(data);
+//   const footer = await this.templateFooter(data);
+//   const courseUrl = data?.course_id
+//     ? constants.EMAIL_COURSE_URL + data.course_id
+//     : process.env.BASE_URL;
+//   return (
+//     (await `${header}
+//     <div style="padding:0 20px">
+//         <p style="font-weight:400;font-size:15px;color: white;"> Dear,
+//         `) +
+//     data.user_name +
+//     `</p>
+//     </div>
+//     <div style="padding:0 20px">
+//         <p style="font-weight:400;font-size:15px;color: white;">Congratulations on your recent purchase of the College UPSC - Level 1 course on Virtual Afsar! We're thrilled to embark on this educational journey with you.</p>
+//     </div>
+//     <div style="padding:0 20px">
+//         <p style="font-weight:400;font-size:15px;color: white;">Your account under the username "${data.user_name}" has been successfully created, granting you access to a world of learning opportunities to excel in your UPSC preparations.</p>
+//     </div>
+//     <div style="padding:0 20px">
+//         <p style="font-weight:400;font-size:15px;color: white;">To commence your learning experience, kindly log in to the Virtual Afsar Platform using the button below:</p>
+//     </div>
+//     <div style="padding:0 20px; display: flex; justify-content: center;">
+//         <a href="` +
+//     courseUrl +
+//     `"
+//             style="display:block;width:13.125rem;height:3.5rem;text-decoration:none;text-transform:uppercase;display:flex;justify-content:center;align-items:center;background-color:#0076cb;border-radius:2rem">
+//             <div style="font-style:normal;font-weight:600;font-size:16px;color:#fff;margin:auto;text-align:center;position:absolute;line-height:24px"> Go To Course</div>
+//         </a>
+//     </div>
+//     <div style="padding:0 20px">
+//         <p style="font-weight:400;font-size:15px;color: white;">We've meticulously designed a comprehensive product tour explicitly tailored to introduce you to our platform's features. This tour aims to ensure you leverage our resources to their fullest potential.</p>
+//     </div>
+//     <div style="padding:0 20px">
+//         <p style="font-weight:400;font-size:15px;color: white;">Should you have any questions or need assistance while getting started, our dedicated support team is available to assist you. Feel free to reach out by replying to this email or contacting our support staff directly.</p>
+//     </div>
+//     <div style="padding:0 20px">
+//         <p style="font-weight:400;font-size:15px;color: white;">Stay connected with us! Follow our social media channels for additional study tips, updates, and engaging content:</p>
+//     </div>
+//     <div style="padding:0 20px">
+//         <p style="font-weight:400;font-size:15px;color: white;">Additionally, stay connected with us on our social media channels for updates, tips, and more:</p>
+//     </div>
     
-    <div style="padding:0 20px">
-        <p style="font-weight:400;font-size:15px;color: white;">For further information and updates, please visit our website: <a href="` + constants.EMAIL_BASE_URL + `" style="color: #fe8b00 !important;"> ` + constants.EMAIL_BASE_URL + `</a> </p>
-    </div>
-    <div style="padding:0 20px">
-        <p style="font-weight:400;font-size:15px;color: white;">Thank you for choosing Virtual Afsar as your partner in achieving your UPSC goals. We're committed to providing you with the guidance and resources needed for success.</p>
-    </div>
-    <div style="padding:0 20px">
-        <p style="font-weight:400;font-size:15px;color: white;">Welcome aboard, and let's begin this enriching learning journey together!</p>
-    </div>
-    <div style="padding:0 20px">
-        <p style="font-weight:400;font-size:15px;color: white;">Best regards,</p>
-        <p style="font-weight:400;font-size:15px;color: white;">Virtual Afsar Team</p>
-    </div>
+//     <div style="padding:0 20px">
+//         <p style="font-weight:400;font-size:15px;color: white;">For further information and updates, please visit our website: <a href="` + constants.EMAIL_BASE_URL + `" style="color: #fe8b00 !important;"> ` + constants.EMAIL_BASE_URL + `</a> </p>
+//     </div>
+//     <div style="padding:0 20px">
+//         <p style="font-weight:400;font-size:15px;color: white;">Thank you for choosing Virtual Afsar as your partner in achieving your UPSC goals. We're committed to providing you with the guidance and resources needed for success.</p>
+//     </div>
+//     <div style="padding:0 20px">
+//         <p style="font-weight:400;font-size:15px;color: white;">Welcome aboard, and let's begin this enriching learning journey together!</p>
+//     </div>
+//     <div style="padding:0 20px">
+//         <p style="font-weight:400;font-size:15px;color: white;">Best regards,</p>
+//         <p style="font-weight:400;font-size:15px;color: white;">Virtual Afsar Team</p>
+//     </div>
 
-    ${footer}
-    `
-  );
-};
-// ---- COURSE PURCHASED TEMPLATE (END) ----
+//     ${footer}
+//     `
+//   );
+// };
+// // ---- COURSE PURCHASED TEMPLATE (END) ----
 
-module.exports.courseSubscription = async (data) => {
-  const header = await this.templateHeader(data);
-  const footer = await this.templateFooter(data);
-  return (
-    (await `${header}
-    <div style="padding:0 20px">
-        <p style="font-weight:400;font-size:15px">🎁 You're In! Subscription Confirmation for `) +
-    data.course_name +
-    `</p>
-    </div>
-    <div style="padding:0 20px">
-        <p style="font-weight:400;font-size:15px">Hey ` +
-    data.user_name +
-    `,</p>
-    </div>
-    <div style="padding:0 20px">
-        <p style="font-weight:400;font-size:15px">Hooray! You've successfully subscribed to the ` +
-    data.course_name +
-    ` package. 🎁 Now, you've got the key to unlimited access to our ` +
-    data.course_name +
-    `.</p>
-    </div>
-    <div style="padding:0 20px">
-        <p style="font-weight:400;font-size:15px">Kickstart your learning adventure now:</p>
-    </div>
-    <div style="padding:0 20px; display: flex; justify-content: center;">
-        <a href="` +
-    data.link +
-    `"
-            style="display:block;width:13.125rem;height:3.5rem;text-decoration:none;text-transform:uppercase;display:flex;justify-content:center;align-items:center;background-color:#0076cb;border-radius:2rem">
-            <div style="font-style:normal;font-weight:600;font-size:16px;color:#fff;margin:auto;text-align:center;position:absolute;line-height:24px">Login</div>
-        </a>
-    </div>
-    <div style="padding:0 20px">
-        <p style="font-weight:400;font-size:15px">Happy learning,</p>
-    </div>
-    ${footer}`
-  );
-};
+// module.exports.courseSubscription = async (data) => {
+//   const header = await this.templateHeader(data);
+//   const footer = await this.templateFooter(data);
+//   return (
+//     (await `${header}
+//     <div style="padding:0 20px">
+//         <p style="font-weight:400;font-size:15px">🎁 You're In! Subscription Confirmation for `) +
+//     data.course_name +
+//     `</p>
+//     </div>
+//     <div style="padding:0 20px">
+//         <p style="font-weight:400;font-size:15px">Hey ` +
+//     data.user_name +
+//     `,</p>
+//     </div>
+//     <div style="padding:0 20px">
+//         <p style="font-weight:400;font-size:15px">Hooray! You've successfully subscribed to the ` +
+//     data.course_name +
+//     ` package. 🎁 Now, you've got the key to unlimited access to our ` +
+//     data.course_name +
+//     `.</p>
+//     </div>
+//     <div style="padding:0 20px">
+//         <p style="font-weight:400;font-size:15px">Kickstart your learning adventure now:</p>
+//     </div>
+//     <div style="padding:0 20px; display: flex; justify-content: center;">
+//         <a href="` +
+//     data.link +
+//     `"
+//             style="display:block;width:13.125rem;height:3.5rem;text-decoration:none;text-transform:uppercase;display:flex;justify-content:center;align-items:center;background-color:#0076cb;border-radius:2rem">
+//             <div style="font-style:normal;font-weight:600;font-size:16px;color:#fff;margin:auto;text-align:center;position:absolute;line-height:24px">Login</div>
+//         </a>
+//     </div>
+//     <div style="padding:0 20px">
+//         <p style="font-weight:400;font-size:15px">Happy learning,</p>
+//     </div>
+//     ${footer}`
+//   );
 
-module.exports.renewedCourseSubscription = async (data) => {
-  const header = await this.templateHeader(data);
-  const footer = await this.templateFooter(data);
-  return (
-    (await `${header}
-    <div style="padding:0 20px">
-        <p style="font-weight:400;font-size:15px">🎉 Hooray! Your Subscription Has Been Renewed</p>
-    </div>
-    <div style="padding:0 20px">
-        <p style="font-weight:400;font-size:15px">Hey `) +
-    data.user_name +
-    `,</p>
-    </div>
-    <div style="padding:0 20px">
-        <p style="font-weight:400;font-size:15px">We're doing a happy dance because your subscription has been renewed! 🎉 Continue to enjoy the endless learning possibilities with us.</p>
-    </div>
-    <div style="padding:0 20px">
-        <p style="font-weight:400;font-size:15px">Log in now and keep the knowledge flowing:</p>
-    </div>
-    <div style="padding:0 20px; display: flex; justify-content: center;">
-        <a href="` +
-    data.link +
-    `"
-            style="display:block;width:13.125rem;height:3.5rem;text-decoration:none;text-transform:uppercase;display:flex;justify-content:center;align-items:center;background-color:#6c63ff;border-radius:2rem">
-            <div style="font-style:normal;font-weight:600;font-size:16px;color:#fff;margin:auto;text-align:center;position:absolute;line-height:24px">Login</div>
-        </a>
-    </div>
-    <div style="padding:0 20px">
-        <p style="font-weight:400;font-size:15px">Happy learning,</p>
-    </div>
-    ${footer}`
-  );
-};
+      return await `
+      <html>
+    <head>
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+      <link
+        href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap"
+        rel="stylesheet"
+      />
+      <style>
+        p {
+          font-family: "Josefin Sans", sans-serif;
+        }
+      </style>
+    </head>
+    <body>
+      <div
+        style="
+          padding: 0.625rem;
+          width: 37.3rem;
+          margin: 0;
+          position: relative;
+          margin-left: -18px;
+          margin-top: 50px;
+          margin-bottom: 50px;
+        "
+      >
+        <div
+          style="
+            height: 29rem;
+            background-color: #0e5f9f;
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+            padding-right: 1rem;
+            width: 10rem;
+            position: absolute;
+            top: 4rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 25px;
+          "
+        >
+          <div style="width: 100%">
+            <div style="text-align: right">
+              <p
+                style="
+                  font-size: 12px;
+                  font-weight: 900;
+                  color: #c3e7f5;
+                  margin: 0;
+                "
+              >
+                INVOICE NO:
+              </p>
+              <p
+                style="
+                  font-size: 12px;
+                  font-weight: 400;
+                  color: #fff;
+                  margin: 0;
+                  padding-top: 2px;
+                "
+              >
+                ${data.invoice_id}
+              </p>
+            </div>
+            <div style="text-align: right; margin-top: 1rem">
+              <p
+                style="
+                  font-size: 12px;
+                  font-weight: bold;
+                  color: #c3e7f5;
+                  margin: 0;
+                "
+              >
+                INVOICE DATE:
+              </p>
+              <p
+                style="
+                  font-size: 12px;
+                  font-weight: 400;
+                  color: #fff;
+                  margin: 0;
+                  padding-top: 2px;
+                "
+              >
+                ${data.issue_data}
+              </p>
+            </div>
+            <div style="text-align: right; margin-top: 1rem">
+              <p
+                style="
+                  font-size: 12px;
+                  font-weight: bold;
+                  color: #c3e7f5;
+                  margin: 0;
+                "
+              >
+                ISSUED TO:
+              </p>
+              <p
+                style="
+                  font-size: 12px;
+                  font-weight: bold;
+                  color: #fff;
+                  margin: 0;
+                  padding-top: 4px;
+                "
+              >
+                ${ data?.username || "N/A" }
+              </p>
+              <p
+                style="
+                  font-size: 11px;
+                  font-weight: 400;
+                  color: #fff;
+                  margin: 0;
+                  padding-top: 5px;
+                "
+              >
+                ${ data?.mobile_no || "N/A" }
+              </p>
+            </div>
+          </div>
+          <div
+            style="
+              background-color: #c3e7f5;
+              border-radius: 50%;
+              width: 5rem;
+              height: 5rem;
+              margin-top: 11rem;
+              margin-bottom: 2rem;
+              margin-left: 2rem;
+              margin-right: auto;
+              padding: 0.8rem;
+              text-align: center;
+            "
+          >
+            <img
+              src="${ constants.INVOICE_VICON_IMAGE }"
+              style="width: 4rem; height: 5rem"
+            />
+          </div>
+        </div>
+        <div
+          style="
+            padding-top: 1rem;
+            width: 31rem;
+            margin-left: 100px;
+            background-color: #c3e7f5;
+          "
+        >
+          <div
+            style="
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              padding: 0 2rem;
+            "
+          >
+            <table style="width: 100%">
+              <tbody style="width: 100%">
+                <tr>
+                  <td style="vertical-align: top">
+                    <p
+                      style="
+                        font-size: 1.8rem;
+                        font-weight: 900;
+                        color: #123e6f;
+                        letter-spacing: 2;
+                        margin: 0;
+                      "
+                    >
+                      I N V O I C E
+                    </p>
+                  </td>
+                  <td style="text-align: end">
+                    <img
+                      src="${ constants.INVOICE_VALOGO_IMAGE }"
+                      style="width: 9.5rem; height: 5.5rem"
+                    />
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
 
-module.exports.subscriptionCancelTemplate = async (data) => {
-  const header = await this.templateHeader(data);
-  const footer = await this.templateFooter(data);
-  return (
-    (await `${header}
-    <div style="padding:0 20px">
-        <p style="font-weight:400;font-size:15px">Course Subscription Cancellation</p>
-    </div>
-    <div style="padding:0 20px">
-        <p style="font-weight:400;font-size:15px">Hey `) +
-    data.user_name +
-    `,</p>
-    </div>
-    <div style="padding:0 20px">
-        <p style="font-weight:400;font-size:15px">We hope this email finds you well. We would like to confirm that your course subscription cancellation request has been successfully processed. Your subscription will be terminated effective immediately, and no further charges will be applied to your account starting from the next billing cycle.</p>
-    </div>
-    <div style="padding:0 20px">
-        <p style="font-weight:400;font-size:15px">Here are the course of your canceled subscription: ` +
-    data.course_title +
-    `</p>
-    </div>
-    <div style="padding:0 20px">
-        <p style="font-weight:400;font-size:15px">We understand that circumstances change, and we appreciate the time you spent as a subscriber to our courses. We hope that you found value in the content and resources we provided during your subscription period.</p>
-    </div>
-    <div style="padding:0 20px">
-        <p style="font-weight:400;font-size:15px">Thank you for being a part of our learning community.</p>
-    </div>
-    <div style="padding:0 20px">
-        <p style="font-weight:400;font-size:15px">Warm regards,</p>
-    </div>
-    ${footer}`
-  );
-};
+          <div style="width: 26.2rem; margin-left: auto; overflow: hidden">
+            <table style="width: 100%; margin-bottom: 1rem">
+              <tbody style="width: 100%">
+                <tr>
+                  <td style="vertical-align: top; padding: 0; width: 50%">
+                    <table style="width: 100%">
+                      <tbody style="width: 100%">
+                        <tr>
+                          <td style="vertical-align: top">
+                            <img
+                              src="${ constants.INVOICE_LOCATION_IMAGE }"
+                              style="
+                                width: 6px;
+                                height: 6px;
+                                background-color: #123e6f;
+                                border-radius: 50%;
+                                padding: 2px;
+                              "
+                            />
+                          </td>
+                          <td>
+                            <p
+                              style="
+                                color: #123e6f;
+                                font-weight: 400;
+                                margin: 0;
+                                font-size: 9px;
+                                text-align: left;
+                              "
+                            >
+                              ${ constants.EMAIL_TEMPLATE_ADDRESS }
+                            </p>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </td>
+                  <td style="padding: 0; width: 50%">
+                    <p
+                      style="
+                        color: #123e6f;
+                        font-weight: 400;
+                        margin: 0;
+                        font-size: 9px;
+                        text-align: left;
+                      "
+                    >
+                      <span style="vertical-align: middle">
+                        <img
+                          src="${ constants.INVOICE_PHONE_IMAGE }"
+                          style="
+                            width: 6px;
+                            height: 6px;
+                            background-color: #123e6f;
+                            border-radius: 50%;
+                            padding: 2px;
+                            margin-right: 0.3rem;
+                          "
+                        />
+                      </span>
+                      Tel : ${ constants.EMAIL_TEMPLATE_MOBILE_NO }
+                    </p>
+                    <p style="margin: 5px 0">
+                      <a
+                        style="
+                          color: #123e6f;
+                          font-weight: 400;
+                          margin: 0;
+                          font-size: 9px;
+                          text-align: left;
+                          text-decoration: none;
+                        "
+                        href="https://virtualafsar.com"
+                      >
+                        <span>
+                          <img
+                            src="${ constants.INVOICE_WEB_IMAGE }"
+                            style="
+                              width: 6px;
+                              height: 6px;
+                              background-color: #123e6f;
+                              border-radius: 50%;
+                              padding: 2px;
+                              margin-right: 0.3rem;
+                            "
+                          />
+                        </span>
+                        Web : https://virtualafsar.com
+                      </a>
+                    </p>
+                    <p style="margin: 0">
+                      <a
+                        style="
+                          color: #123e6f;
+                          font-weight: 400;
+                          margin: 0;
+                          font-size: 9px;
+                          text-align: left;
+                          text-decoration: none;
+                        "
+                        href="mailto:${ constants.EMAIL_TEMPLATE_MAIL_ID }"
+                      >
+                        <span>
+                          <img
+                            src="${ constants.INVOICE_MAIL_IMAGE }"
+                            style="
+                              width: 6px;
+                              height: 6px;
+                              background-color: #123e6f;
+                              border-radius: 50%;
+                              padding: 2px;
+                              margin-right: 0.3rem;
+                            "
+                          />
+                        </span>
+                        Email : ${ constants.EMAIL_TEMPLATE_MAIL_ID }
+                      </a>
+                    </p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <table style="width: 100%; border-collapse: collapse">
+              <tbody>
+                <tr style="width: 100%">
+                  <td
+                    style="
+                      border-right: 0.0625rem solid #0e5f9f;
+                      border-top: 0.0625rem solid #0e5f9f;
+                      text-align: center;
+                      padding: 0.3125rem 0.625rem;
+                      border-bottom: none;
+                      flex: 1;
+                    "
+                  >
+                    <p
+                      style="
+                        color: #123e6f;
+                        font-weight: 900;
+                        margin: 0;
+                        font-size: 11px;
+                      "
+                    >
+                      COURSE NAME
+                    </p>
+                  </td>
 
-module.exports.courseExpireTemplate = async (data) => {
-  const header = await this.templateHeader(data);
-  const footer = await this.templateFooter(data);
-  return (
-    (await `${header}
-    <div style="padding:0 20px">
-        <p style="font-style: normal; font-size: 2.2rem;line-height: 2.4rem; padding: 0.5rem; font-weight: 600; ">⏳ Tick Tock: `) +
-    data.course_name +
-    ` Expiring Soon</p>
-    </div>
-    <div style="padding:0 20px">
-        <p style="font-weight:400;font-size:1.2rem">Dear ` +
-    data.user_name +
-    `,</p>
-    </div>
-    <div style="padding:0 20px">
-        <p style="font-weight:400;font-size:1.2rem">Just a quick heads-up: your access to the ` +
-    data.course_name +
-    ` course will end on ` +
-    data.expireDate +
-    `. ⏳ Make sure to finish any remaining content before then. If you'd like more time, you can extend access in your account settings.</p>
-    </div>
-    <div style="padding:0 20px">
-        <p style="font-weight:400;font-size:1.2rem">Log in to your account now:</p>
-    </div>
-    <div style="padding:0 20px; display: flex; justify-content: center;">
-        <a href="` +
-    process.env.LOGIN_LINK_LIVE +
-    `" style="display:block;width:13.125rem;height:3.5rem;text-decoration:none;text-transform:uppercase;display:flex;justify-content:center;align-items:center;background-color:#6c63ff;border-radius:2rem">
-            <div style="font-style:normal;font-weight:600;font-size:16px;color:#fff;margin:auto;text-align:center;position:absolute;line-height:24px">Login</div>
-        </a>
-    </div>
-    ${footer}`
-  );
-};
+                  <td
+                    style="
+                      border-right: 0.0625rem solid #0e5f9f;
+                      border-top: 0.0625rem solid #0e5f9f;
+                      text-align: center;
+                      padding: 0.3125rem 0.625rem;
+                      border-bottom: none;
+                      flex: 1;
+                    "
+                  >
+                    <p
+                      style="
+                        color: #123e6f;
+                        font-weight: 900;
+                        margin: 0;
+                        font-size: 11px;
+                      "
+                    >
+                      PARTICULARS
+                    </p>
+                  </td>
 
-module.exports.contactUsInquirySubmission = async (data) => {
-  const header = await this.templateHeader(data);
-  const footer = await this.templateFooter(data);
-  return (
-    (await `${header}
-    <div style="padding:0 20px">
-        <p style="font-style: normal; font-size: 2.2rem;line-height: 2.4rem; padding: 0.5rem; font-weight: 600; color: white;">📞 New Contact Us Inquiry Has Been Received</p>
-    </div>
-    <div style="padding:0 20px">
-        <p style="font-weight:400;font-size:1.2rem;color: white;">Dear Admin,</p>
-    </div>
-    <div style="padding:0 20px">
-        <p style="font-weight:400;font-size:1.2rem;color: white;">We're excited to notify you that a new inquiry has just been submitted through the contact form on your app. Please take a moment to review the details provided below:</p>
-    </div>
-    <div style="padding: 0 20px">
-    <p style="font-weight: 600; font-size: 20px;color: white;">
-    <b>Name: </b>`) +
-    data.user_name +
-    `<br>
-    <b>Email: </b>` +
-    data.id +
-    `<br>
-    <b>Subject: </b>` +
-    data.subject +
-    `<br>
-    <b>Message: </b>` +
-    data.your_message +
-    `<br>
-    </p>
-    </div>
-    <div style="padding:0 20px">
-        <p style="font-weight:400;font-size:1.2rem;color: white;">Feel free to address this inquiry promptly and provide the necessary assistance or information required.</p>
-    </div>
+                  <td
+                    style="
+                      text-align: center;
+                      padding: 0.3125rem 0.5625rem 0.3125rem 0.625rem;
+                      border-right: none;
+                      border-top: 0.0625rem solid #0e5f9f;
+                      flex: 0.5;
+                    "
+                  >
+                    <p
+                      style="
+                        color: #123e6f;
+                        font-weight: 900;
+                        margin: 0;
+                        font-size: 11px;
+                      "
+                    >
+                      AMOUNT
+                    </p>
+                  </td>
+                </tr>
+
+                <tr style="width: 100%">
+                  <td
+                    style="
+                      border: 0.0625rem solid #0e5f9f;
+                      padding: 0.3125rem 0.625rem;
+                      border-left: none;
+                      vertical-align: top;
+                      border-bottom: none;
+                    "
+                  >
+                    <p
+                      style="
+                        color: #123e6f;
+                        font-weight: 400;
+                        margin: 0;
+                        font-size: 11px;
+                        padding-top: 2;
+                        text-align: center;
+                      "
+                    >
+                      ${ data?.course_title || "N/A" }
+                    </p>
+                  </td>
+
+                  <td
+                    style="
+                      border: 0.0625rem solid #0e5f9f;
+                      width: 7rem;
+                      border-left: none;
+                      padding: 0.3125rem 0.625rem;
+                      vertical-align: top;
+                      border-bottom: none;
+                    "
+                  >
+                    <div style="width: 6.5rem">
+                      <p
+                        style="
+                          color: #123e6f;
+                          font-weight: 800;
+                          margin: 0;
+                          font-size: 11px;
+                          padding-top: 4px;
+                        "
+                      >
+                        Price
+                      </p>
+                    </div>
+
+                    <div style="width: 6.5rem">
+                      <p
+                        style="
+                          color: #123e6f;
+                          font-weight: 800;
+                          margin: 0;
+                          font-size: 11px;
+                          padding-top: 4px;
+                        "
+                      >
+                        Discount (${ data?.discount || 0 }%)
+                      </p>
+                    </div>
+
+                    <div style="width: 6.5rem">
+                      <p
+                        style="
+                          color: #123e6f;
+                          font-weight: 800;
+                          margin: 0;
+                          font-size: 11px;
+                          padding-top: 4px;
+                        "
+                      >
+                        Sub Total
+                      </p>
+                    </div>
+
+                    <div style="width: 6.5rem">
+                      <p
+                        style="
+                          color: #123e6f;
+                          font-weight: 800;
+                          margin: 0;
+                          font-size: 11px;
+                          padding-top: 4px;
+                        "
+                      >
+                        Coupon Amount
+                      </p>
+                    </div>
+
+                    <div style="width: 6.5rem">
+                      <p
+                        style="
+                          color: #123e6f;
+                          font-weight: 800;
+                          margin: 0;
+                          font-size: 11px;
+                          padding-top: 4px;
+                        "
+                      >
+                        Referral Discount
+                      </p>
+                    </div>
+
+                    <div style="width: 6.5rem">
+                      <p
+                        style="
+                          color: #123e6f;
+                          font-weight: 800;
+                          margin: 0;
+                          font-size: 11px;
+                          padding-top: 4px;
+                        "
+                      >
+                        GST (${ data?.tax_percentage || 0 }%)
+                      </p>
+                    </div>
+
+                    <div style="width: 6.5rem">
+                      <p
+                        style="
+                          color: #123e6f;
+                          font-weight: 800;
+                          margin: 0;
+                          font-size: 11px;
+                          padding-top: 4px;
+                        "
+                      >
+                        Convenience Fees (${ data?.convince_fee || 0 }%)
+                      </p>
+                    </div>
+                  </td>
+
+                  <td
+                    style="
+                      border: 0.0625rem solid #0e5f9f;
+                      border-bottom: none;
+                      padding: 0.3125rem 0.625rem;
+                      text-align: center;
+                      border-left: none;
+                      border-right: none;
+                      vertical-align: top;
+                    "
+                  >
+                    <div>
+                      <p
+                        style="
+                          color: #123e6f;
+                          font-weight: 400;
+                          margin: 0 auto;
+                          font-size: 11px;
+                          width: max-content;
+                          padding-top: 4px;
+                        "
+                      >
+                        ${ data?.course_base_price || 0 }/-
+                      </p>
+                    </div>
+
+                    <div>
+                      <p
+                        style="
+                          color: #123e6f;
+                          font-weight: 400;
+                          margin: 0 auto;
+                          font-size: 11px;
+                          width: max-content;
+                          padding-top: 4px;
+                        "
+                      >
+                        ${ data?.discount_amount || 0 }/-
+                      </p>
+                    </div>
+
+                    <div>
+                      <p
+                        style="
+                          color: #123e6f;
+                          font-weight: 400;
+                          margin: 0 auto;
+                          font-size: 11px;
+                          width: max-content;
+                          padding-top: 4px;
+                        "
+                      >
+                        ${ data?.discount_amount || 0 }/-
+                      </p>
+                    </div>
+
+                    <div>
+                      <p
+                        style="
+                          color: #123e6f;
+                          font-weight: 400;
+                          margin: 0 auto;
+                          font-size: 11px;
+                          width: max-content;
+                          padding-top: 4px;
+                        "
+                      >
+                        ${ data?.coupon_amount || 0 }/-
+                      </p>
+                    </div>
+
+                    <div>
+                      <p
+                        style="
+                          color: #123e6f;
+                          font-weight: 400;
+                          margin: 0 auto;
+                          font-size: 11px;
+                          width: max-content;
+                          padding-top: 4px;
+                        "
+                      >
+                        ${ data?.heman_discount_amount || 0 }/-
+                      </p>
+                    </div>
+
+                    <div>
+                      <p
+                        style="
+                          color: #123e6f;
+                          font-weight: 400;
+                          margin: 0 auto;
+                          font-size: 11px;
+                          width: max-content;
+                          padding-top: 4px;
+                        "
+                      >
+                        ${ data?.tax_amount || 0 }/-
+                      </p>
+                    </div>
+
+                    <div>
+                      <p
+                        style="
+                          color: #123e6f;
+                          font-weight: 400;
+                          margin: 0 auto;
+                          font-size: 11px;
+                          width: max-content;
+                          padding-top: 4px;
+                        "
+                      >
+                        ${ data?.convince_fee_amount || 0 }/-
+                      </p>
+                    </div>
+
+                    <div style="height: 140px"></div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <table
+              style="
+                width: 97%;
+                border-top: 0.0625rem solid #0e5f9f;
+                border-bottom: 0.0625rem solid #0e5f9f;
+                margin-left: 5px;
+              "
+            >
+              <tbody style="width: 100%">
+                <tr>
+                  <td style="vertical-align: middle">
+                    <p
+                      style="
+                        color: #123e6f;
+                        font-weight: bold;
+                        margin: 0;
+                        font-size: 14px;
+                      "
+                    >
+                      GRAND TOTAL
+                    </p>
+                  </td>
+                  <td style="vertical-align: middle">
+                    <p
+                      style="
+                        color: #123e6f;
+                        font-weight: bold;
+                        margin: 0;
+                        font-size: 14px;
+                        text-align: end;
+                      "
+                    >
+                      <span style="vertical-align: bottom">
+                        <img
+                          src="`+ constants.INVOICE_RUPEE_IMAGE + `"
+                          style="width: 14px; height: 14px"
+                        />
+                      </span>
+                      ${ data?.amount || 0 }/-
+                    </p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div style="margin-top: 1rem; padding-left: 1rem">
+              <table style="width: 100%">
+                <tbody style="width: 100%">
+                  <tr>
+                    <td style="width: 100px; padding: 0">
+                      <p
+                        style="
+                          color: #123e6f;
+                          font-weight: bold;
+                          margin: 0;
+                          font-size: 11px;
+                        "
+                      >
+                        Bank Name
+                      </p>
+                    </td>
+                    <td style="width: 100px; padding: 0">
+                      <p style="color: #123e6f; margin: 0; font-size: 11px">
+                        ICICI Bank
+                      </p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="width: 100px; padding: 0">
+                      <p
+                        style="
+                          color: #123e6f;
+                          font-weight: bold;
+                          margin: 0;
+                          font-size: 11px;
+                          padding-top: 2px;
+                        "
+                      >
+                        Branch Name
+                      </p>
+                    </td>
+                    <td style="width: 100px; padding: 0">
+                      <p
+                        style="
+                          color: #123e6f;
+                          margin: 0;
+                          font-size: 11px;
+                          padding-top: 2px;
+                        "
+                      >
+                        Kalawad Road
+                      </p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="width: 100px; padding: 0">
+                      <p
+                        style="
+                          color: #123e6f;
+                          font-weight: bold;
+                          margin: 0;
+                          font-size: 11px;
+                          padding-top: 2px;
+                        "
+                      >
+                        Bank Account Number
+                      </p>
+                    </td>
+                    <td style="width: 100px; padding: 0">
+                      <p
+                        style="
+                          color: #123e6f;
+                          margin: 0;
+                          font-size: 11px;
+                          padding-top: 2px;
+                        "
+                      >
+                        624805017419
+                      </p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="width: 100px; padding: 0">
+                      <p
+                        style="
+                          color: #123e6f;
+                          font-weight: bold;
+                          margin: 0;
+                          font-size: 11px;
+                          padding-top: 2px;
+                        "
+                      >
+                        Bank Branch IFSC
+                      </p>
+                    </td>
+                    <td style="width: 100px; padding: 0">
+                      <p
+                        style="
+                          color: #123e6f;
+                          margin: 0;
+                          font-size: 11px;
+                          padding-top: 2px;
+                        "
+                      >
+                        ICIC0006248
+                      </p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="width: 100px; padding: 0">
+                      <p
+                        style="
+                          color: #123e6f;
+                          font-weight: bold;
+                          margin: 0;
+                          font-size: 11px;
+                          padding-top: 2px;
+                        "
+                      >
+                        HSN Number
+                      </p>
+                    </td>
+                    <td style="width: 100px; padding: 0">
+                      <p
+                        style="
+                          color: #123e6f;
+                          margin: 0;
+                          font-size: 11px;
+                          padding-top: 2px;
+                        "
+                      >
+                        9 9 9 2 9 4
+                      </p>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div
+            style="
+              padding-top: 1rem;
+              padding-bottom: 0.5rem;
+              width: 100%;
+              text-align: center;
+              margin-top: 5rem;
+            "
+          >
+            <p
+              style="
+                color: #123e6f;
+                font-weight: bold;
+                margin: 0;
+                font-size: 11px;
+              "
+            >
+              THANK YOU FOR SUBSCRIBING TO OUR COURSE
+            </p>
+          </div>
+        </div>
+      </div>
+    </body>
+  </html>
+
     
-    <div style="padding:0 20px">
-        <p style="font-weight:400;font-size:15px;color: white;">Best regards,</p>
-        <p style="font-weight:400;font-size:15px;color: white;">Virtual Afsar Team</p>
-    </div>
-
-    ${footer}
-    `
-  );
+  `
 };
-
-module.exports.sendLoginCredencialTemplate = async (data) => {};
 
 module.exports.courseAssignTemplate = async (data) => {};
 

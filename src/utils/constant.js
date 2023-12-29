@@ -19,6 +19,7 @@ module.exports = {
 
     EMAIL_TEMPLATE_BLUETODO_URL: process.env.BASE_URL + "VV-LMS-SERVICE-COURSE-QUERY/getcontent/local/email_assets/blueTodo.png",
     EMAIL_TEMPLATE_BOYMOBILE_URL: process.env.BASE_URL + "VV-LMS-SERVICE-COURSE-QUERY/getcontent/local/email_assets/BoyMobile.png",
+    EMAIL_TEMPLATE_MOBILECAR_URL: process.env.BASE_URL + "VV-LMS-SERVICE-COURSE-QUERY/getcontent/local/email_assets/mobilecar.png",
     EMAIL_TEMPLATE_FB_URL: process.env.BASE_URL + "VV-LMS-SERVICE-COURSE-QUERY/getcontent/local/email_assets/fb.png",
     EMAIL_TEMPLATE_HERO1_URL: process.env.BASE_URL + "VV-LMS-SERVICE-COURSE-QUERY/getcontent/local/email_assets/hero1.png",
     EMAIL_TEMPLATE_HERO2_URL: process.env.BASE_URL + "VV-LMS-SERVICE-COURSE-QUERY/getcontent/local/email_assets/hero2.png",
@@ -41,6 +42,7 @@ module.exports = {
     EMAIL_TEMPLATE_YTWITTER_URL: process.env.BASE_URL + "VV-LMS-SERVICE-COURSE-QUERY/getcontent/local/email_assets/ytwitter.png",
     EMAIL_TEMPLATE_YWEB_URL: process.env.BASE_URL + "VV-LMS-SERVICE-COURSE-QUERY/getcontent/local/email_assets/yweb.png",
     EMAIL_TEMPLATE_YYT_URL: process.env.BASE_URL + "VV-LMS-SERVICE-COURSE-QUERY/getcontent/local/email_assets/yyt.png",
+    EMAIL_TEMPLATE_HINDITXT_URL: process.env.BASE_URL + "VV-LMS-SERVICE-COURSE-QUERY/getcontent/local/email_assets/hindiTxt.png",
     
     EMAIL_TEMPLATE_FACEBOOK_LINK: "https://www.facebook.com/profile.php?id=100095410212980&mibextid=ZbWKwL",
     EMAIL_TEMPLATE_INSTAGRAM_LINK: "https://instagram.com/virtualafsar?igshid=MzRlODBiNWFlZA==",
@@ -59,7 +61,7 @@ module.exports = {
     EMAIL_COURSE_URL: process.env.BASE_URL + "coursePage/",
     EMAIL_BASE_URL: "https://virtualafsar.com/",
 
-    EMAIL_TEMPLATE_APP_STORE_URL: "https://www.apple.com/in/app-store/",
+    EMAIL_TEMPLATE_APP_STORE_URL: "https://apps.apple.com/in/app/virtual-afsar/id6459960071",
     EMAIL_TEMPLATE_PLAY_STORE_URL: "https://play.google.com/store/apps/details?id=com.tjcg.virtualvidhyapith",
     EMAIL_TEMPLATE_APP_STORE_ICON_URL: process.env.BASE_URL + "VV-LMS-SERVICE-COURSE-QUERY/getcontent/local/email_assets/appstore.png",
     EMAIL_TEMPLATE_PLAY_STORE_ICON_URL: process.env.BASE_URL + "VV-LMS-SERVICE-COURSE-QUERY/getcontent/local/email_assets/playstore.png",
@@ -80,4 +82,6 @@ module.exports = {
     INVOICE_VALOGO_IMAGE: process.env.BASE_URL + "VV-LMS-SERVICE-COURSE-QUERY/getcontent/local/invoice_assets/VAlogo.png",
     INVOICE_VICON_IMAGE: process.env.BASE_URL + "VV-LMS-SERVICE-COURSE-QUERY/getcontent/local/invoice_assets/VIcon.png",
     INVOICE_WEB_IMAGE: process.env.BASE_URL + "VV-LMS-SERVICE-COURSE-QUERY/getcontent/local/invoice_assets/web.png",
+    INVOICE_REGULAR_FONT: process.env.BASE_URL + "VV-LMS-SERVICE-COURSE-QUERY/getcontent/local/invoice_assets/GlacialIndifferenceRegular.otf",
+    INVOICE_BOLD_FONT: process.env.BASE_URL + "VV-LMS-SERVICE-COURSE-QUERY/getcontent/local/invoice_assets/GlacialIndifferenceBold.otf",
 };

@@ -9,7 +9,7 @@ module.exports = {
     //send mail address configuration
     EMAIL_TEMPLATE_MAIL_ID: "info@virtualafsar.com",
     EMAIL_TEMPLATE_MOBILE_NO: "+91 91042 91082",
-    EMAIL_TEMPLATE_ADDRESS: " Ganesh Meridian Complex, 8th, Floor, D, Sarkhej, Gandhinagar Hwy, Ahmedabad, Gujarat380061",
+    EMAIL_TEMPLATE_ADDRESS: "803, 8th Floor, Runway Heights,Ayodhya Chawk, 150 ft. Ring Road,Rajkot, Gujarat 360006",
 
     EMAIL_TEMPLATE_FACEBOOK_URL: process.env.BASE_URL + "VV-LMS-SERVICE-COURSE-QUERY/getcontent/local/email_assets/facebooks.png",
     EMAIL_TEMPLATE_INSTAGRAM_URL: process.env.BASE_URL + "VV-LMS-SERVICE-COURSE-QUERY/getcontent/local/email_assets/instagrams.png",

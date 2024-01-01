@@ -2400,11 +2400,11 @@ const checkCoursePurchase = async (userInputs) => {
 const sendTestMail = async (request) => { 
 
         // let subject1 = `welcome Template`;
-        // await sendMail("tjcloudtest@gmail.com", await welcomeTemplate(), subject1, "1", "welcome Template", false, "", "")
+        // await sendMail("jaymanekjay1@gmail.com", await welcomeTemplate(), subject1, "1", "welcome Template", false, "", "")
         // let subject2 = `course Purchase`;
-        // await sendMail("tjcloudtest@gmail.com", await coursePurchaseTemplate(), subject2, "1", "course Purchase Template", false, "", "")
+        // await sendMail("ansarikamal626@gmail.com", await coursePurchaseTemplate(), subject2, "1", "course Purchase Template", false, "", "")
         // let subject3 = `welcome With Credetials `;
-        // await sendMail("tjcloudtest@gmail.com", await welcomeWithCredetialsTemplate(), subject3, "1", "welcome With Credetials Template", false, "", "")
+        // await sendMail("ansarikamal626@gmail.com", await welcomeWithCredetialsTemplate(), subject3, "1", "welcome With Credetials Template", false, "", "")
         // let subject4 = `Not Use`;
         // await sendMail("tjcloudtest@gmail.com", await sendLoginCredencialTemplate(), subject4, "1", "Not Use", false, "", "")
 
@@ -2446,8 +2446,7 @@ const sendTestMail = async (request) => {
         let subject = `Invoice for course payment`;
 
         //send subscription invoice mail
-        await sendMail("tjcloudtest@gmail.com", pdfBody, subject, "1", "Course Payment", true, filePath, pdfName)
-
+        // await sendMail("tjcloudtest@gmail.com", pdfBody, subject, "1", "Course Payment", true, filePath, pdfName)
         return {
             status: true
         };

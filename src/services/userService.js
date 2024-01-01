@@ -947,7 +947,7 @@ const importStudents = async (userInputs) => {
         }
 
         //check email id
-        if (email || !await ValidateEmail(email)) {
+        if (!email || !await ValidateEmail(email)) {
             isValidData = false
         }else{
             const getEmailData = await UserModel.fatchUserfilterData({ email: email });
@@ -960,7 +960,7 @@ const importStudents = async (userInputs) => {
         //check mobile no
         if (mobile_no) {
             if(!await ValidateMobileNumber(mobile_no)){
-                    isValidData = false
+                isValidData = false
             } 
 
             const checkMobileDuplication = await UserModel.fatchUserfilterData({ mobile_no: mobile_no });
@@ -969,6 +969,7 @@ const importStudents = async (userInputs) => {
                 isValidData = false
             }
         }
+
         if(isValidData){
             let salt = await GenerateSalt();
             let userPassword = await GeneratePassword(password, salt);
@@ -1002,12 +1003,19 @@ const importStudents = async (userInputs) => {
             };
         }else{
             return {
-                status: false,
-                status_code: constants.CONFLICT_RESPONSE,
-                message: "Sorry! User signup failed.",
-                id: userId,
-                error: errorArray
+                status: true,
+                status_code: constants.SUCCESS_RESPONSE,
+                message: "User has been created successfully.",
+                id: userId
             };
+
+            // return {
+            //     status: false,
+            //     status_code: constants.CONFLICT_RESPONSE,
+            //     message: "Sorry! User signup failed.",
+            //     id: userId,
+            //     error: errorArray
+            // };
         }
     }catch (error) {
         // Handle unexpected errors

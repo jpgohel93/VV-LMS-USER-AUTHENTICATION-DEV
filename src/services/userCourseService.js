@@ -3,12 +3,13 @@ const constants = require('../utils/constant');
 const { createSubscription , cancelSubscription } = require('../utils/paymentManagement');
 const { CallCourseQueryEvent,CallCourseQueryDataEvent, CallCourseEvents, CallEventBus } = require('../utils/call-event-bus');
 const { coursePurchaseTemplate, subscriptionCancelTemplate, courseAssignedTemplate, welcomeTemplate, welcomeWithCredetialsTemplate, sendLoginCredencialTemplate } = require('../utils/email-template');
-const { createCronLogs, updateCronLogs, createApiCallLog, getNewDate, sendMail, generatePDF, sendPushNotification, findUniqueID, generateInvoiceNumber,invoiceYear } = require('../utils');
+const { createCronLogs, updateCronLogs, createApiCallLog, getNewDate, sendMail, generatePDF, sendPushNotification, findUniqueID, generateInvoiceNumber,invoiceYear,GeneratePassword, GenerateSalt, randomString } = require('../utils');
 const { encrypt, decrypt } = require('../utils/ccavenue');
 const moment = require('moment');
 const fs = require('fs');
 const qs = require('querystring');
 const { invoiceTemplate } = require('../utils/pdf-template');
+
 
 const assignCourse = async (userInputs,request) => {
     try{
@@ -1961,17 +1962,42 @@ const paymentResponse = async (request) => {
                     await generatePDF(pdfBody, pdfName);
                 
                     let email = userData?.email
-                    let subject = `Course purchase successfully`;
-                
+                    
                     let filePath = 'uploads/'+pdfName;
-
-                    let message = await coursePurchaseTemplate({ user_name:  `${userData.first_name} ${userData.last_name}`, subject: subject, course_title: courseTitle, course_id : courseId });
-
-                    //send subscription invoice mail
-                    let sendwait = await sendMail(email, message, subject, userId, "Course Payment", true, filePath, pdfName)
+                    if(userData?.is_funnel_user){
+                        let salt = await GenerateSalt();
+                        let password = await randomString(8);
+                        UserModel.updateUser(userId,{ 
+                            password: await GeneratePassword(password, salt)
+                        });
+        
+                        let subject = `Congratulations and Welcome to Virtual अफ़सर!`;
+                        let message = await welcomeWithCredetialsTemplate({ user_name: `${email}`, subject: subject, course_title: courseTitle, course_id : courseId, password: password });
+                        //send subscription invoice mail
+                        await sendMail(email, message, subject, userId, "Course Payment", true, filePath, pdfName)
+                    }else{
+                        let subject = `Confirmed: Your Payment is Successful`;
+                        let message = await coursePurchaseTemplate({ user_name:  `${userData.first_name} ${userData.last_name}`, subject: subject, course_title: courseTitle, course_id : courseId });
+                        //send subscription invoice mail
+                        await sendMail(email, message, subject, userId, "Course Payment", true, filePath, pdfName)
+                    }
                 }
                 
             }else if(paymentStatus == "Failure" || paymentStatus == "Aborted"){
+
+                if(userData?.is_funnel_user){
+                    let salt = await GenerateSalt();
+                    let password = await randomString(8);
+                    UserModel.updateUser(userId,{ 
+                        password: await GeneratePassword(password, salt)
+                    });
+    
+                    let subject = `Congratulations and Welcome to Virtual अफ़सर!`;
+                    let message = await welcomeWithCredetialsTemplate({ user_name: `${email}`, password: password});
+                    //send subscription invoice mail
+                    await sendMail(email, message, subject, userId, "Course Payment", false, "", "")
+                }
+
                 //update user course data
                 await UserCourseModel.updateUserCourseUsingInvoice(invoiceData._id,{
                     payment_status: 3,

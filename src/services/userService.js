@@ -309,7 +309,7 @@ const loginWithSocialAccount = async (userInputs) => {
                 });
 
                 if(email){
-                    let subject = "Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!";
+                    let subject = "Welcome- Future Officers to Virtual अफ़सर";
                     let message = await welcomeTemplate({ user_name: `${first_name} ${last_name}`, subject: subject});
                     sendMail(email, message, subject, createStudent._id, "Add User");
                 }
@@ -687,7 +687,7 @@ const quickSignup = async (userInputs) => {
 
                 let jwtToken = await GenerateSignature(jwtData);
                 
-                let subject = "Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!";
+                let subject = "Welcome- Future Officers to Virtual अफ़सर";
                 let message = await welcomeTemplate({ user_name: `${first_name} ${last_name}`, subject: subject});
                 await sendMail(email, message, subject, studentId, "Add User");
 
@@ -803,6 +803,10 @@ const addUser = async (userInputs) => {
             //     studentData['is_verify_otp'] = true
             // }
 
+            if(is_funnel_user){
+                studentData['is_funnel_user'] = true
+            }
+
             if(ip_address){
                 let locationData = await GetUserLocation(ip_address);
 
@@ -840,10 +844,11 @@ const addUser = async (userInputs) => {
             }
 
             let createStudent = null
+            let isNewUser = false
             if(isOtpNotValidate && studentId){
                 createStudent = await UserModel.updateUser(studentId,studentData);
             }else{
-                
+                isNewUser = true
                 studentData['user_referral_code'] = await findUserReferralCode()
 
                 createStudent = await UserModel.createUser(studentData);
@@ -885,9 +890,13 @@ const addUser = async (userInputs) => {
 
                 let jwtToken = await GenerateSignature(jwtData);
                 
-                let subject = "Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!";
-                let message = await welcomeTemplate({ user_name: `${first_name} ${last_name}`, subject: subject});
-                await sendMail(email, message, subject, studentId, "Add User"); 
+                if(isNewUser){
+                    if(!is_funnel_user){
+                        let subject = "Welcome- Future Officers to Virtual अफ़सर";
+                        let message = await welcomeTemplate({ user_name: `${first_name} ${last_name}`, subject: subject});
+                        await sendMail(email, message, subject, studentId, "Add User"); 
+                    }
+                }
 
                 return {
                     status: true,
@@ -991,7 +1000,7 @@ const importStudents = async (userInputs) => {
                 user_referral_code: await findUserReferralCode()
             });
             userId = createUser._id
-            let subject = "Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!";
+            let subject = "Congratulations and Welcome to Virtual अफ़सर!";
             let message = await welcomeWithCredetialsTemplate({ user_name: `${first_name} ${last_name}`, subject: subject, mobile_no: `+${country_code} ${mobile_no}`, password: password});
             let sendwait = await sendMail(email, message, subject, userId, "Import Student");
             
@@ -1175,7 +1184,7 @@ const verifyOtp = async (userInputs) => {
 
                 let jwtToken = await GenerateSignature(jwtData);
 
-                let subject = "Welcome to Virtual Vidhyapith LMS - Unlock Your Learning Potential!!";
+                let subject = "Welcome- Future Officers to Virtual अफ़सर";
                 let message = await welcomeTemplate({ user_name: `${getUserData.first_name} ${getUserData.last_name}`, subject: subject});
                 await sendMail(getUserData.email, message, subject, getUserData.id, "Add User");
 

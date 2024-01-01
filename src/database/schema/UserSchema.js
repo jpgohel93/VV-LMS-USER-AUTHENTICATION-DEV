@@ -29,6 +29,10 @@ const UserSchema = new Schema({
         type: Boolean,
         default: false
     },
+    is_funnel_user: {
+        type: Boolean,
+        default: false
+    },
     is_deleted: {
         type: Boolean,
         default: false

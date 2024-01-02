@@ -8,7 +8,9 @@ module.exports = {
 
     //send mail address configuration
     EMAIL_TEMPLATE_MAIL_ID: "info@virtualafsar.com",
-    EMAIL_TEMPLATE_MOBILE_NO: "+91 91042 91082",
+    // EMAIL_TEMPLATE_MOBILE_NO: "+91 91042 91082",
+    EMAIL_TEMPLATE_MOBILE_NO: "+91 848-79-848-59",
+
     EMAIL_TEMPLATE_ADDRESS: "803, 8th Floor, Runway Heights,Ayodhya Chawk, 150 ft. Ring Road,Rajkot, Gujarat 360006",
 
     EMAIL_TEMPLATE_FACEBOOK_URL: process.env.BASE_URL + "VV-LMS-SERVICE-COURSE-QUERY/getcontent/local/email_assets/facebooks.png",
@@ -44,6 +46,10 @@ module.exports = {
     EMAIL_TEMPLATE_YYT_URL: process.env.BASE_URL + "VV-LMS-SERVICE-COURSE-QUERY/getcontent/local/email_assets/yyt.png",
     EMAIL_TEMPLATE_HINDITXT_URL: process.env.BASE_URL + "VV-LMS-SERVICE-COURSE-QUERY/getcontent/local/email_assets/hindiTxt.png",
     EMAIL_TEMPLATE_WHITEBG_URL: process.env.BASE_URL + "VV-LMS-SERVICE-COURSE-QUERY/getcontent/local/email_assets/whiteBg.png",
+    EMAIL_TEMPLATE_COURSEUP_URL: process.env.BASE_URL + "VV-LMS-SERVICE-COURSE-QUERY/getcontent/local/email_assets/csUp.png",
+    EMAIL_TEMPLATE_COURSEDOWN_URL: process.env.BASE_URL + "VV-LMS-SERVICE-COURSE-QUERY/getcontent/local/email_assets/csDown.png",
+    EMAIL_TEMPLATE_COURSEPURSEPURCHASE_URL: process.env.BASE_URL + "VV-LMS-SERVICE-COURSE-QUERY/getcontent/local/email_assets/coursePurchase.png",
+    
     
     EMAIL_TEMPLATE_FACEBOOK_LINK: "https://www.facebook.com/profile.php?id=100095410212980&mibextid=ZbWKwL",
     EMAIL_TEMPLATE_INSTAGRAM_LINK: "https://instagram.com/virtualafsar?igshid=MzRlODBiNWFlZA==",

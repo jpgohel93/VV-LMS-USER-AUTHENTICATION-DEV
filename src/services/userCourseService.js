@@ -2,7 +2,7 @@ const { UserCourseModel, CourseWatchHistoryModel, UserModel, InvoiceModel, CartM
 const constants = require('../utils/constant');
 const { createSubscription , cancelSubscription } = require('../utils/paymentManagement');
 const { CallCourseQueryEvent,CallCourseQueryDataEvent, CallCourseEvents, CallEventBus } = require('../utils/call-event-bus');
-const { coursePurchaseTemplate, subscriptionCancelTemplate, courseAssignedTemplate, welcomeTemplate, welcomeWithCredetialsTemplate, sendLoginCredencialTemplate, forgotPasswordTemplate } = require('../utils/email-template');
+const { coursePurchaseTemplate, subscriptionCancelTemplate, courseAssignedTemplate, welcomeTemplate, welcomeWithCredetialsTemplate, sendLoginCredencialTemplate, forgotPasswordTemplate , sendLoginCredencial} = require('../utils/email-template');
 const { createCronLogs, updateCronLogs, createApiCallLog, getNewDate, sendMail, generatePDF, sendPushNotification, findUniqueID, generateInvoiceNumber,invoiceYear,GeneratePassword, GenerateSalt, randomString } = require('../utils');
 const { encrypt, decrypt } = require('../utils/ccavenue');
 const moment = require('moment');
@@ -2426,16 +2426,28 @@ const checkCoursePurchase = async (userInputs) => {
     }
   
 }
+// ayushnandoriya@gmail.com ansarikamal626@gmail.com
 
 const sendTestMail = async (request) => { 
 
-        let subject1 = `Welcome- Future Officers to Virtual अफ़सर`;
-        await sendMail("ayushnandoriya@gmail.com", await welcomeTemplate(), subject1, "1", "welcome Template", false, "", "")
-        let subject3 = `Reset Your Password Now! `;
-        await sendMail("ayushnandoriya@gmail.com", await forgotPasswordTemplate({ link: "https://virtualafsar.com/resetPassword?id=ansarikamal626@gmail.com" }), subject3, "1", "welcome With Credetials Template", false, "", "")
+        // let subject1 = `Welcome- Future Officers to Virtual अफ़सर`;
+        // await sendMail("ayushnandoriya@gmail.com", await welcomeTemplate(), subject1, "1", "welcome Template", false, "", "")
+
+        let subject1 = `Congratulations and Welcome to Virtual अफ़सर!`;
+        await sendMail("ayushnandoriya@gmail.com", await welcomeWithCredetialsTemplate({
+            name: "Vatsal Kothari", user_name: 'vatsal@gmail.com', password: 'Test@123'
+        }), subject1, "1", "welcome Template", false, "", "")
+
+        // let subject3 = `Reset Your Password Now! `;
+        // await sendMail("ayushnandoriya@gmail.com", await forgotPasswordTemplate({ link: "https://virtualafsar.com/resetPassword?id=ansarikamal626@gmail.com" }), subject3, "1", "welcome With Credetials Template", false, "", "")
         
         // let subject2 = `course Purchase`;
-        // await sendMail("ansarikamal626@gmail.com", await coursePurchaseTemplate(), subject2, "1", "course Purchase Template", false, "", "")
+        // await sendMail("ayushnandoriya@gmail.com", await coursePurchaseTemplate(), subject2, "1", "course Purchase Template", false, "", "")
+
+        
+        // let subject4 = `send Login Credencial`;
+        // await sendMail("ayushnandoriya@gmail.com", await sendLoginCredencial(), subject4, "1", "sendLoginCredencial", false, "", "")
+
         // let subject4 = `Not Use`;
         // await sendMail("tjcloudtest@gmail.com", await sendLoginCredencialTemplate(), subject4, "1", "Not Use", false, "", "")
 

@@ -7,6 +7,7 @@ const nodemailer = require("nodemailer");
 const { SmsLogModel, ApiCallsModel, ConjobLogModel, EmailLogsModel, InvoiceModel, UserModel} = require('../database');
 const fs = require('fs');
 var ip2location = require('ip-to-location');
+const pdfLib = require('pdf-lib');
 
 //Utility functions
 module.exports.GenerateSalt = async () => {
@@ -468,17 +469,26 @@ module.exports.sendMail = async (email, body, subject, userId, module, attachmen
 
 module.exports.generatePDF = async (body, pdfName) => {
 	//Tabloid
-	const options = { format: 'A4',childProcessOptions: { 
-		env: {
-		  OPENSSL_CONF: '/dev/null',
-		},
-	  },border: {
-		top: '0in',
-		right: '0in',
-		bottom: '0in',
-		left: '0in',
-	} };
+	// const options = { format: 'A4', type: 'pdf',  quality: "30" };
 
+	// const pdfBuffer = await new Promise((resolve, reject) => {
+	// 	pdf.create(body, options).toBuffer(async (err, buffer) => {
+	// 	  if (err) {
+	// 		reject(err);
+	// 	  } else {
+
+	// 		const pdfDoc = await pdfLib.PDFDocument.load(buffer);
+  	// 		const compressedBuffer = await pdfDoc.save();
+  
+	// 		fs.writeFileSync('uploads/' + pdfName, compressedBuffer);
+	// 		resolve(buffer);
+	// 	  }
+	// 	});
+	//   });
+
+
+	// return true;
+	const options = { format: 'A4' };
 	return await new Promise(async (resolve, reject) => {
 		await pdf.create(body, options).toFile('uploads/'+pdfName, function (err, res) {
 			if (err){ 

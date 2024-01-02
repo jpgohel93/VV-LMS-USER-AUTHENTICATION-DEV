@@ -43,6 +43,7 @@ module.exports = {
     EMAIL_TEMPLATE_YWEB_URL: process.env.BASE_URL + "VV-LMS-SERVICE-COURSE-QUERY/getcontent/local/email_assets/yweb.png",
     EMAIL_TEMPLATE_YYT_URL: process.env.BASE_URL + "VV-LMS-SERVICE-COURSE-QUERY/getcontent/local/email_assets/yyt.png",
     EMAIL_TEMPLATE_HINDITXT_URL: process.env.BASE_URL + "VV-LMS-SERVICE-COURSE-QUERY/getcontent/local/email_assets/hindiTxt.png",
+    EMAIL_TEMPLATE_WHITEBG_URL: process.env.BASE_URL + "VV-LMS-SERVICE-COURSE-QUERY/getcontent/local/email_assets/whiteBg.png",
     
     EMAIL_TEMPLATE_FACEBOOK_LINK: "https://www.facebook.com/profile.php?id=100095410212980&mibextid=ZbWKwL",
     EMAIL_TEMPLATE_INSTAGRAM_LINK: "https://instagram.com/virtualafsar?igshid=MzRlODBiNWFlZA==",

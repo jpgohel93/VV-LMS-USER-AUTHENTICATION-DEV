@@ -2,7 +2,7 @@ const { UserCourseModel, CourseWatchHistoryModel, UserModel, InvoiceModel, CartM
 const constants = require('../utils/constant');
 const { createSubscription , cancelSubscription } = require('../utils/paymentManagement');
 const { CallCourseQueryEvent,CallCourseQueryDataEvent, CallCourseEvents, CallEventBus } = require('../utils/call-event-bus');
-const { coursePurchaseTemplate, subscriptionCancelTemplate, courseAssignedTemplate, welcomeTemplate, welcomeWithCredetialsTemplate, sendLoginCredencialTemplate } = require('../utils/email-template');
+const { coursePurchaseTemplate, subscriptionCancelTemplate, courseAssignedTemplate, welcomeTemplate, welcomeWithCredetialsTemplate, sendLoginCredencialTemplate, forgotPasswordTemplate } = require('../utils/email-template');
 const { createCronLogs, updateCronLogs, createApiCallLog, getNewDate, sendMail, generatePDF, sendPushNotification, findUniqueID, generateInvoiceNumber,invoiceYear,GeneratePassword, GenerateSalt, randomString } = require('../utils');
 const { encrypt, decrypt } = require('../utils/ccavenue');
 const moment = require('moment');
@@ -1090,13 +1090,14 @@ const coursePaymentResponse = async (userInputs) => {
                     )
                 }
                 
-                const pdfName = order_id+".pdf";
+                const pdfName = "Invoice_#" + order_id+".pdf";
 
                 const invoiceData = {
                     status: paymentStatus,
                     amount:subScriptionData.amount,
                     username: `${userData.first_name} ${userData.last_name}`,
-                    mobile_no: `${userData.first_name} ${userData.last_name}`,
+                    mobile_no: userData?.mobile_no ? `+ ${userData.country_code} ${userData.mobile_no}` : "",
+                    email: userData?.email ? userData?.email : "",
                     issue_data: moment(new Date()).format('MMMM.Do.YYYY'),
                     due_date: moment(new Date()).format('MMMM.Do.YYYY'),
                     course: courseArray
@@ -1513,7 +1514,8 @@ const getInvoice = async (userInputs) => {
                 convince_fee: invoiceData?.convince_fee || 0,
                 convince_fee_amount: invoiceData?.convince_fee_amount || 0,
                 username: `${userData.first_name} ${userData.last_name}`,
-                mobile_no: userData?.mobile_no ? `${userData.country_code} ${userData.mobile_no}` : "",
+                mobile_no: userData?.mobile_no ? `+ ${userData.country_code} ${userData.mobile_no}` : "",
+                email: userData?.email ? userData?.email : "",
                 issue_data: moment(new Date()).format('MMMM/DD/YYYY'),
                 due_date: moment(new Date()).format('MMMM/DD/YYYY'),
                 course_title: courseArray?.length > 0 ? courseArray[0].course_title : 0,
@@ -1935,7 +1937,7 @@ const paymentResponse = async (request) => {
                         )
                     }
                     
-                    const pdfName = orderId+".pdf";
+                    const pdfName = "Invoice_#" + orderId+".pdf";
 
                     const invoice = {
                         status: paymentStatus, // unpaid, paid, failed, refunded
@@ -1953,6 +1955,8 @@ const paymentResponse = async (request) => {
                         convince_fee: invoiceData?.convince_fee || 0,
                         convince_fee_amount: invoiceData?.convince_fee_amount || 0,
                         username: `${userData.first_name} ${userData.last_name}`,
+                        mobile_no: userData?.mobile_no ? `+ ${userData.country_code} ${userData.mobile_no}` : "",
+                        email: userData?.email ? userData?.email : "",
                         issue_data: moment(new Date()).format('MMMM/DD/YYYY'),
                         due_date: moment(new Date()).format('MMMM/DD/YYYY'),
                         course_title: courseArray?.length > 0 ? courseArray[0].course_title : 0,
@@ -1964,7 +1968,7 @@ const paymentResponse = async (request) => {
                     let email = userData?.email
                     
                     let filePath = 'uploads/'+pdfName;
-                    if(userData?.is_funnel_user){
+                    if(userData?.is_funnel_user && userData?.is_new_user){
                         let salt = await GenerateSalt();
                         let password = await randomString(8);
                         UserModel.updateUser(userId,{ 
@@ -1972,12 +1976,12 @@ const paymentResponse = async (request) => {
                         });
         
                         let subject = `Congratulations and Welcome to Virtual अफ़सर!`;
-                        let message = await welcomeWithCredetialsTemplate({ user_name: `${email}`, subject: subject, course_title: courseTitle, course_id : courseId, password: password });
+                        let message = await welcomeWithCredetialsTemplate({ name: `${userData.first_name} ${userData.last_name}`,user_name: `${email}`, subject: subject, course_title: courseTitle, course_id : courseId, password: password });
                         //send subscription invoice mail
                         await sendMail(email, message, subject, userId, "Course Payment", true, filePath, pdfName)
                     }else{
                         let subject = `Confirmed: Your Payment is Successful`;
-                        let message = await coursePurchaseTemplate({ user_name:  `${userData.first_name} ${userData.last_name}`, subject: subject, course_title: courseTitle, course_id : courseId });
+                        let message = await coursePurchaseTemplate({ name: `${userData.first_name} ${userData.last_name}`,user_name: `${email}`, subject: subject, course_title: courseTitle, course_id : courseId });
                         //send subscription invoice mail
                         await sendMail(email, message, subject, userId, "Course Payment", true, filePath, pdfName)
                     }
@@ -1985,7 +1989,7 @@ const paymentResponse = async (request) => {
                 
             }else if(paymentStatus == "Failure" || paymentStatus == "Aborted"){
 
-                if(userData?.is_funnel_user){
+                if(userData?.is_funnel_user && userData?.is_new_user){
                     let salt = await GenerateSalt();
                     let password = await randomString(8);
                     UserModel.updateUser(userId,{ 
@@ -1993,7 +1997,7 @@ const paymentResponse = async (request) => {
                     });
     
                     let subject = `Congratulations and Welcome to Virtual अफ़सर!`;
-                    let message = await welcomeWithCredetialsTemplate({ user_name: `${email}`, password: password});
+                    let message = await welcomeWithCredetialsTemplate({ name: `${userData.first_name} ${userData.last_name}`, user_name: `${email}`, password: password, subject: subject });
                     //send subscription invoice mail
                     await sendMail(email, message, subject, userId, "Course Payment", false, "", "")
                 }
@@ -2425,54 +2429,53 @@ const checkCoursePurchase = async (userInputs) => {
 
 const sendTestMail = async (request) => { 
 
-        // let subject1 = `welcome Template`;
-        // await sendMail("jaymanekjay1@gmail.com", await welcomeTemplate(), subject1, "1", "welcome Template", false, "", "")
+        let subject1 = `Welcome- Future Officers to Virtual अफ़सर`;
+        await sendMail("ayushnandoriya@gmail.com", await welcomeTemplate(), subject1, "1", "welcome Template", false, "", "")
+        let subject3 = `Reset Your Password Now! `;
+        await sendMail("ayushnandoriya@gmail.com", await forgotPasswordTemplate({ link: "https://virtualafsar.com/resetPassword?id=ansarikamal626@gmail.com" }), subject3, "1", "welcome With Credetials Template", false, "", "")
+        
         // let subject2 = `course Purchase`;
         // await sendMail("ansarikamal626@gmail.com", await coursePurchaseTemplate(), subject2, "1", "course Purchase Template", false, "", "")
-        // let subject3 = `welcome With Credetials `;
-        // await sendMail("ansarikamal626@gmail.com", await welcomeWithCredetialsTemplate(), subject3, "1", "welcome With Credetials Template", false, "", "")
         // let subject4 = `Not Use`;
         // await sendMail("tjcloudtest@gmail.com", await sendLoginCredencialTemplate(), subject4, "1", "Not Use", false, "", "")
 
         // let message = " Welcome to Virtual Afsar... \n nbsp ऐसे ही सरकारी अधिकारी की Car की Booking नहीं होती, यह मिलती है UPSC जैसी Exam Clear करने पर।"
         // sendSingleSms(91 ,"9512742802", message, process.env.SMS_OTP_TEMPLATEID, user_id,1)
-        // return {
-        //     status: true
+
+
+        // const pdfName = "Invoice_#" +"dsafdsf41fds54f5sfd.pdf";
+
+        // const invoice = {
+        //     status: "paid", 
+        //     amount: 1000,
+        //     course_base_price: 100,
+        //     discount_amount: 10,
+        //     discount: 10,
+        //     is_tax_inclusive: false,
+        //     is_tax_exclusive: false,
+        //     tax_percentage: 10,
+        //     heman_discount_amount: 10,
+        //     coupon_code: '',
+        //     coupon_amount: 10,
+        //     tax_amount: 10,
+        //     convince_fee: 2,
+        //     convince_fee_amount: 10,
+        //     username: `fdgdfg dfgd gdf dg`,
+        //     issue_data: moment(new Date()).format('MMMM/DD/YYYY'),
+        //     due_date: moment(new Date()).format('MMMM/DD/YYYY'),
+        //     course_title: "gdfgfdfddfgdff",
+        //     invoice_id: "10005/2024-25",
+        //     mobile_no: "+91 0909890989",
+        //     email: "Sfsffsd@gmail.com"
         // };
+        // const pdfBody = await invoiceTemplate(invoice);
+        // await generatePDF(pdfBody, pdfName);
+        // let filePath = 'uploads/'+pdfName;
 
-
-        const pdfName = "sdfsdfsfsd.pdf";
-
-        const invoice = {
-            status: "paid", 
-            amount: 1000,
-            course_base_price: 100,
-            discount_amount: 10,
-            discount: 10,
-            is_tax_inclusive: false,
-            is_tax_exclusive: false,
-            tax_percentage: 10,
-            heman_discount_amount: 10,
-            coupon_code: '',
-            coupon_amount: 10,
-            tax_amount: 10,
-            convince_fee: 2,
-            convince_fee_amount: 10,
-            username: `fdgdfg dfgd gdf dg`,
-            issue_data: moment(new Date()).format('MMMM/DD/YYYY'),
-            due_date: moment(new Date()).format('MMMM/DD/YYYY'),
-            course_title: "gdfgfdfddfgdff",
-            invoice_id: "dfgdgdfgfdfd",
-            mobile_no: "+91 0909890989"
-        };
-        const pdfBody = await invoiceTemplate(invoice);
-        await generatePDF(pdfBody, pdfName);
-        let filePath = 'uploads/'+pdfName;
-
-        let subject = `Invoice for course payment`;
+        // let subject = `Invoice for course payment`;
 
         //send subscription invoice mail
-        // await sendMail("tjcloudtest@gmail.com", pdfBody, subject, "1", "Course Payment", true, filePath, pdfName)
+        //await sendMail("tjcloudtest@gmail.com", pdfBody, subject, "1", "Course Payment", true, filePath, pdfName)
         return {
             status: true
         };
@@ -2748,7 +2751,7 @@ const payByApplePay = async (userInputs, request) => {
             )
         }
         
-        const pdfName = orderId+".pdf";
+        const pdfName = "Invoice_#" + orderId+".pdf";
 
         const invoice = {
             status: "paid",
@@ -2766,7 +2769,8 @@ const payByApplePay = async (userInputs, request) => {
             convince_fee: courseData?.convince_fee || 0,
             convince_fee_amount: convince_fee_amount ? Math.round(convince_fee_amount) : 0,
             username: `${userData.first_name} ${userData.last_name}`,
-            mobile_no: userData?.mobile_no ? `${userData.country_code} ${userData.mobile_no}` : "",
+            mobile_no: userData?.mobile_no ? `+ ${userData.country_code} ${userData.mobile_no}` : "",
+            email: userData?.email ? userData?.email : "",
             issue_data: moment(new Date()).format('MMMM/DD/YYYY'),
             due_date: moment(new Date()).format('MMMM/DD/YYYY'),
             course_title: courseData?.course_title || "Course",
@@ -2774,7 +2778,7 @@ const payByApplePay = async (userInputs, request) => {
         };
 
         const pdfBody = await invoiceTemplate(invoice);
-        await generatePDF(pdfBody, pdfName);
+        await `generatePDF`(pdfBody, pdfName);
     
         let email = userData?.email
         let subject = `Invoice for course payment`;

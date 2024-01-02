@@ -33,6 +33,10 @@ const UserSchema = new Schema({
         type: Boolean,
         default: false
     },
+    is_new_user: {
+        type: Boolean,
+        default: false
+    },
     is_deleted: {
         type: Boolean,
         default: false

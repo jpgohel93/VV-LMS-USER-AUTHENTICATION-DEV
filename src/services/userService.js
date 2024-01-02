@@ -204,7 +204,7 @@ const loginWithSocialAccount = async (userInputs) => {
                     }
                 }
             }
-            
+            studentData['is_new_user'] = false
             UserModel.updateUser(getUserData._id,updateUserData);
 
             await UserMobileActivityModel.createUserLoginHistory({ 
@@ -273,6 +273,7 @@ const loginWithSocialAccount = async (userInputs) => {
                 }
             }
 
+            studentData['is_new_user'] = true
             const createStudent = await UserModel.createUser(studentData); 
 
             if(createStudent){
@@ -642,9 +643,10 @@ const quickSignup = async (userInputs) => {
 
             let createStudent = null
             if(studentId){
+                studentData['is_new_user'] = false
                 createStudent = await UserModel.updateUser(studentId,studentData);
             }else{
-                
+                studentData['is_new_user'] = true
                 studentData['user_referral_code'] = await findUserReferralCode()
 
                 createStudent = await UserModel.createUser(studentData);
@@ -847,9 +849,11 @@ const addUser = async (userInputs) => {
             let isNewUser = false
             if(isOtpNotValidate && studentId){
                 createStudent = await UserModel.updateUser(studentId,studentData);
+                studentData['is_new_user'] = false
             }else{
                 isNewUser = true
                 studentData['user_referral_code'] = await findUserReferralCode()
+                studentData['is_new_user'] = true
 
                 createStudent = await UserModel.createUser(studentData);
                 studentId = createStudent._id
@@ -997,7 +1001,8 @@ const importStudents = async (userInputs) => {
                 status: 1,
                 user_type: 3,
                 user_signup_with: 6,
-                user_referral_code: await findUserReferralCode()
+                user_referral_code: await findUserReferralCode(),
+                is_new_user: true
             });
             userId = createUser._id
             let subject = "Congratulations and Welcome to Virtual अफ़सर!";
@@ -1746,7 +1751,8 @@ const addStudent = async (userInputs) => {
                 is_tc_verify: true,
                 is_verify_otp: true,
                 profile_image: profile_image,
-                user_referral_code: await findUserReferralCode()
+                user_referral_code: await findUserReferralCode(),
+                is_new_user: true
             };
             if(notification_device_id){
                 createUserData['notification_device_id'] = notification_device_id;

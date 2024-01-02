@@ -370,12 +370,14 @@ module.exports = (app) => {
                         //send subscription mail with invoice mail
                         if(userData?.email){
                             let courseData = await CallCourseQueryEvent("get_course_data_without_auth",{ id: userCourseData?.course_id  },' ')
-                            const pdfName = invoice_id+".pdf";
+                            const pdfName = "Invoice_#" + invoice_id+".pdf";
         
                             const invoiceData = {
                                 status: 'paid',
                                 amount: amount,
                                 username: `${userData.first_name} ${userData.last_name}`,
+                                mobile_no: userData?.mobile_no ? `+ ${userData.country_code} ${userData.mobile_no}` : "",
+                                email: userData?.email ? userData?.email : "",
                                 issue_data: moment(new Date()).format('MMMM.Do.YYYY'),
                                 due_date: moment(new Date()).format('MMMM.Do.YYYY'),
                                 course:[{
@@ -553,12 +555,14 @@ module.exports = (app) => {
                         //send subscription mail with invoice mail
                         if(userData?.email){
                             let courseData = await CallCourseQueryEvent("get_course_data_without_auth",{ id: userCourseData?.course_id  },' ')
-                            const pdfName = invoice_id+".pdf";
+                            const pdfName = "Invoice_#" +invoice_id+".pdf";
 
                             const invoiceData = {
                                 status: 'failed',
                                 amount: amount,
                                 username: `${userData.first_name} ${userData.last_name}`,
+                                mobile_no: userData?.mobile_no ? `+ ${userData.country_code} ${userData.mobile_no}` : "",
+                                email: userData?.email ? userData?.email : "",
                                 issue_data: moment(new Date()).format('MMMM.Do.YYYY'),
                                 due_date: moment(new Date()).format('MMMM.Do.YYYY'),
                                 course:[{

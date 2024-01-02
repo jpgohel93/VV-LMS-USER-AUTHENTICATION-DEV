@@ -136,360 +136,137 @@ module.exports.templateFooter = async (data) => {
 };
 
 module.exports.welcomeTemplate = async (data) => {
-  // const header = await this.templateHeader(data);
-  // const footer = await this.templateFooter(data);
-  // return (
-  //   (await `${header}
-  //   <div style="padding:0 20px">
-  //       <p style="font-weight:400;font-size:1.2rem">Dear `) +
-  //   data.user_name +
-  //   `,</p>
-  //   </div>
-  //   <div style="padding:0 20px">
-  //       <p style="font-weight:400;font-size:1.2rem;color: white;">Greetings and a warm welcome to the College UPSC Course- Campus se Collector on the Virtual Afsar App!</p>
-  //   </div>
-  //   <div style="padding:0 20px">
-  //       <p style="font-weight:400;font-size:1.2rem;color: white;">We are thrilled to have you embark on this transformative journey with us. This online course is meticulously crafted to equip you with the essential tools, strategies, and knowledge necessary to excel in your UPSC preparations while navigating the challenges of college life.</p>
-  //   </div>
-  //   <div style="padding:0 20px">
-  //       <p style="font-weight:400;font-size:1.2rem;color: white;">Throughout this course, you'll benefit from engaging lectures, comprehensive study materials, interactive quizzes, and personalized guidance from our experienced educators. Our goal is not just to impart information but to foster a deep understanding of the UPSC examination pattern and its nuances, empowering you to approach it with confidence and competence.</p>
-  //   </div>
-  //   <div style="padding:0 20px">
-  //       <p style="font-weight:400;font-size:1.2rem;color: white;">In this dynamic learning environment, we encourage active participation, questions, and discussions to ensure a fulfilling learning experience. Your dedication and commitment combined with our resources will undoubtedly pave the way for success in your UPSC journey.</p>
-  //   </div>
-  //   <div style="padding:0 20px">
-  //       <p style="font-weight:400;font-size:1.2rem;color: white;">Feel free to explore the course modules and make the most of the myriad resources available to you on the Virtual Afsar App.</p>
-  //   </div>
-  //   <div style="padding:0 20px">
-  //       <p style="font-weight:400;font-size:1.2rem;color: white;">Additionally, stay connected with us on social media to receive updates, tips, and exclusive content:</p>
-  //   </div>
-  //   <div style="padding:0 20px">
-  //       <p style="font-weight:400;font-size:1.2rem;color: white;">Once again, welcome aboard, and let's commence this enriching academic expedition together!</p>
-  //   </div>
-  //   <div style="padding:0 20px">
-  //       <p style="font-weight:400;font-size:15px;color: white;">Best regards,</p>
-  //       <p style="font-weight:400;font-size:15px;color: white;">Virtual Afsar Team</p>
-  //   </div>
-  //   ${footer}
-  //   `
-  // );
-
-  // return await `
-  // <!doctype html>
-  //     <html lang="en">
-
-  //     <head>
-  //         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  //         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  //         <title>Simple Transactional Email</title>
-  //     </head>
-
-  //     <body
-  //         style="-webkit-font-smoothing: antialiased; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; margin: 0; padding: 0;">
-  //         <table role="presentation" border="0" cellpadding="0" cellspacing="0"
-  //             style="border-collapse: separate; background-color: #FFF; width: 100%;">
-  //             <tr>
-  //                 <!-- Extra TD -->
-  //                 <td style="font-size: 16px; vertical-align: top;" valign="top">&nbsp;
-  //                 </td>
-
-  //                 <!-- Main TD -->
-  //                 <td style="font-size: 16px; vertical-align: top; max-width: 600px; padding: 0; width: 600px; margin: 0 auto;"
-  //                     width="600" valign="top">
-  //                     <div style="box-sizing: border-box; display: block; margin: 0 auto; max-width: 600px; padding: 0;">
-
-  //                         <!-- START CENTERED WHITE CONTAINER -->
-  //                         <span
-  //                             style="color: transparent; display: none; height: 0; max-height: 0; max-width: 0; opacity: 0; overflow: hidden; visibility: hidden; width: 0;">This
-  //                             is preheader text. Some clients will show this text as a preview.</span>
-  //                         <table role="presentation" border="0" cellpadding="0" cellspacing="0"
-  //                             style="border-collapse: separate; background: #ffffff; width: 100%;" width="100%">
-
-  //                             <!-- START MAIN CONTENT AREA -->
-  //                             <tr>
-  //                                 <td style="font-size: 16px; vertical-align: top; box-sizing: border-box;" valign="top">
-  //                                     <table role="presentation" border="0" cellpadding="0" cellspacing="0"
-  //                                         style="border-collapse: separate; box-sizing: border-box; width: 100%; min-width: 100%;"
-  //                                         width="100%">
-  //                                         <tbody>
-  //                                             <tr>
-  //                                                 <td align="center" style="padding: 20px; padding-bottom: 30px;"
-  //                                                     valign="center">
-  //                                                   <a href="${ constants.EMAIL_BASE_URL }" target="_blank" style="text-decoration: none;">
-  //                                                     <img src="${ constants.EMAIL_TEMPLATE_LOGOGIF_URL }" />
-  //                                                 </a>
-  //                                                 </td>
-  //                                             </tr>
-  //                                             <tr>
-  //                                                 <td valign="center">
-  //                                                     <img src="${ constants.EMAIL_TEMPLATE_HERO3_URL }" height="500" width="100%" />
-  //                                                 </td>
-  //                                             </tr>
-  //                                             <tr>
-  //                                                 <td style="text-align: center;">
-  //                                                     <div
-  //                                                         style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
-  //                                                         <div style="display: flex;flex-direction: row;">
-  //                                                             <p
-  //                                                                 style="font-family: sans-serif; font-size: 30px; margin: 0 8px 8px 0; font-weight: bold; color: rgb(255, 164, 79);">
-  //                                                                 Welcome to</p>
-  //                                                             <span
-  //                                                                 style="font-family: sans-serif;font-size: 30px; margin: 0 0 8px 0;color: rgb(42, 42, 150);">Virtual
-  //                                                                 Afsar...</span>
-  //                                                         </div>
-  //                                                         <p
-  //                                                             style="font-size: 20px; text-align: center;font-family: sans-serif; font-weight: normal; color: rgb(50, 75, 118);">
-  //                                                             ऐसे ही सरकारी अधिकारी की Car की Booking नही होती, यह मिलती है
-  //                                                             UPSC जैसी Exam Clear करने पर। सपनों की उड़ान, जैसे पंख फैलाने का
-  //                                                             आया हैं सुनहरा अवसर, आपके सपनों को साकार करने हम लाये है Virtual
-  //                                                             Afsar.</p>
-  //                                                     </div>
-  //                     </div>
-  //                 </td>
-  //             </tr>
-
-  //             <tr>
-  //                 <td valign="center">
-  //                     <img src="${ constants.EMAIL_TEMPLATE_BOYMOBILE_URL }" height="690" width="100%" style="margin-bottom: -4px;" />
-  //                 </td>
-  //             </tr>
-  //             <!-- START FOOTER -->
-  //             <tr style="background-color:#032b4e;">
-  //                 <td style="padding: 20px 35px;">
-  //                     <table role="presentation" border="0" cellpadding="0" cellspacing="0"
-  //                         style="box-sizing: border-box; width: 100%; min-width: 100%;" width="100%">
-  //                         <tbody>
-  //                             <tr>
-  //                                 <tr>
-  //                                     <td style="vertical-align:baseline">
-  //                                         <p>
-  //                                             <a href="${ constants.EMAIL_TEMPLATE_APP_STORE_URL }"
-  //                                                 style="cursor:pointer;text-decoration: none;" target="_blank">
-  //                                                 <img src="${ constants.EMAIL_TEMPLATE_APP_STORE_ICON_URL }"
-  //                                                     height="55px" />
-  //                                             </a>
-  //                                         </p>
-  //                                         <p>
-  //                                             <a href="${ constants.EMAIL_TEMPLATE_PLAY_STORE_URL }"
-  //                                                 style="cursor:pointer; text-decoration: none;" target="_blank">
-  //                                                 <img src="${ constants.EMAIL_TEMPLATE_PLAY_STORE_ICON_URL }" height="55px"
-  //                                                     style="cursor:pointer;" />
-  //                                             </a>
-  //                                         </p>
-  //                                     </td>
-  //                                     <td style="text-align: right;">
-  //                                         <a href="mailto:${ constants.EMAIL_TEMPLATE_MAIL_ID }" target="_blank"
-  //                                             style="margin-bottom: -8px; margin-top: 0 ; text-decoration: none;">
-  //                                             <span style="vertical-align: super;
-  //                                                 font-family: Arial, Helvetica, sans-serif;
-  //                                                 font-size: 17px;
-  //                                                 font-weight: 600;
-  //                                                 color: #FFF;
-  //                                                 cursor:pointer;
-  //                                                 ">${ constants.EMAIL_TEMPLATE_MAIL_ID }</span>
-  //                                             <img src="${ constants.EMAIL_TEMPLATE_MAIL_URL }" height="25px"
-  //                                                 style="cursor:pointer;" />
-  //                                         </a>
-  //                                         <p>
-  //                                             <a href="tel:${ constants.EMAIL_TEMPLATE_MOBILE_NO }"
-  //                                                 style="text-decoration: none;">
-  //                                                 <span style="vertical-align: super;
-  //                                             font-family: Arial, Helvetica, sans-serif;
-  //                                             font-size: 17px;
-  //                                             font-weight: 600;
-  //                                             color: #FFF;
-  //                                             cursor: pointer;">${ constants.EMAIL_TEMPLATE_MOBILE_NO }</span>
-  //                                                 <img src="${ constants.EMAIL_TEMPLATE_PHONE_URL }" height="25px"
-  //                                                     style="cursor:pointer;" />
-  //                                             </a>
-  //                                         </p>
-  //                                         <a href="${ constants.EMAIL_BASE_URL }" target="_blank" style="text-decoration: none;">
-  //                                             <img src="${ constants.EMAIL_TEMPLATE_WEB_URL }" height="25px"
-  //                                                 style="margin: 0 5px; cursor: pointer" /></a>
-  //                                         <a
-  //                                             href="${ constants.EMAIL_TEMPLATE_FACEBOOK_LINK }" target="_blank" style="text-decoration: none;">
-  //                                             <img src=" ${ constants.EMAIL_TEMPLATE_FB_URL }" height="25px"
-  //                                                 style="margin: 0 5px; cursor: pointer" />
-  //                                         </a>
-  //                                         <a
-  //                                             href="${ constants.EMAIL_TEMPLATE_TWITTER_LINK }" target="_blank" style="text-decoration: none;">
-  //                                             <img src="${ constants.EMAIL_TEMPLATE_TWITTER_URL }" height="25px"
-  //                                                 style="margin: 0 5px; cursor: pointer" />
-  //                                         </a>
-  //                                         <a
-  //                                             href="${ constants.EMAIL_TEMPLATE_INSTAGRAM_LINK }" target="_blank" style="text-decoration: none;">
-  //                                             <img src="${ constants.EMAIL_TEMPLATE_INSTA_URL }" height="25px"
-  //                                                 style="margin: 0 5px; cursor: pointer" />
-  //                                         </a>
-  //                                         <a href="${ constants.EMAIL_TEMPLATE_YOUTUBE_LINK }" target="_blank" style="text-decoration: none;">
-  //                                             <img src="${ constants.EMAIL_TEMPLATE_YT_URL }" height="25px"
-  //                                                 style="margin: 0 5px; cursor: pointer" />
-  //                                         </a>
-  //                                         <a
-  //                                             href="${ constants.EMAIL_TEMPLATE_LINKEDIN_LINK }" target="_blank" style="text-decoration: none;">
-  //                                             <img src="${ constants.EMAIL_TEMPLATE_IN_URL }" height="25px"
-  //                                                 style="cursor: pointer" />
-  //                                         </a>
-  //                                     </td>
-  //                                 </tr>
-  //                             </tr>
-  //                         </tbody>
-  //                     </table>
-  //                 </td>
-  //             </tr>
-  //             <!-- END FOOTER -->
-  //             </td>
-  //             </tr>
-  //             </tbody>
-  //         </table>
-  //         </td>
-  //         </tr>
-
-  //         <!-- END MAIN CONTENT AREA -->
-  //         </table>
-  //         <!-- END CENTERED WHITE CONTAINER -->
-  //         </div>
-  //         </td>
-
-  //         <!-- Extra TD -->
-  //         <td style="font-size: 16px; vertical-align: top;" valign="top">&nbsp;
-  //         </td>
-  //         </tr>
-  //         </table>
-  //     </body>
-
-  //     </html>
-  // `;
-
   return await `
   <!DOCTYPE html>
-<html lang="en">
+      <html lang="en">
 
-<body style="margin: 0; padding: 0">
-  <div style="max-width: 30rem; margin: auto">
-    <div style="height: 100px; text-align: center; padding: 15px 0">
-      <a style="text-decoration: none; cursor: pointer" href=" ${ constants.EMAIL_BASE_URL }" target="_blank">
-        <img src="${ constants.EMAIL_TEMPLATE_LOGOGIF_URL }" style="height: 100%" />
-      </a>
-    </div>
-    <div>
-      <img src="${ constants.EMAIL_TEMPLATE_HERO3_URL }" style="height: 100%; width: 100%" />
-    </div>
-    <div style="text-align: center; margin-top: 30px;">
-      <p style="
-            font-family: sans-serif;
-            font-size: 30px;
-            margin: 10px;
-            margin-bottom: 30px;
-            font-weight: bold;
-            color: #f5a848;
-          ">
-        Welcome to
-        <span style="color: #032b4e"> Virtual Afsar... </span>
-      </p>
-      <p style="
-            font-size: 20px;
-            text-align: center;
-            font-family: sans-serif;
-            font-weight: normal;
-            color: #032b4e;
-          ">
-        ऐसे ही <span style="font-weight: bold;">सरकारी अधिकारी की Car</span> की Booking नही होती, यह मिलती है <span
-          style="font-weight: bold;">UPSC
-          जैसी Exam</span> Clear करने पर। सपनों की उड़ान, जैसे पंख फैलाने का आया हैं
-        <span style="font-weight: bold;">सुनहरा अवसर</span>, आपके <span style="font-weight: bold;">सपनों को साकार</span>
-        करने हम लाये है <span style="font-weight: bold;">Virtual Afsar.</span>
-      </p>
-    </div>
-    <div style="margin-bottom: -4px">
-      <img src="${ constants.EMAIL_TEMPLATE_BOYMOBILE_URL }" style="width: 100%; height: 100%; margin-bottom: -4px" />
-    </div>
-    <table style="width: 100%; background: #032b4e; padding: 10px 20px">
-      <tbody style="width: 100%">
-        <tr>
-          <td style="vertical-align: middle; width: 50%">
-            <div style="width: 8rem">
-              <a style="text-decoration: none; cursor: pointer" href="${ constants.EMAIL_TEMPLATE_APP_STORE_URL }">
-                <img src="${ constants.EMAIL_TEMPLATE_APP_STORE_ICON_URL }" style="width: 100%; height: 100%" />
-              </a>
-            </div>
-            <div style="width: 8rem; margin-top: 1rem">
-              <a style="text-decoration: none; cursor: pointer" href="${ constants.EMAIL_TEMPLATE_PLAY_STORE_URL }">
-                <img src="${ constants.EMAIL_TEMPLATE_PLAY_STORE_ICON_URL }" style="width: 100%; height: 100%" />
-              </a>
-            </div>
-          </td>
-          <td style="vertical-align: top; text-align: right; width: 50%">
-            <div style="padding-bottom: 10px">
-              <a style="text-decoration: none; color: #fff; cursor: pointer"
-                href="mailto:${ constants.EMAIL_TEMPLATE_MAIL_ID }" target="_blank">${ constants.EMAIL_TEMPLATE_MAIL_ID
-                }
-                <span style="vertical-align: middle">
-                  <img src="${ constants.EMAIL_TEMPLATE_MAIL_URL }"
-                    style="width: 25px; height: 25px; padding-left: 7px" />
-                </span>
-              </a>
-            </div>
-            <div>
-              <a style="text-decoration: none; color: #fff; cursor: pointer"
-                href="tel:${ constants.EMAIL_TEMPLATE_MOBILE_NO }">${ constants.EMAIL_TEMPLATE_MOBILE_NO }
-                <span style="vertical-align: middle">
-                  <img src="${ constants.EMAIL_TEMPLATE_PHONE_URL }"
-                    style="width: 25px; height: 25px; padding-left: 7px" />
-                </span>
-              </a>
-            </div>
-            <div>
-              <p>
-                <a href="${ constants.EMAIL_BASE_URL }" target="_blank" style="
-                      text-decoration: none;
-                      padding-right: 7px;
-                      cursor: pointer;
-                    ">
-                  <img src="${ constants.EMAIL_TEMPLATE_WEB_URL }" style="width: 25px; height: 25px" />
-                </a>
-                <a href="${ constants.EMAIL_TEMPLATE_FACEBOOK_LINK }" target="_blank" style="
-                      text-decoration: none;
-                      padding-right: 7px;
-                      cursor: pointer;
-                    ">
-                  <img src=" ${ constants.EMAIL_TEMPLATE_FB_URL }" style="width: 25px; height: 25px" />
-                </a>
-                <a href="${ constants.EMAIL_TEMPLATE_TWITTER_LINK }" target="_blank" style="
-                      text-decoration: none;
-                      padding-right: 7px;
-                      cursor: pointer;
-                    ">
-                  <img src="${ constants.EMAIL_TEMPLATE_TWITTER_URL }" style="width: 25px; height: 25px" />
-                </a>
-                <a href="${ constants.EMAIL_TEMPLATE_INSTAGRAM_LINK }" target="_blank" style="
-                      text-decoration: none;
-                      padding-right: 7px;
-                      cursor: pointer;
-                    ">
-                  <img src="${ constants.EMAIL_TEMPLATE_INSTA_URL }" style="width: 25px; height: 25px" />
-                </a>
-                <a href="${ constants.EMAIL_TEMPLATE_YOUTUBE_LINK }" target="_blank" style="
-                      text-decoration: none;
-                      padding-right: 7px;
-                      cursor: pointer;
-                    ">
-                  <img src="${ constants.EMAIL_TEMPLATE_YT_URL }" style="width: 25px; height: 25px" />
-                </a>
-                <a href="${ constants.EMAIL_TEMPLATE_LINKEDIN_LINK }" target="_blank"
-                  style="text-decoration: none; cursor: pointer">
-                  <img src="${ constants.EMAIL_TEMPLATE_IN_URL }" style="width: 25px; height: 25px" />
-                </a>
-              </p>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</body>
+      <body style="margin: 0; padding: 0;">
+        <div style="max-width: 30rem; margin: auto;">
+          <div style="height: 100px; text-align: center;">
+            <a style="text-decoration: none; cursor: pointer" href=" ${ constants.EMAIL_BASE_URL }" target="_blank">
+              <img src="${ constants.EMAIL_TEMPLATE_LOGOGIF_URL }" style="height: auto; width: 100%;" />
+            </a>
+          </div>
+          <div>
+            <img src="${ constants.EMAIL_TEMPLATE_HERO3_URL }" style="height: 100%; width: 100%" />
+          </div>
+          <div style="text-align: center; margin-top: 30px;">
+            <p style="
+                  font-family: sans-serif;
+                  font-size: 30px;  
+                  margin: 10px;
+                  margin-bottom: 30px;
+                  font-weight: bold;
+                  color: #f5a848;
+                ">
+              Welcome to
+              <span style="color: #032b4e"> Virtual Afsar... </span>
+            </p>
+            <p style="
+                  font-size: 20px;
+                  text-align: center;
+                  font-family: sans-serif;
+                  font-weight: normal;
+                  color: #032b4e;
+                ">
+              ऐसे ही <span style="font-weight: bold;">सरकारी अधिकारी की Car</span> की Booking नही होती, यह मिलती है <span
+                style="font-weight: bold;">UPSC
+                जैसी Exam</span> Clear करने पर। सपनों की उड़ान, जैसे पंख फैलाने का आया हैं
+              <span style="font-weight: bold;">सुनहरा अवसर</span>, आपके <span style="font-weight: bold;">सपनों को साकार</span>
+              करने हम लाये है <span style="font-weight: bold;">Virtual Afsar.</span>
+            </p>
+          </div>
+          <div style="text-align: center; margin: 0;padding: 0 ; line-height: 0;">
+            <img src="${ constants.EMAIL_TEMPLATE_BOYMOBILE_URL }" style="width: 100%; height: 100%;" />
+          </div>
+          <table style="width: 100%; background: #032b4e; padding: 5px 20px;">
+            <tbody style="width: 100%">
+              <tr>
+                <td style="vertical-align: middle; width: 40%">
+                  <div style="width: 6rem; height: 1.8rem;">
+                    <a style="text-decoration: none; cursor: pointer" href="${ constants.EMAIL_TEMPLATE_APP_STORE_URL }">
+                      <img src="${ constants.EMAIL_TEMPLATE_APP_STORE_ICON_URL }" style="width: 100%; height: 100%" />
+                    </a>
+                  </div>
+                  <div style="width: 6rem; margin-top: 0.4rem; height: 1.8rem;">
+                    <a style="text-decoration: none; cursor: pointer" href="${ constants.EMAIL_TEMPLATE_PLAY_STORE_URL }">
+                      <img src="${ constants.EMAIL_TEMPLATE_PLAY_STORE_ICON_URL }" style="width: 100%; height: 100%" />
+                    </a>
+                  </div>
+                </td>
+                <td style="vertical-align: top; text-align: right; width: 60%">
+                  <div style="padding-bottom: 5px">
+                    <a style="text-decoration: none; color: #fff; cursor: pointer"
+                      href="mailto:${ constants.EMAIL_TEMPLATE_MAIL_ID }" target="_blank">
+                      ${ constants.EMAIL_TEMPLATE_MAIL_ID}
+                      <span style="vertical-align: middle">
+                        <img src="${ constants.EMAIL_TEMPLATE_MAIL_URL }"
+                          style="width: 20px; height: 20px; padding-left: 7px" />
+                      </span>
+                    </a>
+                  </div>
+                  <div>
+                    <a style="text-decoration: none; color: #fff; cursor: pointer"
+                      href="tel:${ constants.EMAIL_TEMPLATE_MOBILE_NO }">
+                      ${ constants.EMAIL_TEMPLATE_MOBILE_NO }
+                      <span style="vertical-align: middle">
+                        <img src="${ constants.EMAIL_TEMPLATE_PHONE_URL }"
+                          style="width: 20px; height: 20px; padding-left: 7px" />
+                      </span>
+                    </a>
+                  </div>
+                  <div>
+                    <p style="margin: 5px 0 0 0;">
+                      <a href="${ constants.EMAIL_BASE_URL }" target="_blank" style="
+                            text-decoration: none;
+                            padding-right: 4px;
+                            cursor: pointer;
+                          ">
+                        <img src="${ constants.EMAIL_TEMPLATE_WEB_URL }" style="width: 20px; height: 20px" />
+                      </a>
+                      <a href="${ constants.EMAIL_TEMPLATE_FACEBOOK_LINK }" target="_blank" style="
+                            text-decoration: none;
+                            padding-right: 4px;
+                            cursor: pointer;
+                          ">
+                        <img src=" ${ constants.EMAIL_TEMPLATE_FB_URL }" style="width: 20px; height: 20px" />
+                      </a>
+                      <a href="${ constants.EMAIL_TEMPLATE_TWITTER_LINK }" target="_blank" style="
+                            text-decoration: none;
+                            padding-right: 4px;
+                            cursor: pointer;
+                          ">
+                        <img src="${ constants.EMAIL_TEMPLATE_TWITTER_URL }" style="width: 20px; height: 20px" />
+                      </a>
+                      <a href="${ constants.EMAIL_TEMPLATE_INSTAGRAM_LINK }" target="_blank" style="
+                            text-decoration: none;
+                            padding-right: 4px;
+                            cursor: pointer;
+                          ">
+                        <img src="${ constants.EMAIL_TEMPLATE_INSTA_URL }" style="width: 20px; height: 20px" />
+                      </a>
+                      <a href="${ constants.EMAIL_TEMPLATE_YOUTUBE_LINK }" target="_blank" style="
+                            text-decoration: none;
+                            padding-right: 4px;
+                            cursor: pointer;
+                          ">
+                        <img src="${ constants.EMAIL_TEMPLATE_YT_URL }" style="width: 20px; height: 20px" />
+                      </a>
+                      <a href="${ constants.EMAIL_TEMPLATE_LINKEDIN_LINK }" target="_blank"
+                        style="text-decoration: none; cursor: pointer">
+                        <img src="${ constants.EMAIL_TEMPLATE_IN_URL }" style="width: 20px; height: 20px" />
+                      </a>
+                    </p>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </body>
 
-</html>`
+      </html>
+  `
 };
 
 module.exports.welcomeWithCredetialsTemplate = async (data) => {
@@ -850,40 +627,131 @@ module.exports.welcomeWithCredetialsTemplate = async (data) => {
 };
 
 module.exports.forgotPasswordTemplate = async (data) => {
-  const header = await this.templateHeader(data);
-  const footer = await this.templateFooter(data);
-  return (
-    (await `${header}
-    <div style="padding:0 20px">
-        <p style="font-style:normal;font-size:1.8rem;padding:.5rem;color: white;">🔑 Password Reset Requested</p>
-    </div>
-    <div style="padding:0 20px">
-        <p style="font-weight:400;font-size:1.2rem;margin-bottom:0.5rem;color: white;">Hey `) +
-    data.user_name +
-    `,</p>
-    </div>
-    <div style="padding:0 20px">
-        <p style="font-weight:400;font-size:1.2rem;margin-bottom:0.8rem;color: white;">We received a request to reset your password. 🔑 If this was initiated by you, simply click the link below to create a new one:</p>
-    </div>
-    <div style="padding:0 20px; display: flex; justify-content: center;">
-        <a href="` +
-    data.link +
-    `"
-            style="display:block;width:13.125rem;height:3.5rem;text-decoration:none;text-transform:uppercase;display:flex;justify-content:center;align-items:center;background-color:#0076cb;border-radius:2rem;margin-bottom:0.8rem;margin-bottom: 2rem;margin-top: 1.5rem">
-            <div style="font-style:normal;font-weight:600;font-size:16px;color:#fff;margin:auto;text-align:center;position:absolute;line-height:24px">Reset Password</div>
+
+  return `
+  <!DOCTYPE html>
+  <html lang="en">
+  
+  <body style="margin: 0; padding: 0;">
+    <div style="max-width: 30rem; margin: auto">
+      <div style="text-align: center;">
+        <a style="text-decoration: none; cursor: pointer" href=" ${ constants.EMAIL_BASE_URL }" target="_blank">
+          <img src="${ constants.EMAIL_TEMPLATE_LOGOGIF_URL }" style="height: auto; width: 100%;" />
         </a>
+      </div>
+      <div>
+        <img src="${ constants.EMAIL_TEMPLATE_HERO4_URL }" style="height: 100%; width: 100%" />
+      </div>
+      <div style="text-align: center; padding: 20px 0; background: url('${ constants.EMAIL_TEMPLATE_WHITEBG_URL }"'); background-size: cover;">
+        <a href="${ data.link }" target="_blank"
+          style="text-decoration: none;">
+          <button style="
+              background-color: #032b4e;
+              color: #fff;
+              font-size: 22px;
+              cursor: pointer;
+              font-weight: bold;
+              padding: 2px;
+              border: solid 3px #032b4e;
+              border-radius: 0.9rem;
+              background-clip: content-box;
+              font-family: sans-serif;
+              height: 50px;
+              width: 200px;
+              margin: 1rem 0;
+            ">
+            Reset Password
+          </button>
+        </a>
+      </div>
+      <table style="width: 100%; background: #fbaa2d; padding: 5px 20px">
+        <tbody style="width: 100%">
+          <tr>
+            <td style="vertical-align: middle; width: 40%">
+              <div style="width: 6rem; height: 1.8rem;">
+                <a style="text-decoration: none; cursor: pointer" href="${ constants.EMAIL_TEMPLATE_APP_STORE_URL }"
+                  target="_blank">
+                  <img src="${ constants.EMAIL_TEMPLATE_APP_STORE_ICON_URL }" style="width: 100%; height: 100%" />
+                </a>
+              </div>
+              <div style="width: 6rem; margin-top: 0.4rem; height: 1.8rem;">
+                <a style="text-decoration: none; cursor: pointer" href="${ constants.EMAIL_TEMPLATE_PLAY_STORE_URL }"
+                  target="_blank">
+                  <img src="${ constants.EMAIL_TEMPLATE_PLAY_STORE_ICON_URL }" style="width: 100%; height: 100%" />
+                </a>
+              </div>
+            </td>
+            <td style="vertical-align: top; text-align: right; width: 60%">
+              <div style="padding-bottom: 5px">
+                <a href="mailto:${ constants.EMAIL_TEMPLATE_MAIL_ID }" target="_blank"
+                  style="text-decoration: none; color: #032b4e; cursor: pointer">${ constants.EMAIL_TEMPLATE_MAIL_ID }
+                  <span style="vertical-align: middle">
+                    <img src="${ constants.EMAIL_TEMPLATE_YMAIL_URL }"
+                      style="width: 20px; height: 20px; padding-left: 7px" />
+                  </span>
+                </a>
+              </div>
+              <div>
+                <a href="tel:${ constants.EMAIL_TEMPLATE_MOBILE_NO }"
+                  style="text-decoration: none; color: #032b4e; cursor: pointer">${ constants.EMAIL_TEMPLATE_MOBILE_NO }
+                  <span style="vertical-align: middle">
+                    <img src="${ constants.EMAIL_TEMPLATE_YPHONE_URL }"
+                      style="width: 20px; height: 20px; padding-left: 7px" />
+                  </span>
+                </a>
+              </div>
+              <div>
+                <p style="margin: 5px 0 0 0;">
+                  <a href="${ constants.EMAIL_BASE_URL }" target="_blank" style="
+                        text-decoration: none;
+                        padding-right: 4px;
+                        cursor: pointer;
+                      ">
+                    <img src="${ constants.EMAIL_TEMPLATE_YWEB_URL }" style="width: 20px; height: 20px" />
+                  </a>
+                  <a href="${ constants.EMAIL_TEMPLATE_FACEBOOK_LINK }" target="_blank" style="
+                        text-decoration: none;
+                        padding-right: 4px;
+                        cursor: pointer;
+                      ">
+                    <img src=" ${ constants.EMAIL_TEMPLATE_YFB_URL }" style="width: 20px; height: 20px" />
+                  </a>
+                  <a href="${ constants.EMAIL_TEMPLATE_TWITTER_LINK }" target="_blank" style="
+                        text-decoration: none;
+                        padding-right: 4px;
+                        cursor: pointer;
+                      ">
+                    <img src="${ constants.EMAIL_TEMPLATE_YTWITTER_URL }" style="width: 20px; height: 20px" />
+                  </a>
+                  <a href="${ constants.EMAIL_TEMPLATE_INSTAGRAM_LINK }" target="_blank" style="
+                        text-decoration: none;
+                        padding-right: 4px;
+                        cursor: pointer;
+                      ">
+                    <img src="${ constants.EMAIL_TEMPLATE_YINSTA_URL }" style="width: 20px; height: 20px" />
+                  </a>
+                  <a href="${ constants.EMAIL_TEMPLATE_YOUTUBE_LINK }" target="_blank" style="
+                        text-decoration: none;
+                        padding-right: 4px;
+                        cursor: pointer;
+                      ">
+                    <img src="${ constants.EMAIL_TEMPLATE_YYT_URL }" style="width: 20px; height: 20px" />
+                  </a>
+                  <a href="${ constants.EMAIL_TEMPLATE_LINKEDIN_LINK }" target="_blank"
+                    style="text-decoration: none; cursor: pointer">
+                    <img src="${ constants.EMAIL_TEMPLATE_YIN_URL }" style="width: 20px; height: 20px" />
+                  </a>
+                </p>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-    <div style="padding:0 20px">
-        <p style="font-weight:400;font-size:1.2rem;color: white;">If this request didn't come from you, please notify us immediately!</p>
-    </div>
-    <div style="padding:0 20px">
-        <p style="font-weight:400;font-size:1.2rem;color: white;">Stay safe,</p>
-    </div>
-    <div style="padding:0 20px">
-        <p style="font-weight:400;font-size:1.2rem;color: white;">Virtual Afsar Team</p>
-    </div>
-    ${footer}`
-  );
+  </body>
+  
+  </html>  
+  `
 };
 
 // ---- COURSE ASSIGNED TEMPLATE (START) ----

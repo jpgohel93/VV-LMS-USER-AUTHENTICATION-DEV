@@ -5,7 +5,7 @@ const moment = require('moment');
 const axios = require('axios');
 const { RandomNumber, DateToTimestamp, sendMail,findUserReferralCode } = require('../utils');
 const { CallAdminEvent, CallCourseQueryEvent } = require('../utils/call-event-bus');
-const { welcomeTemplate, forgotPasswordTemplate, welcomeWithCredetialsTemplate, dailySnapshot, weeklySnapshot, monthlySnapshot } = require('../utils/email-template');
+const { welcomeTemplate, forgotPasswordTemplate, welcomeWithCredetialsTemplate, dailySnapshot, weeklySnapshot, monthlySnapshot, welcomeWithoutPaymentTemplate } = require('../utils/email-template');
 const { RateLimiterMemory } = require('rate-limiter-flexible');
 const { deleteFile } = require('../utils/aws');
 
@@ -1004,9 +1004,9 @@ const importStudents = async (userInputs) => {
                 user_referral_code: await findUserReferralCode(),
                 is_new_user: true
             });
-            userId = createUser._id
+            userId = createUser._id 
             let subject = "Congratulations and Welcome to Virtual अफ़सर!";
-            let message = await welcomeWithCredetialsTemplate({ user_name: `${first_name} ${last_name}`, subject: subject, mobile_no: `+${country_code} ${mobile_no}`, password: password});
+            let message = await welcomeWithoutPaymentTemplate({ name: `${first_name} ${last_name}` ,user_name: `${email}`, subject: subject, mobile_no: `+${country_code} ${mobile_no}`, password: password});
             let sendwait = await sendMail(email, message, subject, userId, "Import Student");
             
             return {

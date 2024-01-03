@@ -48,7 +48,7 @@ module.exports = {
     EMAIL_TEMPLATE_WHITEBG_URL: process.env.BASE_URL + "VV-LMS-SERVICE-COURSE-QUERY/getcontent/local/email_assets/whiteBg.png",
     EMAIL_TEMPLATE_COURSEUP_URL: process.env.BASE_URL + "VV-LMS-SERVICE-COURSE-QUERY/getcontent/local/email_assets/csUp.png",
     EMAIL_TEMPLATE_COURSEDOWN_URL: process.env.BASE_URL + "VV-LMS-SERVICE-COURSE-QUERY/getcontent/local/email_assets/csDown.png",
-    EMAIL_TEMPLATE_COURSEPURSEPURCHASE_URL: process.env.BASE_URL + "VV-LMS-SERVICE-COURSE-QUERY/getcontent/local/email_assets/coursePurchase.png",
+    EMAIL_TEMPLATE_WWCHERO_URL: process.env.BASE_URL + "VV-LMS-SERVICE-COURSE-QUERY/getcontent/local/email_assets/wwcHero.png",
     
     
     EMAIL_TEMPLATE_FACEBOOK_LINK: "https://www.facebook.com/profile.php?id=100095410212980&mibextid=ZbWKwL",

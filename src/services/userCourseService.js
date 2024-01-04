@@ -1967,7 +1967,7 @@ const paymentResponse = async (request) => {
                 
                     let email = userData?.email
                     
-                    let filePath = 'uploads/'+pdfName;
+                    let filePath = './uploads/'+pdfName;
 
                     if(userData?.is_funnel_user && userData?.is_new_user){
                         let salt = await GenerateSalt();

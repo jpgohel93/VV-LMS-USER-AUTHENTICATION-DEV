@@ -510,7 +510,7 @@ module.exports.forgotPasswordTemplate = async (data) => {
       </div>
       <div style="text-align: center; padding: 20px 0; background: url('${ constants.EMAIL_TEMPLATE_WHITEBG_URL }'); background-size: cover;">
         <a href="${ data.link }" target="_blank"
-          style="text-decoration: none;">
+          style="text-decoration: none; cursor: pointer;">
           <button style="
               background-color: #032b4e;
               color: #fff;

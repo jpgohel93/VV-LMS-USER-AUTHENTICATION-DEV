@@ -1000,6 +1000,104 @@ const getCouponUserList = async (userFilter) => {
 
 }
 
+// total Users 
+const totalUsersCount = async () => {
+    let searchFilter = [];
+    searchFilter.push({
+        is_deleted: false
+    });
+
+    searchFilter.push({
+        is_verify_otp: true
+    });
+
+    const totalUsersData = await UserSchema.count({ 
+        $and: searchFilter
+    }).then((data) => {
+        return data
+    }).catch((err) => {
+        return null
+    });
+    return totalUsersData;
+}
+
+
+// total Paid Users Count
+const totalPaidUsersCount = async () => {
+    let searchFilter = [];
+    searchFilter.push({
+        is_deleted: false
+    });
+
+    searchFilter.push({
+        is_verify_otp: true
+    });
+
+    
+    searchFilter.push({
+        is_purchase_course: true
+    });
+
+    const totalPaidUsersData = await UserSchema.count({ 
+        $and: searchFilter
+    }).then((data) => {
+        return data
+    }).catch((err) => {
+        return null
+    });
+    return totalPaidUsersData;
+}
+
+// total Unpaid Users Count
+const  totalUnpaidPaidUsers = async () => {
+    let searchFilter = [];
+    searchFilter.push({
+        is_deleted: false
+    });
+
+    searchFilter.push({
+        is_verify_otp: true
+    });
+
+    searchFilter.push({
+        is_purchase_course: false
+    });
+
+    const totalUnpaidPaidData = await UserSchema.count({ 
+        $and: searchFilter
+    }).then((data) => {
+        return data
+    }).catch((err) => {
+        return null
+    });
+    return totalUnpaidPaidData;
+}
+
+const getgenderDistributionData = async () => {
+
+    let data = await UserSchema.aggregate([
+        {
+            $match: {
+                is_deleted: false
+            },
+        },
+        {$project: {
+          male: {$cond: [{$eq: [{ $toLower: "$gender" }, "male"]}, 1, 0]},
+          female: {$cond: [{$eq: [{ $toLower: "$gender" }, "female"]}, 1, 0]},
+        }},
+        {$group: { _id: null, male: {$sum: "$male"},
+                              female: {$sum: "$female"},
+        }},
+        { "$project": { "_id": 0, "male": 1, "female": 1 } }
+      ]).then((userData) => {
+        console.log("userData", userData)
+        return userData
+    }).catch((err) => {
+        return false
+    });
+console.log("data--------------------------", data)
+   return data;
+}
 
 module.exports = {
     createUser,
@@ -1025,5 +1123,9 @@ module.exports = {
     getCityList,
     getStateList,
     studentData,
-    getCouponUserList
+    getCouponUserList,
+    totalUsersCount,
+    totalPaidUsersCount,
+    totalUnpaidPaidUsers,
+    getgenderDistributionData
 }

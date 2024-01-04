@@ -2,7 +2,7 @@ const { UserCourseModel, CourseWatchHistoryModel, UserModel, InvoiceModel, CartM
 const constants = require('../utils/constant');
 const { createSubscription , cancelSubscription } = require('../utils/paymentManagement');
 const { CallCourseQueryEvent,CallCourseQueryDataEvent, CallCourseEvents, CallEventBus } = require('../utils/call-event-bus');
-const { coursePurchaseTemplate, subscriptionCancelTemplate, courseAssignedTemplate, welcomeTemplate, welcomeWithCredetialsTemplate, sendLoginCredencialTemplate, forgotPasswordTemplate, welcomeWithoutPaymentTemplate,} = require('../utils/email-template');
+const { coursePurchaseTemplate, subscriptionCancelTemplate, courseAssignedTemplate, welcomeTemplate, welcomeWithCredetialsTemplate, sendLoginCredencialTemplate, forgotPasswordTemplate, welcomeWithoutPaymentTemplate, dailyReportTemplate} = require('../utils/email-template');
 const { createCronLogs, updateCronLogs, createApiCallLog, getNewDate, sendMail, generatePDF, sendPushNotification, findUniqueID, generateInvoiceNumber,invoiceYear,GeneratePassword, GenerateSalt, randomString } = require('../utils');
 const { encrypt, decrypt } = require('../utils/ccavenue');
 const moment = require('moment');
@@ -2429,29 +2429,31 @@ const checkCoursePurchase = async (userInputs) => {
   
 }
 
+// ansarikamal626@gmail.com
+
 const sendTestMail = async (request) => { 
 
-        // let subject1 = `Welcome- Future Officers to Virtual अफ़सर`;
-        // await sendMail("tjcloudtest@gmail.com", await welcomeTemplate(), subject1, "1", "welcome Template", false, "", "")
+        let subject1 = `Welcome- Future Officers to Virtual अफ़सर`;
+        await sendMail("ansarikamal626@gmail.com", await welcomeTemplate(), subject1, "1", "welcome Template", false, "", "")
 
         
         // let subject5 = `welcome Without Payment`;
-        // await sendMail("tjcloudtest@gmail.com", await welcomeWithoutPaymentTemplate(
+        // await sendMail("jpgohel93@gmail.com", await welcomeWithoutPaymentTemplate(
         //     { name: "Vatsal Kothari", user_name: 'vatsal@gmail.com', password: 'Test@123'}
         // ), subject5, "1", "welcome Without Payment Template", false, "", "")
 
-        // let subject6 = `Congratulations and Welcome to Virtual अफ़सर!`;
-        // await sendMail("tjcloudtest@gmail.com", await welcomeWithCredetialsTemplate({
-        //     name: "Vatsal Kothari", user_name: 'vatsal@gmail.com', password: 'Test@123'
-        // }), subject6, "1", "welcome Template", false, "", "")
+        let subject6 = `Congratulations and Welcome to Virtual अफ़सर!`;
+        await sendMail("kirankhetariya22@gmail.com", await welcomeWithCredetialsTemplate({
+            name: "Vatsal Kothari", user_name: 'vatsal@gmail.com', password: 'Test@123'
+        }), subject6, "1", "welcome Template", false, "", "")
 
         // let subject3 = `Reset Your Password Now! `;
-        // await sendMail("tjcloudtest@gmail.com", await forgotPasswordTemplate({ link: "https://virtualafsar.com/resetPassword?id=ansarikamal626@gmail.com" }), subject3, "1", "welcome With Credetials Template", false, "", "")
+        // await sendMail("jpgohel93@gmail.com", await forgotPasswordTemplate({ link: "https://virtualafsar.com/resetPassword?id=ansarikamal626@gmail.com" }), subject3, "1", "welcome With Credetials Template", false, "", "")
         
-        let subject2 = `course Purchase`;
-        await sendMail("tjcloudtest@gmail.com", await coursePurchaseTemplate(        {
-            name: "Vatsal Kothari",
-        }), subject2, "1", "course Purchase Template", false, "", "")
+        // let subject2 = `course Purchase`;
+        // await sendMail("jpgohel93@gmail.com", await coursePurchaseTemplate({
+        //     name: "Vatsal Kothari",
+        // }), subject2, "1", "course Purchase Template", false, "", "")
 
 
         // let subject4 = `Not Use`;
@@ -2459,7 +2461,10 @@ const sendTestMail = async (request) => {
 
         // let message = " Welcome to Virtual Afsar... \n nbsp ऐसे ही सरकारी अधिकारी की Car की Booking नहीं होती, यह मिलती है UPSC जैसी Exam Clear करने पर।"
         // sendSingleSms(91 ,"9512742802", message, process.env.SMS_OTP_TEMPLATEID, user_id,1)
-
+  
+        
+        // let subject1 = `dailyReport`;
+        // await sendMail("ansarikamal626@gmail.com", await dailyReportTemplate(), subject1, "1", "daily Report Template", false, "", "")
 
         // const pdfName = "Invoice_#" +"dsafdsf41fds54f5sfd.pdf";
 

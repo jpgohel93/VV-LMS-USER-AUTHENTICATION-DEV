@@ -490,7 +490,7 @@ module.exports.generatePDF = async (body, pdfName) => {
 	// return true;
 	const options = { format: 'A4' };
 	return await new Promise(async (resolve, reject) => {
-		await pdf.create(body, options).toFile('uploads/'+pdfName, function (err, res) {
+		await pdf.create(body, options).toFile('./uploads/'+pdfName, function (err, res) {
 			if (err){ 
 				console.log("pdf error: ::", err)
 				resolve(false)

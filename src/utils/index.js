@@ -452,9 +452,9 @@ module.exports.sendMail = async (email, body, subject, userId, module, attachmen
 			}
 
 			if(attachments){
-				// if (fs.existsSync(attachment_file)) {
-				// 	fs.unlinkSync(attachment_file);
-				// }
+				if (fs.existsSync(attachment_file)) {
+					fs.unlinkSync(attachment_file);
+				}
 			}
 
 			return true

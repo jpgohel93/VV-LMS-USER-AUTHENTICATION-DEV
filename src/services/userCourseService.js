@@ -1967,7 +1967,7 @@ const paymentResponse = async (request) => {
                 
                     let email = userData?.email
                     
-                    let filePath = './uploads/'+pdfName;
+                    let filePath = 'uploads/'+pdfName;
 
                     if(userData?.is_funnel_user && userData?.is_new_user){
                         let salt = await GenerateSalt();
@@ -2442,10 +2442,10 @@ const sendTestMail = async (request) => {
         //     { name: "Vatsal Kothari", user_name: 'vatsal@gmail.com', password: 'Test@123'}
         // ), subject5, "1", "welcome Without Payment Template", false, "", "")
 
-        let subject6 = `Congratulations and Welcome to Virtual अफ़सर!`;
-        await sendMail("kirankhetariya22@gmail.com", await welcomeWithCredetialsTemplate({
-            name: "Vatsal Kothari", user_name: 'vatsal@gmail.com', password: 'Test@123'
-        }), subject6, "1", "welcome Template", false, "", "")
+        // let subject6 = `Congratulations and Welcome to Virtual अफ़सर!`;
+        // await sendMail("kirankhetariya22@gmail.com", await welcomeWithCredetialsTemplate({
+        //     name: "Vatsal Kothari", user_name: 'vatsal@gmail.com', password: 'Test@123'
+        // }), subject6, "1", "welcome Template", false, "", "")
 
         // let subject3 = `Reset Your Password Now! `;
         // await sendMail("jpgohel93@gmail.com", await forgotPasswordTemplate({ link: "https://virtualafsar.com/resetPassword?id=ansarikamal626@gmail.com" }), subject3, "1", "welcome With Credetials Template", false, "", "")
@@ -2466,39 +2466,39 @@ const sendTestMail = async (request) => {
         // let subject1 = `dailyReport`;
         // await sendMail("ansarikamal626@gmail.com", await dailyReportTemplate(), subject1, "1", "daily Report Template", false, "", "")
 
-        // const pdfName = "Invoice_#" +"dsafdsf41fds54f5sfd.pdf";
+        const pdfName = "Invoice_#" +"dsafdsf41fds54f5sfd.pdf";
 
-        // const invoice = {
-        //     status: "paid", 
-        //     amount: 1000,
-        //     course_base_price: 100,
-        //     discount_amount: 10,
-        //     discount: 10,
-        //     is_tax_inclusive: false,
-        //     is_tax_exclusive: false,
-        //     tax_percentage: 10,
-        //     heman_discount_amount: 10,
-        //     coupon_code: '',
-        //     coupon_amount: 10,
-        //     tax_amount: 10,
-        //     convince_fee: 2,
-        //     convince_fee_amount: 10,
-        //     username: `fdgdfg dfgd gdf dg`,
-        //     issue_data: moment(new Date()).format('MMMM/DD/YYYY'),
-        //     due_date: moment(new Date()).format('MMMM/DD/YYYY'),
-        //     course_title: "gdfgfdfddfgdff",
-        //     invoice_id: "10005/2024-25",
-        //     mobile_no: "+91 0909890989",
-        //     email: "Sfsffsd@gmail.com"
-        // };
-        // const pdfBody = await invoiceTemplate(invoice);
-        // await generatePDF(pdfBody, pdfName);
-        // let filePath = 'uploads/'+pdfName;
+        const invoice = {
+            status: "paid", 
+            amount: 1000,
+            course_base_price: 100,
+            discount_amount: 10,
+            discount: 10,
+            is_tax_inclusive: false,
+            is_tax_exclusive: false,
+            tax_percentage: 10,
+            heman_discount_amount: 10,
+            coupon_code: '',
+            coupon_amount: 10,
+            tax_amount: 10,
+            convince_fee: 2,
+            convince_fee_amount: 10,
+            username: `fdgdfg dfgd gdf dg`,
+            issue_data: moment(new Date()).format('MMMM/DD/YYYY'),
+            due_date: moment(new Date()).format('MMMM/DD/YYYY'),
+            course_title: "gdfgfdfddfgdff",
+            invoice_id: "10005/2024-25",
+            mobile_no: "+91 0909890989",
+            email: "Sfsffsd@gmail.com"
+        };
+        const pdfBody = await invoiceTemplate(invoice);
+        await generatePDF(pdfBody, pdfName);
+        let filePath = 'uploads/'+pdfName;
 
-        // let subject = `Invoice for course payment`;
+        let subject = `Invoice for course payment`;
 
         //send subscription invoice mail
-        //await sendMail("tjcloudtest@gmail.com", pdfBody, subject, "1", "Course Payment", true, filePath, pdfName)
+        await sendMail("tjcloudtest@gmail.com", pdfBody, subject, "1", "Course Payment", true, filePath, pdfName)
         return {
             status: true
         };

@@ -1937,7 +1937,7 @@ const paymentResponse = async (request) => {
                         )
                     }
                     
-                    const pdfName = "Invoice_#" + orderId+".pdf";
+                    const pdfName = "Invoice_" + orderId+".pdf";
 
                     const invoice = {
                         status: paymentStatus, // unpaid, paid, failed, refunded
@@ -1968,6 +1968,7 @@ const paymentResponse = async (request) => {
                     let email = userData?.email
                     
                     let filePath = 'uploads/'+pdfName;
+
                     if(userData?.is_funnel_user && userData?.is_new_user){
                         let salt = await GenerateSalt();
                         let password = await randomString(8);
@@ -1991,6 +1992,7 @@ const paymentResponse = async (request) => {
 
                 if(userData?.is_funnel_user && userData?.is_new_user){
                     let salt = await GenerateSalt();
+                     let email = userData?.email
                     let password = await randomString(8);
                     UserModel.updateUser(userId,{ 
                         password: await GeneratePassword(password, salt)

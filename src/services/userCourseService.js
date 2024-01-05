@@ -1937,7 +1937,7 @@ const paymentResponse = async (request) => {
                         )
                     }
                     
-                    const pdfName = "Invoice_" + orderId+".pdf";
+                    const pdfName = "Invoice_#" + orderId+".pdf";
 
                     const invoice = {
                         status: paymentStatus, // unpaid, paid, failed, refunded

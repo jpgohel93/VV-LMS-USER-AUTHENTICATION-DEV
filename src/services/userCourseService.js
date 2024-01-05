@@ -1973,7 +1973,8 @@ const paymentResponse = async (request) => {
                         let salt = await GenerateSalt();
                         let password = await randomString(8);
                         UserModel.updateUser(userId,{ 
-                            password: await GeneratePassword(password, salt)
+                            password: await GeneratePassword(password, salt),
+                            is_new_user: false
                         });
         
                         let subject = `Congratulations and Welcome to Virtual अफ़सर!`;
@@ -1995,7 +1996,8 @@ const paymentResponse = async (request) => {
                      let email = userData?.email
                     let password = await randomString(8);
                     UserModel.updateUser(userId,{ 
-                        password: await GeneratePassword(password, salt)
+                        password: await GeneratePassword(password, salt),
+                        is_new_user: false
                     });
     
                     let subject = `Congratulations and Welcome to Virtual अफ़सर!`;

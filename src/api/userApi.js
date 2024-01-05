@@ -520,7 +520,7 @@ module.exports = async (app) => {
     app.post('/user/changePassword', await validateFormFields([
         body('token')
         .notEmpty()
-        .withMessage('Email id is required'),
+        .withMessage('Token id is required'),
 
         body('new_password')
         .notEmpty()

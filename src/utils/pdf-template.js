@@ -124,6 +124,8 @@ module.exports.invoiceTemplate = async (data) => {
                     color: #fff;
                     margin: 0;
                     padding-top: 5px;
+                    padding-left: 5px;
+                    word-break: break-all;
                   "
                 >
                   ${ data?.email || "" }

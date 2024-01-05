@@ -1090,12 +1090,10 @@ const getgenderDistributionData = async () => {
         }},
         { "$project": { "_id": 0, "male": 1, "female": 1 } }
       ]).then((userData) => {
-        console.log("userData", userData)
         return userData
     }).catch((err) => {
         return false
     });
-console.log("data--------------------------", data)
    return data;
 }
 

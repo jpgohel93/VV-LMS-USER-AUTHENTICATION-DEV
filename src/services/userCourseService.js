@@ -2,7 +2,7 @@ const { UserCourseModel, CourseWatchHistoryModel, UserModel, InvoiceModel, CartM
 const constants = require('../utils/constant');
 const { createSubscription , cancelSubscription } = require('../utils/paymentManagement');
 const { CallCourseQueryEvent,CallCourseQueryDataEvent, CallCourseEvents, CallEventBus } = require('../utils/call-event-bus');
-const { coursePurchaseTemplate, subscriptionCancelTemplate, courseAssignedTemplate, welcomeTemplate, welcomeWithCredetialsTemplate, sendLoginCredencialTemplate, forgotPasswordTemplate, welcomeWithoutPaymentTemplate, dailyReportTemplate} = require('../utils/email-template');
+const { coursePurchaseTemplate, subscriptionCancelTemplate, courseAssignedTemplate, welcomeTemplate, welcomeWithCredetialsTemplate, GenerateRandomPassword, welcomeWithoutPaymentTemplate, dailyReportTemplate} = require('../utils/email-template');
 const { createCronLogs, updateCronLogs, createApiCallLog, getNewDate, sendMail, generatePDF, sendPushNotification, findUniqueID, generateInvoiceNumber,invoiceYear,GeneratePassword, GenerateSalt, randomString } = require('../utils');
 const { encrypt, decrypt } = require('../utils/ccavenue');
 const moment = require('moment');
@@ -1971,7 +1971,7 @@ const paymentResponse = async (request) => {
 
                     if(userData?.is_funnel_user && userData?.is_new_user){
                         let salt = await GenerateSalt();
-                        let password = await randomString(8);
+                        let password = await GenerateRandomPassword();
                         UserModel.updateUser(userId,{ 
                             password: await GeneratePassword(password, salt),
                             is_new_user: false
@@ -1994,7 +1994,7 @@ const paymentResponse = async (request) => {
                 if(userData?.is_funnel_user && userData?.is_new_user){
                     let salt = await GenerateSalt();
                      let email = userData?.email
-                    let password = await randomString(8);
+                    let password = await GenerateRandomPassword();
                     UserModel.updateUser(userId,{ 
                         password: await GeneratePassword(password, salt),
                         is_new_user: false

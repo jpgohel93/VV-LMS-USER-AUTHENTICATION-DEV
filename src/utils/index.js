@@ -436,12 +436,14 @@ module.exports.sendMail = async (email, body, subject, userId, module, attachmen
 	};
 
 	if(attachments){
-		mailOptions['attachments'] = [
-			{
-				filename: file_name,
-				path: attachment_file // Replace with the actual file path
-			}
-		]
+		if(fs.existsSync(attachment_file)){
+			mailOptions['attachments'] = [
+				{
+					filename: file_name,
+					path: attachment_file // Replace with the actual file path
+				}
+			]
+		}
 	}
 	//console.log('mailOptions :: ',mailOptions);
 	// console.log('mailOptions:: ',mailOptions);
@@ -691,3 +693,31 @@ module.exports.generateInvoiceNumber = async (invoiceCounter) => {
 	invoiceNumber = "1" + invoiceNumber
 	return invoiceNumber
 }
+
+module.exports.GenerateRandomPassword = async () => {
+	const length = 8;
+	const charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@$!%*?&";
+	let password = "";
+  
+	// Ensure at least one uppercase, one lowercase, one number, and one special character
+	password += getRandomChar("ABCDEFGHIJKLMNOPQRSTUVWXYZ"); // Uppercase
+	password += getRandomChar("abcdefghijklmnopqrstuvwxyz"); // Lowercase
+	password += getRandomChar("0123456789"); // Number
+	password += getRandomChar("@$!%?&"); // Special character
+  
+	// Fill the rest of the password with random characters
+	for (let i = 4; i < length; i++) {
+	  password += getRandomChar(charset);
+	}
+  
+	// Shuffle the password characters for additional randomness
+	password = password.split('').sort(() => Math.random() - 0.5).join('');
+  
+	return password;
+}
+  
+function getRandomChar(charset) {
+	const randomIndex = Math.floor(Math.random() * charset.length);
+	return charset.charAt(randomIndex);
+}
+  

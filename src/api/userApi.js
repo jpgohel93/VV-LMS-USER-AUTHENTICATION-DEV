@@ -5,7 +5,7 @@ const {
 } = require('../utils/aws');
 const {
     GetUserLocation,
-    randomString
+    GenerateRandomPassword
 } = require('../utils');
 const {
     validateFormFields
@@ -1507,7 +1507,7 @@ module.exports = async (app) => {
                 user_referral_code
             } = req.body;
 
-            let password = await randomString(8);
+            let password = await GenerateRandomPassword();
             const data = await userService.addUser({
                 first_name,
                 email,

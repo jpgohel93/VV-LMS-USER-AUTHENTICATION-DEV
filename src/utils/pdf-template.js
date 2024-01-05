@@ -183,10 +183,8 @@ module.exports.invoiceTemplate = async (data) => {
                       </p>
                     </td>
                     <td style="text-align: end">
-                      <img
-                        src="${ constants.INVOICE_VALOGO_IMAGE }"
-                        style="width: 9.5rem; height: 5.5rem"
-                      />
+                      
+                    
                     </td>
                   </tr>
                 </tbody>
@@ -202,16 +200,7 @@ module.exports.invoiceTemplate = async (data) => {
                         <tbody style="width: 100%">
                           <tr>
                             <td style="vertical-align: top">
-                              <img
-                                src="${ constants.INVOICE_LOCATION_IMAGE }"
-                                style="
-                                  width: 6px;
-                                  height: 6px;
-                                  background-color: #123e6f;
-                                  border-radius: 50%;
-                                  padding: 2px;
-                                "
-                              />
+                             
                             </td>
                             <td>
                               <p

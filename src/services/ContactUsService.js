@@ -33,13 +33,20 @@ const addContactUs = async (userInputs) => {
         }
 
         let emailSub = "Contact Us Inquire Has Been Received"
-        let message = await contactUsInquirySubmission({
-            user_name: first_name,
-            id: email,
-            email: emailSub,
-            subject: subject,
-            your_message: your_message,
-        })
+        // let message = await contactUsInquirySubmission({
+        //     user_name: first_name,
+        //     id: email,
+        //     email: emailSub,
+        //     subject: subject,
+        //     your_message: your_message,
+        // })
+
+        const message = `
+            User Name: ${first_name}
+            ID: ${email}
+            Subject: ${subject}
+            Message: ${your_message}`;
+        
         let sendwait = sendMail(
             process.env.MAIL_SMTP_FROM,
             message,

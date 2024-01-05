@@ -488,7 +488,13 @@ module.exports.generatePDF = async (body, pdfName) => {
 
 
 	// return true;
-	const options = { format: 'A4' };
+	const options = { format: 'A4',
+		childProcessOptions: {
+			env: {
+			OPENSSL_CONF: '/dev/null',
+			},
+		}
+	};
 	return await new Promise(async (resolve, reject) => {
 		await pdf.create(body, options).toFile('./uploads/'+pdfName, function (err, res) {
 			if (err){ 

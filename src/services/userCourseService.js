@@ -1939,11 +1939,16 @@ const paymentResponse = async (request) => {
                     
                     const pdfName = "Invoice_#" + orderId+".pdf";
 
+                    let discountAmount = 0
+                    if(invoiceData?.discount){
+                        discountAmount = invoiceData?.course_base_price -  invoiceData?.discount_amount
+                    }
                     const invoice = {
                         status: paymentStatus, // unpaid, paid, failed, refunded
                         amount: dataArray.amount,
                         course_base_price: invoiceData?.course_base_price || 0,
-                        discount_amount: invoiceData?.discount_amount || 0,
+                        discount_amount: discountAmount,
+                        sub_total: invoiceData?.discount_amount || 0,
                         discount: invoiceData?.discount || 0,
                         is_tax_inclusive: invoiceData?.is_tax_inclusive || false,
                         is_tax_exclusive: invoiceData?.is_tax_exclusive || false,
@@ -2475,6 +2480,7 @@ const sendTestMail = async (request) => {
             amount: 1000,
             course_base_price: 100,
             discount_amount: 10,
+            sub_total: 10,
             discount: 10,
             is_tax_inclusive: false,
             is_tax_exclusive: false,

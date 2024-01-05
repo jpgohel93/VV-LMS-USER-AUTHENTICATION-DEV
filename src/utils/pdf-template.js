@@ -564,7 +564,7 @@ module.exports.invoiceTemplate = async (data) => {
                             padding-top: 4px;
                           "
                         >
-                          ${ data?.discount_amount || 0 }/-
+                          ${ data?.sub_total || 0 }/-
                         </p>
                       </div>
     

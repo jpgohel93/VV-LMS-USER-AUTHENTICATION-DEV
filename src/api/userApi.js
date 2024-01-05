@@ -518,11 +518,9 @@ module.exports = async (app) => {
     });
 
     app.post('/user/changePassword', await validateFormFields([
-        body('email_id')
+        body('token')
         .notEmpty()
-        .withMessage('Email id is required')
-        .matches(/^[a-z0-9][a-z0-9-_\.]+@([a-z]|[a-z0-9]?[a-z0-9-]+[a-z0-9])\.[a-z0-9]{2,10}(?:\.[a-z]{2,10})?$/i)
-        .withMessage('Please enter valid email id'),
+        .withMessage('Email id is required'),
 
         body('new_password')
         .notEmpty()
@@ -548,12 +546,12 @@ module.exports = async (app) => {
     ]), async (req, res, next) => {
 
         const {
-            email_id,
+            token,
             new_password,
             confirm_password
         } = req.body;
         const data = await userService.changePassword({
-            email_id,
+            token,
             new_password,
             confirm_password
         });

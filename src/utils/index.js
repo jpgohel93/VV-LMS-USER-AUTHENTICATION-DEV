@@ -50,6 +50,15 @@ module.exports.ValidateSignature = async (req) => {
 	}
 };
 
+module.exports.GetTokenData = async (signature) => {
+	try {
+		const payload = await jwt.verify(signature, process.env.JWT_SECRET_KEY);
+		return payload;
+	} catch (error) {
+		return false;
+	}
+};
+
 module.exports.CheckPassword = async (password) => {
 	var regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,}$/;
 	if (regex.test(password)) {

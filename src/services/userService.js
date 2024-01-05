@@ -1,5 +1,5 @@
 const { UserModel, UserMobileActivityModel, UserCourseModel, CourseWatchHistoryModel, EmailLogsModel, InvoiceModel } = require("../database");
-const { GeneratePassword, GenerateSalt , CheckPassword, ValidateEmail, ValidateMobileNumber, ValidatePassword, GenerateSignature, sendSingleSms, GetUserLocation, sendPushNotification, millisecToTime } = require('../utils');
+const { GeneratePassword, GenerateSalt , CheckPassword, ValidateEmail, ValidateMobileNumber, ValidatePassword, GenerateSignature, sendSingleSms, GetUserLocation, sendPushNotification, millisecToTime, GetTokenData } = require('../utils');
 const constants = require('../utils/constant');
 const moment = require('moment');
 const axios = require('axios');
@@ -1320,12 +1320,19 @@ const sendForgotPasswordLink = async (userInputs) => {
         const getEmailData = await UserModel.fatchUserfilterData({ email: email });
         if(getEmailData !== null){
             const userId = (getEmailData._id).toString();
+
+
+            let jwtData = {
+                email: email
+            }
+
+            let jwtToken = await GenerateSignature(jwtData);
             //send mail over hear  
-            let link = ''
+            let link = '' 
             if(process.env.DEVELOPER_MODE == "development"){
-                link = process.env.RESET_PASSWORD_LINK_LOCAL + email
+                link = process.env.RESET_PASSWORD_LINK_LOCAL + jwtToken
             }else{
-                link = process.env.RESET_PASSWORD_LINK_LIVE + email
+                link = process.env.RESET_PASSWORD_LINK_LIVE + jwtToken
             }
             let username = (getEmailData?.first_name ? getEmailData?.first_name : '') + " " + (getEmailData?.last_name ? getEmailData?.last_name : '')
             let subject = "Reset Your Password - Account Recovery Request";
@@ -1368,41 +1375,56 @@ const sendForgotPasswordLink = async (userInputs) => {
 
 const changePassword = async (userInputs) => {
     try{
-        const { email_id,new_password,confirm_password } = userInputs;
+        const { token, new_password,confirm_password } = userInputs;
 
         if(new_password === confirm_password){
-            //send mail over hear  
-            const getEmailData = await UserModel.fatchUserfilterData({ email: email_id });
+            let jwtToken = await GetTokenData(token); 
 
-            if(getEmailData !== null){
+            if(jwtToken && jwtToken?.email){
+
+                let email_id = jwtToken.email
                 //send mail over hear  
+                const getEmailData = await UserModel.fatchUserfilterData({ email: email_id });
 
-                let userPassword = await GeneratePassword(new_password, getEmailData.password_salt);
+                if(getEmailData !== null){
+                    //send mail over hear  
 
-                let updatePassword = UserModel.updateUser(getEmailData._id,{ 
-                    password: userPassword
-                });
+                    let userPassword = await GeneratePassword(new_password, getEmailData.password_salt);
 
-                if(updatePassword){
-                    return {
-                        status: true,
-                        status_code: constants.SUCCESS_RESPONSE,
-                        message: "Password changed successfully"
-                    };
+                    let updatePassword = UserModel.updateUser(getEmailData._id,{ 
+                        password: userPassword
+                    });
+
+                    if(updatePassword){
+                        return {
+                            status: true,
+                            status_code: constants.SUCCESS_RESPONSE,
+                            message: "Password changed successfully"
+                        };
+                    }else{
+                        return {
+                            status: false,
+                            status_code: constants.ERROR_RESPONSE,
+                            message: "Sorry! Falied to change the password"
+                        };
+                    }
                 }else{
                     return {
                         status: false,
                         status_code: constants.ERROR_RESPONSE,
-                        message: "Sorry! Falied to change the password"
+                        message: "Email id is not registered with us"
                     };
                 }
             }else{
                 return {
                     status: false,
                     status_code: constants.ERROR_RESPONSE,
-                    message: "Email id is not registered with us"
+                    message: "Sorry! Falied to change the password"
                 };
             }
+           
+            
+           
         }else{
             return {
                 status: false,

@@ -299,7 +299,7 @@ module.exports.welcomeWithCredetialsTemplate = async (data) => {
                 font-weight: bold;
                 color: #fff;
                 margin: 5px 0 0 0;
-              ">${ data.name }</p>
+              ">${ data.name || ''}</p>
           <div style="margin-top: 25px;">
             <p style="
                 font-family: sans-serif;
@@ -1753,7 +1753,7 @@ module.exports.welcomeWithoutPaymentTemplate = async (data) => {
               font-weight: bold;
               color: #fff;
               margin: 5px 0 0 0;
-            ">${ data.name }</p>
+            ">${ data.name || ''}</p>
       </div>
   
       <div

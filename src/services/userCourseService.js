@@ -1970,7 +1970,7 @@ const paymentResponse = async (request) => {
                     const pdfBody = await invoiceTemplate(invoice);
                     await generatePDF(pdfBody, pdfName);
                 
-                    let email = userData?.email
+                    let email = userData?.email ? userData?.email : ""
                     
                     let filePath = 'uploads/'+pdfName;
 
@@ -1983,14 +1983,14 @@ const paymentResponse = async (request) => {
                         });
         
                         let subject = `Congratulations and Welcome to Virtual अफ़सर!`;
-                        let message = await welcomeWithCredetialsTemplate({ name: `${userData.first_name} ${userData.last_name}`,user_name: `${email}`, subject: subject, course_title: courseTitle, course_id : courseId, password: password });
+                        let message = await welcomeWithCredetialsTemplate({ name: `${userData?.first_name || ''} ${userData?.last_name || ''}`,user_name: `${email}`, subject: subject, course_title: courseTitle, course_id : courseId, password: password });
                         //send subscription invoice mail
-                        sendMail(email, message, subject, userId, "Course Payment", true, filePath, pdfName)
+                        await sendMail(email, message, subject, userId, "Course Payment", true, filePath, pdfName)
                     }else{
                         let subject = `Confirmed: Your Payment is Successful`;
-                        let message = await coursePurchaseTemplate({ name: `${userData.first_name} ${userData.last_name}`,user_name: `${email}`, subject: subject, course_title: courseTitle, course_id : courseId });
+                        let message = await coursePurchaseTemplate({ name: `${userData?.first_name || ''} ${userData?.last_name || ''}`,user_name: `${email}`, subject: subject, course_title: courseTitle, course_id : courseId });
                         //send subscription invoice mail
-                        sendMail(email, message, subject, userId, "Course Payment", true, filePath, pdfName)
+                        await sendMail(email, message, subject, userId, "Course Payment", true, filePath, pdfName)
                     }
                 }
                 
@@ -1998,7 +1998,7 @@ const paymentResponse = async (request) => {
 
                 if(userData?.is_funnel_user && userData?.is_new_user){
                     let salt = await GenerateSalt();
-                     let email = userData?.email
+                     let email = userData?.email ? userData?.email : ""
                     let password = await GenerateRandomPassword();
                     UserModel.updateUser(userId,{ 
                         password: await GeneratePassword(password, salt),
@@ -2006,7 +2006,7 @@ const paymentResponse = async (request) => {
                     });
     
                     let subject = `Congratulations and Welcome to Virtual अफ़सर!`;
-                    let message = await welcomeWithoutPaymentTemplate({ name: `${userData.first_name} ${userData.last_name}`, user_name: `${email}`, password: password, subject: subject });
+                    let message = await welcomeWithoutPaymentTemplate({ name: `${userData?.first_name || ''} ${userData?.last_name || ''}`, user_name: `${email}`, password: password, subject: subject });
                     //send subscription invoice mail
                     await sendMail(email, message, subject, userId, "Course Payment", false, "", "")
                 }

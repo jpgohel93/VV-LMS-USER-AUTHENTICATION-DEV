@@ -1190,7 +1190,7 @@ const verifyOtp = async (userInputs) => {
                 let jwtToken = await GenerateSignature(jwtData);
 
                 let subject = "Welcome- Future Officers to Virtual अफ़सर";
-                let message = await welcomeTemplate({ user_name: `${getUserData.first_name} ${getUserData.last_name}`, subject: subject});
+                let message = await welcomeTemplate({ user_name: `${getUserData?.first_name || ""} ${getUserData?.last_name || ""}`, subject: subject});
                 await sendMail(getUserData.email, message, subject, getUserData.id, "Add User");
 
                 return {

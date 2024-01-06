@@ -10,10 +10,10 @@ module.exports = async (req,res,next) => {
         let module = route?.[1] || null
         let apiname = route?.[2] || null
 
-        if(userData.user_type === 5){
+        if(userData.user_type === 5 || userData.user_type === 3 ){
             //student
             return next();
-        }else if(userData.user_type === 1 || userData.user_type === 2 || userData.user_type === 3 || userData.user_type === 4 || userData.user_type === 6 || userData.user_type === 7 || userData.user_type === 8){
+        }else if(userData.user_type === 1 || userData.user_type === 2 || userData.user_type === 4 || userData.user_type === 6 || userData.user_type === 7 || userData.user_type === 8){
            
            /*
                 /user/bulkImport

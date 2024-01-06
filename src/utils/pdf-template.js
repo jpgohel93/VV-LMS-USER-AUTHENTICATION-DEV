@@ -124,7 +124,7 @@ module.exports.invoiceTemplate = async (data) => {
                     color: #fff;
                     margin: 0;
                     padding-top: 5px;
-                    padding-left: 5px;
+                    padding-left: 1rem;
                     word-break: break-all;
                   "
                 >
@@ -147,8 +147,8 @@ module.exports.invoiceTemplate = async (data) => {
               "
             >
               <img
-                src="${ constants.INVOICE_VICON_IMAGE }"
-                style="width: 4rem; height: 5rem"
+                src="${ constants.INVOICE_VICON_JPG_IMAGE }"
+                style="width: 64px; height: 80px"
               />
             </div>
           </div>
@@ -186,8 +186,8 @@ module.exports.invoiceTemplate = async (data) => {
                     </td>
                     <td style="text-align: end">
                       <img
-                        src="${ constants.INVOICE_VALOGO_IMAGE }"
-                        style="width: 9.5rem; height: 5.5rem"
+                        src="${ constants.INVOICE_VALOGO_JPG_IMAGE }"
+                        style="width: 152px; height: 88px"
                       />
                     </td>
                   </tr>
@@ -564,7 +564,7 @@ module.exports.invoiceTemplate = async (data) => {
                             padding-top: 4px;
                           "
                         >
-                          ${ data?.sub_total || 0 }/-
+                          ${ data?.discount_amount || 0 }/-
                         </p>
                       </div>
     
@@ -830,7 +830,8 @@ module.exports.invoiceTemplate = async (data) => {
           </div>
         </div>
       </body>
-    </html>    
+    </html>
+        
     
       `
 

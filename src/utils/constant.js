@@ -91,4 +91,6 @@ module.exports = {
     INVOICE_WEB_IMAGE: process.env.BASE_URL + "VV-LMS-SERVICE-COURSE-QUERY/getcontent/local/invoice_assets/web.png",
     INVOICE_REGULAR_FONT: process.env.BASE_URL + "VV-LMS-SERVICE-COURSE-QUERY/getcontent/local/invoice_assets/GlacialIndifferenceRegular.otf",
     INVOICE_BOLD_FONT: process.env.BASE_URL + "VV-LMS-SERVICE-COURSE-QUERY/getcontent/local/invoice_assets/GlacialIndifferenceBold.otf",
+    INVOICE_VALOGO_JPG_IMAGE: process.env.BASE_URL + "VV-LMS-SERVICE-COURSE-QUERY/getcontent/local/invoice_assets/VAlogo.jpg",
+    INVOICE_VICON_JPG_IMAGE: process.env.BASE_URL + "VV-LMS-SERVICE-COURSE-QUERY/getcontent/local/invoice_assets/VIcon.jpg",
 };

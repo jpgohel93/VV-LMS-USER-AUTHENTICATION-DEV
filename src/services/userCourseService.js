@@ -1959,7 +1959,7 @@ const paymentResponse = async (request) => {
                         tax_amount: invoiceData?.tax_amount || 0,
                         convince_fee: invoiceData?.convince_fee || 0,
                         convince_fee_amount: invoiceData?.convince_fee_amount || 0,
-                        username: `${userData.first_name} ${userData.last_name}`,
+                        username: `${userData?.first_name || '' } ${userData?.last_name || '' }`,
                         mobile_no: userData?.mobile_no ? `+ ${userData.country_code} ${userData.mobile_no}` : "",
                         email: userData?.email ? userData?.email : "",
                         issue_data: moment(new Date()).format('MMMM/DD/YYYY'),

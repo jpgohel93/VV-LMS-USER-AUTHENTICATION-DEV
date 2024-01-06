@@ -2,8 +2,8 @@ const { UserCourseModel, CourseWatchHistoryModel, UserModel, InvoiceModel, CartM
 const constants = require('../utils/constant');
 const { createSubscription , cancelSubscription } = require('../utils/paymentManagement');
 const { CallCourseQueryEvent,CallCourseQueryDataEvent, CallCourseEvents, CallEventBus } = require('../utils/call-event-bus');
-const { coursePurchaseTemplate, subscriptionCancelTemplate, courseAssignedTemplate, welcomeTemplate, welcomeWithCredetialsTemplate, GenerateRandomPassword, welcomeWithoutPaymentTemplate, dailyReportTemplate} = require('../utils/email-template');
-const { createCronLogs, updateCronLogs, createApiCallLog, getNewDate, sendMail, generatePDF, sendPushNotification, findUniqueID, generateInvoiceNumber,invoiceYear,GeneratePassword, GenerateSalt, randomString } = require('../utils');
+const { coursePurchaseTemplate, subscriptionCancelTemplate, courseAssignedTemplate, welcomeTemplate, welcomeWithCredetialsTemplate, welcomeWithoutPaymentTemplate, dailyReportTemplate} = require('../utils/email-template');
+const { createCronLogs, updateCronLogs, createApiCallLog, getNewDate, sendMail, generatePDF, sendPushNotification, findUniqueID, generateInvoiceNumber,invoiceYear,GeneratePassword, GenerateSalt, randomString, GenerateRandomPassword } = require('../utils');
 const { encrypt, decrypt } = require('../utils/ccavenue');
 const moment = require('moment');
 const fs = require('fs');
@@ -2809,7 +2809,7 @@ const payByApplePay = async (userInputs, request) => {
         };
 
         const pdfBody = await invoiceTemplate(invoice);
-        await `generatePDF`(pdfBody, pdfName);
+        await generatePDF(pdfBody, pdfName);
     
         let email = userData?.email
         let subject = `Invoice for course payment`;

@@ -1979,6 +1979,7 @@ const paymentResponse = async (request) => {
                         let password = await GenerateRandomPassword();
                         UserModel.updateUser(userId,{ 
                             password: await GeneratePassword(password, salt),
+                            password_salt: salt,
                             is_new_user: false
                         });
         
@@ -2002,6 +2003,7 @@ const paymentResponse = async (request) => {
                     let password = await GenerateRandomPassword();
                     UserModel.updateUser(userId,{ 
                         password: await GeneratePassword(password, salt),
+                        password_salt: salt,
                         is_new_user: false
                     });
     

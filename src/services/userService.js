@@ -389,6 +389,7 @@ const userSignin = async (userInputs) => {
             if(getUserData.status == 1){
                 let validPassword = await ValidatePassword(password, getUserData.password, getUserData.password_salt);
 
+
                 if(validPassword){
                     //update last login time
                     const updateUserData = { 

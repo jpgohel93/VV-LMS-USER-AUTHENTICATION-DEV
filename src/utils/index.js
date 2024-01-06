@@ -498,27 +498,25 @@ module.exports.generatePDF = async (body, pdfName) => {
 	//   });
 
 
-	setTimeout(async () => {
-		// return true;
-		const options = { format: 'A4',
-			childProcessOptions: {
-				env: {
-				OPENSSL_CONF: '/dev/null',
-				},
-			}
-		};
-		return await new Promise(async (resolve, reject) => {
-			await pdf.create(body, options).toFile('./uploads/'+pdfName, function (err, res) {
-				if (err){ 
-					console.log("pdf error: ::", err)
-					resolve(false)
-				}else{ 
-					//console.log("pdf res: ::", res) 
-					resolve(true)
-				};
-			});
-		})
-	}, 10000)
+	// return true;
+	const options = { format: 'A4',
+		childProcessOptions: {
+			env: {
+			OPENSSL_CONF: '/dev/null',
+			},
+		}
+	};
+	return await new Promise(async (resolve, reject) => {
+		await pdf.create(body, options).toFile('./uploads/'+pdfName, function (err, res) {
+			if (err){ 
+				console.log("pdf error: ::", err)
+				resolve(false)
+			}else{ 
+				//console.log("pdf res: ::", res) 
+				resolve(true)
+			};
+		});
+	})
 	
 	// setTimeout(async () => {
     //     const doc = new jsPDF({ orientation: 'portrait', unit: 'px', format: 'a4' })

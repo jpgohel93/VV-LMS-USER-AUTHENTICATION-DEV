@@ -1985,12 +1985,12 @@ const paymentResponse = async (request) => {
                         let subject = `Congratulations and Welcome to Virtual अफ़सर!`;
                         let message = await welcomeWithCredetialsTemplate({ name: `${userData.first_name} ${userData.last_name}`,user_name: `${email}`, subject: subject, course_title: courseTitle, course_id : courseId, password: password });
                         //send subscription invoice mail
-                        await sendMail(email, message, subject, userId, "Course Payment", true, filePath, pdfName)
+                        sendMail(email, message, subject, userId, "Course Payment", true, filePath, pdfName)
                     }else{
                         let subject = `Confirmed: Your Payment is Successful`;
                         let message = await coursePurchaseTemplate({ name: `${userData.first_name} ${userData.last_name}`,user_name: `${email}`, subject: subject, course_title: courseTitle, course_id : courseId });
                         //send subscription invoice mail
-                        await sendMail(email, message, subject, userId, "Course Payment", true, filePath, pdfName)
+                        sendMail(email, message, subject, userId, "Course Payment", true, filePath, pdfName)
                     }
                 }
                 

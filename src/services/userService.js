@@ -5,7 +5,7 @@ const moment = require('moment');
 const axios = require('axios');
 const { RandomNumber, DateToTimestamp, sendMail,findUserReferralCode } = require('../utils');
 const { CallAdminEvent, CallCourseQueryEvent } = require('../utils/call-event-bus');
-const { welcomeTemplate, forgotPasswordTemplate, welcomeWithCredetialsTemplate, dailySnapshot, weeklySnapshot, monthlySnapshot, welcomeWithoutPaymentTemplate } = require('../utils/email-template');
+const { welcomeTemplate, forgotPasswordTemplate, welcomeWithCredetialsTemplate, dailySnapshot, weeklySnapshot, monthlySnapshot, welcomeWithoutPaymentTemplate, dailyReportTemplate } = require('../utils/email-template');
 const { RateLimiterMemory } = require('rate-limiter-flexible');
 const { deleteFile } = require('../utils/aws');
 
@@ -1575,16 +1575,11 @@ const updateAccountData= async (userInputs) => {
 
 const changeAccountPassword = async (userInputs) => {
     try{
-        const { id, old_password, new_password, confirm_password  } = userInputs;
+        const { id, new_password, confirm_password  } = userInputs;
 
         if(new_password === confirm_password){
    
             const userData = await UserModel.fatchUserById(id);
-
-            let validPassword = await ValidatePassword(old_password, userData.password, userData.password_salt);
-
-            if(validPassword){
-
                 if(userData){
                     let userPassword = await GeneratePassword(new_password, userData.password_salt);
 
@@ -1612,16 +1607,7 @@ const changeAccountPassword = async (userInputs) => {
                         message: "User is not registered with us"
                     };
                 }
-            }else{
-                return {
-                    status: false,
-                    status_code: constants.ERROR_RESPONSE,
-                    message: "Old password is not valid",
-                    error: {
-                        old_password: "Old password is not valid"
-                    }
-                };
-            }
+            
         }else{
             return {
                 status: false,
@@ -4388,58 +4374,93 @@ const sendDailyReportMail = async () => {
     try{
         let data = {}
         //yesterday signup user
-        let startDate = new Date(new Date().setUTCHours(0, 0, 0, 0)).toISOString()
+        // let startDate = new Date(new Date().setUTCHours(0, 0, 0, 0)).toISOString()
+        let startDate = "2022-01-06T00:00:00.000Z"
+        // console.log("startDate", startDate)
         let endDate = new Date(new Date().setUTCHours(23, 59, 59, 999)).toISOString()
 
         let todaySignup = await UserModel.countStudents( "", "", startDate, endDate)
         data['todaySignup'] = todaySignup
 
+        // Purchases Made
+        const todayPurchasesMade = await UserModel.todayPurchasesCourse(startDate, endDate);
+        data['todayPurchasesMade'] = todayPurchasesMade
+
         let todayReferral = await UserModel.countStudents( "", "", startDate, endDate, 1)
         data['todayReferral'] = todayReferral
-
-        //get the chart data age wise
-        const todayAgeData = await UserModel.dailyReportAgeData(startDate, endDate);
-        data['todayAgeData'] = todayAgeData
-
-        let firstRangeCount = 0;
-        let secondRangeCount = 0;
-        let thirdRangeCount = 0;
-        let forthRangeCount = 0;
         
-        let todayAgeRagngeData = {
-            first_range_count: firstRangeCount,
-            second_range_count: secondRangeCount,
-            third_range_count: thirdRangeCount,
-            forth_range_count: forthRangeCount
-        }
+        const getAgeData = await UserModel.getAgeData(startDate, endDate);
+        
+        let totalUserCount = 0;
+        let averageCount = 0;
+        let firstRangeCount = 0;
+        let firstRangePer = 0;
+        let secondRangeCount = 0;
+        let secondRangePer = 0;
+        let thirdRangeCount = 0;;
+        let thirdRangePer = 0;
+        let forthRangeCount = 0;;
+        let forthRangePer = 0;
+        let fifthRangeCount = 0;;
+        let fifthRangePer = 0;
 
-        if(todayAgeData && todayAgeData?.length > 0){
-            todayAgeData.map((ageElement) => {
-                if(ageElement.age == "below 16"){
-                    firstRangeCount = ageElement.personas
-                }else if(ageElement.age == "17 - 28"){
-                    secondRangeCount = ageElement.personas
-                }else if(ageElement.age == "28 - 45"){
-                    thirdRangeCount = ageElement.personas
-                }else if(ageElement.age == "45+"){
-                    forthRangeCount = ageElement.personas
-                }
-            });
-            todayAgeRagngeData = {
-                first_range_count: firstRangeCount,
-                second_range_count: secondRangeCount,
-                third_range_count: thirdRangeCount,
-                forth_range_count: forthRangeCount
+        if(getAgeData !== null){
+            if(getAgeData.length > 0){
+                getAgeData.map((ageElement) => {
+                    if(ageElement.age == "below 16"){
+                        totalUserCount = totalUserCount + ageElement.personas
+                        firstRangeCount = ageElement.personas
+                    }else if(ageElement.age == "17 - 28"){
+                        totalUserCount = totalUserCount + ageElement.personas
+                        secondRangeCount = ageElement.personas
+                    }else if(ageElement.age == "28 - 45"){
+                        totalUserCount = totalUserCount + ageElement.personas
+                        thirdRangeCount = ageElement.personas
+                    }else if(ageElement.age == "45+"){
+                        totalUserCount = totalUserCount + ageElement.personas
+                        forthRangeCount = ageElement.personas
+                    }else{
+                        totalUserCount = totalUserCount + ageElement.personas
+                        fifthRangeCount = ageElement.personas
+                    }
+                });
+
+                averageCount = totalUserCount > 0 ? (totalUserCount / 3).toFixed(2) : 0;
+                firstRangePer =  firstRangeCount > 0 ? ((firstRangeCount * 100) / totalUserCount).toFixed(2) : 0;
+                secondRangePer = secondRangeCount > 0 ? ((secondRangeCount * 100) / totalUserCount).toFixed(2) : 0;
+                thirdRangePer = thirdRangeCount > 0 ? ((thirdRangeCount * 100) / totalUserCount).toFixed(2) : 0;
+                forthRangePer = forthRangeCount > 0 ? ((forthRangeCount * 100) / totalUserCount).toFixed(2) : 0;
+                fifthRangePer = fifthRangeCount > 0 ? ((fifthRangeCount * 100) / totalUserCount).toFixed(2) : 0;
+
             }
+            
+        }
+        
+        data['getAgeData'] = {
+            totalUserCount,
+            averageCount,
+            firstRangeCount,
+            firstRangePer,
+            secondRangeCount,
+            secondRangePer,
+            thirdRangeCount,
+            thirdRangePer,
+            forthRangeCount,
+            forthRangePer,
+            fifthRangeCount,
+            fifthRangePer,
         }
 
-        data['todayAgeRagngeData'] = todayAgeRagngeData
     
         let stateData = {}; // Initialize as an empty object
         let cityData = {};  // Initialize as an empty object
         
         const stateTodayDistribution = await UserModel.getStateWiseLocationDistributionData(startDate, endDate);
         const cityTodayDistribution = await UserModel.getCityWiseLocationDistributionData(startDate, endDate);
+        
+        const stateAndCityToday = await UserModel.getStateAndCityWiseLocationDistributionData(startDate, endDate);
+        
+        data['stateAndCityToday'] = stateAndCityToday
         
         if (stateTodayDistribution?.length > 0) {
             stateTodayDistribution.forEach((element) => {
@@ -4489,18 +4510,87 @@ const sendDailyReportMail = async () => {
     
         data['todayWatchVideo'] = todayWatchVideo
         data['todayCompletedVideo'] = todayWatchVideo && todayCompletedVideo ? parseFloat(todayCompletedVideo * 100 / todayWatchVideo).toFixed(2) : 0
-       
-        let subject = "Daily Snapshot";
-        let message = await dailySnapshot(data);
-        sendMail("tjcloudtest@gmail.com", message, subject, '', "Daily Snapshot");
+
+        // totalUsers
+        const totalUsers = await UserModel.totalUsersCount();
+        data['totalUsers'] = totalUsers
+
+         //get Total Paid users
+         const totalPaidUsers = await UserModel.totalPaidUsersCount();
+         data['totalPaidUsers'] = totalPaidUsers
+
+        //get Total unpaid Users
+        const totalUnpaidPaidUsers = await UserModel.totalUnpaidPaidUsers();
+        data['totalUnpaidPaidUsers'] = totalUnpaidPaidUsers
+
+        // Total Revenue to Date
+
+        const totalRevenueToData = await InvoiceModel.totalRevenueToData();
+        data['totalRevenueToData'] = totalRevenueToData
+
+        // Gender Distribution
+        let malePercentage = 0
+        let femalePercentage = 0
+        let maleCount = 0
+        let femaleCount = 0
+
+        const genderDistribution = await UserModel.getGenderData(startDate, endDate);
+
+         maleCount  = genderDistribution[0].male
+         femaleCount = genderDistribution[0].female
+
+        const totalCount = maleCount + femaleCount;
+        malePercentage = ((maleCount / totalCount) * 100).toFixed(2);
+        femalePercentage = ((femaleCount / totalCount) * 100).toFixed(2);
+
+        data["genderDistribution"] = {
+            malePercentage,
+            femalePercentage,
+            maleCount,
+            femaleCount
+
+        }
+
+        // Today's User Enagement
+        const todayInvoiceCount = await InvoiceModel.todayInvoiceCount(startDate, endDate);
+        const todayUnpaidUser =  todaySignup - (todayInvoiceCount.invoice_count || 0);
+        const userCourseAssigned = await UserCourseModel.getUserCourseAssignedList(startDate, endDate)
+        console.log("userCourseAssigned", userCourseAssigned)
+         
+        let todayGetPaymentCount = todayInvoiceCount.invoice_count;
+        let todayFaildPaymentCount = todayUnpaidUser;
+        let todayGetPaymentPar = ((todayGetPaymentCount / (todayGetPaymentCount + todayFaildPaymentCount)) * 100).toFixed(2);
+        let todayFaildPaymentPar = ((todayFaildPaymentCount / (todayGetPaymentCount + todayFaildPaymentCount)) * 100).toFixed(2);
+
+
+        data['todayUserEnagement'] = {
+            todayGetPaymentCount,
+            todayFaildPaymentCount,
+            todayGetPaymentPar,
+            todayFaildPaymentPar
+            };
+
+
+        // let subject = "Daily Snapshot";
+        // let message = await dailySnapshot(data);
+        // sendMail("tjcloudtest@gmail.com", message, subject, '', "Daily Snapshot");
+
+        
+        // let subject = "Daily Snapshot";
+        // let message = await dailyReportTemplate(data);
+        // sendMail("ayushnandoriya@gmail.com", message, subject, '', "Daily Snapshot");
+
 
         return {
             status: true,
             status_code: constants.SUCCESS_RESPONSE,
-            message: "Mail send successfully"
+            message: "Mail send successfully",
+            data:data,
+
         }
 
     }catch (error) {
+        console.log("error", error)
         // Handle unexpected errors
        // console.log("error :: ", error)
         return {

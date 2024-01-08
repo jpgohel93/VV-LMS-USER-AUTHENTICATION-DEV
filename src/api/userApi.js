@@ -660,17 +660,6 @@ module.exports = async (app) => {
         });
 
     app.post('/user/changeAccountPassword', UserAuth, await validateFormFields([
-        body('old_password')
-        .notEmpty()
-        .withMessage('Old password is required')
-        .isStrongPassword({
-            minLength: 8,
-            minLowercase: 1,
-            minUppercase: 1,
-            minNumbers: 1
-        }).withMessage("Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"),
-
-
         body('new_password')
         .notEmpty()
         .withMessage('New password is required')
@@ -698,13 +687,11 @@ module.exports = async (app) => {
 
         const {
             id,
-            old_password,
             new_password,
             confirm_password
         } = req.body;
         const data = await userService.changeAccountPassword({
             id,
-            old_password,
             new_password,
             confirm_password
         });

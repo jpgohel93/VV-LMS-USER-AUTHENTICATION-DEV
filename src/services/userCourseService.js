@@ -943,6 +943,7 @@ const mylearning = async (userInputs,request) => {
                                             course_title: course?.course_title ? course.course_title : '',
                                             course_description: course?.short_description ? course.short_description : '',
                                             image: courseDefault?.web_image ? courseDefault.web_image : '',
+                                            app_image: courseDefault?.app_image ? courseDefault.app_image : '',
                                             publisher_id: course?.publisher_id ? course.publisher_id : '',
                                             publisher_name: course?.publisher_name ? course.publisher_name : '',
                                         },

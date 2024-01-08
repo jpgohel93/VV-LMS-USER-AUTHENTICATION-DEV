@@ -1910,8 +1910,6 @@ module.exports.welcomeWithoutPaymentTemplate = async (data) => {
 
 module.exports.dailyReportTemplate = (getdata) => {
   const stateAndCityToday = getdata.stateAndCityToday;
-
-  // Create the HTML content for the table
   const tableHtml = `
     <div style="max-width: 30rem; margin: auto">
 
@@ -2071,8 +2069,6 @@ module.exports.dailyReportTemplate = (getdata) => {
     </div>
     <!-- Today's Highlights End -->
 
-
-    
     <!-- Overall Platform Statistics Start -->
     <div
       style="
@@ -2229,8 +2225,6 @@ module.exports.dailyReportTemplate = (getdata) => {
     </div>
     <!-- Overall Platform Statistics End -->
 
-
-    
     <!-- Age Distribution Start -->
     <div
       style="
@@ -2475,8 +2469,6 @@ module.exports.dailyReportTemplate = (getdata) => {
     </div>
     <!-- Age Distribution End -->
 
-
-    
     <!-- Gender Distribution Start -->
     <div
       style="
@@ -2551,7 +2543,7 @@ module.exports.dailyReportTemplate = (getdata) => {
                     color: #0d66b5;
                   "
                 >
-                ${getdata.genderDistribution.malePercentage || 0}%
+                ${getdata.genderDistribution.malePercentage || 0 }%
                 </p>
               </td>
             </tr>
@@ -2601,8 +2593,6 @@ module.exports.dailyReportTemplate = (getdata) => {
     </div>
     <!-- Gender Distribution End -->
 
-
-    
     <!-- Today's User Enagement Start -->
     <div
     style="
@@ -2745,7 +2735,7 @@ module.exports.dailyReportTemplate = (getdata) => {
                   color: #0d66b5;
                 "
               >
-              10
+              ${getdata.todayUserEnagement.todayOtherUserCount || 0}
               </p>
             </td>
             <td style="text-align: right">
@@ -2758,7 +2748,7 @@ module.exports.dailyReportTemplate = (getdata) => {
                   color: #0d66b5;
                 "
               >
-                45%
+              ${getdata.todayUserEnagement.todayOtherUserPar  || 0}%
               </p>
             </td>
           </tr>
@@ -2767,8 +2757,6 @@ module.exports.dailyReportTemplate = (getdata) => {
     </div>
   </div>
   <!-- Today's User Enagement End -->
-
-
 
       <!-- State & City Wise Distribution Start -->
       <div style="border-radius: 15px; border: 1px solid #c0ccf7; box-shadow: 0px 0px 6.9px -1px #afdaff; margin: 20px 0;">
@@ -2805,7 +2793,6 @@ module.exports.dailyReportTemplate = (getdata) => {
       </div>
     </div>
   `;
-
   return tableHtml;
 };
 

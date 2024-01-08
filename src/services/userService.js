@@ -4429,7 +4429,6 @@ const sendDailyReportMail = async () => {
                 thirdRangePer = thirdRangeCount > 0 ? ((thirdRangeCount * 100) / totalUserCount).toFixed(2) : 0;
                 forthRangePer = forthRangeCount > 0 ? ((forthRangeCount * 100) / totalUserCount).toFixed(2) : 0;
                 fifthRangePer = fifthRangeCount > 0 ? ((fifthRangeCount * 100) / totalUserCount).toFixed(2) : 0;
-
             }
             
         }
@@ -4526,13 +4525,12 @@ const sendDailyReportMail = async () => {
         const totalRevenueToData = await InvoiceModel.totalRevenueToData();
         data['totalRevenueToData'] = totalRevenueToData
 
-        // Gender Distribution
-        let malePercentage = 0
-        let femalePercentage = 0
-        let maleCount = 0
-        let femaleCount = 0
-
         const genderDistribution = await UserModel.getGenderData(startDate, endDate);
+             // Gender Distribution
+             let malePercentage = 0
+             let femalePercentage = 0
+             let maleCount = 0
+             let femaleCount = 0
 
          maleCount  = genderDistribution[0].male
          femaleCount = genderDistribution[0].female
@@ -4546,26 +4544,27 @@ const sendDailyReportMail = async () => {
             femalePercentage,
             maleCount,
             femaleCount
-
         }
-
-        // Today's User Enagement
         const todayInvoiceCount = await InvoiceModel.todayInvoiceCount(startDate, endDate);
-        const todayUnpaidUser =  todaySignup - (todayInvoiceCount.invoice_count || 0);
-        const userCourseAssigned = await UserCourseModel.getUserCourseAssignedList(startDate, endDate)
-        console.log("userCourseAssigned", userCourseAssigned)
-         
-        let todayGetPaymentCount = todayInvoiceCount.invoice_count;
-        let todayFaildPaymentCount = todayUnpaidUser;
-        let todayGetPaymentPar = ((todayGetPaymentCount / (todayGetPaymentCount + todayFaildPaymentCount)) * 100).toFixed(2);
-        let todayFaildPaymentPar = ((todayFaildPaymentCount / (todayGetPaymentCount + todayFaildPaymentCount)) * 100).toFixed(2);
+            const todayUnpaidUser = todaySignup - (todayInvoiceCount.invoice_count || 0);
+            const userCourseAssigned = await UserCourseModel.getUserCourseAssignedList(startDate, endDate);
 
+            let todayGetPaymentCount = todayInvoiceCount.invoice_count;
+            let todayFaildPaymentCount = todayUnpaidUser;
+            let todayOtherUserCount = userCourseAssigned.count;
 
-        data['todayUserEnagement'] = {
-            todayGetPaymentCount,
-            todayFaildPaymentCount,
-            todayGetPaymentPar,
-            todayFaildPaymentPar
+            let total = todayGetPaymentCount + todayFaildPaymentCount + todayOtherUserCount;
+            let todayGetPaymentPar = ((todayGetPaymentCount / total) * 100).toFixed(2);
+            let todayFaildPaymentPar = ((todayFaildPaymentCount / total) * 100).toFixed(2);
+            let todayOtherUserPar = ((todayOtherUserCount / total) * 100).toFixed(2);
+
+            data['todayUserEnagement'] = {
+                todayGetPaymentCount,
+                todayFaildPaymentCount,
+                todayOtherUserCount,
+                todayGetPaymentPar,
+                todayFaildPaymentPar,
+                todayOtherUserPar,
             };
 
 
@@ -4576,15 +4575,13 @@ const sendDailyReportMail = async () => {
         
         // let subject = "Daily Snapshot";
         // let message = await dailyReportTemplate(data);
-        // sendMail("ayushnandoriya@gmail.com", message, subject, '', "Daily Snapshot");
+        // sendMail("kirankhetariya22@gmail.com", message, subject, '', "Daily Snapshot");
 
 
         return {
             status: true,
             status_code: constants.SUCCESS_RESPONSE,
             message: "Mail send successfully",
-            data:data,
-
         }
 
     }catch (error) {

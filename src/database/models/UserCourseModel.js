@@ -653,26 +653,26 @@ const getUserCourseAssignedList = async (startDate, endDate) => {
     const filter = [
         {
             $match: {
-                createdAt: {
-                    $gte: new Date(startDate),
-                    $lte: new Date(endDate),
+                $expr: {
+                    $and: [
+                        { $gte: ["$createdAt", new Date(startDate)] },
+                        { $lte: ["$createdAt", new Date(endDate)] },
+                    ],
                 },
                 type: 1,
                 is_deleted: false,
-                is_purchase:false,
-                payment_status: { $ne: 2 }
             },
         },
         {
             $group: {
                 _id: null,
-                count: { $sum: 1 }
-            }
+                count: { $sum: 1 },
+            },
         },
         {
             $project: {
                 _id: 0,
-                count: 1
+                count: 1,
             },
         },
     ];

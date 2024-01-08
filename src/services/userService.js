@@ -4374,9 +4374,7 @@ const sendDailyReportMail = async () => {
     try{
         let data = {}
         //yesterday signup user
-        // let startDate = new Date(new Date().setUTCHours(0, 0, 0, 0)).toISOString()
-        let startDate = "2022-01-06T00:00:00.000Z"
-        // console.log("startDate", startDate)
+        let startDate = new Date(new Date().setUTCHours(0, 0, 0, 0)).toISOString()
         let endDate = new Date(new Date().setUTCHours(23, 59, 59, 999)).toISOString()
 
         let todaySignup = await UserModel.countStudents( "", "", startDate, endDate)

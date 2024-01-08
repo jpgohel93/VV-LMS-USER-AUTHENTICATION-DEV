@@ -648,6 +648,43 @@ const getUserCoursePurchaseList = async (userFilter) => {
     return getFilterData;
 }
 
+
+const getUserCourseAssignedList = async (startDate, endDate) => {
+    const filter = [
+        {
+            $match: {
+                createdAt: {
+                    $gte: new Date(startDate),
+                    $lte: new Date(endDate),
+                },
+                type: 1,
+                is_deleted: false,
+                is_purchase:false,
+                payment_status: { $ne: 2 }
+            },
+        },
+        {
+            $group: {
+                _id: null,
+                count: { $sum: 1 }
+            }
+        },
+        {
+            $project: {
+                _id: 0,
+                count: 1
+            },
+        },
+    ];
+    let getFilterData =  await UserCourseSchema.aggregate(filter).then((result) => {
+        return  result.length > 0 ? result[0] : { count: 0 };
+    }).catch((err) => {
+        return null
+    });
+
+    return getFilterData;
+}
+
 module.exports = {
     assignUserCourse,
     filterUserCourseData,
@@ -674,5 +711,6 @@ module.exports = {
     getUserWithdrawAmount,
     countTransation,
     updateUserEarning,
-    getUserCoursePurchaseList
+    getUserCoursePurchaseList,
+    getUserCourseAssignedList
 }

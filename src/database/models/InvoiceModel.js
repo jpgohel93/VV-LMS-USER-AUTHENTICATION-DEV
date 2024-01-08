@@ -223,6 +223,71 @@ const invoiceCount = async (year) => {
    return invoiceCount;
 }
 
+const totalRevenueToData = async () => {
+    let condition = []
+
+        condition.push({
+            $match: {
+                payment_status: 2
+            }
+        })
+    
+
+    condition.push( {
+        $group: {
+          _id: null,
+          amount: {
+            $sum: "$amount",
+          },
+          user_count: {$sum: 1}
+        }
+      }, { $project: { _id: 0, amount: 1, user_count: 1 } })
+
+    let data = await InvoiceSchema.aggregate(condition).then((userData) => {
+        return userData?.length > 0 ? userData[0] : {}
+    }).catch((err) => {
+        return false
+    });
+
+   return data;
+}
+
+const todayInvoiceCount = async (startDate, endDate) => {
+    let condition = [
+        {
+            $match: {
+                createdAt: {
+                    $gte: new Date(startDate),
+                    $lte: new Date(endDate),
+                },
+                payment_status: 2
+            },
+        },
+        {
+            $group: {
+                _id: "$user_id",
+                invoice_count: {
+                    $sum: 1,
+                },
+            },
+        },
+        {
+            $project: {
+                _id: 0,
+                invoice_count: 1,
+            },
+        },
+    ];
+
+    let data = await InvoiceSchema.aggregate(condition).then((result) => {
+        return result?.length > 0 ? result[0] : { invoice_count: 0 };
+    }).catch((err) => {
+        return false;
+    });
+
+    return data;
+};
+
 
 module.exports = {
     createInvoice,
@@ -234,5 +299,7 @@ module.exports = {
     findOrderById,
     findByIdData,
     revenueData,
-    invoiceCount
+    invoiceCount,
+    totalRevenueToData,
+    todayInvoiceCount
 }

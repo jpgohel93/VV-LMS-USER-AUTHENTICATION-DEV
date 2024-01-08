@@ -1907,3 +1907,935 @@ module.exports.welcomeWithoutPaymentTemplate = async (data) => {
 
   `
 }
+
+module.exports.dailyReportTemplate = (getdata) => {
+  const stateAndCityToday = getdata.stateAndCityToday;
+
+  // Create the HTML content for the table
+  const tableHtml = `
+    <div style="max-width: 30rem; margin: auto">
+
+    <!-- Today's Highlights Start -->
+    <div
+      style="
+        border-radius: 15px;
+        border: 1px solid #c0ccf7;
+        box-shadow: 0px 0px 6.9px -1px #afdaff;
+        margin: 25px 0;
+      "
+    >
+      <div style="padding: 5px 20px 0 20px">
+        <p
+          style="
+            font-family: sans-serif;
+            font-size: 20px;
+            font-weight: 500;
+            color: #000;
+            margin-bottom: 0;
+            margin-top: 5px;
+            padding-left: 5px;
+            padding-top: 4px;
+            border-left: 3px solid #00bf71;
+          "
+        >
+          Today's Highlights :
+        </p>
+      </div>
+      <hr color="#c0ccf7" />
+      <div style="padding: 20px">
+        <div
+          style="border: 1px solid #c0ccf7; border-radius: 10px; padding: 6px"
+        >
+          <table
+            style="
+              width: 100%;
+              border-collapse: collapse;
+              border-spacing: 30px;
+            "
+          >
+            <tr style="border-bottom: 1px solid #c0ccf7">
+              <th style="text-align: left">
+                <p
+                  style="
+                    padding-left: 10px;
+                    font-family: sans-serif;
+                    font-size: 15px;
+                    font-weight: 600;
+                    color: #000;
+                  "
+                >
+                  New Sign-Ups
+                </p>
+              </th>
+              <td style="text-align: right">
+                <p
+                  style="
+                  padding-right: 10px;
+                    font-family: sans-serif;
+                    font-size: 15px;
+                    font-weight: 600;
+                    color: #0d66b5;
+                  "
+                >
+                  ${getdata.todaySignup}
+                </p>
+              </td>
+            </tr>
+            <tr style="border-bottom: 1px solid #c0ccf7">
+              <th style="text-align: left">
+                <p
+                  style="
+                    padding-left: 10px;
+                    font-family: sans-serif;
+                    font-size: 15px;
+                    font-weight: 600;
+                    color: #000;
+                  "
+                >
+                  Purchases Made
+                </p>
+              </th>
+              <td style="text-align: right">
+                <p
+                  style="
+                  padding-right: 10px;
+                    font-family: sans-serif;
+                    font-size: 15px;
+                    font-weight: 600;
+                    color: #0d66b5;
+                  "
+                >
+                  ${getdata.todayPurchasesMade}
+                </p>
+              </td>
+            </tr>
+            <tr style="border-bottom: 1px solid #c0ccf7">
+              <th style="text-align: left">
+                <p
+                  style="
+                    padding-left: 10px;
+                    font-family: sans-serif;
+                    font-size: 15px;
+                    font-weight: 600;
+                    color: #000;
+                  "
+                >
+                  Total Revenue Collected
+                </p>
+              </th>
+              <td style="text-align: right">
+                <p
+                  style="
+                  padding-right: 10px;
+                    font-family: sans-serif;
+                    font-size: 15px;
+                    font-weight: 600;
+                    color: #0d66b5;
+                  "
+                >
+                  ${getdata.todayRevenueData.amount}
+                </p>
+              </td>
+            </tr>
+            <tr>
+              <th style="text-align: left">
+                <p
+                  style="
+                    padding-left: 10px;
+                    font-family: sans-serif;
+                    font-size: 15px;
+                    font-weight: 600;
+                    color: #000;
+                  "
+                >
+                  Total Videos Viewed
+                </p>
+              </th>
+              <td style="text-align: right">
+                <p
+                  style="
+                  padding-right: 10px;
+                    font-family: sans-serif;
+                    font-size: 15px;
+                    font-weight: 600;
+                    color: #0d66b5;
+                  "
+                >
+                ${getdata.todayWatchVideo}
+                </p>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+    <!-- Today's Highlights End -->
+
+
+    
+    <!-- Overall Platform Statistics Start -->
+    <div
+      style="
+        border-radius: 15px;
+        border: 1px solid #c0ccf7;
+        box-shadow: 0px 0px 6.9px -1px #afdaff;
+        margin: 20px 0;
+      "
+    >
+      <div style="padding: 5px 20px 0 20px">
+        <p
+          style="
+            font-family: sans-serif;
+            font-size: 20px;
+            font-weight: normal;
+            color: #000;
+            margin-bottom: 0;
+            margin-top: 5px;
+            padding-left: 5px;
+            padding-top: 4px;
+            border-left: 3px solid #00bf71;
+          "
+        >
+          Overall Platform Statistics :
+        </p>
+      </div>
+      <hr color="#c0ccf7" />
+      <div style="padding: 20px">
+        <div
+          style="border: 1px solid #c0ccf7; border-radius: 10px; padding: 6px"
+        >
+          <table
+            style="
+              width: 100%;
+              border-collapse: collapse;
+              border-spacing: 30px;
+            "
+          >
+            <tr style="border-bottom: 1px solid #c0ccf7">
+              <th style="text-align: left">
+                <p
+                  style="
+                    padding-left: 10px;
+                    font-family: sans-serif;
+                    font-size: 15px;
+                    font-weight: 600;
+                    color: #000;
+                  "
+                >
+                  Total Users
+                </p>
+              </th>
+              <td style="text-align: right">
+                <p
+                  style="
+                  padding-right: 10px;
+                    font-family: sans-serif;
+                    font-size: 15px;
+                    font-weight: 600;
+                    color: #0d66b5;
+                  "
+                >
+                ${getdata.totalUsers}
+                </p>
+              </td>
+            </tr>
+            <tr style="border-bottom: 1px solid #c0ccf7">
+              <th style="text-align: left">
+                <p
+                  style="
+                    padding-left: 10px;
+                    font-family: sans-serif;
+                    font-size: 15px;
+                    font-weight: 600;
+                    color: #000;
+                  "
+                >
+                  Total Paid Users
+                </p>
+              </th>
+              <td style="text-align: right">
+                <p
+                  style="
+                  padding-right: 10px;
+                    font-family: sans-serif;
+                    font-size: 15px;
+                    font-weight: 600;
+                    color: #0d66b5;
+                  "
+                >
+                ${getdata.totalPaidUsers}
+                </p>
+              </td>
+            </tr>
+            <tr style="border-bottom: 1px solid #c0ccf7">
+              <th style="text-align: left">
+                <p
+                  style="
+                    padding-left: 10px;
+                    font-family: sans-serif;
+                    font-size: 15px;
+                    font-weight: 600;
+                    color: #000;
+                  "
+                >
+                  Total Unpaid Users
+                </p>
+              </th>
+              <td style="text-align: right">
+                <p
+                  style="
+                  padding-right: 10px;
+                    font-family: sans-serif;
+                    font-size: 15px;
+                    font-weight: 600;
+                    color: #0d66b5;
+                  "
+                >
+                ${getdata.totalUnpaidPaidUsers}
+                </p>
+              </td>
+            </tr>
+            <tr>
+              <th style="text-align: left">
+                <p
+                  style="
+                    padding-left: 10px;
+                    font-family: sans-serif;
+                    font-size: 15px;
+                    font-weight: 600;
+                    color: #000;
+                  "
+                >
+                  Total Revenue To Date
+                </p>
+              </th>
+              <td style="text-align: right">
+                <p
+                  style="
+                  padding-right: 10px;
+                    font-family: sans-serif;
+                    font-size: 15px;
+                    font-weight: 600;
+                    color: #0d66b5;
+                  "
+                >
+                ${getdata.totalRevenueToData.amount || 0}
+                </p>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+    <!-- Overall Platform Statistics End -->
+
+
+    
+    <!-- Age Distribution Start -->
+    <div
+      style="
+        border-radius: 15px;
+        border: 1px solid #c0ccf7;
+        box-shadow: 0px 0px 6.9px -1px #afdaff;
+        margin: 20px 0;
+      "
+    >
+      <div style="padding: 5px 20px 0 20px">
+        <p
+          style="
+            font-family: sans-serif;
+            font-size: 20px;
+            font-weight: normal;
+            color: #000;
+            margin-bottom: 0;
+            margin-top: 5px;
+            padding-left: 5px;
+            padding-top: 4px;
+            border-left: 3px solid #00bf71;
+          "
+        >
+          Age Distribution
+        </p>
+      </div>
+      <hr color="#c0ccf7" />
+      <div style="padding: 20px">
+        <div
+          style="border: 1px solid #c0ccf7; border-radius: 10px; padding: 6px"
+        >
+          <table
+            style="
+              width: 100%;
+              border-collapse: collapse;
+              border-spacing: 30px;
+            "
+          >
+            <tr style="border-bottom: 1px solid #c0ccf7">
+              <th style="text-align: left">
+                <p
+                  style="
+                    padding-left: 10px;
+                    font-family: sans-serif;
+                    font-size: 15px;
+                    font-weight: 600;
+                    color: #000;
+                  "
+                >
+                  10-16
+                </p>
+              </th>
+              <td>
+                <p
+                  style="
+                    font-family: sans-serif;
+                    font-size: 15px;
+                    font-weight: 600;
+                    color: #0d66b5;
+                  "
+                >
+                ${getdata.getAgeData.firstRangeCount}
+                </p>
+              </td>
+              <td style="text-align: right">
+                <p
+                  style="
+                    padding-right: 10px;
+                    font-family: sans-serif;
+                    font-size: 15px;
+                    font-weight: 600;
+                    color: #0d66b5;
+                  "
+                >
+                ${getdata.getAgeData.firstRangePer}%
+                </p>
+              </td>
+            </tr>
+            <tr style="border-bottom: 1px solid #c0ccf7">
+              <th style="text-align: left">
+                <p
+                  style="
+                    padding-left: 10px;
+                    font-family: sans-serif;
+                    font-size: 15px;
+                    font-weight: 600;
+                    color: #000;
+                  "
+                >
+                17-28
+                </p>
+              </th>
+              <td>
+                <p
+                  style="
+                    font-family: sans-serif;
+                    font-size: 15px;
+                    font-weight: 600;
+                    color: #0d66b5;
+                  "
+                >
+                ${getdata.getAgeData.secondRangeCount}
+                </p>
+              </td>
+              <td style="text-align: right">
+                <p
+                  style="
+                    padding-right: 10px;
+                    font-family: sans-serif;
+                    font-size: 15px;
+                    font-weight: 600;
+                    color: #0d66b5;
+                  "
+                >
+                ${getdata.getAgeData.secondRangePer}%
+                </p>
+              </td>
+            </tr>
+            <tr style="border-bottom: 1px solid #c0ccf7">
+              <th style="text-align: left">
+                <p
+                  style="
+                    padding-left: 10px;
+                    font-family: sans-serif;
+                    font-size: 15px;
+                    font-weight: 600;
+                    color: #000;
+                  "
+                >
+                29-45
+                </p>
+              </th>
+              <td>
+                <p
+                  style="
+                    font-family: sans-serif;
+                    font-size: 15px;
+                    font-weight: 600;
+                    color: #0d66b5;
+                  "
+                >
+                ${getdata.getAgeData.thirdRangeCount}
+                </p>
+              </td>
+              <td style="text-align: right">
+                <p
+                  style="
+                    padding-right: 10px;
+                    font-family: sans-serif;
+                    font-size: 15px;
+                    font-weight: 600;
+                    color: #0d66b5;
+                  "
+                >
+                ${getdata.getAgeData.thirdRangePer}%
+                </p>
+              </td>
+            </tr>
+            <tr style="border-bottom: 1px solid #c0ccf7">
+              <th style="text-align: left">
+                <p
+                  style="
+                    padding-left: 10px;
+                    font-family: sans-serif;
+                    font-size: 15px;
+                    font-weight: 600;
+                    color: #000;
+                  "
+                >
+                45-60
+                </p>
+              </th>
+              <td>
+                <p
+                  style="
+                    font-family: sans-serif;
+                    font-size: 15px;
+                    font-weight: 600;
+                    color: #0d66b5;
+                  "
+                >
+                ${getdata.getAgeData.forthRangeCount}
+                </p>
+              </td>
+              <td style="text-align: right">
+                <p
+                  style="
+                    padding-right: 10px;
+                    font-family: sans-serif;
+                    font-size: 15px;
+                    font-weight: 600;
+                    color: #0d66b5;
+                  "
+                >
+                ${getdata.getAgeData.forthRangePer}%
+                </p>
+              </td>
+            </tr>
+            <tr>
+              <th style="text-align: left">
+                <p
+                  style="
+                    padding-left: 10px;
+                    font-family: sans-serif;
+                    font-size: 15px;
+                    font-weight: 600;
+                    color: #000;
+                  "
+                >
+                Other
+                </p>
+              </th>
+              <td>
+                <p
+                  style="
+                    font-family: sans-serif;
+                    font-size: 15px;
+                    font-weight: 600;
+                    color: #0d66b5;
+                  "
+                >
+                ${getdata.getAgeData.fifthRangeCount}
+                </p>
+              </td>
+              <td style="text-align: right">
+                <p
+                  style="
+                    padding-right: 10px;
+                    font-family: sans-serif;
+                    font-size: 15px;
+                    font-weight: 600;
+                    color: #0d66b5;
+                  "
+                >
+                ${getdata.getAgeData.fifthRangePer}%
+                </p>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+    <!-- Age Distribution End -->
+
+
+    
+    <!-- Gender Distribution Start -->
+    <div
+      style="
+        border-radius: 15px;
+        border: 1px solid #c0ccf7;
+        box-shadow: 0px 0px 6.9px -1px #afdaff;
+        margin: 20px 0;
+      "
+    >
+      <div style="padding: 5px 20px 0 20px">
+        <p
+          style="
+            font-family: sans-serif;
+            font-size: 20px;
+            font-weight: normal;
+            color: #000;
+            margin-bottom: 0;
+            margin-top: 5px;
+            padding-left: 5px;
+            padding-top: 4px;
+            border-left: 3px solid #00bf71;
+          "
+        >
+          Gender Distribution
+        </p>
+      </div>
+      <hr color="#c0ccf7" />
+      <div style="padding: 20px">
+        <div
+          style="border: 1px solid #c0ccf7; border-radius: 10px; padding: 6px"
+        >
+          <table
+            style="
+              width: 100%;
+              border-collapse: collapse;
+              border-spacing: 30px;
+            "
+          >
+            <tr style="border-bottom: 1px solid #c0ccf7">
+              <th style="text-align: left">
+                <p
+                  style="
+                    padding-left: 10px;
+                    font-family: sans-serif;
+                    font-size: 15px;
+                    font-weight: 600;
+                    color: #000;
+                  "
+                >
+                  Male
+                </p>
+              </th>
+              <td>
+                <p
+                  style="
+                    font-family: sans-serif;
+                    font-size: 15px;
+                    font-weight: 600;
+                    color: #0d66b5;
+                  "
+                >
+                ${getdata.genderDistribution.maleCount || 0}
+                </p>
+              </td>
+              <td style="text-align: right">
+                <p
+                  style="
+                    padding-right: 10px;
+                    font-family: sans-serif;
+                    font-size: 15px;
+                    font-weight: 600;
+                    color: #0d66b5;
+                  "
+                >
+                ${getdata.genderDistribution.malePercentage || 0}%
+                </p>
+              </td>
+            </tr>
+            <tr>
+              <th style="text-align: left">
+                <p
+                  style="
+                    padding-left: 10px;
+                    font-family: sans-serif;
+                    font-size: 15px;
+                    font-weight: 600;
+                    color: #000;
+                  "
+                >
+                  Female
+                </p>
+              </th>
+              <td>
+                <p
+                  style="
+                    font-family: sans-serif;
+                    font-size: 15px;
+                    font-weight: 600;
+                    color: #0d66b5;
+                  "
+                >
+                ${getdata.genderDistribution.femaleCount || 0}
+                </p>
+              </td>
+              <td style="text-align: right">
+                <p
+                  style="
+                    padding-right: 10px;
+                    font-family: sans-serif;
+                    font-size: 15px;
+                    font-weight: 600;
+                    color: #0d66b5;
+                  "
+                >
+                ${getdata.genderDistribution.femalePercentage || 0}%
+                </p>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+    <!-- Gender Distribution End -->
+
+
+    
+    <!-- Today's User Enagement Start -->
+    <div
+    style="
+      border-radius: 15px;
+      border: 1px solid #c0ccf7;
+      box-shadow: 0px 0px 6.9px -1px #afdaff;
+      margin: 20px 0;
+    "
+  >
+    <div style="padding: 5px 20px 0 20px">
+      <p
+        style="
+          font-family: sans-serif;
+          font-size: 20px;
+          font-weight: normal;
+          color: #000;
+          margin-bottom: 0;
+          margin-top: 5px;
+          padding-left: 5px;
+          padding-top: 4px;
+          border-left: 3px solid #00bf71;
+        "
+      >
+        Today's User Enagement:
+      </p>
+    </div>
+    <hr color="#c0ccf7" />
+    <div style="padding: 20px">
+      <div
+        style="border: 1px solid #c0ccf7; border-radius: 10px; padding: 6px"
+      >
+        <table
+          style="
+            width: 100%;
+            border-collapse: collapse;
+            border-spacing: 30px;
+          "
+        >
+          <tr style="border-bottom: 1px solid #c0ccf7">
+            <th style="text-align: left">
+              <p
+                style="
+                  padding-left: 10px;
+                  font-family: sans-serif;
+                  font-size: 15px;
+                  font-weight: 600;
+                  color: #000;
+                "
+              >
+                Paid
+              </p>
+            </th>
+            </td>
+            <td>
+              <p
+                style="
+                  font-family: sans-serif;
+                  font-size: 15px;
+                  font-weight: 600;
+                  color: #0d66b5;
+                "
+              >
+              ${getdata.todayUserEnagement.todayGetPaymentCount || 0}
+              </p>
+            </td>
+            <td style="text-align: right">
+              <p
+                style="
+                  padding-right: 10px;
+                  font-family: sans-serif;
+                  font-size: 15px;
+                  font-weight: 600;
+                  color: #0d66b5;
+                "
+              >
+              ${getdata.todayUserEnagement.todayGetPaymentPar || 0}%
+              </p>
+            </td>
+          </tr>
+          <tr style="border-bottom: 1px solid #c0ccf7">
+            <th style="text-align: left">
+              <p
+                style="
+                  padding-left: 10px;
+                  font-family: sans-serif;
+                  font-size: 15px;
+                  font-weight: 600;
+                  color: #000;
+                "
+              >
+              Unpaid
+              </p>
+            </th>
+            <td>
+              <p
+                style="
+                  font-family: sans-serif;
+                  font-size: 15px;
+                  font-weight: 600;
+                  color: #0d66b5;
+                "
+              >
+              ${getdata.todayUserEnagement.todayFaildPaymentCount || 0}
+              </p>
+            </td>
+            <td style="text-align: right">
+              <p
+                style="
+                  padding-right: 10px;
+                  font-family: sans-serif;
+                  font-size: 15px;
+                  font-weight: 600;
+                  color: #0d66b5;
+                "
+              >
+              ${getdata.todayUserEnagement.todayFaildPaymentPar  || 0}%
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <th style="text-align: left">
+              <p
+                style="
+                  padding-left: 10px;
+                  font-family: sans-serif;
+                  font-size: 15px;
+                  font-weight: 600;
+                  color: #000;
+                "
+              >
+              Other
+              </p>
+            </th>
+            <td>
+              <p
+                style="
+                  font-family: sans-serif;
+                  font-size: 15px;
+                  font-weight: 600;
+                  color: #0d66b5;
+                "
+              >
+              10
+              </p>
+            </td>
+            <td style="text-align: right">
+              <p
+                style="
+                  padding-right: 10px;
+                  font-family: sans-serif;
+                  font-size: 15px;
+                  font-weight: 600;
+                  color: #0d66b5;
+                "
+              >
+                45%
+              </p>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <!-- Today's User Enagement End -->
+
+
+
+      <!-- State & City Wise Distribution Start -->
+      <div style="border-radius: 15px; border: 1px solid #c0ccf7; box-shadow: 0px 0px 6.9px -1px #afdaff; margin: 20px 0;">
+        <div style="padding: 5px 20px 0 20px">
+          <p style="font-family: sans-serif; font-size: 20px; font-weight: normal; color: #000; margin-bottom: 0; margin-top: 5px; padding-left: 5px; padding-top: 4px; border-left: 3px solid #00bf71;">
+            State & City Wise Distribution:
+          </p>
+        </div>
+        <hr color="#c0ccf7" />
+        <div style="padding: 20px">
+          <div style="border: 1px solid #c0ccf7; border-radius: 10px">
+            <table style="width: 100%; border-collapse: collapse; border-spacing: 30px;">
+              <tr style="border-bottom: 1px solid #c0ccf7; background-color: #edf6ff;">
+                <th style="text-align: left; border-top-left-radius: 9px">
+                  <p style="padding-left: 10px; font-family: sans-serif; font-size: 15px; font-weight: 600; color: #000; text-align: left;">
+                    State
+                  </p>
+                </th>
+                <th style="text-align: left">
+                  <p style="font-family: sans-serif; font-size: 15px; font-weight: 600; color: #000; padding-left: 17px;">
+                    City
+                  </p>
+                </th>
+                <th style="text-align: right; border-top-right-radius: 9px">
+                  <p style="padding-right: 10px; font-family: sans-serif; font-size: 15px; font-weight: 600; color: #000;">
+                    Number
+                  </p>
+                </th>
+              </tr>
+              ${generateRowsHTML(stateAndCityToday)}
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+
+  return tableHtml;
+};
+
+function generateRowsHTML(data) {
+  let rowsHtml = '';
+  for (const state in data) {
+    rowsHtml += `<tr style="border-bottom: 1px solid #c0ccf7">
+      <td style="text-align: left; border-right: 1px solid #c0ccf7" rowspan="${data[state].length + 1}">
+        <p style="padding-left: 10px; font-family: sans-serif; font-size: 15px; font-weight: 600; color: #000; text-align: left;">
+          ${state}
+        </p>
+      </td>
+    </tr>`;
+
+    for (let i = 0; i < data[state].length; i++) {
+      rowsHtml += `<tr style="border-bottom: 1px solid #c0ccf7">
+        <td>
+          <p style="text-align: left; font-family: sans-serif; font-size: 15px; font-weight: 600; color: #000; padding-left: 15px;">
+            ${data[state][i].city}
+          </p>
+        </td>
+        <td style="text-align: right">
+          <p style="padding-right: 10px; font-family: sans-serif; font-size: 15px; font-weight: 600; color: #0d66b5;">
+            ${data[state][i].count}
+          </p>
+        </td>
+      </tr>`;
+    }
+  }
+  return rowsHtml;
+}
+
+

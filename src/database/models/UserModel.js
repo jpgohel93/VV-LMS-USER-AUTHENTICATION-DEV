@@ -262,7 +262,8 @@ const getAgeData = async (startDate, endDate) => {
                 createdAt: {
                     $gte: new Date(startDate),
                     $lte: new Date(endDate),
-                }
+                },
+                is_deleted: false
             },
         })
     }
@@ -1097,6 +1098,191 @@ const getgenderDistributionData = async () => {
    return data;
 }
 
+
+const getStateAndCityWiseLocationDistributionData = async (startDate, endDate) => {
+    let condition = [];
+
+    if (startDate && endDate) {
+        condition.push({
+            $match: {
+                createdAt: {
+                    $gte: new Date(startDate),
+                    $lte: new Date(endDate),
+                },
+                is_deleted: false,
+            },
+        });
+    } else {
+        condition.push({
+            $match: {
+                is_deleted: false,
+            },
+        });
+    }
+
+    condition.push(
+        {
+            $group: {
+                _id: {
+                    state: "$state",
+                    city: "$city",
+                },
+                count: { $sum: 1 },
+            },
+        },
+        {
+            $project: {
+                _id: 0,
+                state: {
+                    $cond: {
+                        if: { $eq: ["$_id.state", null] },
+                        then: "Other",
+                        else: {
+                            $concat: [
+                                { $toUpper: { $substrCP: ["$_id.state", 0, 1] } },
+                                { $substrCP: ["$_id.state", 1, { $strLenCP: "$_id.state" }] },
+                            ],
+                        },
+                    },
+                },
+                city: {
+                    $cond: {
+                        if: { $eq: ["$_id.city", null] },
+                        then: "Other",
+                        else: {
+                            $concat: [
+                                { $toUpper: { $substrCP: ["$_id.city", 0, 1] } },
+                                { $substrCP: ["$_id.city", 1, { $strLenCP: "$_id.city" }] },
+                            ],
+                        },
+                    },
+                },
+                count: 1,
+            },
+        }
+    );
+
+    const chartData = await UserSchema.aggregate(condition)
+        .then((data) => {
+            return data;
+        })
+        .catch((err) => {
+            return null;
+        });
+
+    // Process the data to organize it by states and cities
+    const result = {};
+    chartData.forEach(({ state, city, count }) => {
+        if (!result[state]) {
+            result[state] = [];
+        }
+        result[state].push({ city, count });
+    });
+    return result;
+};
+
+
+// TodayPurchasesMade
+
+const todayPurchasesCourse = async (startDate, endDate) => {
+    try {
+        let condition = [];
+
+        if (startDate && endDate) {
+            condition.push({
+                $match: {
+                    createdAt: {
+                        $gte: new Date(startDate),
+                        $lte: new Date(endDate),
+                    },
+                    is_deleted: false,
+                },
+            });
+        }
+
+        let searchFilter = [
+            { is_deleted: false },
+            { is_verify_otp: true },
+            { is_purchase_course: true },
+        ];
+
+        const totalPaidUsersData = await UserSchema.aggregate([
+            ...condition,
+            { $match: { $and: searchFilter } },
+            { $count: 'totalPaidUsers' },
+        ]);
+
+        return totalPaidUsersData.length > 0 ? totalPaidUsersData[0].totalPaidUsers : 0;
+    } catch (error) {
+        return null;
+    }
+};
+
+
+const getDailyReportAgeData = async (startDate, endDate) => {
+    let condition = []
+
+    if(startDate && endDate){
+        condition.push({
+            $match: {
+                createdAt: {
+                    $gte: new Date(startDate),
+                    $lte: new Date(endDate),
+                },
+                is_deleted: false
+            },
+        })
+    }else{
+        condition.push({
+            $match: {
+                is_deleted: false
+            }
+        })
+    }
+
+    condition.push(
+        { 
+            "$project": {
+                "age": {
+                    "$divide": [
+                        {
+                            "$subtract": [
+                                new Date(),
+                                { "$ifNull": ["$birth_date", new Date()] }
+                            ]
+                        },
+                        1000 * 86400 * 365
+                    ]
+                }
+            }
+        },
+        {
+            "$group": {
+                "_id": {
+                    "$concat": [
+                        { "$cond": [ { "$and": [ { "$gt":  ["$age", 0 ] }, { "$lt": ["$age", 16] } ]}, "below 16", ""] },
+                        { "$cond": [ { "$and": [ { "$gte": ["$age", 17] }, { "$lt": ["$age", 28] } ]}, "17 - 28", ""] },
+                        { "$cond": [ { "$and": [ { "$gte": ["$age", 28] }, { "$lte": ["$age", 45] } ]}, "28 - 45", ""] },
+                        { "$cond": [{ "$and": [{ "$gt": ["$age", 45] }, { "$lt": ["$age", 60] }] }, "45 - 60", ""] },
+                        { "$cond": [{ "$gte": ["$age", 60] }, "60+", ""] }
+                    ]
+                },
+                "personas": { "$sum": 1 }
+            }
+        },
+        { "$project": { "_id": 0, "age": "$_id", "personas": 1 } }
+    )
+
+    let data = await UserSchema.aggregate(condition).then((userData) => {
+        return userData
+    }).catch((err) => {
+        return false
+    });
+
+   return data;
+}
+
+
 module.exports = {
     createUser,
     updateUser,
@@ -1125,5 +1311,8 @@ module.exports = {
     totalUsersCount,
     totalPaidUsersCount,
     totalUnpaidPaidUsers,
-    getgenderDistributionData
+    getgenderDistributionData,
+    getStateAndCityWiseLocationDistributionData,
+    todayPurchasesCourse,
+    getDailyReportAgeData
 }

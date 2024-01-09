@@ -1737,7 +1737,11 @@ const addStudent = async (userInputs) => {
             let salt = await GenerateSalt();
             let userPassword = null;
 
-            if(user_signup_with == 1){
+            // if(user_signup_with == 1 ){
+            //     userPassword = await GeneratePassword(password, salt);
+            // }
+
+            if(password){
                 userPassword = await GeneratePassword(password, salt);
             }
 
